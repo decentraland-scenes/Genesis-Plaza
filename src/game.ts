@@ -72,14 +72,49 @@ Gallery_action_Moebius.addComponent(new Transform({
 ))
 engine.addEntity(Gallery_action_Moebius)
 
-//add Core_Action_Spawmpoint
-let Core_Action_Spawmpoint = new Entity()
-Core_Action_Spawmpoint.addComponent(new GLTFShape("models/Core_Action_Spawmpoint.glb"))
-Core_Action_Spawmpoint.addComponent(new Transform({
+//add Particles
+let Particles = new Entity()
+Particles.addComponent(new GLTFShape("models/Particles.glb"))
+Particles.addComponent(new Transform({
 	rotation: Quaternion.Euler(0, 180, 0)
 }
 ))
-engine.addEntity(Core_Action_Spawmpoint)
+engine.addEntity(Particles)
 
+//add mole
+let mole = new Entity()
+mole.addComponent(new GLTFShape("models/mole.glb"))
+mole.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(mole)
+
+//add balloon
+let balloon = new Entity()
+balloon.addComponent(new GLTFShape("models/balloon.glb"))
+balloon.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(balloon)
+
+//add stops
+let stops = new Entity()
+stops.addComponent(new GLTFShape("models/stops.glb"))
+stops.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(stops)
+
+//add train
+let train = new Entity()
+train.addComponent(new GLTFShape("models/train.glb"))
+train.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(train)
 
 
