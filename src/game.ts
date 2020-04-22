@@ -161,6 +161,28 @@ shell.addComponent(new Transform({
 ))
 engine.addEntity(shell)
 
+//WHALE BUILDING (WEARABLES NFTs)
+
+//add whale
+let whale = new Entity()
+whale.addComponent(new GLTFShape("models/whale.glb"))
+whale.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(whale)
+
+// TRADING CENTER
+
+//add trading_center
+let trading_center = new Entity()
+trading_center.addComponent(new GLTFShape("models/trading_center.glb"))
+trading_center.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(trading_center)
+
 
 //STREET MESH
 
