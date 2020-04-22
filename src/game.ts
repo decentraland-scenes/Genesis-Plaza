@@ -176,7 +176,7 @@ engine.addEntity(whale)
 
 //add trading_center
 let trading_center = new Entity()
-trading_center.addComponent(new GLTFShape("models/trading_center.glb"))
+trading_center.addComponent(new GLTFShape("models/trading-center.glb"))
 trading_center.addComponent(new Transform({
 	rotation: Quaternion.Euler(0, 180, 0)
 }
