@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 app.use(cors({ origin: true }))
+require('isomorphic-fetch')
 
 export type messageBoard = {
   name: string
@@ -12,6 +13,7 @@ export type messageBoard = {
 }
 
 // http://localhost:5001/genesis-plaza/us-central/app/hello-world
+// https://us-central1-genesis-plaza.cloudfunctions.net/app/hello-world
 
 app.get('/hello-world', (req: any, res: any) => {
   return res.status(200).send('Hello World!')
@@ -29,7 +31,7 @@ exports.app = functions.https.onRequest(app)
 //// AWS
 const AWS = require('aws-sdk')
 
-const config = require('../../keys/aws-key.json')
+const config = require('../keys/aws-key.json')
 
 AWS.config.setPromisesDependency()
 AWS.config.update({
@@ -74,12 +76,16 @@ export async function uploadMessageBoardJSON(
   )
 }
 
+//https://us-central1-genesis-plaza.cloudfunctions.net/app/addmessage?location=artichoke&message=mymessage
+
 app.post('/addmessage', (req: any, res: any) => {
   let location: string = String(req.query.location)
   let message: string = String(req.query.message)
 
   let url =
-    'https://genesis-plaza.s3.us-east-2.amazonaws.com/messageboards/${location}.json'
+    'https://genesis-plaza.s3.us-east-2.amazonaws.com/messageboards/' +
+    location +
+    '.json'
 
   updateJSON(url, message, location)
 
@@ -91,22 +97,25 @@ export async function updateJSON(
   newMessage: string,
   location: string
 ) {
-  let currentJson: messageBoard = await getJSON(url)
-  console.log(currentJson)
+  let currentMessages: string[] = await getJSON(url)
+  console.log('old messages: ', currentMessages)
 
-  currentJson.messages.push(newMessage)
+  currentMessages.push(newMessage)
 
-  uploadMessageBoardJSON(location, currentJson)
+  uploadMessageBoardJSON(location, {
+    name: location,
+    messages: currentMessages,
+  })
 }
 
-export async function getJSON(url: string): Promise<messageBoard> {
+export async function getJSON(url: string): Promise<string[]> {
   try {
     let response = await fetch(url).then()
-
     let json = await response.json()
-    return json
+    return json.messages
   } catch {
     console.log('error fetching from AWS server')
-    return { name: '', messages: [] }
+    console.log('url used: ', url)
+    return []
   }
 }

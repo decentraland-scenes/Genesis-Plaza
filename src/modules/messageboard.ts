@@ -1,71 +1,56 @@
-import { screenSpaceUI, sceneMessageBus, UIOpenTime } from '../game'
+import { sceneMessageBus } from '../game'
+import { setNewMessage } from './serverHandler'
+import { UIOpenTime, messagebg } from './ui'
 
-const FloatingText = new Entity()
-export let FloatingTextShape = new TextShape('Write something')
-FloatingTextShape.color = Color3.FromHexString('#8040E2')
-FloatingText.addComponent(FloatingTextShape)
-FloatingText.addComponent(
+export let boardLocation = null
+
+/// ARTICHOKE
+const ArtichokeFloatingText = new Entity()
+export let ArtichokeFloatingTextShape = new TextShape('Write something')
+ArtichokeFloatingTextShape.color = Color3.FromHexString('#8040E2')
+ArtichokeFloatingText.addComponent(ArtichokeFloatingTextShape)
+ArtichokeFloatingText.addComponent(
   new Transform({
-    position: new Vector3(4, 2.5, 4),
+    position: new Vector3(48, 12.5, 39),
     scale: new Vector3(1, 1, 1),
     rotation: Quaternion.Euler(0, 180, 0),
   })
 )
-engine.addEntity(FloatingText)
+engine.addEntity(ArtichokeFloatingText)
 
-const messageTexture = new Texture('images/UI_TX.png')
+// TOWER
 
-const messagebg = new UIImage(screenSpaceUI, messageTexture)
-messagebg.name = 'messagebackground'
-messagebg.width = 1024
-messagebg.height = 1024 / 4
-messagebg.hAlign = 'center'
-messagebg.vAlign = 'center'
-messagebg.sourceLeft = 0
-messagebg.sourceTop = 0
-messagebg.sourceWidth = 1024
-messagebg.sourceHeight = 1024 / 4
-messagebg.visible = false
-messagebg.isPointerBlocker = false
-
-export const message = new UIInputText(messagebg)
-message.name = 'message'
-message.width = '650px'
-message.height = '100px'
-message.hAlign = 'center'
-message.vAlign = 'center'
-message.positionY = -30
-message.fontSize = 30
-message.vTextAlign = 'center'
-message.hTextAlign = 'center'
-message.color = Color4.FromHexString('#53508F88')
-message.placeholder = 'Write something'
-
-message.isPointerBlocker = true
-message.visible = true
-message.onTextSubmit = new OnTextSubmit((x) => {
-  //FloatingTextShape.value = x.text
-  let newText = x.text.substr(0, 50)
-  sceneMessageBus.emit('newText', { text: newText })
-})
+const TowerFloatingText = new Entity()
+export let TowerFloatingTextShape = new TextShape('Write something')
+TowerFloatingTextShape.color = Color3.FromHexString('#8040E2')
+TowerFloatingText.addComponent(TowerFloatingTextShape)
+TowerFloatingText.addComponent(
+  new Transform({
+    position: new Vector3(50, 20, 119),
+    scale: new Vector3(5, 5, 5),
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+engine.addEntity(TowerFloatingText)
 
 // sceneMessageBus.on('newText', x => {
 //   sceneState.bannerText = x.text
 //   FloatingTextShape.value = x.text
 // })
 
-let UIOpener = new Entity()
-UIOpener.addComponent(new GLTFShape('models/Message.glb'))
-UIOpener.addComponent(
+let ArtichokeUIOpener = new Entity()
+ArtichokeUIOpener.addComponent(new BoxShape()) // GLTFShape('models/Message.glb'))
+ArtichokeUIOpener.addComponent(
   new Transform({
-    position: new Vector3(8, 0, 8),
+    position: new Vector3(42, 10, 40),
     scale: new Vector3(1, 1, 1),
   })
 )
-UIOpener.addComponent(
+ArtichokeUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
       UIOpenTime = +Date.now()
+      boardLocation = 'artichoke'
       messagebg.visible = true
       messagebg.isPointerBlocker = true
     },
@@ -75,4 +60,28 @@ UIOpener.addComponent(
     }
   )
 )
-engine.addEntity(UIOpener)
+engine.addEntity(ArtichokeUIOpener)
+
+let TowerUIOpener = new Entity()
+TowerUIOpener.addComponent(new BoxShape()) // GLTFShape('models/Message.glb'))
+TowerUIOpener.addComponent(
+  new Transform({
+    position: new Vector3(47, 2, 118.8),
+    scale: new Vector3(1, 1, 1),
+  })
+)
+TowerUIOpener.addComponent(
+  new OnPointerDown(
+    (e) => {
+      UIOpenTime = +Date.now()
+      boardLocation = 'tower'
+      messagebg.visible = true
+      messagebg.isPointerBlocker = true
+    },
+    {
+      button: ActionButton.POINTER,
+      hoverText: 'Write something',
+    }
+  )
+)
+engine.addEntity(TowerUIOpener)

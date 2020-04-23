@@ -1,12 +1,6 @@
 import utils from '../node_modules/decentraland-ecs-utils/index'
 
-export var UIOpenTime = 0
 export const sceneMessageBus = new MessageBus()
-
-// UI
-
-export const screenSpaceUI = new UICanvas()
-screenSpaceUI.visible = true
 
 // AGORA BUILDING
 
@@ -291,3 +285,15 @@ train.addComponent(
   })
 )
 engine.addEntity(train)
+
+//////// HACK TO LOG POSITIONS
+
+const camera = Camera.instance
+
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(camera.position)
+  }
+}
+
+engine.addSystem(new CameraTrackSystem())

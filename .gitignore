@@ -106,3 +106,4 @@ dist
 
 # KEY FOR AWS
 keys/
+server/functions/keys/
