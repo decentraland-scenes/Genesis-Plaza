@@ -12,5 +12,10 @@
   },
   "devDependencies": {
     "decentraland-ecs": "^6.4.8-20200420193932.commit-931cc34"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "decentraland-ecs-utils": "^1.1.4",
+    "express": "^4.17.1"
   }
 }
