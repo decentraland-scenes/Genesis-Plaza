@@ -64,6 +64,15 @@ moon_tower.addComponent(
 )
 engine.addEntity(moon_tower)
 
+//add MoonTower_Action_Elevator
+let MoonTower_Action_Elevator = new Entity()
+MoonTower_Action_Elevator.addComponent(new GLTFShape("models/MoonTower_Action_Elevator.glb"))
+MoonTower_Action_Elevator.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(MoonTower_Action_Elevator)
+
 //add MoonTower_Action_Cosmos
 let MoonTower_Action_Cosmos = new Entity()
 MoonTower_Action_Cosmos.addComponent(
@@ -78,14 +87,15 @@ engine.addEntity(MoonTower_Action_Cosmos)
 
 //add MoonTower_Action_Moon
 let MoonTower_Action_Moon = new Entity()
-MoonTower_Action_Moon.addComponent(
-  new GLTFShape('models/MoonTower_Action_Moon.glb')
-)
-MoonTower_Action_Moon.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
+MoonTower_Action_Moon.addComponent(new GLTFShape("models/MoonTower_Action_Moon.glb"))
+MoonTower_Action_Moon.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}))
+const MoonTower_Action_MoonAnimator = new Animator();
+MoonTower_Action_Moon.addComponent(MoonTower_Action_MoonAnimator);
+let playMoonTower_Action_Moon = new AnimationState("MoonTower_Action_MoonDark.001")
+MoonTower_Action_MoonAnimator.addClip(playMoonTower_Action_Moon);
+playMoonTower_Action_Moon.play()
 engine.addEntity(MoonTower_Action_Moon)
 
 //add MoonTower_Action_Ringu
