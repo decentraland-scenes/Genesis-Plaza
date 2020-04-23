@@ -3,6 +3,8 @@ import {
   TowerFloatingTextShape,
 } from './messageboard'
 
+export const sceneMessageBus = new MessageBus()
+
 export let awsServer = 'https://genesis-plaza.s3.us-east-2.amazonaws.com/'
 export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
