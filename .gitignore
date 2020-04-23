@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+server/functions/keys/aws-key.json
+server/functions/lib/index.js.map
+server/functions/lib/index.js
