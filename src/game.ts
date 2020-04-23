@@ -1,4 +1,6 @@
 import utils from '../node_modules/decentraland-ecs-utils/index'
+import { Locations, teleport } from './modules/teleports'
+import { setTriggerAreas } from './modules/triggers'
 
 export const sceneMessageBus = new MessageBus()
 
@@ -25,18 +27,6 @@ artichoke.addComponent(
   })
 )
 engine.addEntity(artichoke)
-
-//add Artichoke_Elevator
-let Artichoke_Elevator = new Entity()
-Artichoke_Elevator.addComponent(
-  new GLTFShape("models/L'architoque_Elevator.glb")
-)
-Artichoke_Elevator.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(Artichoke_Elevator)
 
 // THE HALLWAY (PICTURES FRAMES & NFTs)
 
@@ -109,18 +99,6 @@ MoonTower_Action_Ringu.addComponent(
   })
 )
 engine.addEntity(MoonTower_Action_Ringu)
-
-//add TheWhale_Action_Elevator
-let TheWhale_Action_Elevator = new Entity()
-TheWhale_Action_Elevator.addComponent(
-  new GLTFShape('models/TheWhale_Action_Elevator.glb')
-)
-TheWhale_Action_Elevator.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(TheWhale_Action_Elevator)
 
 //add TheWhale_Action_Sculpture
 let TheWhale_Action_Sculpture = new Entity()
@@ -250,6 +228,16 @@ mole.addComponent(
     rotation: Quaternion.Euler(0, 180, 0),
   })
 )
+mole.addComponent(
+  new OnPointerDown(
+    (e) => {
+      teleport(Locations.MOLES)
+    },
+    {
+      hoverText: 'Teleport',
+    }
+  )
+)
 engine.addEntity(mole)
 
 // BALLOON
@@ -297,3 +285,5 @@ class CameraTrackSystem implements ISystem {
 }
 
 engine.addSystem(new CameraTrackSystem())
+
+setTriggerAreas()
