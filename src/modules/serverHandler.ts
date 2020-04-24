@@ -1,7 +1,6 @@
-import {
-  ArtichokeFloatingTextShape,
-  TowerFloatingTextShape,
-} from './messageboard'
+import { ArtichokeFloatingTextShape, setTowerText } from './messageboard'
+
+export const sceneMessageBus = new MessageBus()
 
 export let awsServer = 'https://genesis-plaza.s3.us-east-2.amazonaws.com/'
 export let fireBaseServer =
@@ -57,5 +56,5 @@ export async function updateMessageBoards() {
   ArtichokeFloatingTextShape.value = artMessage
 
   let towerMessage = await getLastMessage('tower')
-  TowerFloatingTextShape.value = towerMessage
+  setTowerText(towerMessage)
 }

@@ -1,4 +1,5 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
+import { sceneMessageBus } from './serverHandler'
 
 export function setTriggerAreas() {
   //ARTICHOKE ELEVATOR
@@ -25,7 +26,6 @@ export function setTriggerAreas() {
     new Transform({ position: new Vector3(51, 2.5, 39.5) })
   )
 
-  // create trigger area object, setting size and relative position
   let artichokeTriggerBox = new utils.TriggerBoxShape(
     new Vector3(4, 4, 4),
     Vector3.Zero()
@@ -39,7 +39,8 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        activateArichokeElevator()
+        //activateArichokeElevator()
+        sceneMessageBus.emit('artichokeElevator', {})
         log('triggered!')
       },
       null, //onCameraExit
@@ -55,7 +56,6 @@ export function setTriggerAreas() {
 
   // WHALE ELEVATOR
 
-  //add TheWhale_Action_Elevator
   let TheWhale_Action_Elevator = new Entity()
   TheWhale_Action_Elevator.addComponent(
     new GLTFShape('models/TheWhale_Action_Elevator.glb')
@@ -79,7 +79,6 @@ export function setTriggerAreas() {
     new Transform({ position: new Vector3(188.5, 3, 236) })
   )
 
-  // create trigger area object, setting size and relative position
   let whaleTriggerBox = new utils.TriggerBoxShape(
     new Vector3(7, 3, 7),
     Vector3.Zero()
@@ -93,7 +92,8 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        activateWhaleElevator()
+        sceneMessageBus.emit('whaleElevator', {})
+        //activateWhaleElevator()
         log('triggered!')
       },
       null, //onCameraExit
@@ -106,4 +106,69 @@ export function setTriggerAreas() {
     whale_elevator_anim.stop()
     whale_elevator_anim.play()
   }
+
+  //// MOON TOWER ELEVATOR
+
+  let MoonTower_Action_Elevator = new Entity()
+  MoonTower_Action_Elevator.addComponent(
+    new GLTFShape('models/MoonTower_Action_Elevator.glb')
+  )
+  MoonTower_Action_Elevator.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(MoonTower_Action_Elevator)
+
+  let moon_elevator_anim = new AnimationState('MoonTower_Action_Elevator', {
+    looping: false,
+  })
+
+  MoonTower_Action_Elevator.addComponent(new Animator())
+  MoonTower_Action_Elevator.getComponent(Animator).addClip(moon_elevator_anim)
+
+  const moonElevatorTrigger = new Entity()
+  moonElevatorTrigger.addComponent(
+    new Transform({ position: new Vector3(48.6, 2.4, 116.6) })
+  )
+
+  let moonTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(3, 3, 3),
+    Vector3.Zero()
+  )
+  moonElevatorTrigger.addComponent(
+    new utils.TriggerComponent(
+      moonTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        //activateMoonlevator()
+        sceneMessageBus.emit('moonElevator', {})
+        log('triggered!')
+      },
+      null, //onCameraExit
+      false //true
+    )
+  )
+  engine.addEntity(moonElevatorTrigger)
+
+  function activateMoonlevator() {
+    moon_elevator_anim.stop()
+    moon_elevator_anim.play()
+  }
+
+  sceneMessageBus.on('artichokeElevator', (e) => {
+    activateArichokeElevator()
+  })
+
+  sceneMessageBus.on('whaleElevator', (e) => {
+    activateWhaleElevator()
+  })
+
+  sceneMessageBus.on('moonElevator', (e) => {
+    activateMoonlevator()
+  })
 }

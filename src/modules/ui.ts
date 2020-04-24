@@ -3,7 +3,7 @@
 import {
   boardLocation,
   ArtichokeFloatingTextShape,
-  TowerFloatingTextShape,
+  setTowerText,
 } from './messageboard'
 import { setNewMessage } from './serverHandler'
 
@@ -57,7 +57,7 @@ message.onTextSubmit = new OnTextSubmit((x) => {
   if (boardLocation == 'artichoke') {
     ArtichokeFloatingTextShape.value = newText
   } else if (boardLocation == 'tower') {
-    TowerFloatingTextShape.value = newText
+    setTowerText(newText)
   }
 })
 
