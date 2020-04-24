@@ -1,4 +1,3 @@
-import { sceneMessageBus } from '../game'
 import { setNewMessage } from './serverHandler'
 import { UIOpenTime, messagebg, updateOpenUITime } from './ui'
 
@@ -21,17 +20,39 @@ engine.addEntity(ArtichokeFloatingText)
 // TOWER
 
 const TowerFloatingText = new Entity()
-export let TowerFloatingTextShape = new TextShape('Write something')
-TowerFloatingTextShape.color = Color3.FromHexString('#8040E2')
-TowerFloatingText.addComponent(TowerFloatingTextShape)
+// export let TowerFloatingTextShape = new TextShape('Write something')
+// TowerFloatingTextShape.color = Color3.FromHexString('#8040E2')
+// TowerFloatingText.addComponent(TowerFloatingTextShape)
 TowerFloatingText.addComponent(
   new Transform({
-    position: new Vector3(50, 20, 119),
-    scale: new Vector3(5, 5, 5),
-    rotation: Quaternion.Euler(0, 180, 0),
+    position: new Vector3(49.5, 37, 119),
+    scale: new Vector3(13, 13, 13),
+    rotation: Quaternion.Euler(0, 0, 0),
   })
 )
 engine.addEntity(TowerFloatingText)
+
+let towerLetters: Entity[] = []
+
+let maxCharacters = 26
+for (let i = 0; i < maxCharacters; i++) {
+  let angle = 360 - (i * 360) / maxCharacters
+  let radAngle = angle * (Math.PI / 180)
+
+  let letter = new Entity()
+  letter.setParent(TowerFloatingText)
+  letter.addComponent(new TextShape(''))
+  letter.getComponent(TextShape).fontSize = 4
+  letter.getComponent(TextShape).color = Color3.Blue() //Color3.FromHexString('#8040E2')
+  letter.addComponent(
+    new Transform({
+      position: new Vector3(Math.sin(radAngle), 0, Math.cos(radAngle)),
+      rotation: Quaternion.Euler(0, angle - 180, 0),
+    })
+  )
+  engine.addEntity(letter)
+  towerLetters.push(letter)
+}
 
 // sceneMessageBus.on('newText', x => {
 //   sceneState.bannerText = x.text
@@ -85,3 +106,27 @@ TowerUIOpener.addComponent(
   )
 )
 engine.addEntity(TowerUIOpener)
+
+export function setTowerText(text: string) {
+  let editedText = text.trim().slice(0, maxCharacters - 3)
+  for (let i = 0; i <= maxCharacters - 1; i++) {
+    let letter = towerLetters[i]
+    let textShape = letter.getComponent(TextShape)
+
+    if (i < editedText.length) {
+      textShape.value = editedText[i]
+    } else {
+      textShape.value = ''
+    }
+  }
+}
+
+class SpinTextSystem implements ISystem {
+  update(dt: number) {
+    const transform = TowerFloatingText.getComponent(Transform)
+
+    transform.rotate(Vector3.Up(), dt * 10)
+  }
+}
+
+engine.addSystem(new SpinTextSystem())

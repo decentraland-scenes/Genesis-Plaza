@@ -1,7 +1,4 @@
-import {
-  ArtichokeFloatingTextShape,
-  TowerFloatingTextShape,
-} from './messageboard'
+import { ArtichokeFloatingTextShape, setTowerText } from './messageboard'
 
 export const sceneMessageBus = new MessageBus()
 
@@ -59,5 +56,5 @@ export async function updateMessageBoards() {
   ArtichokeFloatingTextShape.value = artMessage
 
   let towerMessage = await getLastMessage('tower')
-  TowerFloatingTextShape.value = towerMessage
+  setTowerText(towerMessage)
 }

@@ -2,8 +2,6 @@ import utils from '../node_modules/decentraland-ecs-utils/index'
 import { Locations, teleport } from './modules/teleports'
 import { setTriggerAreas } from './modules/triggers'
 
-export const sceneMessageBus = new MessageBus()
-
 // AGORA BUILDING
 
 //add agora
@@ -283,14 +281,14 @@ engine.addEntity(train)
 
 //////// HACK TO LOG POSITIONS
 
-const camera = Camera.instance
+// const camera = Camera.instance
 
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(camera.position)
-  }
-}
+// class CameraTrackSystem implements ISystem {
+//   update() {
+//     log(camera.position)
+//   }
+// }
 
-engine.addSystem(new CameraTrackSystem())
+// engine.addSystem(new CameraTrackSystem())
 
 setTriggerAreas()
