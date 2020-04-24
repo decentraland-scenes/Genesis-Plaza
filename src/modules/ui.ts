@@ -16,6 +16,10 @@ export function closeUI() {
   messagebg.visible = false
 }
 
+export function updateOpenUITime() {
+  UIOpenTime = +Date.now()
+}
+
 const messageTexture = new Texture('images/UI_TX.png')
 
 export const messagebg = new UIImage(screenSpaceUI, messageTexture)
