@@ -155,9 +155,63 @@ export function setTriggerAreas() {
   )
   engine.addEntity(moonElevatorTrigger)
 
-  function activateMoonlevator() {
+  function activateMoonElevator() {
     moon_elevator_anim.stop()
     moon_elevator_anim.play()
+  }
+
+  ///////  SHELL ELEVATOR
+
+  let shell_elevator = new Entity()
+  shell_elevator.addComponent(new GLTFShape('models/shell_elevator.glb'))
+  shell_elevator.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(shell_elevator)
+
+  let shell_elevator_anim = new AnimationState('TheShell_ElevatorAction', {
+    looping: false,
+  })
+
+  shell_elevator.addComponent(new Animator())
+  shell_elevator.getComponent(Animator).addClip(shell_elevator_anim)
+
+  const shellElevatorTrigger = new Entity()
+  shellElevatorTrigger.addComponent(
+    new Transform({
+      position: new Vector3(300.5, 11.3, 120),
+      rotation: Quaternion.Euler(0, 45, 0),
+    })
+  )
+
+  let shellTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(7, 2, 6),
+    Vector3.Zero()
+  )
+  shellElevatorTrigger.addComponent(
+    new utils.TriggerComponent(
+      shellTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        //activateMoonlevator()
+        sceneMessageBus.emit('shellElevator', {})
+        log('triggered!')
+      },
+      null, //onCameraExit
+      false
+    )
+  )
+  engine.addEntity(shellElevatorTrigger)
+
+  function activateShellElevator() {
+    shell_elevator_anim.stop()
+    shell_elevator_anim.play()
   }
 
   sceneMessageBus.on('artichokeElevator', (e) => {
@@ -169,6 +223,10 @@ export function setTriggerAreas() {
   })
 
   sceneMessageBus.on('moonElevator', (e) => {
-    activateMoonlevator()
+    activateMoonElevator()
+  })
+
+  sceneMessageBus.on('shellElevator', (e) => {
+    activateShellElevator()
   })
 }
