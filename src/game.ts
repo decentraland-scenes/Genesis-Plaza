@@ -165,7 +165,7 @@ auditorium.addComponent(
 )
 engine.addEntity(auditorium)
 
-// BLOCKCHAIN BUILDING
+// SHALE BUILDING
 
 //add shell_building
 let shell = new Entity()
@@ -176,6 +176,33 @@ shell.addComponent(
   })
 )
 engine.addEntity(shell)
+
+//add shell_elevator
+let shell_elevator = new Entity()
+shell_elevator.addComponent(new GLTFShape("models/shell_elevator.glb"))
+shell_elevator.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(shell_elevator)
+
+//add shoe_prop
+let shoe_prop = new Entity()
+shoe_prop.addComponent(new GLTFShape("models/shoe_prop.glb"))
+shoe_prop.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(shoe_prop)
+
+//add tshirt_prop
+let tshirt_prop = new Entity()
+tshirt_prop.addComponent(new GLTFShape("models/tshirt_prop.glb"))
+tshirt_prop.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(tshirt_prop)
 
 //WHALE BUILDING (WEARABLES NFTs)
 
