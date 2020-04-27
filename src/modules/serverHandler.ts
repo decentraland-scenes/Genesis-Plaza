@@ -53,8 +53,12 @@ export async function getLastMessage(location: string): Promise<string> {
 
 export async function updateMessageBoards() {
   let artMessage = await getLastMessage('artichoke')
-  ArtichokeFloatingTextShape.value = artMessage
+  if (artMessage) {
+    ArtichokeFloatingTextShape.value = artMessage
+  }
 
   let towerMessage = await getLastMessage('tower')
-  setTowerText(towerMessage)
+  if (towerMessage) {
+    setTowerText(towerMessage)
+  }
 }
