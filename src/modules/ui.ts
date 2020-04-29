@@ -6,6 +6,7 @@ import {
   setTowerText,
 } from './messageboard'
 import { setNewMessage } from './serverHandler'
+import { WearableData } from './wearables'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -60,6 +61,72 @@ message.onTextSubmit = new OnTextSubmit((x) => {
     setTowerText(newText)
   }
 })
+
+//////// WEARABLES UI
+
+export function displayWearableUI(wearable: WearableData) {
+  const wearableTexture = new Texture(wearable.image)
+
+  const background = new UIContainerRect(screenSpaceUI)
+  background.hAlign = 'right'
+  background.vAlign = 'center'
+  background.width = 700
+  background.height = 700
+
+  const icon = new UIImage(background, wearableTexture)
+  icon.name = 'messagebackground'
+  icon.width = 256
+  icon.height = 256
+  icon.hAlign = 'right'
+  icon.vAlign = 'center'
+  icon.sourceLeft = 0
+  icon.sourceTop = 0
+  icon.sourceWidth = 256
+  icon.sourceHeight = 256
+  icon.visible = true
+  icon.isPointerBlocker = false
+
+  const name = new UIText(background)
+  name.value = wearable.name
+  name.vAlign = 'top'
+  name.hAlign = 'center'
+  name.fontSize = 50
+
+  const desc = new UIText(background)
+  desc.value = wearable.wearable.description
+  desc.vAlign = 'center'
+  desc.hAlign = 'center'
+  desc.fontSize = 25
+  desc.positionY = -100
+
+  const rarity = new UIText(background)
+  rarity.value = wearable.wearable.rarity
+  rarity.vAlign = 'center'
+  rarity.hAlign = 'left'
+  rarity.fontSize = 25
+  rarity.positionY = 25
+
+  const collection = new UIText(background)
+  collection.value = wearable.wearable.collection
+  collection.vAlign = 'center'
+  collection.hAlign = 'left'
+  collection.fontSize = 25
+  collection.positionY = 0
+
+  const category = new UIText(background)
+  category.value = wearable.wearable.category
+  category.vAlign = 'center'
+  category.hAlign = 'left'
+  category.fontSize = 25
+  category.positionY = -25
+
+  const price = new UIText(background)
+  price.value = String(wearable.searchOrderPrice / 1000000000000000000)
+  price.vAlign = 'center'
+  price.hAlign = 'left'
+  price.fontSize = 25
+  price.positionY = -50
+}
 
 /////// CLOSE UI
 

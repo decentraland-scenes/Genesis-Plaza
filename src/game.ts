@@ -5,15 +5,15 @@ import { Wearable } from './modules/wearables'
 
 //////// HACK TO LOG POSITIONS
 
-const camera = Camera.instance
+// const camera = Camera.instance
 
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(camera.position)
-  }
-}
+// class CameraTrackSystem implements ISystem {
+//   update() {
+//     log(camera.position)
+//   }
+// }
 
-engine.addSystem(new CameraTrackSystem())
+// engine.addSystem(new CameraTrackSystem())
 
 // AGORA BUILDING
 
@@ -317,7 +317,7 @@ setTriggerAreas()
 //////// WEARABLES
 
 const Eyewear_Raver = new Wearable(
-  new GLTFShape('models/wearables/first_floor/A/Eyewear_Raver.glb'),
+  new GLTFShape('models/wearables/first_floor/A/Eyewear_CyborgMonocle.glb'),
   {
     position: new Vector3(284, 10.5, 110.4),
     rotation: Quaternion.Euler(0, 60, 0),
@@ -376,7 +376,7 @@ const M_Mask_Skull = new Wearable(
     position: new Vector3(265.9, 10.5, 122.5),
     rotation: Quaternion.Euler(0, 90, 0),
   },
-  'M_Mask_Skull'
+  'lirio skull'
 )
 
 const M_TopHead_Machete = new Wearable(
@@ -385,7 +385,7 @@ const M_TopHead_Machete = new Wearable(
     position: new Vector3(265.5, 10.5, 124.5),
     rotation: Quaternion.Euler(0, 90, 0),
   },
-  'M_TopHead_Machete'
+  'Machete Headband'
 )
 
 const M_TopHead_Skull = new Wearable(
@@ -436,7 +436,7 @@ const protection_mask_funny_mask = new Wearable(
     position: new Vector3(267.3, 10.5, 135.2),
     rotation: Quaternion.Euler(0, 115, 0),
   },
-  'protection_mask_funny_mask'
+  'funny protection mask'
 )
 
 const Eyewear_XmasTree = new Wearable(
