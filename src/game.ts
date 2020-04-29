@@ -1,6 +1,19 @@
 import utils from '../node_modules/decentraland-ecs-utils/index'
 import { Locations, teleport } from './modules/teleports'
 import { setTriggerAreas } from './modules/triggers'
+import { Wearable } from './modules/wearables'
+
+//////// HACK TO LOG POSITIONS
+
+const camera = Camera.instance
+
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(camera.position)
+  }
+}
+
+engine.addSystem(new CameraTrackSystem())
 
 // AGORA BUILDING
 
@@ -299,16 +312,210 @@ train.addComponent(
 )
 engine.addEntity(train)
 
-//////// HACK TO LOG POSITIONS
-
-const camera = Camera.instance
-
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(camera.position)
-  }
-}
-
-engine.addSystem(new CameraTrackSystem())
-
 setTriggerAreas()
+
+//////// WEARABLES
+
+const Eyewear_Raver = new Wearable(
+  new GLTFShape('models/wearables/first_floor/A/Eyewear_Raver.glb'),
+  {
+    position: new Vector3(284, 10.5, 110.4),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'Eyewear_Raver'
+)
+
+const Spysuit_Goggles = new Wearable(
+  new GLTFShape('models/wearables/first_floor/A/Spysuit_Goggles.glb'),
+  {
+    position: new Vector3(283, 10.5, 111.8),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'Spysuit_Goggles'
+)
+
+const Eye_Thingy = new Wearable(
+  new GLTFShape('models/wearables/first_floor/A/Eyewear_Raver.glb'),
+  {
+    position: new Vector3(282, 10.5, 113.1),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'Eyewear_Raver'
+)
+
+const F_Hat_Foam = new Wearable(
+  new GLTFShape('models/wearables/first_floor/B/F_Hat_Foam.glb'),
+  {
+    position: new Vector3(276.5, 10.5, 110.4),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'F_Hat_Foam'
+)
+
+const sunhat = new Wearable(
+  new GLTFShape('models/wearables/first_floor/B/sunhat.glb'),
+  {
+    position: new Vector3(275.5, 10.5, 111.8),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'sunhat'
+)
+
+const MaleHat_DCL = new Wearable(
+  new GLTFShape('models/wearables/first_floor/B/MaleHat_DCL.glb'),
+  {
+    position: new Vector3(274.5, 10.5, 113.1),
+    rotation: Quaternion.Euler(0, 60, 0),
+  },
+  'MaleHat_DCL'
+)
+
+const M_Mask_Skull = new Wearable(
+  new GLTFShape('models/wearables/first_floor/C/M_Mask_Skull.glb'),
+  {
+    position: new Vector3(265.9, 10.5, 122.5),
+    rotation: Quaternion.Euler(0, 90, 0),
+  },
+  'M_Mask_Skull'
+)
+
+const M_TopHead_Machete = new Wearable(
+  new GLTFShape('models/wearables/first_floor/C/M_TopHead_Machete.glb'),
+  {
+    position: new Vector3(265.5, 10.5, 124.5),
+    rotation: Quaternion.Euler(0, 90, 0),
+  },
+  'M_TopHead_Machete'
+)
+
+const M_TopHead_Skull = new Wearable(
+  new GLTFShape('models/wearables/first_floor/C/M_TopHead_Skull.glb'),
+  {
+    position: new Vector3(265.2, 10.5, 126.5),
+    rotation: Quaternion.Euler(0, 90, 0),
+  },
+  'M_TopHead_Skull'
+)
+
+const protection_mask_hot_mask = new Wearable(
+  new GLTFShape('models/wearables/first_floor/D/protection_mask_hot_mask.glb'),
+  {
+    position: new Vector3(265.7, 10.5, 131.5),
+    rotation: Quaternion.Euler(0, 115, 0),
+  },
+  'protection_mask_hot_mask'
+)
+
+const protection_mask_skull_mask = new Wearable(
+  new GLTFShape(
+    'models/wearables/first_floor/D/protection_mask_skull_mask.glb'
+  ),
+  {
+    position: new Vector3(266.23, 10.5, 132.73),
+    rotation: Quaternion.Euler(0, 115, 0),
+  },
+  'protection_mask_skull_mask'
+)
+
+const protection_mask_african_mask = new Wearable(
+  new GLTFShape(
+    'models/wearables/first_floor/D/protection_mask_african_mask.glb'
+  ),
+  {
+    position: new Vector3(266.76, 10.5, 133.96),
+    rotation: Quaternion.Euler(0, 115, 0),
+  },
+  'protection_mask_african_mask'
+)
+
+const protection_mask_funny_mask = new Wearable(
+  new GLTFShape(
+    'models/wearables/first_floor/D/protection_mask_funny_mask.glb'
+  ),
+  {
+    position: new Vector3(267.3, 10.5, 135.2),
+    rotation: Quaternion.Euler(0, 115, 0),
+  },
+  'protection_mask_funny_mask'
+)
+
+const Eyewear_XmasTree = new Wearable(
+  new GLTFShape('models/wearables/first_floor/E/Eyewear_XmasTree.glb'),
+  {
+    position: new Vector3(270.8, 10.5, 139),
+    rotation: Quaternion.Euler(0, 145, 0),
+  },
+  'Eyewear_XmasTree'
+)
+
+const F_Hat_Elf = new Wearable(
+  new GLTFShape('models/wearables/first_floor/E/F_Hat_Elf.glb'),
+  {
+    position: new Vector3(272.3, 10.5, 140.7),
+    rotation: Quaternion.Euler(0, 145, 0),
+  },
+  'F_Hat_Elf'
+)
+
+const F_Helmet_LedSuit = new Wearable(
+  new GLTFShape('models/wearables/first_floor/E/F_Helmet_LedSuit.glb'),
+  {
+    position: new Vector3(273.8, 10.5, 141.7),
+    rotation: Quaternion.Euler(0, 145, 0),
+  },
+  'F_Helmet_LedSuit'
+)
+
+const Umbrella_Hat = new Wearable(
+  new GLTFShape('models/wearables/first_floor/F/Umbrella_Hat.glb'),
+  {
+    position: new Vector3(286.9, 10.5, 140.9),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'Umbrella_Hat'
+)
+
+const M_Hat_Hat_of_Wonder = new Wearable(
+  new GLTFShape('models/wearables/first_floor/F/M_Hat_Hat_of_Wonder.glb'),
+  {
+    position: new Vector3(288.8, 10.5, 140.9),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'M_Hat_Hat_of_Wonder'
+)
+
+const MaleHat_MANA = new Wearable(
+  new GLTFShape('models/wearables/first_floor/F/MaleHat_MANA.glb'),
+  {
+    position: new Vector3(290.4, 10.5, 140.9),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'MaleHat_MANA'
+)
+
+const Tiara_Bee = new Wearable(
+  new GLTFShape('models/wearables/first_floor/G/Tiara_Bee.glb'),
+  {
+    position: new Vector3(291.4, 10.5, 135.3),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'Tiara_Bee'
+)
+
+const F_Tiara_GreenStone = new Wearable(
+  new GLTFShape('models/wearables/first_floor/G/F_Tiara_GreenStone.glb'),
+  {
+    position: new Vector3(293.26, 10.5, 135.3),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'F_Tiara_GreenStone'
+)
+
+const F_Tiara_LaurelWreath = new Wearable(
+  new GLTFShape('models/wearables/first_floor/G/F_Tiara_LaurelWreath.glb'),
+  {
+    position: new Vector3(294.8, 10.5, 135.5),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'F_Tiara_LaurelWreath'
+)
