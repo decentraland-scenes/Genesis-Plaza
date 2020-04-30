@@ -32,6 +32,11 @@ export class Wearable extends Entity {
     this.addComponent(
       new OnPointerDown(
         async function () {
+          if (this.isDefault) {
+            log(
+              'This item is part of the classic collection of wearables. You can find it in your inventory.'
+            )
+          }
           // openUI1(wearableName, this)
           let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
           if (info) {

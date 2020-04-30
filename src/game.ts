@@ -322,7 +322,7 @@ const Eyewear_Raver = new Wearable(
     position: new Vector3(284, 10.5, 110.4),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'Eyewear_Raver'
+  'Cyborg Monocle (It’s over 9000!!!)'
 )
 
 const Spysuit_Goggles = new Wearable(
@@ -331,7 +331,7 @@ const Spysuit_Goggles = new Wearable(
     position: new Vector3(283, 10.5, 111.8),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'Spysuit_Goggles'
+  'Spy Suit Eyewear'
 )
 
 const Eye_Thingy = new Wearable(
@@ -340,7 +340,7 @@ const Eye_Thingy = new Wearable(
     position: new Vector3(282, 10.5, 113.1),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'Eyewear_Raver'
+  'Raver Goggles'
 )
 
 const F_Hat_Foam = new Wearable(
@@ -349,7 +349,7 @@ const F_Hat_Foam = new Wearable(
     position: new Vector3(276.5, 10.5, 110.4),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'F_Hat_Foam'
+  'Mexican Foam Hat'
 )
 
 const sunhat = new Wearable(
@@ -358,7 +358,7 @@ const sunhat = new Wearable(
     position: new Vector3(275.5, 10.5, 111.8),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'sunhat'
+  'Trendy Sport Hat'
 )
 
 const MaleHat_DCL = new Wearable(
@@ -367,7 +367,7 @@ const MaleHat_DCL = new Wearable(
     position: new Vector3(274.5, 10.5, 113.1),
     rotation: Quaternion.Euler(0, 60, 0),
   },
-  'MaleHat_DCL'
+  'MANA Hat'
 )
 
 const M_Mask_Skull = new Wearable(
@@ -394,7 +394,7 @@ const M_TopHead_Skull = new Wearable(
     position: new Vector3(265.2, 10.5, 126.5),
     rotation: Quaternion.Euler(0, 90, 0),
   },
-  'M_TopHead_Skull'
+  'Skull Mexican Hat'
 )
 
 const protection_mask_hot_mask = new Wearable(
@@ -403,7 +403,7 @@ const protection_mask_hot_mask = new Wearable(
     position: new Vector3(265.7, 10.5, 131.5),
     rotation: Quaternion.Euler(0, 115, 0),
   },
-  'protection_mask_hot_mask'
+  'Hot Protection Mask'
 )
 
 const protection_mask_skull_mask = new Wearable(
@@ -414,7 +414,7 @@ const protection_mask_skull_mask = new Wearable(
     position: new Vector3(266.23, 10.5, 132.73),
     rotation: Quaternion.Euler(0, 115, 0),
   },
-  'protection_mask_skull_mask'
+  'Skull Protection Mask'
 )
 
 const protection_mask_african_mask = new Wearable(
@@ -425,7 +425,7 @@ const protection_mask_african_mask = new Wearable(
     position: new Vector3(266.76, 10.5, 133.96),
     rotation: Quaternion.Euler(0, 115, 0),
   },
-  'protection_mask_african_mask'
+  'African Protection Mask'
 )
 
 const protection_mask_funny_mask = new Wearable(
@@ -436,7 +436,7 @@ const protection_mask_funny_mask = new Wearable(
     position: new Vector3(267.3, 10.5, 135.2),
     rotation: Quaternion.Euler(0, 115, 0),
   },
-  'funny protection mask'
+  'Graffiti Protection Mask'
 )
 
 const Eyewear_XmasTree = new Wearable(
@@ -445,7 +445,7 @@ const Eyewear_XmasTree = new Wearable(
     position: new Vector3(270.8, 10.5, 139),
     rotation: Quaternion.Euler(0, 145, 0),
   },
-  'Eyewear_XmasTree'
+  'Christmas Tree Eyewear'
 )
 
 const F_Hat_Elf = new Wearable(
@@ -454,7 +454,7 @@ const F_Hat_Elf = new Wearable(
     position: new Vector3(272.3, 10.5, 140.7),
     rotation: Quaternion.Euler(0, 145, 0),
   },
-  'F_Hat_Elf'
+  'Christmas Elf Hat'
 )
 
 const F_Helmet_LedSuit = new Wearable(
@@ -463,7 +463,7 @@ const F_Helmet_LedSuit = new Wearable(
     position: new Vector3(273.8, 10.5, 141.7),
     rotation: Quaternion.Euler(0, 145, 0),
   },
-  'F_Helmet_LedSuit'
+  'Cyber Xmas Helmet'
 )
 
 const Umbrella_Hat = new Wearable(
@@ -472,7 +472,7 @@ const Umbrella_Hat = new Wearable(
     position: new Vector3(286.9, 10.5, 140.9),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'Umbrella_Hat'
+  'Umbrella Hat'
 )
 
 const M_Hat_Hat_of_Wonder = new Wearable(
@@ -481,7 +481,7 @@ const M_Hat_Hat_of_Wonder = new Wearable(
     position: new Vector3(288.8, 10.5, 140.9),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'M_Hat_Hat_of_Wonder'
+  'Hat of Wonder'
 )
 
 const MaleHat_MANA = new Wearable(
@@ -490,7 +490,7 @@ const MaleHat_MANA = new Wearable(
     position: new Vector3(290.4, 10.5, 140.9),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'MaleHat_MANA'
+  'Decentraland Hat'
 )
 
 const Tiara_Bee = new Wearable(
@@ -499,7 +499,7 @@ const Tiara_Bee = new Wearable(
     position: new Vector3(291.4, 10.5, 135.3),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'Tiara_Bee'
+  'Bee Headband'
 )
 
 const F_Tiara_GreenStone = new Wearable(
@@ -508,7 +508,8 @@ const F_Tiara_GreenStone = new Wearable(
     position: new Vector3(293.26, 10.5, 135.3),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'F_Tiara_GreenStone'
+  'F_Tiara_GreenStone',
+  true
 )
 
 const F_Tiara_LaurelWreath = new Wearable(
@@ -517,5 +518,6 @@ const F_Tiara_LaurelWreath = new Wearable(
     position: new Vector3(294.8, 10.5, 135.5),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'F_Tiara_LaurelWreath'
+  'F_Tiara_LaurelWreath',
+  true
 )
