@@ -7,6 +7,7 @@ import {
 } from './messageboard'
 import { setNewMessage } from './serverHandler'
 import { WearableData } from './wearables'
+import { Teleport } from './teleports'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -21,10 +22,10 @@ export function updateOpenUITime() {
   UIOpenTime = +Date.now()
 }
 
-const messageTexture = new Texture('images/UI_TX.png')
+const messageBoardTexture = new Texture('images/inputText.png')
 
-export const messagebg = new UIImage(screenSpaceUI, messageTexture)
-messagebg.name = 'messagebackground'
+export const messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
+messagebg.name = 'mmbBackground'
 messagebg.width = 1024
 messagebg.height = 1024 / 4
 messagebg.hAlign = 'center'
@@ -37,7 +38,7 @@ messagebg.visible = false
 messagebg.isPointerBlocker = false
 
 export const message = new UIInputText(messagebg)
-message.name = 'message'
+message.name = 'mbMessage'
 message.width = '650px'
 message.height = '100px'
 message.hAlign = 'center'
@@ -68,13 +69,14 @@ export function displayWearableUI(wearable: WearableData) {
   const wearableTexture = new Texture(wearable.image)
 
   const background = new UIContainerRect(screenSpaceUI)
+  background.name = 'wearablebackground'
   background.hAlign = 'right'
   background.vAlign = 'center'
   background.width = 700
   background.height = 700
 
   const icon = new UIImage(background, wearableTexture)
-  icon.name = 'messagebackground'
+  icon.name = 'wearableThumbnail'
   icon.width = 256
   icon.height = 256
   icon.hAlign = 'right'
@@ -87,12 +89,14 @@ export function displayWearableUI(wearable: WearableData) {
   icon.isPointerBlocker = false
 
   const name = new UIText(background)
+  name.name = 'wearableName'
   name.value = wearable.name
   name.vAlign = 'top'
   name.hAlign = 'center'
   name.fontSize = 50
 
   const desc = new UIText(background)
+  desc.name = 'wearableDesc'
   desc.value = wearable.wearable.description
   desc.vAlign = 'center'
   desc.hAlign = 'center'
@@ -100,6 +104,7 @@ export function displayWearableUI(wearable: WearableData) {
   desc.positionY = -100
 
   const rarity = new UIText(background)
+  rarity.name = 'wearableRarity'
   rarity.value = wearable.wearable.rarity
   rarity.vAlign = 'center'
   rarity.hAlign = 'left'
@@ -107,6 +112,7 @@ export function displayWearableUI(wearable: WearableData) {
   rarity.positionY = 25
 
   const collection = new UIText(background)
+  collection.name = 'wearableCollection'
   collection.value = wearable.wearable.collection
   collection.vAlign = 'center'
   collection.hAlign = 'left'
@@ -114,6 +120,7 @@ export function displayWearableUI(wearable: WearableData) {
   collection.positionY = 0
 
   const category = new UIText(background)
+  category.name = 'wearableCategory'
   category.value = wearable.wearable.category
   category.vAlign = 'center'
   category.hAlign = 'left'
@@ -121,11 +128,111 @@ export function displayWearableUI(wearable: WearableData) {
   category.positionY = -25
 
   const price = new UIText(background)
+  price.name = 'wearablePrice'
   price.value = String(wearable.searchOrderPrice / 1000000000000000000)
   price.vAlign = 'center'
   price.hAlign = 'left'
   price.fontSize = 25
   price.positionY = -50
+}
+
+//////// TELEPORTS UI
+
+const teleportUITexture = new Texture('images/teleportModal.png')
+
+export function openTeleportUI(teleport: Teleport) {
+  log('teleportStuff: ', teleport)
+  const screenshotTexture = new Texture(teleport.screenshot)
+
+  const tBackground = new UIImage(screenSpaceUI, teleportUITexture)
+  tBackground.name = 'tBackground'
+  tBackground.hAlign = 'center'
+  tBackground.vAlign = 'center'
+  tBackground.width = 268
+  tBackground.height = 182
+  tBackground.positionY = -91
+  tBackground.sourceLeft = 0
+  tBackground.sourceTop = 52
+  tBackground.sourceWidth = 268
+  tBackground.sourceHeight = 182
+
+  const screenshot = new UIImage(screenSpaceUI, screenshotTexture)
+  screenshot.name = 'tScreenshot'
+  screenshot.hAlign = 'center'
+  screenshot.vAlign = 'center'
+  screenshot.width = 268
+  screenshot.height = 172
+  screenshot.positionY = 172 / 2
+  screenshot.sourceLeft = 0
+  screenshot.sourceTop = 0
+  screenshot.sourceWidth = 268
+  screenshot.sourceHeight = 172
+
+  const icon = new UIImage(screenSpaceUI, teleportUITexture)
+  icon.name = 'tIcon'
+  icon.width = 9.67
+  icon.height = 12.9
+  icon.hAlign = 'center'
+  icon.vAlign = 'center'
+  icon.positionY = -37.57
+  icon.positionX = -114.49
+  icon.sourceLeft = 0
+  icon.sourceTop = 0
+  icon.sourceWidth = 9.67
+  icon.sourceHeight = 12.9
+  icon.visible = true
+  icon.isPointerBlocker = false
+
+  const name = new UIText(screenSpaceUI)
+  name.name = 'tName'
+  name.value = teleport.name
+  name.vAlign = 'center'
+  name.hAlign = 'center'
+  name.vTextAlign = 'left'
+  name.positionY = -12.83
+  name.positionX = 14.51 - 268 / 2
+  name.fontSize = 16
+  name.color = Color4.Black()
+  name.width = '10px'
+
+  const desc = new UIText(screenSpaceUI)
+  desc.name = 'tDesc'
+  desc.value = teleport.description
+  desc.vAlign = 'center'
+  desc.hAlign = 'center'
+  desc.vTextAlign = 'left'
+  desc.fontSize = 14
+  desc.positionY = -75
+  desc.positionX = 14.51 - 268 / 2
+  desc.color = Color4.Black()
+  desc.width = '10px'
+
+  const coordinates = new UIText(screenSpaceUI)
+  coordinates.name = 'tCoords'
+  coordinates.value = teleport.location
+  coordinates.vAlign = 'center'
+  coordinates.hAlign = 'center'
+  coordinates.vTextAlign = 'left'
+  coordinates.positionY = -37.57
+  coordinates.positionX = 34 - 268 / 2
+  coordinates.fontSize = 14
+  coordinates.color = Color4.Black()
+  coordinates.width = '10px'
+
+  const button = new UIImage(screenSpaceUI, teleportUITexture)
+  button.name = 'tButton'
+  button.hAlign = 'center'
+  button.vAlign = 'center'
+  button.width = 215.15
+  button.height = 40
+  button.positionY = -138
+  button.sourceLeft = 27
+  button.sourceTop = 0
+  button.sourceWidth = 215.15
+  button.sourceHeight = 40
+  button.onClick = new OnClick(() => {
+    teleport.travel()
+  })
 }
 
 /////// CLOSE UI

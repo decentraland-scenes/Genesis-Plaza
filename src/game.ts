@@ -1,19 +1,19 @@
 import utils from '../node_modules/decentraland-ecs-utils/index'
-import { Locations, teleport } from './modules/teleports'
+import { Locations, Teleport } from './modules/teleports'
 import { setTriggerAreas } from './modules/triggers'
 import { Wearable } from './modules/wearables'
 
 //////// HACK TO LOG POSITIONS
 
-const camera = Camera.instance
+// const camera = Camera.instance
 
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(camera.position)
-  }
-}
+// class CameraTrackSystem implements ISystem {
+//   update() {
+//     log(camera.position)
+//   }
+// }
 
-engine.addSystem(new CameraTrackSystem())
+// engine.addSystem(new CameraTrackSystem())
 
 // AGORA BUILDING
 
@@ -248,35 +248,38 @@ engine.addEntity(street)
 
 //TELEPORTERS
 
-//add Particles
-let Particles = new Entity()
-Particles.addComponent(new GLTFShape('models/Particles.glb'))
-Particles.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
+let mole = new Teleport(
+  new GLTFShape('models/teleports/click_a_mole.glb'),
+  {
+    position: new Vector3(10, 0.5, 10),
+  },
+  Locations.MOLES,
+  'Click a Mole',
+  'Whack the moles before they hide!',
+  'images/example-screenshot.png'
 )
-engine.addEntity(Particles)
 
-//add mole
-let mole = new Entity()
-mole.addComponent(new GLTFShape('models/mole.glb'))
-mole.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
+let fruit = new Teleport(
+  new GLTFShape('models/teleports/fruit_catcher.glb'),
+  {
+    position: new Vector3(12, 0.5, 10),
+  },
+  Locations.FRUIT,
+  'Fruit Catcher',
+  'Catch as many fruits as you can,\navoid bombs! Compete for the\nhighest score!',
+  'images/example-screenshot.png'
 )
-mole.addComponent(
-  new OnPointerDown(
-    (e) => {
-      teleport(Locations.MOLES)
-    },
-    {
-      hoverText: 'Teleport',
-    }
-  )
+
+let infinity = new Teleport(
+  new GLTFShape('models/teleports/infinity_engine.glb'),
+  {
+    position: new Vector3(14, 0.5, 10),
+  },
+  Locations.INFINITY,
+  'Infinity Engine',
+  'Mine for loot underground, then\ndefend a train from\nbandits.',
+  'images/example-screenshot.png'
 )
-engine.addEntity(mole)
 
 // BALLOON
 

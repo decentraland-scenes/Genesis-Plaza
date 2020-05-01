@@ -48,13 +48,6 @@ export class Wearable extends Entity {
         { hoverText: 'Info' }
       )
     )
-
-    // let standParticles = new Entity()
-    // standParticles.addComponent(new GLTFShape('models/particles.glb'))
-    // standParticles.setParent(this)
-    // engine.addEntity(standParticles)
-
-    //this.addComponent(new AudioSource(sound))
   }
 
   //   public buy(): void {
