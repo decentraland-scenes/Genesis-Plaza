@@ -1,4 +1,4 @@
-import { openTeleportUI, screenSpaceUI } from './ui'
+import { openTeleportUI, screenSpaceUI, updateOpenUITime } from './ui'
 
 export enum Locations {
   CROWD = 'crowd',

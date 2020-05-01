@@ -2,7 +2,7 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 //import { sceneMessageBus } from './game'
 
-import { displayWearableUI } from './ui'
+import { openWearableUI, updateOpenUITime } from './ui'
 
 export class Wearable extends Entity {
   wearableName: string
@@ -40,7 +40,7 @@ export class Wearable extends Entity {
           // openUI1(wearableName, this)
           let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
           if (info) {
-            displayWearableUI(info.data.nfts[0])
+            openWearableUI(info.data.nfts[0])
           } else {
             log('no results')
           }
