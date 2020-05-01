@@ -2,7 +2,12 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 //import { sceneMessageBus } from './game'
 
-import { openWearableUI, updateOpenUITime } from './ui'
+import {
+  openWearableUI,
+  updateOpenUITime,
+  wearableClassic,
+  wearableNotForSale,
+} from './ui'
 
 export class Wearable extends Entity {
   wearableName: string
@@ -28,22 +33,26 @@ export class Wearable extends Entity {
       this.isDefault = true
     }
     this.wearableName = wearableName.toLocaleLowerCase()
+    let thisWearable = this
 
     this.addComponent(
       new OnPointerDown(
         async function () {
-          if (this.isDefault) {
+          if (thisWearable.isDefault) {
+            wearableClassic()
             log(
               'This item is part of the classic collection of wearables. You can find it in your inventory.'
             )
+          } else {
+            let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
+            if (info.data.nfts.length > 0) {
+              openWearableUI(info.data.nfts[0])
+            } else {
+              wearableNotForSale()
+              log('no results')
+            }
           }
           // openUI1(wearableName, this)
-          let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
-          if (info) {
-            openWearableUI(info.data.nfts[0])
-          } else {
-            log('no results')
-          }
         },
         { hoverText: 'Info' }
       )
@@ -51,28 +60,9 @@ export class Wearable extends Entity {
   }
 
   //   public buy(): void {
-  //     let anim = this.getComponent(Animator)
 
-  //     anim.getClip('idle').stop()
-  //     anim.getClip('buy').stop()
-  //     anim.getClip('new_mask').stop()
+  // getWearableURL(this)
 
-  //     anim.getClip('buy').play()
-
-  //     this.addComponentOrReplace(
-  //       new utils.Delay(4000, () => {
-  //         anim.getClip('buy').stop()
-  //         //anim.getClip('new_mask').play()
-  //         anim.getClip('idle').play()
-  //         // this.addComponentOrReplace(
-  //         //   new utils.Delay(1000, () => {
-  //         //     anim.getClip('new_mask').stop()
-  //         //     this.idleAnim.play()
-
-  //         //   })
-  //         // )
-  //       })
-  //     )
   //   }
 }
 
@@ -81,9 +71,8 @@ export type WearableData = {
   id: string
   name: string
   owner: { address: string }
-
+  contractAddress: string
   tokenId: string
-  price: number
   image: string
   searchOrderPrice: number
   searchOrderStatus: string
@@ -100,7 +89,6 @@ export type WearableData = {
 
 async function getWearableOnSale(wearableName: string) {
   let now = String(Math.floor(Date.now() / 1000))
-
   const query =
     `
 	  {
@@ -113,11 +101,13 @@ async function getWearableOnSale(wearableName: string) {
 			id
 		  name
 		  image
+		  contractAddress
+		  tokenId
 		  wearable{ name, representationId, collection, description, category, rarity, bodyShapes }
-			searchOrderPrice
-			searchOrderStatus
+		  searchOrderPrice
+		  searchOrderStatus
 		  owner{address}
-			activeOrder {
+		  activeOrder {
 			  id
 			}
 		  }
@@ -145,4 +135,13 @@ async function queryGraph(query: string) {
   }
   const res = await fetch(url, opts)
   return res.json()
+}
+
+export function getWearableURL(wearable: WearableData) {
+  return (
+    'https://market.decentraland.org/contracts/' +
+    wearable.contractAddress +
+    '/tokens/' +
+    wearable.tokenId
+  )
 }

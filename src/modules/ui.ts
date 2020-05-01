@@ -74,79 +74,243 @@ export function openMessageBoardUI() {
 
 //////// WEARABLES UI
 
-let wBackground = new UIContainerRect(screenSpaceUI)
+const wearableTexture = new Texture('images/wearablesModal.png')
+const wearableColors = new Texture('images/wearable-colors.png')
+
+let wBackground = new UIImage(screenSpaceUI, wearableTexture)
 wBackground.visible = false
+
+export function wearableClassic() {
+  updateOpenUITime()
+  wBackground = new UIImage(screenSpaceUI, wearableTexture)
+  wBackground.name = 'wearablebackground'
+  wBackground.visible = true
+  wBackground.positionY = 100
+  wBackground.sourceTop = 0
+  wBackground.sourceLeft = 0
+  wBackground.sourceHeight = 45.67
+  wBackground.sourceWidth = 203
+  wBackground.height = 45.67
+  wBackground.width = 203
+  wBackground.hAlign = 'center'
+  wBackground.vAlign = 'center'
+}
+
+export function wearableNotForSale() {
+  updateOpenUITime()
+  wBackground = new UIImage(screenSpaceUI, wearableTexture)
+  wBackground.name = 'wearablebackground'
+  wBackground.visible = true
+  wBackground.positionY = 100
+  wBackground.sourceTop = 58
+  wBackground.sourceLeft = 0
+  wBackground.sourceHeight = 45.67
+  wBackground.sourceWidth = 173
+  wBackground.height = 45.67
+  wBackground.width = 173
+  wBackground.hAlign = 'center'
+  wBackground.vAlign = 'center'
+}
 
 export function openWearableUI(wearable: WearableData) {
   updateOpenUITime()
-  const wearableTexture = new Texture(wearable.image)
 
-  wBackground = new UIContainerRect(screenSpaceUI)
+  const wearableThumnail = new Texture(wearable.image)
+
+  let backgroundOffset = -70
+
+  wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
-  wBackground.hAlign = 'right'
+  wBackground.visible = true
+  wBackground.positionY = backgroundOffset
+  wBackground.sourceTop = 172
+  wBackground.sourceLeft = 0
+  wBackground.sourceHeight = 461
+  wBackground.sourceWidth = 385
+  wBackground.height = 461
+  wBackground.width = 385
+  wBackground.hAlign = 'center'
   wBackground.vAlign = 'center'
-  wBackground.width = 700
-  wBackground.height = 700
 
-  const icon = new UIImage(wBackground, wearableTexture)
-  icon.name = 'wearableThumbnail'
-  icon.width = 256
-  icon.height = 256
-  icon.hAlign = 'right'
-  icon.vAlign = 'center'
-  icon.sourceLeft = 0
-  icon.sourceTop = 0
-  icon.sourceWidth = 256
-  icon.sourceHeight = 256
-  icon.visible = true
-  icon.isPointerBlocker = false
+  const wRarityColor = new UIImage(wBackground, wearableColors)
+  wRarityColor.name = 'wearableRarityColor'
+  wRarityColor.positionY = 461 / 2 + 15 - backgroundOffset
+  wRarityColor.width = 385
+  wRarityColor.height = 175
+  wRarityColor.hAlign = 'center'
+  wRarityColor.vAlign = 'center'
+  wRarityColor.sourceWidth = 385
+  wRarityColor.sourceHeight = 175
+
+  switch (wearable.wearable.rarity) {
+    case 'unique':
+      wRarityColor.sourceLeft = 0
+      wRarityColor.sourceTop = 0
+      break
+    case 'mythic':
+      wRarityColor.sourceLeft = 0
+      wRarityColor.sourceTop = 175
+      break
+    case 'legendary':
+      wRarityColor.sourceLeft = 0
+      wRarityColor.sourceTop = 350
+      break
+    case 'epic':
+      wRarityColor.sourceLeft = 0
+      wRarityColor.sourceTop = 350 + 175
+      break
+    case 'uncommon':
+      wRarityColor.sourceLeft = 385
+      wRarityColor.sourceTop = 350
+      break
+    case 'common':
+      wRarityColor.sourceLeft = 385
+      wRarityColor.sourceTop = 175
+      break
+    case 'swanky':
+      wRarityColor.sourceLeft = 385
+      wRarityColor.sourceTop = 175 + 350
+      break
+  }
+
+  let closeIcon = new UIImage(wBackground, wearableTexture)
+  closeIcon.name = 'closeIcon'
+  closeIcon.visible = true
+  closeIcon.positionY = 461 / 2 + 144 + 12
+  closeIcon.positionX = 354 / 2
+  closeIcon.sourceTop = 0
+  closeIcon.sourceLeft = 219
+  closeIcon.sourceHeight = 24
+  closeIcon.sourceWidth = 24
+  closeIcon.height = 24
+  closeIcon.width = 24
+  closeIcon.hAlign = 'center'
+  closeIcon.vAlign = 'center'
+
+  const thumnail = new UIImage(wBackground, wearableThumnail)
+  thumnail.name = 'wearableThumbnail'
+  thumnail.width = 256
+  thumnail.height = 256
+  thumnail.hAlign = 'center'
+  thumnail.vAlign = 'center'
+  thumnail.positionY = 461 / 2
+  thumnail.sourceLeft = 0
+  thumnail.sourceTop = 0
+  thumnail.sourceWidth = 256
+  thumnail.sourceHeight = 256
 
   const name = new UIText(wBackground)
   name.name = 'wearableName'
   name.value = wearable.name
-  name.vAlign = 'top'
+  name.hTextAlign = 'center'
+  name.vAlign = 'center'
   name.hAlign = 'center'
-  name.fontSize = 50
-
-  const desc = new UIText(wBackground)
-  desc.name = 'wearableDesc'
-  desc.value = wearable.wearable.description
-  desc.vAlign = 'center'
-  desc.hAlign = 'center'
-  desc.fontSize = 25
-  desc.positionY = -100
+  name.fontSize = 16
+  name.positionY = 461 / 2 + 121
+  name.color = Color4.White()
 
   const rarity = new UIText(wBackground)
   rarity.name = 'wearableRarity'
-  rarity.value = wearable.wearable.rarity
+  rarity.hTextAlign = 'center'
+  rarity.value = wearable.wearable.rarity.toLocaleUpperCase()
   rarity.vAlign = 'center'
-  rarity.hAlign = 'left'
-  rarity.fontSize = 25
-  rarity.positionY = 25
+  rarity.hAlign = 'center'
+  rarity.fontSize = 16
+  rarity.positionY = 461 / 2 + 142
+  rarity.color = Color4.FromHexString('#FFFFFF88')
+
+  let parsedDesc = wearable.wearable.description
+  if (parsedDesc.length > 45) {
+    parsedDesc = parsedDesc.slice(0, 45) + parsedDesc.replace(/(.{45})/g, '\n')
+  }
+
+  const desc = new UIText(wBackground)
+  desc.name = 'wearableDesc'
+  desc.value = parsedDesc
+  desc.vAlign = 'center'
+  desc.hAlign = 'center'
+  desc.fontSize = 15
+  desc.positionY = 461 / 2 - 275
+  desc.positionX = -385 / 2 + 29 + 5
+  desc.width = 10
+  desc.hTextAlign = 'left'
+  desc.color = Color4.Black()
+
+  let shortenedOwner =
+    wearable.owner.address.slice(0, 5) +
+    '...' +
+    wearable.owner.address.slice(wearable.owner.address.length - 4)
+
+  const owner = new UIText(wBackground)
+  owner.name = 'wearableOwner'
+  owner.value = shortenedOwner
+  owner.vAlign = 'center'
+  owner.hAlign = 'center'
+  owner.fontSize = 15
+  owner.positionY = 461 / 2 - 119 + 5
+  owner.positionX = -385 / 2 + 29 + 5
+  owner.width = 10
+  owner.hTextAlign = 'left'
+  owner.color = Color4.Black()
 
   const collection = new UIText(wBackground)
   collection.name = 'wearableCollection'
   collection.value = wearable.wearable.collection
   collection.vAlign = 'center'
-  collection.hAlign = 'left'
-  collection.fontSize = 25
-  collection.positionY = 0
+  collection.hAlign = 'center'
+  collection.fontSize = 15
+  collection.positionY = 461 / 2 - 185 + 5
+  collection.positionX = -385 / 2 + 29 + 5
+  collection.width = 10
+  collection.hTextAlign = 'left'
+  collection.color = Color4.Black()
 
   const category = new UIText(wBackground)
   category.name = 'wearableCategory'
   category.value = wearable.wearable.category
   category.vAlign = 'center'
-  category.hAlign = 'left'
-  category.fontSize = 25
-  category.positionY = -25
+  category.hAlign = 'center'
+  category.fontSize = 15
+  category.positionY = 461 / 2 - 185 + 5
+  category.positionX = -385 / 2 + 205 + 5
+  category.width = 10
+  category.color = Color4.Black()
+
+  let genderString: string
+  if (wearable.wearable.bodyShapes.length == 2) {
+    genderString = 'Unisex'
+  } else {
+    if (wearable.wearable.bodyShapes[0] == 'BaseMale') {
+      genderString = 'Male'
+    } else {
+      genderString = 'Female'
+    }
+  }
+
+  const gender = new UIText(wBackground)
+  gender.name = 'wearableGender'
+  gender.value = genderString
+  gender.vAlign = 'center'
+  gender.hAlign = 'center'
+  gender.fontSize = 15
+  gender.positionY = 461 / 2 - 210 + 5
+  gender.positionX = -385 / 2 + 205 + 5
+  gender.width = 10
+  gender.color = Color4.Black()
 
   const price = new UIText(wBackground)
   price.name = 'wearablePrice'
   price.value = String(wearable.searchOrderPrice / 1000000000000000000)
   price.vAlign = 'center'
-  price.hAlign = 'left'
-  price.fontSize = 25
-  price.positionY = -50
+  price.hAlign = 'center'
+  price.fontSize = 15
+  price.positionY = 461 / 2 - 395 + 6
+  price.positionX = -385 / 2 + 191 + 5
+  price.width = 10
+  price.hTextAlign = 'left'
+  price.color = Color4.Black()
+
+  log('gender: ', genderString, ' desc: ', parsedDesc)
 }
 
 //////// TELEPORTS UI
