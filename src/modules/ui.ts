@@ -20,6 +20,14 @@ export function closeUI() {
   wBackground.visible = false
 }
 
+export function checkUIOpen(): boolean {
+  if (messagebg.visible || tBackground.visible || wBackground.visible) {
+    return true
+  } else {
+    return false
+  }
+}
+
 export function updateOpenUITime() {
   UIOpenTime = +Date.now()
 }
@@ -82,6 +90,8 @@ wBackground.visible = false
 
 export function wearableClassic() {
   updateOpenUITime()
+  wBackground.visible = false
+
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
   wBackground.visible = true
@@ -98,6 +108,8 @@ export function wearableClassic() {
 
 export function wearableNotForSale() {
   updateOpenUITime()
+  wBackground.visible = false
+
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
   wBackground.visible = true
@@ -114,6 +126,8 @@ export function wearableNotForSale() {
 
 export function openWearableUI(wearable: WearableData) {
   updateOpenUITime()
+
+  wBackground.visible = false
 
   const wearableThumnail = new Texture(wearable.image)
 
@@ -186,6 +200,9 @@ export function openWearableUI(wearable: WearableData) {
   closeIcon.width = 24
   closeIcon.hAlign = 'center'
   closeIcon.vAlign = 'center'
+  closeIcon.onClick = new OnClick(() => {
+    closeUI()
+  })
 
   const thumnail = new UIImage(wBackground, wearableThumnail)
   thumnail.name = 'wearableThumbnail'
@@ -298,9 +315,14 @@ export function openWearableUI(wearable: WearableData) {
   gender.width = 10
   gender.color = Color4.Black()
 
+  let formattedPrice = roundNumber(
+    wearable.searchOrderPrice / 1000000000000000000,
+    4
+  )
+
   const price = new UIText(wBackground)
   price.name = 'wearablePrice'
-  price.value = String(wearable.searchOrderPrice / 1000000000000000000)
+  price.value = String(formattedPrice)
   price.vAlign = 'center'
   price.hAlign = 'center'
   price.fontSize = 15
@@ -311,6 +333,11 @@ export function openWearableUI(wearable: WearableData) {
   price.color = Color4.Black()
 
   log('gender: ', genderString, ' desc: ', parsedDesc)
+}
+
+function roundNumber(num, dec) {
+  let largeNum = num * Math.pow(10, dec)
+  return Math.round(largeNum) / Math.pow(10, dec)
 }
 
 //////// TELEPORTS UI
@@ -425,14 +452,8 @@ const input = Input.instance
 //button down event
 input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
   const currentTime = +Date.now()
-  let isOpen: boolean
-  if (messagebg.visible || tBackground.visible || wBackground.visible) {
-    isOpen = true
-  } else {
-    isOpen = false
-  }
 
-  if (isOpen && currentTime - UIOpenTime > 100) {
+  if (checkUIOpen() && currentTime - UIOpenTime > 100) {
     closeUI()
     log('clicked on the close image ', messagebg.visible)
   }

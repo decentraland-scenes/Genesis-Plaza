@@ -830,8 +830,7 @@ const xmas_cyberpunk_upper_body = new Wearable(
     position: new Vector3(0, 0, 3.5),
     rotation: Quaternion.Euler(0, 0, 0),
   },
-  'Cyberpunk Jacket',
-  true
+  'Cyberpunk Jacket'
 )
 xmas_cyberpunk_upper_body.setParent(rotated5)
 
@@ -871,7 +870,6 @@ const razor_blade_upper_body = new Wearable(
     position: new Vector3(0, 0, 3.5),
     rotation: Quaternion.Euler(0, 0, 0),
   },
-  'Razor Blade Jacket',
-  true
+  'Razor Blade Jacket'
 )
 razor_blade_upper_body.setParent(rotated7)
