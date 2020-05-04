@@ -293,7 +293,7 @@ balloon.addComponent(
 )
 engine.addEntity(balloon)
 
-// TRAIN
+/* // TRAIN
 
 //add stops
 let stops = new Entity()
@@ -314,6 +314,8 @@ train.addComponent(
   })
 )
 engine.addEntity(train)
+
+*/
 
 setTriggerAreas()
 
