@@ -8,11 +8,14 @@ import {
 import { setNewMessage } from './serverHandler'
 import { WearableData } from './wearables'
 import { Teleport } from './teleports'
+import './../extensions/entityExtensions'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
 
 export var UIOpenTime = 0
+
+export var UIOpener: Entity
 
 export function closeUI() {
   messagebg.visible = false
@@ -39,8 +42,11 @@ const messageBoardTexture = new Texture('images/inputText.png')
 export let messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
 messagebg.visible = false
 
-export function openMessageBoardUI() {
+export function openMessageBoardUI(opener: Entity) {
   updateOpenUITime()
+  messagebg.visible = false
+  UIOpener = opener
+
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
   messagebg.width = 1024
@@ -88,9 +94,10 @@ const wearableColors = new Texture('images/wearable-colors.png')
 let wBackground = new UIImage(screenSpaceUI, wearableTexture)
 wBackground.visible = false
 
-export function wearableClassic() {
+export function wearableClassic(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
+  UIOpener = wearable
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -106,9 +113,10 @@ export function wearableClassic() {
   wBackground.vAlign = 'center'
 }
 
-export function wearableNotForSale() {
+export function wearableNotForSale(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
+  UIOpener = wearable
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -124,12 +132,12 @@ export function wearableNotForSale() {
   wBackground.vAlign = 'center'
 }
 
-export function openWearableUI(wearable: WearableData) {
+export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   updateOpenUITime()
-
   wBackground.visible = false
+  UIOpener = wearable
 
-  const wearableThumnail = new Texture(wearable.image)
+  const wearableThumnail = new Texture(wearableData.image)
 
   let backgroundOffset = -70
 
@@ -156,7 +164,7 @@ export function openWearableUI(wearable: WearableData) {
   wRarityColor.sourceWidth = 385
   wRarityColor.sourceHeight = 175
 
-  switch (wearable.wearable.rarity) {
+  switch (wearableData.wearable.rarity) {
     case 'unique':
       wRarityColor.sourceLeft = 0
       wRarityColor.sourceTop = 0
@@ -218,7 +226,7 @@ export function openWearableUI(wearable: WearableData) {
 
   const name = new UIText(wBackground)
   name.name = 'wearableName'
-  name.value = wearable.name
+  name.value = wearableData.name
   name.hTextAlign = 'center'
   name.vAlign = 'center'
   name.hAlign = 'center'
@@ -229,14 +237,14 @@ export function openWearableUI(wearable: WearableData) {
   const rarity = new UIText(wBackground)
   rarity.name = 'wearableRarity'
   rarity.hTextAlign = 'center'
-  rarity.value = wearable.wearable.rarity.toLocaleUpperCase()
+  rarity.value = wearableData.wearable.rarity.toLocaleUpperCase()
   rarity.vAlign = 'center'
   rarity.hAlign = 'center'
   rarity.fontSize = 16
   rarity.positionY = 461 / 2 + 142
   rarity.color = Color4.FromHexString('#FFFFFF88')
 
-  let parsedDesc = wearable.wearable.description
+  let parsedDesc = wearableData.wearable.description
   if (parsedDesc.length > 45) {
     parsedDesc = parsedDesc.slice(0, 45) + parsedDesc.replace(/(.{45})/g, '\n')
   }
@@ -254,9 +262,9 @@ export function openWearableUI(wearable: WearableData) {
   desc.color = Color4.Black()
 
   let shortenedOwner =
-    wearable.owner.address.slice(0, 5) +
+    wearableData.owner.address.slice(0, 5) +
     '...' +
-    wearable.owner.address.slice(wearable.owner.address.length - 4)
+    wearableData.owner.address.slice(wearableData.owner.address.length - 4)
 
   const owner = new UIText(wBackground)
   owner.name = 'wearableOwner'
@@ -272,7 +280,7 @@ export function openWearableUI(wearable: WearableData) {
 
   const collection = new UIText(wBackground)
   collection.name = 'wearableCollection'
-  collection.value = wearable.wearable.collection
+  collection.value = wearableData.wearable.collection
   collection.vAlign = 'center'
   collection.hAlign = 'center'
   collection.fontSize = 15
@@ -284,7 +292,7 @@ export function openWearableUI(wearable: WearableData) {
 
   const category = new UIText(wBackground)
   category.name = 'wearableCategory'
-  category.value = wearable.wearable.category
+  category.value = wearableData.wearable.category
   category.vAlign = 'center'
   category.hAlign = 'center'
   category.fontSize = 15
@@ -294,10 +302,10 @@ export function openWearableUI(wearable: WearableData) {
   category.color = Color4.Black()
 
   let genderString: string
-  if (wearable.wearable.bodyShapes.length == 2) {
+  if (wearableData.wearable.bodyShapes.length == 2) {
     genderString = 'Unisex'
   } else {
-    if (wearable.wearable.bodyShapes[0] == 'BaseMale') {
+    if (wearableData.wearable.bodyShapes[0] == 'BaseMale') {
       genderString = 'Male'
     } else {
       genderString = 'Female'
@@ -316,7 +324,7 @@ export function openWearableUI(wearable: WearableData) {
   gender.color = Color4.Black()
 
   let formattedPrice = roundNumber(
-    wearable.searchOrderPrice / 1000000000000000000,
+    wearableData.searchOrderPrice / 1000000000000000000,
     4
   )
 
@@ -331,8 +339,6 @@ export function openWearableUI(wearable: WearableData) {
   price.width = 10
   price.hTextAlign = 'left'
   price.color = Color4.Black()
-
-  log('gender: ', genderString, ' desc: ', parsedDesc)
 }
 
 function roundNumber(num, dec) {
@@ -349,7 +355,9 @@ tBackground.visible = false
 
 export function openTeleportUI(teleport: Teleport) {
   updateOpenUITime()
-  log('teleportStuff: ', teleport)
+  UIOpener = teleport
+  tBackground.visible = false
+
   const screenshotTexture = new Texture(teleport.screenshot)
 
   tBackground = new UIImage(screenSpaceUI, teleportUITexture)
@@ -458,3 +466,34 @@ input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
     log('clicked on the close image ', messagebg.visible)
   }
 })
+
+class UIDistanceSystem implements ISystem {
+  update() {
+    if (checkUIOpen()) {
+      let dist = distance(
+        Camera.instance.position,
+        UIOpener.getGlobalPosition()
+      )
+      log(dist)
+
+      if (dist > 16 * 16) {
+        closeUI()
+      }
+    }
+  }
+}
+
+engine.addSystem(new UIDistanceSystem())
+
+// Get distance
+/* 
+Note:
+This function really returns distance squared, as it's a lot more efficient to calculate.
+The square root operation is expensive and isn't really necessary if we compare the result to squared values.
+We also use {x,z} not {x,y}. The y-coordinate is how high up it is.
+*/
+function distance(pos1: Vector3, pos2: Vector3): number {
+  const a = pos1.x - pos2.x
+  const b = pos1.z - pos2.z
+  return a * a + b * b
+}

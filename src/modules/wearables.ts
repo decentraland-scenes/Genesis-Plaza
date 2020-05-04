@@ -39,16 +39,16 @@ export class Wearable extends Entity {
       new OnPointerDown(
         async function () {
           if (thisWearable.isDefault) {
-            wearableClassic()
+            wearableClassic(thisWearable)
             log(
               'This item is part of the classic collection of wearables. You can find it in your inventory.'
             )
           } else {
             let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
             if (info.data.nfts.length > 0) {
-              openWearableUI(info.data.nfts[0])
+              openWearableUI(thisWearable, info.data.nfts[0])
             } else {
-              wearableNotForSale()
+              wearableNotForSale(thisWearable)
               log('no results')
             }
           }

@@ -76,7 +76,7 @@ ArtichokeUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
       boardLocation = 'artichoke'
-      openMessageBoardUI()
+      openMessageBoardUI(ArtichokeUIOpener)
     },
     {
       button: ActionButton.POINTER,
@@ -98,7 +98,7 @@ TowerUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
       boardLocation = 'tower'
-      openMessageBoardUI()
+      openMessageBoardUI(TowerUIOpener)
     },
     {
       button: ActionButton.POINTER,
