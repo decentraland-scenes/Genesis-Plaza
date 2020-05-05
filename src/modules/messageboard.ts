@@ -1,5 +1,10 @@
 import { setNewMessage } from './serverHandler'
-import { UIOpenTime, messagebg, updateOpenUITime } from './ui'
+import {
+  UIOpenTime,
+  messagebg,
+  updateOpenUITime,
+  openMessageBoardUI,
+} from './ui'
 
 export let boardLocation = null
 
@@ -70,10 +75,8 @@ ArtichokeUIOpener.addComponent(
 ArtichokeUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
-      updateOpenUITime()
       boardLocation = 'artichoke'
-      messagebg.visible = true
-      messagebg.isPointerBlocker = true
+      openMessageBoardUI(ArtichokeUIOpener)
     },
     {
       button: ActionButton.POINTER,
@@ -94,10 +97,8 @@ TowerUIOpener.addComponent(
 TowerUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
-      updateOpenUITime()
       boardLocation = 'tower'
-      messagebg.visible = true
-      messagebg.isPointerBlocker = true
+      openMessageBoardUI(TowerUIOpener)
     },
     {
       button: ActionButton.POINTER,
