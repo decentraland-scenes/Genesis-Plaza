@@ -1,10 +1,5 @@
 import { setNewMessage } from './serverHandler'
-import {
-  UIOpenTime,
-  messagebg,
-  updateOpenUITime,
-  openMessageBoardUI,
-} from './ui'
+import { openMessageBoardUI } from './ui'
 
 export let boardLocation = null
 

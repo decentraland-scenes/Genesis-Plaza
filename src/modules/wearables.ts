@@ -2,12 +2,7 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 //import { sceneMessageBus } from './game'
 
-import {
-  openWearableUI,
-  updateOpenUITime,
-  wearableClassic,
-  wearableNotForSale,
-} from './ui'
+import { openWearableUI, wearableClassic, wearableNotForSale } from './ui'
 
 export class Wearable extends Entity {
   wearableName: string
