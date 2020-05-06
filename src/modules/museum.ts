@@ -273,4 +273,31 @@ export function placeMuseumPieces() {
     },
     'Community Wearable Contest'
   )
+
+
+
+
+////////  WEARABLES BUILDING
+
+
+ let xmax_wearables = new MuseumPiece(
+    new GLTFShape('models/wearables/xmas_stand.glb'),
+    {
+      position: new Vector3(279.67, 9.5, 145),
+      rotation: Quaternion.Euler(0, 180, 0),
+    },
+    'About X-Mas Wearables'
+  )
+
+
+ let halloween_wearables = new MuseumPiece(
+    new GLTFShape('models/wearables/halloween_stand.glb'),
+    {
+      position: new Vector3(265.38, 9.5, 114),
+      rotation: Quaternion.Euler(0, 150, 0),
+    },
+    'About Halloween Wearables'
+  )
+
+
 }
