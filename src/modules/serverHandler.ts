@@ -7,7 +7,7 @@ export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
 
 // how often to refresh scene, in seconds
-export const refreshInterval: number = 1
+export const refreshInterval: number = 30
 
 export class CheckServer implements ISystem {
   timer: number
@@ -26,6 +26,12 @@ export class CheckServer implements ISystem {
 engine.addSystem(new CheckServer(refreshInterval))
 
 export async function setNewMessage(location: string, message: string) {
+  if (location == 'artichoke') {
+    sceneMessageBus.emit('artichokeMessage', { text: message })
+  } else if (location == 'tower') {
+    sceneMessageBus.emit('towerMessage', { text: message })
+    //setTowerText(newText)
+  }
   try {
     let url =
       fireBaseServer +
@@ -62,3 +68,13 @@ export async function updateMessageBoards() {
     setTowerText(towerMessage)
   }
 }
+
+// ////// UPDATE MESSAGEBOARDS
+
+sceneMessageBus.on('towerMessage', (e) => {
+  setTowerText(e.text)
+})
+
+sceneMessageBus.on('artichokeMessage', (e) => {
+  ArtichokeFloatingTextShape.value = e.text
+})

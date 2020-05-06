@@ -1,10 +1,6 @@
 // UI
 
-import {
-  boardLocation,
-  ArtichokeFloatingTextShape,
-  setTowerText,
-} from './messageboard'
+import { boardLocation } from './messageboard'
 import { setNewMessage } from './serverHandler'
 import { WearableData } from './wearables'
 import { Teleport } from './teleports'
@@ -78,11 +74,6 @@ export function openMessageBoardUI(opener: Entity) {
     //FloatingTextShape.value = x.text
     let newText = x.text.substr(0, 50)
     setNewMessage(boardLocation, newText)
-    if (boardLocation == 'artichoke') {
-      ArtichokeFloatingTextShape.value = newText
-    } else if (boardLocation == 'tower') {
-      setTowerText(newText)
-    }
   })
 }
 

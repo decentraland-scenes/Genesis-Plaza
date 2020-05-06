@@ -1,5 +1,4 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
-import { sceneMessageBus } from './serverHandler'
 
 export function addScreen() {
   const e = new Entity()

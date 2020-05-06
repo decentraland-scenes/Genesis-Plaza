@@ -1,4 +1,3 @@
-import { setNewMessage } from './serverHandler'
 import { openMessageBoardUI } from './ui'
 
 export let boardLocation = null
@@ -10,7 +9,7 @@ ArtichokeFloatingTextShape.color = Color3.FromHexString('#8040E2')
 ArtichokeFloatingText.addComponent(ArtichokeFloatingTextShape)
 ArtichokeFloatingText.addComponent(
   new Transform({
-    position: new Vector3(48, 12.5, 39),
+    position: new Vector3(47, 12.5, 37),
     scale: new Vector3(1, 1, 1),
     rotation: Quaternion.Euler(0, 180, 0),
   })
@@ -25,16 +24,24 @@ const TowerFloatingText = new Entity()
 // TowerFloatingText.addComponent(TowerFloatingTextShape)
 TowerFloatingText.addComponent(
   new Transform({
-    position: new Vector3(49.5, 37, 119),
-    scale: new Vector3(13, 13, 13),
+    position: new Vector3(48.6, 21, 116.6),
+    scale: new Vector3(1, 1, 1),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 )
 engine.addEntity(TowerFloatingText)
 
+const bkgModel = new Entity()
+
+bkgModel.addComponent(new GLTFShape('models/screen-moon.glb'))
+bkgModel.setParent(TowerFloatingText)
+
+engine.addEntity(bkgModel)
+
 let towerLetters: Entity[] = []
 
-let maxCharacters = 26
+let distanceMultiplier = 9
+let maxCharacters = 40
 for (let i = 0; i < maxCharacters; i++) {
   let angle = 360 - (i * 360) / maxCharacters
   let radAngle = angle * (Math.PI / 180)
@@ -42,11 +49,15 @@ for (let i = 0; i < maxCharacters; i++) {
   let letter = new Entity()
   letter.setParent(TowerFloatingText)
   letter.addComponent(new TextShape(''))
-  letter.getComponent(TextShape).fontSize = 4
+  letter.getComponent(TextShape).fontSize = 22
   letter.getComponent(TextShape).color = Color3.Blue() //Color3.FromHexString('#8040E2')
   letter.addComponent(
     new Transform({
-      position: new Vector3(Math.sin(radAngle), 0, Math.cos(radAngle)),
+      position: new Vector3(
+        Math.sin(radAngle) * distanceMultiplier,
+        0,
+        Math.cos(radAngle) * distanceMultiplier
+      ),
       rotation: Quaternion.Euler(0, angle - 180, 0),
     })
   )
@@ -85,7 +96,7 @@ let TowerUIOpener = new Entity()
 TowerUIOpener.addComponent(new GLTFShape('models/message_booth.glb'))
 TowerUIOpener.addComponent(
   new Transform({
-    position: new Vector3(43.8, 38.2, 122.4),
+    position: new Vector3(43.8, 37.4, 122.4),
     scale: new Vector3(1, 1, 1),
   })
 )

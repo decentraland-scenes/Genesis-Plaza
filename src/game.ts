@@ -14,11 +14,11 @@ class CameraTrackSystem implements ISystem {
   }
 }
 
+engine.addSystem(new CameraTrackSystem())
+
 //// ADD BUILDINGS
 
 addBuildings()
-
-engine.addSystem(new CameraTrackSystem())
 
 // BALLOON
 
