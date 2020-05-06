@@ -82,10 +82,10 @@ ArtichokeUIOpener.addComponent(
 engine.addEntity(ArtichokeUIOpener)
 
 let TowerUIOpener = new Entity()
-TowerUIOpener.addComponent(new BoxShape()) // GLTFShape('models/Message.glb'))
+TowerUIOpener.addComponent(new GLTFShape('models/message_booth.glb'))
 TowerUIOpener.addComponent(
   new Transform({
-    position: new Vector3(47, 2, 118.8),
+    position: new Vector3(43.8, 38.2, 122.4),
     scale: new Vector3(1, 1, 1),
   })
 )
