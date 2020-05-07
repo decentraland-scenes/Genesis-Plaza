@@ -39,7 +39,6 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        //activateArichokeElevator()
         sceneMessageBus.emit('artichokeElevator', {})
         log('triggered!')
       },
@@ -93,7 +92,6 @@ export function setTriggerAreas() {
       () => {
         //onCameraEnter
         sceneMessageBus.emit('whaleElevator', {})
-        //activateWhaleElevator()
         log('triggered!')
       },
       null, //onCameraExit
@@ -145,7 +143,6 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        //activateMoonlevator()
         sceneMessageBus.emit('moonElevator', {})
         log('triggered!')
       },
@@ -199,7 +196,6 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        //activateMoonlevator()
         sceneMessageBus.emit('shellElevator', {})
         log('triggered!')
       },
@@ -212,6 +208,146 @@ export function setTriggerAreas() {
   function activateShellElevator() {
     shell_elevator_anim.stop()
     shell_elevator_anim.play()
+  }
+
+  //// BALOOON
+
+  let ballonIsFlying: boolean = false
+
+  let balloon = new Entity()
+  balloon.addComponent(new GLTFShape('models/balloon.glb'))
+  balloon.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(balloon)
+
+  let balloon_anim = new AnimationState('Cube.079|Cube.079|Cube.079Action|', {
+    looping: false,
+  })
+
+  balloon.addComponent(new Animator())
+  balloon.getComponent(Animator).addClip(balloon_anim)
+
+  const balloonTrigger = new Entity()
+  balloonTrigger.addComponent(
+    new Transform({
+      position: new Vector3(228.5, 3.5, 185.9),
+      rotation: Quaternion.Euler(0, 45, 0),
+    })
+  )
+
+  let BalloonTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(2, 1, 2),
+    Vector3.Zero()
+  )
+  balloonTrigger.addComponent(
+    new utils.TriggerComponent(
+      BalloonTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        sceneMessageBus.emit('startBalloon', {})
+        log('triggered!')
+      },
+      null, //onCameraExit
+      false
+    )
+  )
+  engine.addEntity(balloonTrigger)
+
+  function activateBalloon() {
+    if (ballonIsFlying) return
+    ballonIsFlying = true
+    balloon_anim.stop()
+    balloon_anim.play()
+    balloon.addComponentOrReplace(
+      new utils.Delay(10000, () => {
+        ballonIsFlying = false
+      })
+    )
+  }
+
+  // TRAIN
+
+  //add stops
+  let stops = new Entity()
+  stops.addComponent(new GLTFShape('models/stops.glb'))
+  stops.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(stops)
+
+  //add train
+  let train = new Entity()
+  train.addComponent(new GLTFShape('models/train.glb'))
+  train.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  train.addComponent(new Animator())
+  engine.addEntity(train)
+  let train1_anim = new AnimationState('Action', {
+    looping: false,
+  })
+  train.getComponent(Animator).addClip(train1_anim)
+
+  let trainIsMoving: boolean = false
+  let currentTrainStation: number = 1
+
+  const station1Trigger = new Entity()
+  station1Trigger.addComponent(
+    new Transform({
+      position: new Vector3(234, 7.9, 142),
+      rotation: Quaternion.Euler(0, 45, 0),
+    })
+  )
+
+  //position: new Vector3(52, 7, 224),
+
+  let TrainTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(2, 1, 4),
+    Vector3.Zero()
+  )
+  station1Trigger.addComponent(
+    new utils.TriggerComponent(
+      TrainTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        if (currentTrainStation != 1) return
+        sceneMessageBus.emit('startTrain', { station: 1 })
+        log('triggered!')
+      },
+      null, //onCameraExit
+      true
+    )
+  )
+  engine.addEntity(station1Trigger)
+
+  function activateTrain(station: number) {
+    if (trainIsMoving) return
+
+    trainIsMoving = true
+    train1_anim.stop()
+    train1_anim.play()
+    //currentTrainStation =
+
+    train.addComponentOrReplace(
+      new utils.Delay(10000, () => {
+        trainIsMoving = false
+      })
+    )
   }
 
   sceneMessageBus.on('artichokeElevator', (e) => {
@@ -228,5 +364,13 @@ export function setTriggerAreas() {
 
   sceneMessageBus.on('shellElevator', (e) => {
     activateShellElevator()
+  })
+
+  sceneMessageBus.on('startBalloon', (e) => {
+    activateBalloon()
+  })
+
+  sceneMessageBus.on('startTrain', (e) => {
+    activateTrain(e.station)
   })
 }

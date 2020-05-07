@@ -20,42 +20,6 @@ engine.addSystem(new CameraTrackSystem())
 
 addBuildings()
 
-// BALLOON
-
-//add balloon
-let balloon = new Entity()
-balloon.addComponent(new GLTFShape('models/balloon.glb'))
-balloon.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(balloon)
-
-/* // TRAIN
-
-//add stops
-let stops = new Entity()
-stops.addComponent(new GLTFShape('models/stops.glb'))
-stops.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(stops)
-
-//add train
-let train = new Entity()
-train.addComponent(new GLTFShape('models/train.glb'))
-train.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(train)
-
-*/
-
 /// ELEVATORS
 
 setTriggerAreas()

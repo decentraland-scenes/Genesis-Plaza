@@ -97,49 +97,49 @@ export function placeTeleports() {
 
   // garden & rock
   let teleportPos4 = new Transform({
-    position: new Vector3(189.84, 0.5, 68),
+    position: new Vector3(189.84, 1, 68),
     rotation: Quaternion.Euler(0, 270, 0),
   })
 
   // rock & market
   let teleportPos5 = new Transform({
-    position: new Vector3(210.19, 0.5, 68.8),
+    position: new Vector3(210.19, 1, 68.8),
     rotation: Quaternion.Euler(0, 90, 0),
   })
 
   // sculpture & wearables
   let teleportPos6 = new Transform({
-    position: new Vector3(211.19, 0.5, 119.5),
+    position: new Vector3(211.19, 1, 119.5),
     rotation: Quaternion.Euler(0, 270, 0),
   })
 
   // wearables - west
   let teleportPos7 = new Transform({
-    position: new Vector3(226.8, 0.5, 132.8),
+    position: new Vector3(226.8, 1, 132.8),
     rotation: Quaternion.Euler(0, 90, 0),
   })
 
   // wearables - NW
   let teleportPos8 = new Transform({
-    position: new Vector3(228.3, 0.5, 168.8),
+    position: new Vector3(228.3, 1, 168.8),
     rotation: Quaternion.Euler(0, 135, 0),
   })
 
   // wearables - N
   let teleportPos9 = new Transform({
-    position: new Vector3(261.2, 0.5, 174.4),
+    position: new Vector3(261.2, 1, 174.4),
     rotation: Quaternion.Euler(0, 135, 0),
   })
 
   // whale - S
   let teleportPos10 = new Transform({
-    position: new Vector3(222.7, 0.5, 203.8),
+    position: new Vector3(222.7, 1, 203.8),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
   // center - N
   let teleportPos11 = new Transform({
-    position: new Vector3(175.45, 0.5, 210),
+    position: new Vector3(175.45, 1, 210),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
@@ -151,16 +151,23 @@ export function placeTeleports() {
 
   // tower- east
   let teleportPos13 = new Transform({
-    position: new Vector3(89.42, 0.5, 101.4),
+    position: new Vector3(89.42, 1, 101.4),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 
   // tower- south
   let teleportPos14 = new Transform({
-    position: new Vector3(17.44, 0.5, 75.3),
+    position: new Vector3(17.44, 1, 75.3),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
+  // center - N2
+  let teleportPos15 = new Transform({
+    position: new Vector3(145.45, 1, 210),
+    rotation: Quaternion.Euler(0, 45, 0),
+  })
+
+  //1
   let dragonRush = new Teleport(
     new GLTFShape('models/teleports/dragon_rush.glb'),
     teleportPos1,
@@ -172,8 +179,27 @@ export function placeTeleports() {
 
   //2
 
+  let magic1 = new Teleport(
+    new GLTFShape('models/teleports/star.glb'),
+    teleportPos2,
+    Locations.MAGIC,
+    'Random amazing scene',
+    '',
+    'images/example-screenshot.png'
+  )
+
   //3
 
+  let magic2 = new Teleport(
+    new GLTFShape('models/teleports/star.glb'),
+    teleportPos3,
+    Locations.MAGIC,
+    'Random amazing scene',
+    '',
+    'images/example-screenshot.png'
+  )
+
+  //4
   let blockRunner = new Teleport(
     new GLTFShape('models/teleports/block_runner.glb'),
     teleportPos4,
@@ -183,6 +209,7 @@ export function placeTeleports() {
     'images/example-screenshot.png'
   )
 
+  //5
   let roulette = new Teleport(
     new GLTFShape('models/teleports/roulette.glb'),
     teleportPos5,
@@ -192,8 +219,18 @@ export function placeTeleports() {
     'images/example-screenshot.png'
   )
 
-  // 6 => magic
+  // 6
 
+  let magic3 = new Teleport(
+    new GLTFShape('models/teleports/star.glb'),
+    teleportPos6,
+    Locations.MAGIC,
+    'Random amazing scene',
+    '',
+    'images/example-screenshot.png'
+  )
+
+  //7
   let fruit = new Teleport(
     new GLTFShape('models/teleports/fruit_catcher.glb'),
     teleportPos7,
@@ -204,11 +241,36 @@ export function placeTeleports() {
   )
 
   //8
+  let magic14 = new Teleport(
+    new GLTFShape('models/teleports/star.glb'),
+    teleportPos8,
+    Locations.MAGIC,
+    'Random amazing scene',
+    '',
+    'images/example-screenshot.png'
+  )
 
   //9
+  let magic5 = new Teleport(
+    new GLTFShape('models/teleports/star.glb'),
+    teleportPos9,
+    Locations.MAGIC,
+    'Random amazing scene',
+    '',
+    'images/example-screenshot.png'
+  )
 
   // 10  (crowd!)
+  let crowd = new Teleport(
+    new GLTFShape('models/teleports/crowd.glb'),
+    teleportPos10,
+    Locations.CROWD,
+    'Join other players',
+    '',
+    'images/example-screenshot.png'
+  )
 
+  // 11
   let museum = new Teleport(
     new GLTFShape('models/teleports/museum_district.glb'),
     teleportPos11,
@@ -218,6 +280,7 @@ export function placeTeleports() {
     'images/example-screenshot.png'
   )
 
+  // 12
   let mole = new Teleport(
     new GLTFShape('models/teleports/click_a_mole.glb'),
     teleportPos12,
@@ -227,6 +290,7 @@ export function placeTeleports() {
     'images/example-screenshot.png'
   )
 
+  // 13
   let tombChaser = new Teleport(
     new GLTFShape('models/teleports/tomb_chaser.glb'),
     teleportPos13,
@@ -236,12 +300,23 @@ export function placeTeleports() {
     'images/example-screenshot.png'
   )
 
+  // 14
   let infinity = new Teleport(
     new GLTFShape('models/teleports/infinity_engine.glb'),
     teleportPos14,
     Locations.INFINITY,
     'Infinity Engine',
     'Mine for loot underground, then\ndefend a train from\nbandits.',
+    'images/example-screenshot.png'
+  )
+
+  // 15  (crowd!)
+  let crowd2 = new Teleport(
+    new GLTFShape('models/teleports/crowd.glb'),
+    teleportPos15,
+    Locations.CROWD,
+    'Join other players',
+    '',
     'images/example-screenshot.png'
   )
 }

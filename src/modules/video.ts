@@ -18,11 +18,6 @@ export function addScreen() {
   mat.texture = v
 
   e.addComponent(mat)
-  e.addComponent(
-    new OnPointerDown(() => {
-      v.playing = !v.playing
-    })
-  )
   engine.addEntity(e)
 
   const videoTrigger = new Entity()
