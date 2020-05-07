@@ -139,6 +139,9 @@ sceneMessageBus.on('setRadio', (e) => {
     musicStream.getComponent(AudioStream).playing = false
     musicStream.removeComponent(AudioStream)
   }
+  LightsA.play()
+  LightsB.play()
+  LightsC.play()
 
   musicStream.addComponent(
     new utils.Delay(100, () => {
@@ -146,6 +149,13 @@ sceneMessageBus.on('setRadio', (e) => {
     })
   )
 })
+
+function radioOff() {
+  LightsA.stop()
+  LightsB.stop()
+  LightsC.stop()
+  musicStream.getComponent(AudioStream).playing = false
+}
 
 // turn on when approach
 
@@ -161,3 +171,42 @@ sceneMessageBus.on('setRadio', (e) => {
 
 // raw sites:
 // https://www.a100.radio/
+
+///// LIGTHS
+
+let LightsA = new AnimationState('Lights_Anim')
+let LightsB = new AnimationState('LightsB_Artichoke')
+let LightsC = new AnimationState('LightsC_Artichoke')
+
+let artichokeLightsA = new Entity()
+artichokeLightsA.addComponent(new GLTFShape('models/LightsA_Artichoke.glb'))
+artichokeLightsA.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsA.addComponent(new Animator()).addClip(LightsA)
+engine.addEntity(artichokeLightsA)
+
+let artichokeLightsB = new Entity()
+artichokeLightsB.addComponent(new GLTFShape('models/LightsB_Artichoke.glb'))
+artichokeLightsB.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsB.addComponent(new Animator()).addClip(LightsB)
+engine.addEntity(artichokeLightsB)
+
+let artichokeLightsC = new Entity()
+artichokeLightsC.addComponent(new GLTFShape('models/LightsC_Artichoke.glb'))
+artichokeLightsC.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsC.addComponent(new Animator()).addClip(LightsC)
+engine.addEntity(artichokeLightsC)
+LightsA.stop()
+LightsB.stop()
+LightsC.stop()
