@@ -56,12 +56,12 @@ export class Teleport extends Entity {
     )
 
     let Particles = new Entity()
-    Particles.addComponent(new GLTFShape('models/Particles.glb'))
-    Particles.addComponent(
-      new Transform({
-        rotation: Quaternion.Euler(0, 180, 0),
-      })
-    )
+    Particles.addComponent(new GLTFShape('models/particles.glb'))
+    // Particles.addComponent(
+    //   new Transform({
+    //     rotation: Quaternion.Euler(0, 180, 0),
+    //   })
+    // )
     Particles.setParent(this)
   }
 
