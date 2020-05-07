@@ -139,7 +139,7 @@ export function placeTeleports() {
 
   // center - N
   let teleportPos11 = new Transform({
-    position: new Vector3(175.45, 1, 210),
+    position: new Vector3(174.71, 1, 209.8),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 

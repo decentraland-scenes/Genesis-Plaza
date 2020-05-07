@@ -113,63 +113,63 @@ export function placeMuseumPieces() {
     'Builder contest 2019'
   )
 
-  //   let avatar1 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(199, 9.5, 232.43),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
+  let avatar1 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/first-avatar.glb'),
+    {
+      position: new Vector3(200.99, 10.7, 234.22),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
 
-  //   let avatar2 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(197.8, 9.5, 230.5),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
-  //   let avatar3 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(196.27, 9.5, 229.11),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
+  let avatar2 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/fox-avatar.glb'),
+    {
+      position: new Vector3(199, 10.3, 231.8),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
+  let avatar3 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/square-robot-avatar.glb'),
+    {
+      position: new Vector3(196.8, 10.3, 229.7),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
 
-  //   let avatar4 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(196.65, 9.5, 227.43),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
+  let avatar5 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/round-robot-avatar.glb'),
+    {
+      position: new Vector3(194.38, 10.3, 227),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
 
-  //   let avatar5 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(192.79, 9.5, 226.05),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
+  let avatar6 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/boy.glb'),
+    {
+      position: new Vector3(191.59, 10.8, 224.95),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
 
-  //   let avatar6 = new MuseumPiece(
-  //     new GLTFShape('models/museum/builder_winner.glb'),
-  //     {
-  //       position: new Vector3(190.8, 9.5, 224.79),
-  //       rotation: Quaternion.Euler(0, 515, 0),
-  //     },
-  //     'Avatar'
-  //   )
+  let avatar7 = new MuseumPiece(
+    new GLTFShape('models/museum/avatars/girl.glb'),
+    {
+      position: new Vector3(188.7, 10.8, 223),
+      rotation: Quaternion.Euler(0, 315, 0),
+    },
+    'Avatar'
+  )
 
   let declaration = new MuseumPiece(
     new GLTFShape('models/museum/declaration.glb'),
     {
-      position: new Vector3(196.29, 19.5, 226.15),
+      position: new Vector3(196.29, 195, 226.15),
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Declaration'
@@ -274,13 +274,9 @@ export function placeMuseumPieces() {
     'Community Wearable Contest'
   )
 
+  ////////  WEARABLES BUILDING
 
-
-
-////////  WEARABLES BUILDING
-
-
- let xmax_wearables = new MuseumPiece(
+  let xmax_wearables = new MuseumPiece(
     new GLTFShape('models/wearables/xmas_stand.glb'),
     {
       position: new Vector3(279.67, 9.5, 145),
@@ -289,8 +285,7 @@ export function placeMuseumPieces() {
     'About X-Mas Wearables'
   )
 
-
- let halloween_wearables = new MuseumPiece(
+  let halloween_wearables = new MuseumPiece(
     new GLTFShape('models/wearables/halloween_stand.glb'),
     {
       position: new Vector3(265.38, 9.5, 114),
@@ -298,6 +293,4 @@ export function placeMuseumPieces() {
     },
     'About Halloween Wearables'
   )
-
-
 }
