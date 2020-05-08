@@ -146,13 +146,13 @@ export function addWearables() {
 
   // FLOOR 1
 
-  const Eyewear_Raver = new Wearable(
-    new GLTFShape('models/wearables/first_floor/A/Eyewear_CyborgMonocle.glb'),
+  const Eyewear_MANA = new Wearable(
+    new GLTFShape('models/wearables/first_floor/A/MANA_Eyewear.glb'),
     {
       position: new Vector3(284, 10.5, 110.4),
       rotation: Quaternion.Euler(0, 60, 0),
     },
-    'Cyborg Monocle (It’s over 9000!!!)'
+    'MANA Eyewear'
   )
 
   const Spysuit_Goggles = new Wearable(
