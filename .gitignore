@@ -111,3 +111,5 @@ server/functions/lib/index.js
 keys/
 server/functions/keys/
 
+## compiled scene
+bin/game.js

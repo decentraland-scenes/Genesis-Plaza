@@ -1,6 +1,16 @@
 import { sceneMessageBus } from './serverHandler'
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 
+export enum Radios {
+  RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
+  INTERVIEW = 'https://dclcoreradio.com/dclradio.ogg',
+  DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
+  SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
+}
+
+let isInRadioRange: boolean = false
+let currentRadio: Radios | null = null
+
 const musicStream = new Entity()
 engine.addEntity(musicStream)
 
@@ -53,7 +63,7 @@ blueButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
+        station: Radios.RAVE,
       })
       blueButton.press()
     },
@@ -71,7 +81,7 @@ greenButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: 'https://dclcoreradio.com/dclradio.ogg',
+        station: Radios.INTERVIEW,
       })
       greenButton.press()
     },
@@ -89,7 +99,7 @@ lightBlueButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
+        station: Radios.DELTA,
       })
       lightBlueButton.press()
     },
@@ -107,7 +117,7 @@ redButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: 'https://edge.singsingmusic.net/MC2.mp3',
+        station: Radios.SIGNS,
       })
       redButton.press()
     },
@@ -125,7 +135,7 @@ yellowButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: 'https://edge.singsingmusic.net/MC2.mp3',
+        station: Radios.SIGNS,
       })
       yellowButton.press()
     },
@@ -139,13 +149,29 @@ sceneMessageBus.on('setRadio', (e) => {
     musicStream.getComponent(AudioStream).playing = false
     musicStream.removeComponent(AudioStream)
   }
-
-  musicStream.addComponent(
-    new utils.Delay(100, () => {
-      musicStream.addComponentOrReplace(new AudioStream(e.station))
-    })
-  )
+  LightsA.play()
+  LightsB.play()
+  LightsC.play()
+  currentRadio = e.station
+  radioOn(e.station)
 })
+
+function radioOn(station) {
+  if (isInRadioRange) {
+    musicStream.addComponent(
+      new utils.Delay(100, () => {
+        musicStream.addComponentOrReplace(new AudioStream(station))
+      })
+    )
+  }
+}
+
+function radioOff() {
+  LightsA.stop()
+  LightsB.stop()
+  LightsC.stop()
+  musicStream.getComponent(AudioStream).playing = false
+}
 
 // turn on when approach
 
@@ -161,3 +187,83 @@ sceneMessageBus.on('setRadio', (e) => {
 
 // raw sites:
 // https://www.a100.radio/
+
+///// LIGTHS
+
+let LightsA = new AnimationState('Lights_Anim')
+let LightsB = new AnimationState('LightsB_Artichoke')
+let LightsC = new AnimationState('LightsC_Artichoke')
+
+let artichokeLightsA = new Entity()
+artichokeLightsA.addComponent(new GLTFShape('models/LightsA_Artichoke.glb'))
+artichokeLightsA.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsA.addComponent(new Animator()).addClip(LightsA)
+engine.addEntity(artichokeLightsA)
+
+let artichokeLightsB = new Entity()
+artichokeLightsB.addComponent(new GLTFShape('models/LightsB_Artichoke.glb'))
+artichokeLightsB.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsB.addComponent(new Animator()).addClip(LightsB)
+engine.addEntity(artichokeLightsB)
+
+let artichokeLightsC = new Entity()
+artichokeLightsC.addComponent(new GLTFShape('models/LightsC_Artichoke.glb'))
+artichokeLightsC.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+artichokeLightsC.addComponent(new Animator()).addClip(LightsC)
+engine.addEntity(artichokeLightsC)
+LightsA.stop()
+LightsB.stop()
+LightsC.stop()
+
+const artichokeTrigger = new Entity()
+artichokeTrigger.addComponent(
+  new Transform({ position: new Vector3(47, 6, 46) })
+)
+
+let artichokeTriggerBox = new utils.TriggerBoxShape(
+  new Vector3(90, 14, 90),
+  Vector3.Zero()
+)
+artichokeTrigger.addComponent(
+  new utils.TriggerComponent(
+    artichokeTriggerBox, //shape
+    0, //layer
+    0, //triggeredByLayer
+    null, //onTriggerEnter
+    null, //onTriggerExit
+    () => {
+      sceneMessageBus.emit('enteredRadioRange', {})
+      isInRadioRange = true
+      if (currentRadio) {
+        radioOn(currentRadio)
+      }
+
+      log('triggered!')
+    },
+    () => {
+      isInRadioRange = false
+      radioOff()
+    }, //onCameraExit
+    false
+  )
+)
+engine.addEntity(artichokeTrigger)
+
+sceneMessageBus.on('enteredRadioRange', (e) => {
+  if (!isInRadioRange || currentRadio == null) return
+  sceneMessageBus.emit('setRadio', {
+    station: currentRadio,
+  })
+})

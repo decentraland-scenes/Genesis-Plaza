@@ -1,3 +1,27 @@
+let board1CenterPiece = new Entity()
+board1CenterPiece.addComponent(
+  new Transform({
+    position: new Vector3(
+      273.1819305419922,
+      5.453011512756348,
+      37.91725158691406
+    ),
+  })
+)
+
+engine.addEntity(board1CenterPiece)
+
+let rotatedPanel1 = new Entity()
+rotatedPanel1.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 295, 0),
+    position: new Vector3(1, 0, 0),
+  })
+)
+rotatedPanel1.addComponent(new PlaneShape())
+rotatedPanel1.setParent(board1CenterPiece)
+engine.addEntity(rotatedPanel1)
+
 //  let now = String(Math.floor(Date.now() / 1000))
 //  let day = String(Math.floor(Date.now() / 1000 - (1 * 24  * 60 * 60)))
 //  let seven_days = String(Math.floor(Date.now() / 1000 - (7 * 24  * 60 * 60)))
