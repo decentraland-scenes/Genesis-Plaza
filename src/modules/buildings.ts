@@ -218,26 +218,6 @@ export function addBuildings() {
   )
   engine.addEntity(trading_center)
 
-  //add wearables_market
-let wearables_market = new Entity()
-wearables_market.addComponent(new GLTFShape("models/wearables_market.glb"))
-wearables_market.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(wearables_market)
-
-//add land_market
-let land_market = new Entity()
-land_market.addComponent(new GLTFShape("models/land_market.glb"))
-land_market.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(land_market)
-
   //STREET MESH
 
   //add street
