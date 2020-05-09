@@ -1,6 +1,6 @@
 /// LOWER FLOOR BOARD
 
-const lowerBoardWidth = -3.35
+const lowerBoardWidth = -3.365
 
 let lowerCenterPiece = new Entity()
 lowerCenterPiece.addComponent(
@@ -169,7 +169,7 @@ lowerPanel6Title.addComponent(
 
 ///////// MID FLOOR
 
-let midBoardWidth = lowerBoardWidth * 1.35 //-4.57
+let midBoardWidth = lowerBoardWidth * 1.348 //-4.57
 
 let midCenterPiece = new Entity()
 midCenterPiece.addComponent(
@@ -338,12 +338,12 @@ midPanel6Title.addComponent(
 
 /////// TOP FLOOR
 
-let topBoardWidth = lowerBoardWidth * 1.85 //-6
+let topBoardWidth = lowerBoardWidth * 1.98 //-6
 
 let topCenterPiece = new Entity()
 topCenterPiece.addComponent(
   new Transform({
-    position: new Vector3(273.018, 23.5, 37.792),
+    position: new Vector3(273.19, 23.5, 37.85),
   })
 )
 
