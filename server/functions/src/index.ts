@@ -208,6 +208,7 @@ async function updateMarketData() {
   }
 
   // cheapest & most expensive wearable x category
+  // mana btw eth price
 
   //   let dateNow =  Math.floor( Date.now() / 1000)
 
