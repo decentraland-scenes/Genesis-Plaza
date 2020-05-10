@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions'
+//import { config } from 'firebase-functions'
 
 // exports.scheduledFunction = functions.pubsub
 //   .schedule('every day')
@@ -32,6 +33,11 @@ app.get('/update-market', (req: any, res: any) => {
   return res.status(200).send('Updated Market Data!')
 })
 
+app.get('/update-coins', (req: any, res: any) => {
+  updateCoinData()
+  return res.status(200).send('Updated Coins Data!')
+})
+
 exports.app = functions.https.onRequest(app)
 
 // // Start writing Firebase Functions
@@ -44,12 +50,12 @@ exports.app = functions.https.onRequest(app)
 //// AWS
 const AWS = require('aws-sdk')
 
-const config = require('../keys/aws-key.json')
+const AWSconfig = require('../keys/aws-key.json')
 
 AWS.config.setPromisesDependency()
 AWS.config.update({
-  accessKeyId: config.AWSAccessKeyId,
-  secretAccessKey: config.AWSSecretKey,
+  accessKeyId: AWSconfig.AWSAccessKeyId,
+  secretAccessKey: AWSconfig.AWSSecretKey,
   region: 'us-east-2',
 })
 
@@ -133,6 +139,13 @@ export async function getMeessageJSON(url: string): Promise<string[]> {
   }
 }
 
+export type CoinData = {
+  MANAETH: number
+  ETHUSDT: number
+  BTCUSDT: number
+  MANAUSD: number
+}
+
 export type MarketData = {
   landSalesYesterday: number
   landSalesWeek: number
@@ -177,7 +190,35 @@ export async function uploadMarketData(jsonContents: MarketData) {
       console.log('Successfully uploaded market JSON')
     },
     function (err: any) {
-      console.log('There was an error uploading json file: ', err.message)
+      console.log(
+        'There was an error uploading market json file: ',
+        err.message
+      )
+    }
+  )
+}
+
+export async function uploadCoinData(jsonContents: CoinData) {
+  console.log('uploading coin data')
+
+  var upload = new AWS.S3.ManagedUpload({
+    params: {
+      Bucket: 'genesis-plaza',
+      Key: 'market/coinData.json',
+      Body: JSON.stringify(jsonContents),
+      ACL: 'public-read',
+      ContentType: 'application/json; charset=utf-8',
+    },
+  })
+
+  var promise = upload.promise()
+
+  promise.then(
+    function (data: any) {
+      console.log('Successfully uploaded coin JSON')
+    },
+    function (err: any) {
+      console.log('There was an error uploading coin json file: ', err.message)
     }
   )
 }
@@ -238,21 +279,21 @@ async function updateMarketData() {
       landContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateYesterday +
-      '&limit=2000'
+      '&limit=300'
   )
   let weekLandSales = await getOpenSeaEventsJSON(
     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
       landContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateWeekAgo +
-      '&limit=2000'
+      '&limit=300'
   )
   let monthLandSales = await getOpenSeaEventsJSON(
     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
       landContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateMonthAgo +
-      '&limit=2000'
+      '&limit=300'
   )
 
   let yesterdayWearablesSales = await getOpenSeaEventsJSON(
@@ -260,21 +301,21 @@ async function updateMarketData() {
       wearablesContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateYesterday +
-      '&limit=4000'
+      '&limit=300'
   )
   let weekWearablesSales = await getOpenSeaEventsJSON(
     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
       wearablesContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateWeekAgo +
-      '&limit=10000'
+      '&limit=300'
   )
   let monthWearablesSales = await getOpenSeaEventsJSON(
     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
       wearablesContract +
       '&offset=0&event_type=successful&occurred_after=' +
       dateMonthAgo +
-      '&limit=30000'
+      '&limit=300'
   )
 
   //   let yesterdayEstateSales = await getOpenSeaEventsJSON(
@@ -524,14 +565,40 @@ async function updateMarketData() {
   uploadMarketData(dataToSend)
 }
 
-export async function getOpenSeaEventsJSON(url: string): Promise<any[]> {
+export async function getOpenSeaEventsJSON(
+  url: string,
+  alreadyCollected?: [],
+  offset?: number
+): Promise<any[]> {
   try {
-    let response = await fetch(url).then()
+    let finalURL = url
+    if (offset) {
+      finalURL = url + '&offset=' + offset
+    }
+    let response = await fetch(finalURL).then()
     let json = await response.json()
-    return json.asset_events
+    let fullList = json.asset_events
+    if (alreadyCollected) {
+      fullList = json.asset_events.concat(alreadyCollected)
+    }
+
+    if (json.asset_events.length >= 300) {
+      console.log('long response for ', finalURL)
+
+      let offset: number = 0
+
+      offset = fullList.length
+
+      return await getOpenSeaEventsJSON(url, fullList, offset)
+    } else {
+      return fullList
+    }
   } catch {
-    console.log('error fetching from AWS server')
+    console.log('error fetching from OpenSea API')
     console.log('url used: ', url)
+    if (alreadyCollected) {
+      return alreadyCollected
+    }
     return []
   }
 }
@@ -540,4 +607,43 @@ export function toMana(longNum: string) {
   let shortNum = parseFloat(longNum) / 1000000000000000000
   let squaredNum = shortNum * Math.pow(10, 4)
   return Math.round(squaredNum) / Math.pow(10, 4)
+}
+
+export async function updateCoinData() {
+  let dataToSend: CoinData = {
+    MANAETH: 0,
+    ETHUSDT: 0,
+    BTCUSDT: 0,
+    MANAUSD: 0,
+  }
+
+  try {
+    // Now grab the data (with fix for CORS issue).
+    //let proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+    let targetUrl = 'https://api.binance.com/api/v1/ticker/allPrices'
+    let response = await fetch(targetUrl) //proxyUrl + targetUrl)
+    let json = await response.json()
+
+    console.log(json)
+
+    for (var i = 0; i < json.length; i++) {
+      switch (json[i].symbol) {
+        case 'MANAETH':
+          dataToSend.MANAETH = parseFloat(json[i].price)
+          break
+        case 'ETHUSDT':
+          dataToSend.ETHUSDT = parseFloat(json[i].price)
+          break
+        case 'BTCUSDT':
+          dataToSend.BTCUSDT = parseFloat(json[i].price)
+          break
+      }
+    }
+
+    dataToSend.MANAUSD = dataToSend.MANAETH * dataToSend.ETHUSDT
+
+    uploadCoinData(dataToSend)
+  } catch {
+    console.log('Failed to connect to Binance API.')
+  }
 }

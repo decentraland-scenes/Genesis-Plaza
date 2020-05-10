@@ -220,7 +220,7 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     })
   )
-  map.addComponent(new GLTFShape('models/museum/map/base.glb'))
+  map.addComponent(new GLTFShape('models/museum/map/map_base.glb'))
   engine.addEntity(map)
 
   let districts = new Entity()
@@ -230,7 +230,7 @@ export function placeMuseumPieces() {
     })
   )
   districts.setParent(map)
-  districts.addComponent(new GLTFShape('models/museum/map/districts.glb'))
+  districts.addComponent(new GLTFShape('models/museum/map/map_districts.glb'))
 
   districts
     .addComponent(new Animator())
@@ -253,7 +253,7 @@ export function placeMuseumPieces() {
       position: new Vector3(),
     })
   )
-  plazas.addComponent(new GLTFShape('models/museum/map/plazas.glb'))
+  plazas.addComponent(new GLTFShape('models/museum/map/map_plazas.glb'))
 
   plazas.addComponent(new Animator()).addClip(plazasOn).addClip(plazasOff)
 
@@ -274,7 +274,7 @@ export function placeMuseumPieces() {
       position: new Vector3(),
     })
   )
-  roads.addComponent(new GLTFShape('models/museum/map/roads.glb'))
+  roads.addComponent(new GLTFShape('models/museum/map/map_roads.glb'))
 
   roads.addComponent(new Animator()).addClip(roadsOn).addClip(roadsOff)
 
@@ -309,7 +309,7 @@ export function placeMuseumPieces() {
   let pua = new MuseumPiece(
     new GLTFShape('models/museum/pua.glb'),
     {
-      position: new Vector3(189.29, 16, 222.7),
+      position: new Vector3(189.29, 16.5, 222.7),
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Point of interest'
