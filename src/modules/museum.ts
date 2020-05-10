@@ -31,6 +31,15 @@ export class MuseumPiece extends Entity {
   }
 }
 
+//// MAP ANIMS
+
+let districtOn = new AnimationState('District_Action', { looping: false })
+let districtOff = new AnimationState('District_OFF_Action', { looping: false })
+let roadsOn = new AnimationState('Roads_Action', { looping: false })
+let roadsOff = new AnimationState('Roads_OFF_Action', { looping: false })
+let plazasOn = new AnimationState('Plazas_Action', { looping: false })
+let plazasOff = new AnimationState('Plazas_OFF_Action', { looping: false })
+
 export function placeMuseumPieces() {
   let dao = new MuseumPiece(
     new GLTFShape('models/museum/dao.glb'),
@@ -148,20 +157,11 @@ export function placeMuseumPieces() {
     'Avatar'
   )
 
-  let new_logo = new MuseumPiece(
-    new GLTFShape('models/museum/new_logo.glb'),
-    {
-      position: new Vector3(182.6, 10.3, 226.5),
-      rotation: Quaternion.Euler(0, 45, 0),
-    },
-    'New Logo'
-  )
-
   let first_auction = new MuseumPiece(
     new GLTFShape('models/museum/first_auction.glb'),
     {
-      position: new Vector3(177, 10.4, 233.3),
-      rotation: Quaternion.Euler(0, 52, 0),
+      position: new Vector3(182.6, 10.3, 226.5),
+      rotation: Quaternion.Euler(0, 45, 0),
     },
     'First Land Auction'
   )
@@ -169,16 +169,25 @@ export function placeMuseumPieces() {
   let second_auction = new MuseumPiece(
     new GLTFShape('models/museum/second_auction.glb'),
     {
+      position: new Vector3(177, 10.4, 233.3),
+      rotation: Quaternion.Euler(0, 52, 0),
+    },
+    'Second Land Auction'
+  )
+
+  let new_logo = new MuseumPiece(
+    new GLTFShape('models/museum/new_logo.glb'),
+    {
       position: new Vector3(171.8, 10.5, 239.9),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Second Land Auction'
+    'New Logo'
   )
 
   let landing = new MuseumPiece(
     new GLTFShape('models/museum/landing.glb'),
     {
-      position: new Vector3(165.9, 10.5, 246),
+      position: new Vector3(165.9, 9.5, 246),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Landing'
@@ -196,7 +205,7 @@ export function placeMuseumPieces() {
   let names = new MuseumPiece(
     new GLTFShape('models/museum/names.glb'),
     {
-      position: new Vector3(151.7, 10.5, 258.4),
+      position: new Vector3(151.7, 9.5, 258.4),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Virtual identity'
@@ -204,31 +213,85 @@ export function placeMuseumPieces() {
 
   ///// UPSTAIRS
 
-  let map = new MuseumPiece(
-    new GLTFShape('models/museum/map/base.glb'),
-    {
-      position: new Vector3(196.29, 18.5, 226.15),
+  let map = new Entity()
+  map.addComponent(
+    new Transform({
+      position: new Vector3(196.29, 18, 226.15),
       rotation: Quaternion.Euler(0, 315, 0),
-    },
-    'Map'
+    })
   )
+  map.addComponent(new GLTFShape('models/museum/map/base.glb'))
+  engine.addEntity(map)
 
   let districts = new Entity()
+  districts.addComponent(
+    new Transform({
+      position: new Vector3(),
+    })
+  )
   districts.setParent(map)
   districts.addComponent(new GLTFShape('models/museum/map/districts.glb'))
 
+  districts
+    .addComponent(new Animator())
+    .addClip(districtOn)
+    .addClip(districtOff)
+  districts.addComponent(
+    new OnPointerDown(
+      function () {
+        animateMap(MapItems.DISTRICTS)
+        //askAboutPiece(thisPiece)
+      },
+      { hoverText: 'Districts' }
+    )
+  )
+
   let plazas = new Entity()
   plazas.setParent(map)
+  plazas.addComponent(
+    new Transform({
+      position: new Vector3(),
+    })
+  )
   plazas.addComponent(new GLTFShape('models/museum/map/plazas.glb'))
+
+  plazas.addComponent(new Animator()).addClip(plazasOn).addClip(plazasOff)
+
+  plazas.addComponent(
+    new OnPointerDown(
+      function () {
+        animateMap(MapItems.PLAZAS)
+        //askAboutPiece(thisPiece)
+      },
+      { hoverText: 'Plazas' }
+    )
+  )
 
   let roads = new Entity()
   roads.setParent(map)
+  roads.addComponent(
+    new Transform({
+      position: new Vector3(),
+    })
+  )
   roads.addComponent(new GLTFShape('models/museum/map/roads.glb'))
+
+  roads.addComponent(new Animator()).addClip(roadsOn).addClip(roadsOff)
+
+  roads.addComponent(
+    new OnPointerDown(
+      function () {
+        animateMap(MapItems.ROADS)
+        //askAboutPiece(thisPiece)
+      },
+      { hoverText: 'Roads' }
+    )
+  )
 
   let parcel = new MuseumPiece(
     new GLTFShape('models/museum/land.glb'),
     {
-      position: new Vector3(193, 18.4, 223.5),
+      position: new Vector3(193, 17.4, 223.5),
       rotation: Quaternion.Euler(0, 195, 0),
     },
     'LAND Parcel'
@@ -237,7 +300,7 @@ export function placeMuseumPieces() {
   let estate = new MuseumPiece(
     new GLTFShape('models/museum/estate.glb'),
     {
-      position: new Vector3(199.2, 18.4, 230),
+      position: new Vector3(199.2, 17.4, 230),
       rotation: Quaternion.Euler(0, 30, 0),
     },
     'Estate'
@@ -246,16 +309,25 @@ export function placeMuseumPieces() {
   let pua = new MuseumPiece(
     new GLTFShape('models/museum/pua.glb'),
     {
-      position: new Vector3(189.29, 16.5, 222.7),
+      position: new Vector3(189.29, 16, 222.7),
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Point of interest'
   )
 
+  let museum_district = new MuseumPiece(
+    new GLTFShape('models/museum/museum_district.glb'),
+    {
+      position: new Vector3(181.2, 17.5, 228.6),
+      rotation: Quaternion.Euler(0, 45, 0),
+    },
+    'Builder Contest 2019'
+  )
+
   let builderContest = new MuseumPiece(
     new GLTFShape('models/museum/builder_winner.glb'),
     {
-      position: new Vector3(175.2, 18.5, 236.6),
+      position: new Vector3(175.2, 17.5, 236.6),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Builder Contest 2019'
@@ -264,7 +336,7 @@ export function placeMuseumPieces() {
   let builderContest2 = new MuseumPiece(
     new GLTFShape('models/museum/builder_winner.glb'),
     {
-      position: new Vector3(167.3, 18.5, 244.95),
+      position: new Vector3(167.3, 17.5, 244.95),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Builder Contest 2019'
@@ -273,7 +345,7 @@ export function placeMuseumPieces() {
   let mana = new MuseumPiece(
     new GLTFShape('models/museum/mana.glb'),
     {
-      position: new Vector3(167.7, 18.5, 252.8),
+      position: new Vector3(168.4, 18.5, 255.7),
       rotation: Quaternion.Euler(0, 135, 0),
     },
     'MANA'
@@ -282,7 +354,7 @@ export function placeMuseumPieces() {
   let hackathon = new MuseumPiece(
     new GLTFShape('models/museum/hackathon_winner.glb'),
     {
-      position: new Vector3(186.7, 18.2, 251.1),
+      position: new Vector3(185.7, 17.2, 252),
       rotation: Quaternion.Euler(0, 225, 0),
     },
     'September 2019 Hackathon'
@@ -291,7 +363,7 @@ export function placeMuseumPieces() {
   let hackathon2 = new MuseumPiece(
     new GLTFShape('models/museum/contest_game.glb'),
     {
-      position: new Vector3(192.9, 18.2, 245),
+      position: new Vector3(192.9, 17.2, 245),
       rotation: Quaternion.Euler(0, 225, 0),
     },
     'Hackathons'
@@ -300,7 +372,7 @@ export function placeMuseumPieces() {
   let community_contest = new MuseumPiece(
     new GLTFShape('models/museum/community_contest.glb'),
     {
-      position: new Vector3(198.6, 18.2, 239.9),
+      position: new Vector3(201.5, 17.2, 236.9),
       rotation: Quaternion.Euler(0, 225, 0),
     },
     'Community Wearable Contest'
@@ -368,4 +440,40 @@ export function placeMuseumPieces() {
     },
     'About Halloween Wearables'
   )
+}
+
+export enum MapItems {
+  DISTRICTS = 'districts',
+  PLAZAS = 'plazas',
+  ROADS = 'roads',
+}
+
+let currentItem: MapItems | null = null
+
+export function animateMap(item: MapItems) {
+  switch (currentItem) {
+    case MapItems.DISTRICTS:
+      districtOff.stop
+      districtOff.play
+    case MapItems.ROADS:
+      roadsOff.stop
+      roadsOff.play
+    case MapItems.PLAZAS:
+      plazasOff.stop
+      plazasOff.play
+  }
+
+  currentItem = item
+
+  switch (item) {
+    case MapItems.DISTRICTS:
+      districtOn.stop
+      districtOn.play
+    case MapItems.ROADS:
+      roadsOn.stop
+      roadsOn.play
+    case MapItems.PLAZAS:
+      plazasOn.stop
+      plazasOn.play
+  }
 }

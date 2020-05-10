@@ -66,7 +66,7 @@ export function setTriggerAreas() {
   )
   engine.addEntity(TheWhale_Action_Elevator)
 
-  let whale_elevator_anim = new AnimationState('TheWhale_Action_Elevator', {
+  let whale_elevator_anim = new AnimationState('WhaleElevator_Action', {
     looping: false,
   })
 
