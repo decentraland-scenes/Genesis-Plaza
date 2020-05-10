@@ -86,13 +86,13 @@ export function placeMuseumPieces() {
     'University District'
   )
 
-  let haloween_event = new MuseumPiece(
-    new GLTFShape('models/museum/halloween_event.glb'),
+  let first_avatars = new MuseumPiece(
+    new GLTFShape('models/museum/first-avatars.glb'),
     {
       position: new Vector3(193.7, 10.35, 245.95),
       rotation: Quaternion.Euler(0, 230, 0),
     },
-    'University District'
+    'First Avatars'
   )
 
   let museum_district = new MuseumPiece(

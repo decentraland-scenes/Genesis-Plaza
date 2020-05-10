@@ -221,11 +221,11 @@ export function placeTeleports() {
 
   // 6
 
-  let magic3 = new Teleport(
-    new GLTFShape('models/teleports/star.glb'),
+  let koko = new Teleport(
+    new GLTFShape('models/teleports/koko_jones.glb'),
     teleportPos6,
-    Locations.MAGIC,
-    'Random amazing scene',
+    Locations.KOKO,
+    'Koko Jones',
     '',
     'images/example-screenshot.png'
   )
@@ -251,21 +251,22 @@ export function placeTeleports() {
   )
 
   //9
-  let magic5 = new Teleport(
-    new GLTFShape('models/teleports/star.glb'),
+  let crowd = new Teleport(
+    new GLTFShape('models/teleports/crowd.glb'),
     teleportPos9,
-    Locations.MAGIC,
-    'Random amazing scene',
+    Locations.CROWD,
+    'Join other players',
     '',
     'images/example-screenshot.png'
   )
 
   // 10  (crowd!)
-  let crowd = new Teleport(
-    new GLTFShape('models/teleports/crowd.glb'),
+
+  let salmonomicon = new Teleport(
+    new GLTFShape('models/teleports/salmonomicon.glb'),
     teleportPos10,
-    Locations.CROWD,
-    'Join other players',
+    Locations.SALMONOMICON,
+    'Book of Salmonomicon',
     '',
     'images/example-screenshot.png'
   )
