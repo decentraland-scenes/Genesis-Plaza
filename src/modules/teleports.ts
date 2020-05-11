@@ -175,7 +175,7 @@ export function placeTeleports() {
     Locations.DRAGONRUSH,
     'Dragon Rush',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Dragon_Race.jpg'
   )
 
   //2
@@ -186,7 +186,7 @@ export function placeTeleports() {
     Locations.TOKI,
     'Toki Toki Land',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Toki_Land.jpg'
   )
 
   //3
@@ -207,7 +207,7 @@ export function placeTeleports() {
     Locations.BLOCK,
     'Block Runner',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/BlockRunner.jpg'
   )
 
   //5
@@ -217,7 +217,7 @@ export function placeTeleports() {
     Locations.CASINO,
     'Serenity Island Casino',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Chateau_satoshi.jpg'
   )
 
   // 6
@@ -228,7 +228,7 @@ export function placeTeleports() {
     Locations.KOKO,
     'Koko Jones',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Koko_Jones.jpg'
   )
 
   //7
@@ -238,7 +238,7 @@ export function placeTeleports() {
     Locations.FRUIT,
     'Fruit Catcher',
     'Catch as many fruits as you can,\navoid bombs! Compete for the\nhighest score!',
-    'images/example-screenshot.png'
+    'images/teleports/Fruit_Catcher.jpg'
   )
 
   //8
@@ -269,7 +269,7 @@ export function placeTeleports() {
     Locations.SALMONOMICON,
     'Book of Salmonomicon',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Salmonomicon.jpg'
   )
 
   // 11
@@ -279,7 +279,7 @@ export function placeTeleports() {
     Locations.MUSEUM,
     'Museum District',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Museum_District.jpg'
   )
 
   // 12
@@ -289,7 +289,7 @@ export function placeTeleports() {
     Locations.MOLES,
     'Click a Mole',
     'Whack the moles before they hide!',
-    'images/example-screenshot.png'
+    'images/teleports/Click_a_Mole.jpg'
   )
 
   // 13
@@ -299,7 +299,7 @@ export function placeTeleports() {
     Locations.TOMBCHASER,
     'Tomb Chaser',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Tomb_Chaser.jpg'
   )
 
   // 14
@@ -309,7 +309,7 @@ export function placeTeleports() {
     Locations.INFINITY,
     'Infinity Engine',
     'Mine for loot underground, then\ndefend a train from\nbandits.',
-    'images/example-screenshot.png'
+    'images/teleports/Infinity_Engine.jpg'
   )
 
   // 15  (crowd!)

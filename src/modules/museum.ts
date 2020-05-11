@@ -53,7 +53,7 @@ export function placeMuseumPieces() {
   let vision = new MuseumPiece(
     new GLTFShape('models/museum/first-image-dcl.glb'),
     {
-      position: new Vector3(168.24, 9.5, 266.3),
+      position: new Vector3(162, 9.5, 269.4),
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'The Vision'
@@ -62,7 +62,7 @@ export function placeMuseumPieces() {
   let firstPixels = new MuseumPiece(
     new GLTFShape('models/museum/pixels-beginning'),
     {
-      position: new Vector3(174.5, 9.5, 262.5),
+      position: new Vector3(168.24, 9.5, 266.3),
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'First Experiments'
@@ -71,7 +71,7 @@ export function placeMuseumPieces() {
   let first3D = new MuseumPiece(
     new GLTFShape('models/museum/first-experiment.glb'),
     {
-      position: new Vector3(179.6, 10, 258.2),
+      position: new Vector3(174.5, 9.5, 262.5),
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'First 3D Version'
@@ -80,8 +80,8 @@ export function placeMuseumPieces() {
   let declaration = new MuseumPiece(
     new GLTFShape('models/museum/declaration.glb'),
     {
-      position: new Vector3(184.7, 10.2, 254),
-      rotation: Quaternion.Euler(0, 218, 0),
+      position: new Vector3(179.6, 10, 258.2),
+      rotation: Quaternion.Euler(0, 230, 0),
     },
     'Declaration of independance'
   )
@@ -89,8 +89,8 @@ export function placeMuseumPieces() {
   let old_logo = new MuseumPiece(
     new GLTFShape('models/museum/old_logo.glb'),
     {
-      position: new Vector3(193.7, 10.35, 245.95),
-      rotation: Quaternion.Euler(0, 235, 0),
+      position: new Vector3(189.2, 10.2, 250),
+      rotation: Quaternion.Euler(0, 208, 0),
     },
     'Original Logo'
   )
@@ -98,10 +98,19 @@ export function placeMuseumPieces() {
   let first_avatars = new MuseumPiece(
     new GLTFShape('models/museum/first-avatars.glb'),
     {
+      position: new Vector3(193.7, 10.35, 245.95),
+      rotation: Quaternion.Euler(0, 235, 0),
+    },
+    'First Avatars'
+  )
+
+  let first_auction = new MuseumPiece(
+    new GLTFShape('models/museum/first_auction.glb'),
+    {
       position: new Vector3(198.5, 10.3, 240.7),
       rotation: Quaternion.Euler(0, 230, 0),
     },
-    'First Avatars'
+    'First Land Auction'
   )
 
   let avatar1 = new MuseumPiece(
@@ -157,20 +166,11 @@ export function placeMuseumPieces() {
     'Avatar'
   )
 
-  let first_auction = new MuseumPiece(
-    new GLTFShape('models/museum/first_auction.glb'),
-    {
-      position: new Vector3(182.6, 10.3, 226.5),
-      rotation: Quaternion.Euler(0, 45, 0),
-    },
-    'First Land Auction'
-  )
-
   let second_auction = new MuseumPiece(
     new GLTFShape('models/museum/second_auction.glb'),
     {
-      position: new Vector3(177, 10.4, 233.3),
-      rotation: Quaternion.Euler(0, 52, 0),
+      position: new Vector3(182.6, 10.3, 226.5),
+      rotation: Quaternion.Euler(0, 45, 0),
     },
     'Second Land Auction'
   )
@@ -178,8 +178,8 @@ export function placeMuseumPieces() {
   let new_logo = new MuseumPiece(
     new GLTFShape('models/museum/new_logo.glb'),
     {
-      position: new Vector3(171.8, 10.5, 239.9),
-      rotation: Quaternion.Euler(0, 45, 0),
+      position: new Vector3(177, 10.4, 233.3),
+      rotation: Quaternion.Euler(0, 52, 0),
     },
     'New Logo'
   )
@@ -187,7 +187,7 @@ export function placeMuseumPieces() {
   let landing = new MuseumPiece(
     new GLTFShape('models/museum/landing.glb'),
     {
-      position: new Vector3(165.9, 9.5, 246),
+      position: new Vector3(171.8, 10.5, 239.9),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Landing'
@@ -196,8 +196,8 @@ export function placeMuseumPieces() {
   let builder = new MuseumPiece(
     new GLTFShape('models/museum/builder.glb'),
     {
-      position: new Vector3(159.8, 9.5, 251.9),
-      rotation: Quaternion.Euler(0, 42, 0),
+      position: new Vector3(165.9, 9.5, 246),
+      rotation: Quaternion.Euler(0, 45, 0),
     },
     'Builder'
   )
@@ -205,10 +205,19 @@ export function placeMuseumPieces() {
   let names = new MuseumPiece(
     new GLTFShape('models/museum/names.glb'),
     {
+      position: new Vector3(159.8, 9.5, 251.9),
+      rotation: Quaternion.Euler(0, 42, 0),
+    },
+    'Virtual identity'
+  )
+
+  let wearables = new MuseumPiece(
+    new GLTFShape('models/museum/halloween_event.glb'),
+    {
       position: new Vector3(151.7, 9.5, 258.4),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Virtual identity'
+    'Token Wearables'
   )
 
   ///// UPSTAIRS
@@ -297,6 +306,15 @@ export function placeMuseumPieces() {
     'LAND Parcel'
   )
 
+  let parcelPua = new MuseumPiece(
+    new GLTFShape('models/museum/pua.glb'),
+    {
+      position: new Vector3(193, 17.55, 223.5),
+      rotation: Quaternion.Euler(0, 195, 0),
+    },
+    'LAND Parcel'
+  )
+
   let estate = new MuseumPiece(
     new GLTFShape('models/museum/estate.glb'),
     {
@@ -306,13 +324,13 @@ export function placeMuseumPieces() {
     'Estate'
   )
 
-  let pua = new MuseumPiece(
+  let estatePua = new MuseumPiece(
     new GLTFShape('models/museum/pua.glb'),
     {
-      position: new Vector3(189.29, 16.5, 222.7),
-      rotation: Quaternion.Euler(0, 315, 0),
+      position: new Vector3(199.2, 17.55, 230),
+      rotation: Quaternion.Euler(0, 30, 0),
     },
-    'Point of interest'
+    'Estate'
   )
 
   let museum_district = new MuseumPiece(
@@ -330,16 +348,16 @@ export function placeMuseumPieces() {
       position: new Vector3(175.2, 17.5, 236.6),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Builder Contest 2019'
+    'First Builder Contest'
   )
 
   let builderContest2 = new MuseumPiece(
-    new GLTFShape('models/museum/builder_winner.glb'),
+    new GLTFShape('models/museum/smart-items.glb'),
     {
       position: new Vector3(167.3, 17.5, 244.95),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Builder Contest 2019'
+    'Creator contest'
   )
 
   let mana = new MuseumPiece(
@@ -451,6 +469,7 @@ export enum MapItems {
 let currentItem: MapItems | null = null
 
 export function animateMap(item: MapItems) {
+  log('selected item: ', item)
   switch (currentItem) {
     case MapItems.DISTRICTS:
       districtOff.stop
@@ -467,12 +486,15 @@ export function animateMap(item: MapItems) {
 
   switch (item) {
     case MapItems.DISTRICTS:
+      log('clicked Districts')
       districtOn.stop
       districtOn.play
     case MapItems.ROADS:
+      log('clicked Roads')
       roadsOn.stop
       roadsOn.play
     case MapItems.PLAZAS:
+      log('clicked Plazas')
       plazasOn.stop
       plazasOn.play
   }
