@@ -1,13 +1,15 @@
 import * as functions from 'firebase-functions'
 //import { config } from 'firebase-functions'
+const OpenSea = require('../keys/opensea-key.json')
 
-// exports.scheduledFunction = functions.pubsub
-//   .schedule('every day')
-//   .onRun((context) => {
-//     console.log('This will be once a day')
-//     updateMarketData()
-//     return null
-//   })
+exports.scheduledFunction = functions.pubsub
+  .schedule('every 30 minutes')
+  .onRun((context) => {
+    console.log('This will run every hour')
+    updateMarketData()
+    updateCoinData
+    return null
+  })
 
 //const admin = require('firebase-admin')
 const express = require('express')
@@ -139,6 +141,35 @@ export async function getMeessageJSON(url: string): Promise<string[]> {
   }
 }
 
+export type WearableData = {
+  activeOrder: { id: string }
+  id: string
+  name: string
+  owner: { address: string }
+  contractAddress: string
+  tokenId: string
+  image: string
+  searchOrderPrice: number
+  searchOrderStatus: string
+  wearable: {
+    bodyShapes: string[]
+    category: string
+    collection: string
+    description: string
+    name: string
+    rarity: string
+    representationId: string
+  }
+}
+
+export type ParcelData = {
+  id: string
+  name: string
+  searchOrderPrice: number
+  parcel: { x: number; y: number }
+  owner: { address: string }
+}
+
 export type CoinData = {
   MANAETH: number
   ETHUSDT: number
@@ -162,12 +193,36 @@ export type MarketData = {
   totalMANALandAndEstateYesterday: number
   totalMANALandAndEstateWeek: number
   totalMANALandAndEstateMonth: number
+  cheapestLandNow: ParcelData | null
   wearableSalesYesterday: number
   wearableSalesWeek: number
   wearableSalesMonth: number
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
+  cheapSwankyNow: WearableData | null
+  expensiveSwankyWeek: WearableData | null
+  cheapEpicNow: WearableData | null
+  expensiveEpicWeek: WearableData | null
+  cheapLegendaryNow: WearableData | null
+  expensiveLegendaryWeek: WearableData | null
+  cheapMythicNow: WearableData | null
+  expensiveMythicWeek: WearableData | null
+}
+
+export enum Direction {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+export enum Rarity {
+  COMMOMN = '"common"',
+  UNCOMMON = '"uncommon"',
+  SWANKY = '"swanky"',
+  EPIC = '"epic"',
+  LEGENDARY = '"legendary"',
+  MYTHIC = '"mythic"',
+  UNIQUE = '"unique"',
 }
 
 export async function uploadMarketData(jsonContents: MarketData) {
@@ -240,18 +295,27 @@ async function updateMarketData() {
     totalMANALandAndEstateYesterday: 0,
     totalMANALandAndEstateWeek: 0,
     totalMANALandAndEstateMonth: 0,
+    cheapestLandNow: null,
     wearableSalesYesterday: 0,
     wearableSalesWeek: 0,
     wearableSalesMonth: 0,
     totalMANAWearablesYesterday: 0,
     totalMANAWearablesWeek: 0,
     totalMANAWearablesMonth: 0,
+    cheapSwankyNow: null,
+    expensiveSwankyWeek: null,
+    cheapEpicNow: null,
+    expensiveEpicWeek: null,
+    cheapLegendaryNow: null,
+    expensiveLegendaryWeek: null,
+    cheapMythicNow: null,
+    expensiveMythicWeek: null,
   }
 
-  // cheapest & most expensive wearable x category
-  // mana btw eth price
+  // cheapest parcel now
+  // largest estate sold?
 
-  //   let dateNow =  Math.floor( Date.now() / 1000)
+  let dateNow = Math.floor(Date.now() / 1000)
 
   let dateYesterday = Math.floor(Date.now() / 1000 - 1 * 24 * 60 * 60)
 
@@ -460,65 +524,6 @@ async function updateMarketData() {
   }
   dataToSend.landSalesMonth = monthLandSales.length
 
-  /// Estate YESTERDAY
-
-  //   for (let i = 0; i < yesterdayEstateSales.length; i++) {
-  //     if (yesterdayEstateSales[i].payment_token.symbol != 'MANA') {
-  //       continue
-  //     }
-
-  //     dataToSend.totalMANALandAndEstateYesterday += toMana(
-  //       yesterdayEstateSales[i].total_price
-  //     )
-
-  //     if (
-  //       toMana(yesterdayEstateSales[i].total_price) >
-  //       dataToSend.expensiveEstateYesterday
-  //     ) {
-  //       dataToSend.expensiveEstateYesterday = toMana(
-  //         yesterdayEstateSales[i].total_price
-  //       )
-  //     }
-  //   }
-  //   dataToSend.estateSalesYesterday = yesterdayEstateSales.length
-
-  //   // Estate WEEK
-  //   for (let i = 0; i < weekEstateSales.length; i++) {
-  //     if (weekEstateSales[i].payment_token.symbol != 'MANA') {
-  //       continue
-  //     }
-
-  //     dataToSend.totalMANALandAndEstateWeek += toMana(
-  //       weekEstateSales[i].total_price
-  //     )
-
-  //     if (
-  //       toMana(weekEstateSales[i].total_price) > dataToSend.expensiveEstateWeek
-  //     ) {
-  //       dataToSend.expensiveEstateWeek = toMana(weekEstateSales[i].total_price)
-  //     }
-  //   }
-  //   dataToSend.estateSalesWeek = weekEstateSales.length
-
-  //   /// Estate MONTH
-
-  //   for (let i = 0; i < monthEstateSales.length; i++) {
-  //     if (monthEstateSales[i].payment_token.symbol != 'MANA') {
-  //       continue
-  //     }
-
-  //     dataToSend.totalMANALandAndEstateMonth += toMana(
-  //       monthEstateSales[i].total_price
-  //     )
-
-  //     if (
-  //       toMana(monthEstateSales[i].total_price) > dataToSend.expensiveEstateMonth
-  //     ) {
-  //       dataToSend.expensiveEstateMonth = toMana(monthEstateSales[i].total_price)
-  //     }
-  //   }
-  //   dataToSend.estateSalesMonth = monthEstateSales.length
-
   //// WEARABLES
 
   // wearables Yesterday
@@ -558,7 +563,53 @@ async function updateMarketData() {
   }
   dataToSend.wearableSalesMonth = monthWearablesSales.length
 
-  // current on sale
+  // wearable sales examples
+
+  dataToSend.cheapSwankyNow = await getMarketplaceWearable(
+    Rarity.SWANKY,
+    Direction.ASC,
+    dateNow
+  )
+  dataToSend.expensiveSwankyWeek = await getMarketplaceWearable(
+    Rarity.SWANKY,
+    Direction.DESC,
+    dateWeekAgo
+  )
+
+  dataToSend.cheapEpicNow = await getMarketplaceWearable(
+    Rarity.EPIC,
+    Direction.ASC,
+    dateNow
+  )
+  dataToSend.expensiveEpicWeek = await getMarketplaceWearable(
+    Rarity.EPIC,
+    Direction.DESC,
+    dateWeekAgo
+  )
+
+  dataToSend.cheapLegendaryNow = await getMarketplaceWearable(
+    Rarity.LEGENDARY,
+    Direction.ASC,
+    dateNow
+  )
+  dataToSend.expensiveLegendaryWeek = await getMarketplaceWearable(
+    Rarity.LEGENDARY,
+    Direction.DESC,
+    dateWeekAgo
+  )
+
+  dataToSend.cheapMythicNow = await getMarketplaceWearable(
+    Rarity.MYTHIC,
+    Direction.ASC,
+    dateNow
+  )
+  dataToSend.expensiveMythicWeek = await getMarketplaceWearable(
+    Rarity.MYTHIC,
+    Direction.DESC,
+    dateWeekAgo
+  )
+
+  dataToSend.cheapestLandNow = await getMarketplaceParcel(dateNow)
 
   console.log('DATA TO SEND: ', dataToSend)
 
@@ -575,7 +626,9 @@ export async function getOpenSeaEventsJSON(
     if (offset) {
       finalURL = url + '&offset=' + offset
     }
-    let response = await fetch(finalURL).then()
+    const opts = { headers: { 'X-API-KEY': OpenSea.OpenSeaKey } }
+
+    let response = await fetch(finalURL, opts).then()
     let json = await response.json()
     let fullList = json.asset_events
     if (alreadyCollected) {
@@ -601,12 +654,6 @@ export async function getOpenSeaEventsJSON(
     }
     return []
   }
-}
-
-export function toMana(longNum: string) {
-  let shortNum = parseFloat(longNum) / 1000000000000000000
-  let squaredNum = shortNum * Math.pow(10, 4)
-  return Math.round(squaredNum) / Math.pow(10, 4)
 }
 
 export async function updateCoinData() {
@@ -646,4 +693,88 @@ export async function updateCoinData() {
   } catch {
     console.log('Failed to connect to Binance API.')
   }
+}
+
+export async function getMarketplaceWearable(
+  rarity: Rarity,
+  direction: Direction,
+  maxDate: number
+) {
+  const url = 'https://api.thegraph.com/subgraphs/name/decentraland/marketplace'
+
+  let query =
+    `{
+	nfts(orderDirection: ` +
+    direction +
+    `, orderBy: searchOrderPrice, first:1, where:{ searchWearableRarity: ` +
+    rarity +
+    `, category: wearable, searchOrderStatus:open, searchOrderExpiresAt_gt:` +
+    maxDate +
+    `
+  }) {
+	id
+    name
+     owner{address}
+    image
+    contractAddress
+    tokenId
+    searchOrderPrice
+	  searchOrderStatus
+    wearable{ name, representationId, collection, description, category, rarity, bodyShapes }
+	}
+}
+	`
+  const opts = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query }),
+  }
+
+  try {
+    const res = await fetch(url, opts)
+    let json = await res.json()
+    return json.data.nfts[0]
+  } catch (error) {
+    console.log(`Error fetching wearable dat `, error)
+    throw error
+  }
+}
+
+export async function getMarketplaceParcel(maxDate: number) {
+  const url = 'https://api.thegraph.com/subgraphs/name/decentraland/marketplace'
+
+  let query =
+    ` {
+			nfts(orderBy: searchOrderPrice, orderDirection: asc,  first: 1, where:{ category: parcel, searchOrderStatus:open, searchOrderExpiresAt_gt: ` +
+    maxDate +
+    `})
+				{
+				  id
+				   name
+			  searchOrderPrice
+			  parcel{x,y}
+			  owner{address}
+		  }
+		  }
+	  `
+  const opts = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query }),
+  }
+
+  try {
+    const res = await fetch(url, opts)
+    let json = await res.json()
+    return json.data.nfts[0]
+  } catch (error) {
+    console.log(`Error fetching wearable dat `, error)
+    throw error
+  }
+}
+
+export function toMana(longNum: string) {
+  let shortNum = parseFloat(longNum) / 1000000000000000000
+  let squaredNum = shortNum * Math.pow(10, 4)
+  return Math.round(squaredNum) / Math.pow(10, 4)
 }

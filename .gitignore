@@ -106,6 +106,7 @@ dist
 
 #  AWS keys
 server/functions/keys/aws-key.json
+server/functions/keys/opensea-key.json
 server/functions/lib/index.js.map
 server/functions/lib/index.js
 keys/

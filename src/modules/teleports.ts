@@ -15,6 +15,7 @@ export enum Locations {
   MOLES = '-71,-71', /// NEED REAL LOCATION
   PRESENT = '-40,-49',
   CASINO = '-55,144',
+  TOKI = '28,45',
 }
 
 declare const dcl: any
@@ -179,11 +180,11 @@ export function placeTeleports() {
 
   //2
 
-  let magic1 = new Teleport(
-    new GLTFShape('models/teleports/star.glb'),
+  let toki = new Teleport(
+    new GLTFShape('models/teleports/toki_land.glb'),
     teleportPos2,
-    Locations.MAGIC,
-    'Random amazing scene',
+    Locations.TOKI,
+    'Toki Toki Land',
     '',
     'images/example-screenshot.png'
   )
