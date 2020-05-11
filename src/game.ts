@@ -5,6 +5,8 @@ import { Wearable, addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museum'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
+import { loadFaceUserSystem } from "./modules/faceUserSystem"
+import { loadRobots } from "./modules/robotBuilder"
 
 //////// HACK TO LOG POSITIONS
 
@@ -26,16 +28,24 @@ setTriggerAreas()
 
 ///TELEPORTERS
 
-placeTeleports()
+// placeTeleports()
 
 /// MUSEUM
 
-placeMuseumPieces()
+// placeMuseumPieces()
 
 /// VIDEO SCEREEN
 
-addScreen()
+// addScreen()
 
 //// WEARABLES
 
-addWearables()
+// addWearables()
+
+//// ROBOTS
+const dummyTarget = new Entity()
+dummyTarget.addComponent(new PlaneShape())
+dummyTarget.addComponent(new Transform())
+
+loadFaceUserSystem(dummyTarget)
+loadRobots(dummyTarget)
