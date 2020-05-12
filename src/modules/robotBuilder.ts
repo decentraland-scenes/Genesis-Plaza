@@ -51,7 +51,7 @@ export function addRobots(dummyTarget: Entity) {
   const bela = new Robot(
     resources.models.robots.bela,
     new Transform({
-      position: new Vector3(37.27, 3.65, 265.32),
+      position: new Vector3(37.27, 4, 265.32),
       rotation: Quaternion.Euler(0, 90, 0),
     }),
     RobotID.Agora
