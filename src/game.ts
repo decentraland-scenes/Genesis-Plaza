@@ -7,6 +7,7 @@ import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/faceUserSystem'
 import { addRobots } from './modules/robotBuilder'
+import { addNFTs } from './modules/nftBuilder'
 
 //////// HACK TO LOG POSITIONS
 
@@ -49,3 +50,6 @@ dummyTarget.addComponent(new Transform())
 
 addFaceUserSystem(dummyTarget)
 addRobots(dummyTarget)
+
+//// NFTS
+addNFTs()
