@@ -1,4 +1,5 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
+import { MarketData } from './serverHandler'
 
 /////// GET DATA FROM SERVER
 
@@ -664,6 +665,10 @@ epicBoard2Title.addComponent(
     position: new Vector3(0, 1, -0.2),
   })
 )
+
+////// UPDATE BOARDS
+
+export function updateTradeCentrer(data: MarketData) {}
 
 ////// ROOFTOP MUSIC
 

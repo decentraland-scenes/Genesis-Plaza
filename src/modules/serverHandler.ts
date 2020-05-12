@@ -1,4 +1,5 @@
 import { ArtichokeFloatingTextShape, setTowerText } from './messageboard'
+import { updateTradeCentrer } from './marketData'
 
 export const sceneMessageBus = new MessageBus()
 
@@ -7,26 +8,41 @@ export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
 
 // how often to refresh scene, in seconds
-export const refreshInterval: number = 30
+export const messageRefreshInterval: number = 30
+
+// how often to refresh scene, in seconds
+export const marketRefreshInterval: number = 30
 
 // check server for new messageboard messages
 export class CheckServer implements ISystem {
-  timer: number
-  constructor(timer: number) {
-    this.timer = timer
+  messageTimer: number
+  marketTimer: number
+  totalMessageTime: number
+  totalMarketTime: number
+  constructor(messageTimer: number, marketTimer: number) {
+    this.totalMessageTime = messageTimer
+    this.totalMarketTime = marketTimer
+    this.messageTimer = 0
+    this.marketTimer = 0
   }
   update(dt: number) {
-    this.timer -= dt
-    if (this.timer < 0) {
-      this.timer = refreshInterval
+    this.messageTimer -= dt
+    this.marketTimer -= dt
+    if (this.messageTimer < 0) {
+      this.messageTimer = this.totalMessageTime
       updateMessageBoards()
+    }
+    if (this.marketTimer < 0) {
+      this.marketTimer = this.totalMarketTime
+      updateMarketData()
     }
   }
 }
 
-engine.addSystem(new CheckServer(refreshInterval))
+engine.addSystem(new CheckServer(messageRefreshInterval, marketRefreshInterval))
 
-// send new message to server
+//////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
+
 export async function setNewMessage(location: string, message: string) {
   if (location == 'artichoke') {
     sceneMessageBus.emit('artichokeMessage', { text: message })
@@ -48,6 +64,9 @@ export async function setNewMessage(location: string, message: string) {
   }
 }
 
+// ////// UPDATE MESSAGEBOARDS
+
+// get lastest message
 export async function getLastMessage(location: string): Promise<string> {
   try {
     let url = awsServer + 'messageboards/' + location + '.json'
@@ -59,7 +78,7 @@ export async function getLastMessage(location: string): Promise<string> {
   }
 }
 
-// change messages displayed in the plaza
+// change text displayed in the plaza
 export async function updateMessageBoards() {
   let artMessage = await getLastMessage('artichoke')
   if (artMessage) {
@@ -72,7 +91,7 @@ export async function updateMessageBoards() {
   }
 }
 
-// ////// UPDATE MESSAGEBOARDS
+///// HANDLE MESSAGEBUS UPDATES
 
 sceneMessageBus.on('towerMessage', (e) => {
   setTowerText(e.text)
@@ -81,3 +100,99 @@ sceneMessageBus.on('towerMessage', (e) => {
 sceneMessageBus.on('artichokeMessage', (e) => {
   ArtichokeFloatingTextShape.value = e.text
 })
+
+//////// TRADE CENTER DATA
+
+export type WearableData = {
+  activeOrder: { id: string }
+  id: string
+  name: string
+  owner: { address: string }
+  contractAddress: string
+  tokenId: string
+  image: string
+  searchOrderPrice: number
+  searchOrderStatus: string
+  wearable: {
+    bodyShapes: string[]
+    category: string
+    collection: string
+    description: string
+    name: string
+    rarity: string
+    representationId: string
+  }
+}
+
+export type ParcelData = {
+  id: string
+  name: string
+  searchOrderPrice: number
+  parcel: { x: number; y: number }
+  owner: { address: string }
+}
+
+export type CoinData = {
+  MANAETH: number
+  ETHUSDT: number
+  BTCUSDT: number
+  MANAUSD: number
+}
+
+export type MarketData = {
+  coins: CoinData | null
+  landSalesYesterday: number
+  landSalesWeek: number
+  landSalesMonth: number
+  cheapestLandYesterday: number
+  cheapestLandWeek: number
+  cheapestLandMonth: number
+  expensiveLandYesterday: number
+  expensiveLandWeek: number
+  expensiveLandMonth: number
+  expensiveEstateYesterday: number
+  expensiveEstateWeek: number
+  expensiveEstateMonth: number
+  totalMANALandAndEstateYesterday: number
+  totalMANALandAndEstateWeek: number
+  totalMANALandAndEstateMonth: number
+  cheapestLandNow: ParcelData | null
+  wearableSalesYesterday: number
+  wearableSalesWeek: number
+  wearableSalesMonth: number
+  totalMANAWearablesYesterday: number
+  totalMANAWearablesWeek: number
+  totalMANAWearablesMonth: number
+  cheapSwankyNow: WearableData | null
+  expensiveSwankyWeek: WearableData | null
+  cheapEpicNow: WearableData | null
+  expensiveEpicWeek: WearableData | null
+  cheapLegendaryNow: WearableData | null
+  expensiveLegendaryWeek: WearableData | null
+  cheapMythicNow: WearableData | null
+  expensiveMythicWeek: WearableData | null
+}
+
+let marketData: MarketData | null = null
+
+export async function getMarketData(): Promise<MarketData> {
+  try {
+    let url = awsServer + 'market/marketData.json'
+    let response = await fetch(url).then()
+    let json = await response.json()
+    return json
+  } catch {
+    log('error fetching from AWS server')
+  }
+}
+
+export async function updateMarketData() {
+  let newMarketData = await getMarketData()
+  if (newMarketData == marketData) {
+    return
+  } else {
+    marketData = newMarketData
+  }
+  log('MARKET DATA: ', marketData)
+  updateTradeCentrer(marketData)
+}

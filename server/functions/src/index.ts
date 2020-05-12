@@ -7,7 +7,6 @@ exports.scheduledFunction = functions.pubsub
   .onRun((context) => {
     console.log('This will run every hour')
     updateMarketData()
-    updateCoinData
     return null
   })
 
@@ -178,6 +177,7 @@ export type CoinData = {
 }
 
 export type MarketData = {
+  coins: CoinData | null
   landSalesYesterday: number
   landSalesWeek: number
   landSalesMonth: number
@@ -280,6 +280,7 @@ export async function uploadCoinData(jsonContents: CoinData) {
 
 async function updateMarketData() {
   let dataToSend: MarketData = {
+    coins: null,
     landSalesYesterday: 0,
     landSalesWeek: 0,
     landSalesMonth: 0,
@@ -382,27 +383,7 @@ async function updateMarketData() {
       '&limit=300'
   )
 
-  //   let yesterdayEstateSales = await getOpenSeaEventsJSON(
-  //     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
-  //       estateContract +
-  //       '&offset=0&event_type=successful&occurred_after=' +
-  //       dateYesterday +
-  //       '&limit=2000'
-  //   )
-  //   let weekEstateSales = await getOpenSeaEventsJSON(
-  //     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
-  //       estateContract +
-  //       '&offset=0&event_type=successful&occurred_after=' +
-  //       dateWeekAgo +
-  //       '&limit=2000'
-  //   )
-  //   let monthEstateSales = await getOpenSeaEventsJSON(
-  //     'https://api.opensea.io/api/v1/events?only_opensea=false&asset_contract_address=' +
-  //       estateContract +
-  //       '&offset=0&event_type=successful&occurred_after=' +
-  //       dateMonthAgo +
-  //       '&limit=2000'
-  //   )
+  dataToSend.coins = await updateCoinData()
 
   /// LAND YESTERDAY
 
@@ -656,8 +637,8 @@ export async function getOpenSeaEventsJSON(
   }
 }
 
-export async function updateCoinData() {
-  let dataToSend: CoinData = {
+export async function updateCoinData(): Promise<CoinData> {
+  let data: CoinData = {
     MANAETH: 0,
     ETHUSDT: 0,
     BTCUSDT: 0,
@@ -676,22 +657,24 @@ export async function updateCoinData() {
     for (var i = 0; i < json.length; i++) {
       switch (json[i].symbol) {
         case 'MANAETH':
-          dataToSend.MANAETH = parseFloat(json[i].price)
+          data.MANAETH = parseFloat(json[i].price)
           break
         case 'ETHUSDT':
-          dataToSend.ETHUSDT = parseFloat(json[i].price)
+          data.ETHUSDT = parseFloat(json[i].price)
           break
         case 'BTCUSDT':
-          dataToSend.BTCUSDT = parseFloat(json[i].price)
+          data.BTCUSDT = parseFloat(json[i].price)
           break
       }
     }
 
-    dataToSend.MANAUSD = dataToSend.MANAETH * dataToSend.ETHUSDT
+    data.MANAUSD = data.MANAETH * data.ETHUSDT
 
-    uploadCoinData(dataToSend)
+    return data
+    //uploadCoinData(dataToSend)
   } catch {
     console.log('Failed to connect to Binance API.')
+    return data
   }
 }
 

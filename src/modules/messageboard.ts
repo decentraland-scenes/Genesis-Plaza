@@ -19,9 +19,6 @@ engine.addEntity(ArtichokeFloatingText)
 // TOWER
 
 const TowerFloatingText = new Entity()
-// export let TowerFloatingTextShape = new TextShape('Write something')
-// TowerFloatingTextShape.color = Color3.FromHexString('#8040E2')
-// TowerFloatingText.addComponent(TowerFloatingTextShape)
 TowerFloatingText.addComponent(
   new Transform({
     position: new Vector3(48.6, 21, 116.6),

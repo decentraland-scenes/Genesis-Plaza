@@ -173,23 +173,10 @@ function radioOff() {
   LightsA.stop()
   LightsB.stop()
   LightsC.stop()
-  musicStream.playing = false
+  if (musicStream) {
+    musicStream.playing = false
+  }
 }
-
-// turn on when approach
-
-//// stations
-
-//  Rave: https://icecast.ravepartyradio.org/ravepartyradio-192.mp3
-
-// DCL Interviews:  https://dclcoreradio.com/dclradio.ogg
-
-// Electronic -  Delta: (argentina?)  https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e
-
-// https://edge.singsingmusic.net/MC2.mp3
-
-// raw sites:
-// https://www.a100.radio/
 
 ///// LIGTHS
 

@@ -16,7 +16,7 @@ class CameraTrackSystem implements ISystem {
   }
 }
 
-engine.addSystem(new CameraTrackSystem())
+//engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
