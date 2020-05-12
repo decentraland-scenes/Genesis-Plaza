@@ -186,7 +186,7 @@ export function placeTeleports() {
     Locations.TOKI,
     'Toki Toki Land',
     '',
-    'images/teleports/Toki_Land.jpg'
+    'images/teleports/TokiLand.jpg'
   )
 
   //3
@@ -258,7 +258,7 @@ export function placeTeleports() {
     Locations.CROWD,
     'Join other players',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Crowd.jpg'
   )
 
   // 10  (crowd!)
@@ -289,7 +289,7 @@ export function placeTeleports() {
     Locations.MOLES,
     'Click a Mole',
     'Whack the moles before they hide!',
-    'images/teleports/Click_a_Mole.jpg'
+    'images/teleports/ClickAMole.jpg'
   )
 
   // 13
@@ -319,6 +319,6 @@ export function placeTeleports() {
     Locations.CROWD,
     'Join other players',
     '',
-    'images/example-screenshot.png'
+    'images/teleports/Crowd.jpg'
   )
 }

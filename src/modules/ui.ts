@@ -373,8 +373,8 @@ export function openTeleportUI(teleport: Teleport) {
   screenshot.positionY = 172 / 2 + 91
   screenshot.sourceLeft = 0
   screenshot.sourceTop = 0
-  screenshot.sourceWidth = 268
-  screenshot.sourceHeight = 172
+  screenshot.sourceWidth = 536
+  screenshot.sourceHeight = 344
 
   const icon = new UIImage(tBackground, teleportUITexture)
   icon.name = 'tIcon'

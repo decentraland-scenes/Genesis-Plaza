@@ -1,7 +1,3 @@
-//import { openUI1 } from './ui'
-//import utils from '../node_modules/decentraland-ecs-utils/index'
-//import { sceneMessageBus } from './game'
-
 import { openWearableUI, wearableClassic, wearableNotForSale } from './ui'
 
 export class Wearable extends Entity {

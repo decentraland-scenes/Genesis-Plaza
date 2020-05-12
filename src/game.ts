@@ -1,12 +1,12 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 import { placeTeleports } from './modules/teleports'
-import { setTriggerAreas } from './modules/triggers'
-import { Wearable, addWearables } from './modules/wearables'
+import { setTriggerAreas } from './modules/elevators'
+import { addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museum'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
-import { loadFaceUserSystem } from "./modules/faceUserSystem"
-import { loadRobots } from "./modules/robotBuilder"
+import { loadFaceUserSystem } from './modules/faceUserSystem'
+import { loadRobots } from './modules/robotBuilder'
 
 //////// HACK TO LOG POSITIONS
 
