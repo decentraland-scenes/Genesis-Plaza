@@ -323,9 +323,9 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   button.name = 'wButton'
   button.hAlign = 'center'
   button.vAlign = 'center'
-  button.width = 215.15
-  button.height = 40
-  button.positionY = -138 + 91
+  button.width = 322
+  button.height = 44
+  button.positionY = 461 / 2 - 395 - 20 + 9
   button.sourceLeft = 0
   button.sourceTop = 116
   button.sourceWidth = 322
