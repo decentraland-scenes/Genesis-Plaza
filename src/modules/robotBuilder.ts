@@ -122,7 +122,10 @@ export function addRobots(dummyTarget: Entity) {
     robots[i].addComponent(
       new OnPointerDown(
         (): void => {
-          if (!dialogWindow.isDialogOpen) {
+
+          let isGoodbyePlaying =  robots[i].getComponent(Animator).getClip("Goodbye").playing
+
+          if (!dialogWindow.isDialogOpen && !isGoodbyePlaying) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
