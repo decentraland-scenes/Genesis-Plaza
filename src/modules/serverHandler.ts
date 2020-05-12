@@ -10,8 +10,8 @@ export let fireBaseServer =
 // how often to refresh scene, in seconds
 export const messageRefreshInterval: number = 30
 
-// how often to refresh scene, in seconds
-export const marketRefreshInterval: number = 30
+// how often to refresh scene, in seconds  (30 minutes)
+export const marketRefreshInterval: number = 1800
 
 // check server for new messageboard messages
 export class CheckServer implements ISystem {
@@ -160,6 +160,9 @@ export type MarketData = {
   wearableSalesYesterday: number
   wearableSalesWeek: number
   wearableSalesMonth: number
+  expensiveWearableYesterday: number
+  expensiveWearableWeek: number
+  expensiveWearableMonth: number
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number

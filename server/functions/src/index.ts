@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions'
 const OpenSea = require('../keys/opensea-key.json')
 
 exports.scheduledFunction = functions.pubsub
-  .schedule('every 30 minutes')
+  .schedule('every 60 minutes')
   .onRun((context) => {
     console.log('This will run every hour')
     updateMarketData()
@@ -197,6 +197,9 @@ export type MarketData = {
   wearableSalesYesterday: number
   wearableSalesWeek: number
   wearableSalesMonth: number
+  expensiveWearableYesterday: number
+  expensiveWearableWeek: number
+  expensiveWearableMonth: number
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
@@ -300,6 +303,9 @@ async function updateMarketData() {
     wearableSalesYesterday: 0,
     wearableSalesWeek: 0,
     wearableSalesMonth: 0,
+    expensiveWearableYesterday: 0,
+    expensiveWearableWeek: 0,
+    expensiveWearableMonth: 0,
     totalMANAWearablesYesterday: 0,
     totalMANAWearablesWeek: 0,
     totalMANAWearablesMonth: 0,
@@ -513,6 +519,16 @@ async function updateMarketData() {
       continue
     }
 
+    if (
+      toMana(yesterdayWearablesSales[i].total_price) >
+        dataToSend.expensiveWearableYesterday ||
+      dataToSend.expensiveWearableYesterday == 0
+    ) {
+      dataToSend.expensiveWearableYesterday = toMana(
+        yesterdayWearablesSales[i].total_price
+      )
+    }
+
     dataToSend.totalMANAWearablesYesterday += toMana(
       yesterdayWearablesSales[i].total_price
     )
@@ -523,6 +539,16 @@ async function updateMarketData() {
   for (let i = 0; i < weekWearablesSales.length; i++) {
     if (weekWearablesSales[i].payment_token.symbol != 'MANA') {
       continue
+    }
+
+    if (
+      toMana(weekWearablesSales[i].total_price) >
+        dataToSend.expensiveWearableWeek ||
+      dataToSend.expensiveWearableWeek == 0
+    ) {
+      dataToSend.expensiveWearableWeek = toMana(
+        weekWearablesSales[i].total_price
+      )
     }
 
     dataToSend.totalMANAWearablesWeek += toMana(
@@ -536,6 +562,16 @@ async function updateMarketData() {
   for (let i = 0; i < monthWearablesSales.length; i++) {
     if (monthWearablesSales[i].payment_token.symbol != 'MANA') {
       continue
+    }
+
+    if (
+      toMana(monthWearablesSales[i].total_price) >
+        dataToSend.expensiveWearableMonth ||
+      dataToSend.expensiveWearableMonth == 0
+    ) {
+      dataToSend.expensiveWearableMonth = toMana(
+        monthWearablesSales[i].total_price
+      )
     }
 
     dataToSend.totalMANAWearablesMonth += toMana(
@@ -651,8 +687,6 @@ export async function updateCoinData(): Promise<CoinData> {
     let targetUrl = 'https://api.binance.com/api/v1/ticker/allPrices'
     let response = await fetch(targetUrl) //proxyUrl + targetUrl)
     let json = await response.json()
-
-    console.log(json)
 
     for (var i = 0; i < json.length; i++) {
       switch (json[i].symbol) {

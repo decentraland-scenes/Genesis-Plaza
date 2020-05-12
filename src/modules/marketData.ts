@@ -35,15 +35,6 @@ lowerShiftPanel1.addComponent(
 lowerShiftPanel1.setParent(lowerRotationPanel1)
 lowerShiftPanel1.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let lowerPanel1Title = new Entity()
-lowerPanel1Title.addComponent(new TextShape('Board 1'))
-lowerPanel1Title.setParent(lowerShiftPanel1)
-lowerPanel1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let lowerRotationPanel2 = new Entity()
 lowerRotationPanel2.addComponent(
   new Transform({
@@ -61,15 +52,6 @@ lowerShiftPanel2.addComponent(
 lowerShiftPanel2.setParent(lowerRotationPanel2)
 lowerShiftPanel2.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let lowerPanel2Title = new Entity()
-lowerPanel2Title.addComponent(new TextShape('Board 2'))
-lowerPanel2Title.setParent(lowerShiftPanel2)
-lowerPanel2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let lowerRotationPanel3 = new Entity()
 lowerRotationPanel3.addComponent(
   new Transform({
@@ -81,20 +63,11 @@ lowerRotationPanel3.setParent(lowerCenterPiece)
 let lowerShiftPanel3 = new Entity()
 lowerShiftPanel3.addComponent(
   new Transform({
-    position: new Vector3(0, 0, lowerBoardWidth),
+    position: new Vector3(0, 0, lowerBoardWidth - 0.1),
   })
 )
 lowerShiftPanel3.setParent(lowerRotationPanel3)
 lowerShiftPanel3.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let lowerPanel3Title = new Entity()
-lowerPanel3Title.addComponent(new TextShape('Board 3'))
-lowerPanel3Title.setParent(lowerShiftPanel3)
-lowerPanel3Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 let lowerRotationPanel4 = new Entity()
 lowerRotationPanel4.addComponent(
@@ -113,15 +86,6 @@ lowerShiftPanel4.addComponent(
 lowerShiftPanel4.setParent(lowerRotationPanel4)
 lowerShiftPanel4.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let lowerPanel4Title = new Entity()
-lowerPanel4Title.addComponent(new TextShape('Board 4'))
-lowerPanel4Title.setParent(lowerShiftPanel4)
-lowerPanel4Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let lowerRotationPanel5 = new Entity()
 lowerRotationPanel5.addComponent(
   new Transform({
@@ -139,15 +103,6 @@ lowerShiftPanel5.addComponent(
 lowerShiftPanel5.setParent(lowerRotationPanel5)
 lowerShiftPanel5.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let lowerPanel5Title = new Entity()
-lowerPanel5Title.addComponent(new TextShape('Board 5'))
-lowerPanel5Title.setParent(lowerShiftPanel5)
-lowerPanel5Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let lowerRotationPanel6 = new Entity()
 lowerRotationPanel6.addComponent(
   new Transform({
@@ -164,15 +119,6 @@ lowerShiftPanel6.addComponent(
 )
 lowerShiftPanel6.setParent(lowerRotationPanel6)
 lowerShiftPanel6.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let lowerPanel6Title = new Entity()
-lowerPanel6Title.addComponent(new TextShape('Board 6'))
-lowerPanel6Title.setParent(lowerShiftPanel6)
-lowerPanel6Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 ///////// MID FLOOR
 
@@ -198,7 +144,7 @@ midRotationPanel1.setParent(midCenterPiece)
 let midShiftPanel1 = new Entity()
 midShiftPanel1.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth),
+    position: new Vector3(0, 0, midBoardWidth + 0.05),
   })
 )
 midShiftPanel1.setParent(midRotationPanel1)
@@ -224,7 +170,7 @@ midRotationPanel2.setParent(midCenterPiece)
 let midShiftPanel2 = new Entity()
 midShiftPanel2.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth),
+    position: new Vector3(0, 0, midBoardWidth + 0.15),
   })
 )
 midShiftPanel2.setParent(midRotationPanel2)
@@ -250,7 +196,7 @@ midRotationPanel3.setParent(midCenterPiece)
 let midShiftPanel3 = new Entity()
 midShiftPanel3.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth),
+    position: new Vector3(0, 0, midBoardWidth + 0.15),
   })
 )
 midShiftPanel3.setParent(midRotationPanel3)
@@ -276,7 +222,7 @@ midRotationPanel4.setParent(midCenterPiece)
 let midShiftPanel4 = new Entity()
 midShiftPanel4.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth),
+    position: new Vector3(0, 0, midBoardWidth + 0.15),
   })
 )
 midShiftPanel4.setParent(midRotationPanel4)
@@ -393,7 +339,7 @@ topRotationPanel2.setParent(topCenterPiece)
 let topShiftPanel2 = new Entity()
 topShiftPanel2.addComponent(
   new Transform({
-    position: new Vector3(0, 0, topBoardWidth),
+    position: new Vector3(0, 0, topBoardWidth + 0.05),
   })
 )
 topShiftPanel2.setParent(topRotationPanel2)
@@ -419,7 +365,7 @@ topRotationPanel3.setParent(topCenterPiece)
 let topShiftPanel3 = new Entity()
 topShiftPanel3.addComponent(
   new Transform({
-    position: new Vector3(0, 0, topBoardWidth),
+    position: new Vector3(0, 0, topBoardWidth + 0.1),
   })
 )
 topShiftPanel3.setParent(topRotationPanel3)
@@ -445,7 +391,7 @@ topRotationPanel4.setParent(topCenterPiece)
 let topShiftPanel4 = new Entity()
 topShiftPanel4.addComponent(
   new Transform({
-    position: new Vector3(0, 0, topBoardWidth),
+    position: new Vector3(0, 0, topBoardWidth + 0.05),
   })
 )
 topShiftPanel4.setParent(topRotationPanel4)
@@ -497,7 +443,7 @@ topRotationPanel6.setParent(topCenterPiece)
 let topShiftPanel6 = new Entity()
 topShiftPanel6.addComponent(
   new Transform({
-    position: new Vector3(0, 0, topBoardWidth),
+    position: new Vector3(0, 0, topBoardWidth - 0.05),
   })
 )
 topShiftPanel6.setParent(topRotationPanel6)
@@ -668,7 +614,206 @@ epicBoard2Title.addComponent(
 
 ////// UPDATE BOARDS
 
-export function updateTradeCentrer(data: MarketData) {}
+export enum StockDataTypes {
+  BIGTITLE = 'bigtitle',
+  BIGVALUE = 'bigvalue',
+  TITLE = 'title',
+  LABEL = 'label',
+  VALUE = 'value',
+  UNIT = 'unit',
+}
+
+let SFFont = new Font(Fonts.SanFrancisco)
+
+//// CLEAR OLD TEXT SHAPES
+
+export class StockData extends Entity {
+  constructor(
+    type: StockDataTypes,
+    text: string,
+    transform: TranformConstructorArgs,
+    parent: Entity
+  ) {
+    super()
+    engine.addEntity(this)
+
+    this.addComponent(new Transform(transform))
+    this.setParent(parent)
+
+    let shape = new TextShape(text)
+
+    shape.font = SFFont
+
+    switch (type) {
+      case StockDataTypes.BIGTITLE:
+        shape.fontSize = 6
+        shape.color = Color3.White()
+        shape.vTextAlign = 'center'
+        break
+      case StockDataTypes.BIGVALUE:
+        shape.fontSize = 4
+        shape.color = Color3.Green()
+        shape.vTextAlign = 'center'
+        break
+
+      case StockDataTypes.TITLE:
+        shape.fontSize = 3
+        shape.color = Color3.White()
+        shape.vTextAlign = 'center'
+        break
+      case StockDataTypes.LABEL:
+        shape.fontSize = 2
+        shape.color = Color3.Green()
+        shape.vTextAlign = 'left'
+        break
+      case StockDataTypes.VALUE:
+        shape.fontSize = 2
+        shape.color = Color3.Green()
+        shape.vTextAlign = 'right'
+        break
+      case StockDataTypes.UNIT:
+        shape.fontSize = 2
+        shape.color = Color3.White()
+        shape.vTextAlign = 'right'
+        break
+    }
+
+    this.addComponent(shape)
+  }
+}
+
+export function updateTradeCentrer(data: MarketData) {
+  let lowerPanel1Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'BTC Price',
+    {
+      position: new Vector3(0, 0.4, 0),
+    },
+    lowerShiftPanel1
+  )
+
+  let lowerPanel1Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    data.coins.BTCUSDT.toString() + ' USD',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel1
+  )
+
+  let lowerPanel2Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'ETH Price',
+    {
+      position: new Vector3(0, 0.4, 0),
+    },
+    lowerShiftPanel2
+  )
+
+  let lowerPanel2Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    data.coins.ETHUSDT.toString() + ' USD',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel2
+  )
+
+  let lowerPanel3itle = new StockData(
+    StockDataTypes.BIGTITLE,
+    'MANA Price',
+    {
+      position: new Vector3(0, 0.4, 0),
+    },
+    lowerShiftPanel3
+  )
+
+  let lowerPanel3Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    data.coins.MANAETH.toString() + ' ETH',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel3
+  )
+
+  let lowerPanel4itle = new StockData(
+    StockDataTypes.BIGTITLE,
+    'MANA Price',
+    {
+      position: new Vector3(0, 0.4, 0),
+    },
+    lowerShiftPanel4
+  )
+
+  let lowerPanel4Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    data.coins.MANAUSD.toString() + ' USD',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel4
+  )
+
+  let lowerPanel5itle = new StockData(
+    StockDataTypes.TITLE,
+    'DCL token transactions',
+    {
+      position: new Vector3(0, 0.5, 0),
+    },
+    lowerShiftPanel5
+  )
+  let lowerPanel5itle2 = new StockData(
+    StockDataTypes.TITLE,
+    'last 7 days',
+    {
+      position: new Vector3(0, 0.15, 0),
+    },
+    lowerShiftPanel5
+  )
+
+  let totalTokenSalesWeek = data.landSalesWeek + data.wearableSalesWeek
+
+  let lowerPanel5Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    totalTokenSalesWeek.toString() + ' tokens',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel5
+  )
+
+  let lowerPanel6itle = new StockData(
+    StockDataTypes.TITLE,
+    'DCL token transactions',
+    {
+      position: new Vector3(0, 0.5, 0),
+    },
+    lowerShiftPanel6
+  )
+  let lowerPanel6itle2 = new StockData(
+    StockDataTypes.TITLE,
+    'last 7 days',
+    {
+      position: new Vector3(0, 0.15, 0),
+    },
+    lowerShiftPanel6
+  )
+
+  let totalTokenManaWeek =
+    (data.totalMANALandAndEstateWeek + data.totalMANAWearablesWeek) *
+    data.coins.MANAUSD
+  let roundedTotalTokenManaWeek = Math.floor(totalTokenManaWeek * 100) / 100
+
+  let lowerPanel6Value = new StockData(
+    StockDataTypes.BIGVALUE,
+    roundedTotalTokenManaWeek.toString() + ' USD',
+    {
+      position: new Vector3(0, -0.3, 0),
+    },
+    lowerShiftPanel6
+  )
+}
 
 ////// ROOFTOP MUSIC
 
