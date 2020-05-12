@@ -80,7 +80,7 @@ export function addRobots(dummyTarget: Entity) {
   charlieRings.addComponent(ringShape)
   charlieRings.addComponent(
     new Transform({
-      position: new Vector3(0, -0.55, 0),
+      position: new Vector3(0, -0.55, -.2),
     })
   )
   charlieRings.setParent(charlie)
