@@ -1,3 +1,9 @@
+import utils from '../../node_modules/decentraland-ecs-utils/index'
+
+/////// GET DATA FROM SERVER
+
+////// POSITION ALL PANELS
+
 /// LOWER FLOOR BOARD
 
 const lowerBoardWidth = -3.365
@@ -659,57 +665,40 @@ epicBoard2Title.addComponent(
   })
 )
 
-//  let now = String(Math.floor(Date.now() / 1000))
-//  let day = String(Math.floor(Date.now() / 1000 - (1 * 24  * 60 * 60)))
-//  let seven_days = String(Math.floor(Date.now() / 1000 - (7 * 24  * 60 * 60)))
-//  let thirty_days = String(Math.floor(Date.now() / 1000 - (30 * 24  * 60 * 60)))
+////// ROOFTOP MUSIC
 
-// async function getMarketData(wearableName: string) {
-//   let now = String(Math.floor(Date.now() / 1000))
-//   const query =
-//     `
-// 		{
-// 			nfts(first: 1,  orderBy: searchOrderPrice, orderDirection: asc, where:{ category: wearable, searchText: "` +
-//     wearableName +
-//     `", searchOrderStatus:open, searchOrderExpiresAt_gt:` +
-//     now +
-//     `
-// 		  }) {
-// 			  id
-// 			name
-// 			image
-// 			contractAddress
-// 			tokenId
-// 			wearable{ name, representationId, collection, description, category, rarity, bodyShapes }
-// 			searchOrderPrice
-// 			searchOrderStatus
-// 			owner{address}
-// 			activeOrder {
-// 				id
-// 			  }
-// 			}
-// 		}`
+const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
 
-//   log('query: ', query)
+const marketMusicStreamEnt = new Entity()
+engine.addEntity(marketMusicStreamEnt)
 
-//   // const variables = { x, y }
-//   try {
-//     let response = queryGraph(query)
-//     log('wearable info: ', await response)
-//     return response
-//   } catch (error) {
-//     log(`Error fetching wearable dat `, error)
-//     throw error
-//   }
-// }
+let marketMusicStream = new AudioStream(rooftopStation)
+marketMusicStream.playing = false
+marketMusicStreamEnt.addComponent(marketMusicStream)
 
-// async function queryGraph(query: string) {
-//   const url = 'https://api.thegraph.com/subgraphs/name/decentraland/marketplace'
-//   const opts = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ query }),
-//   }
-//   const res = await fetch(url, opts)
-//   return res.json()
-// }
+const marketRoofTrigger = new Entity()
+marketRoofTrigger.addComponent(
+  new Transform({ position: new Vector3(272, 29.7, 36) })
+)
+
+let marketRoofTriggerBox = new utils.TriggerBoxShape(
+  new Vector3(60, 6, 69),
+  Vector3.Zero()
+)
+marketRoofTrigger.addComponent(
+  new utils.TriggerComponent(
+    marketRoofTriggerBox, //shape
+    0, //layer
+    0, //triggeredByLayer
+    null, //onTriggerEnter
+    null, //onTriggerExit
+    () => {
+      marketMusicStream.playing = true
+    },
+    () => {
+      marketMusicStream.playing = false
+    }, //onCameraExit
+    false
+  )
+)
+engine.addEntity(marketRoofTrigger)
