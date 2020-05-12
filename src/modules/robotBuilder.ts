@@ -16,7 +16,7 @@ import { TrackUserSlerp } from "./faceUserSystem"
 
 export const robots: Robot[] = []
 
-export function loadRobots(dummyTarget: Entity) {
+export function addRobots(dummyTarget: Entity) {
   // Robots
   const ringShape = resources.models.robots.rings
 
@@ -52,7 +52,7 @@ export function loadRobots(dummyTarget: Entity) {
     resources.models.robots.bela,
     new Transform({
       position: new Vector3(37.27, 3.65, 265.32),
-      rotation: Quaternion.Euler(0, 115, 0),
+      rotation: Quaternion.Euler(0, 90, 0),
     }),
     RobotID.Agora
   )

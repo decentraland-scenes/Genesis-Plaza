@@ -6,7 +6,7 @@ export class TrackUserSlerp {
 let currentCameraPosition = new Vector3(0, 0, 0)
 
 // Rotates robot to face the user during interaction
-export function loadFaceUserSystem(dummyTarget: Entity) {
+export function addFaceUserSystem(dummyTarget: Entity) {
   class FaceUserSystem implements ISystem {
     private robotGroup: ComponentGroup = engine.getComponentGroup(
       TrackUserSlerp
