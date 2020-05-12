@@ -53,7 +53,7 @@ export function placeMuseumPieces() {
   let vision = new MuseumPiece(
     new GLTFShape('models/museum/first-image-dcl.glb'),
     {
-      position: new Vector3(162, 9.5, 269.4),
+      position: new Vector3(162, 9.4, 269.4),
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'The Vision'
@@ -71,7 +71,7 @@ export function placeMuseumPieces() {
   let first3D = new MuseumPiece(
     new GLTFShape('models/museum/first-experiment.glb'),
     {
-      position: new Vector3(174.5, 9.5, 262.5),
+      position: new Vector3(174.5, 9.7, 262.5),
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'First 3D Version'
@@ -80,8 +80,8 @@ export function placeMuseumPieces() {
   let declaration = new MuseumPiece(
     new GLTFShape('models/museum/declaration.glb'),
     {
-      position: new Vector3(179.6, 10, 258.2),
-      rotation: Quaternion.Euler(0, 230, 0),
+      position: new Vector3(183.9, 10, 254.7),
+      rotation: Quaternion.Euler(0, 220, 0),
     },
     'Declaration of independance'
   )
@@ -89,8 +89,8 @@ export function placeMuseumPieces() {
   let old_logo = new MuseumPiece(
     new GLTFShape('models/museum/old_logo.glb'),
     {
-      position: new Vector3(189.2, 10.2, 250),
-      rotation: Quaternion.Euler(0, 208, 0),
+      position: new Vector3(189.2, 10.4, 250),
+      rotation: Quaternion.Euler(0, 212, 0),
     },
     'Original Logo'
   )
@@ -98,8 +98,8 @@ export function placeMuseumPieces() {
   let first_avatars = new MuseumPiece(
     new GLTFShape('models/museum/first-avatars.glb'),
     {
-      position: new Vector3(193.7, 10.35, 245.95),
-      rotation: Quaternion.Euler(0, 235, 0),
+      position: new Vector3(193.7, 10.45, 245.95),
+      rotation: Quaternion.Euler(0, 230, 0),
     },
     'First Avatars'
   )
@@ -107,7 +107,7 @@ export function placeMuseumPieces() {
   let first_auction = new MuseumPiece(
     new GLTFShape('models/museum/first_auction.glb'),
     {
-      position: new Vector3(198.5, 10.3, 240.7),
+      position: new Vector3(198.5, 10.5, 240.7),
       rotation: Quaternion.Euler(0, 230, 0),
     },
     'First Land Auction'
@@ -169,7 +169,7 @@ export function placeMuseumPieces() {
   let second_auction = new MuseumPiece(
     new GLTFShape('models/museum/second_auction.glb'),
     {
-      position: new Vector3(182.6, 10.3, 226.5),
+      position: new Vector3(182.6, 10.5, 226.5),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Second Land Auction'
@@ -178,7 +178,7 @@ export function placeMuseumPieces() {
   let new_logo = new MuseumPiece(
     new GLTFShape('models/museum/new_logo.glb'),
     {
-      position: new Vector3(177, 10.4, 233.3),
+      position: new Vector3(177, 10.45, 233.3),
       rotation: Quaternion.Euler(0, 52, 0),
     },
     'New Logo'
@@ -188,7 +188,7 @@ export function placeMuseumPieces() {
     new GLTFShape('models/museum/landing.glb'),
     {
       position: new Vector3(171.8, 10.5, 239.9),
-      rotation: Quaternion.Euler(0, 45, 0),
+      rotation: Quaternion.Euler(0, 50, 0),
     },
     'Landing'
   )
@@ -196,7 +196,7 @@ export function placeMuseumPieces() {
   let builder = new MuseumPiece(
     new GLTFShape('models/museum/builder.glb'),
     {
-      position: new Vector3(165.9, 9.5, 246),
+      position: new Vector3(165.9, 9.8, 246),
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Builder'
@@ -214,8 +214,8 @@ export function placeMuseumPieces() {
   let wearables = new MuseumPiece(
     new GLTFShape('models/museum/halloween_event.glb'),
     {
-      position: new Vector3(151.7, 9.5, 258.4),
-      rotation: Quaternion.Euler(0, 45, 0),
+      position: new Vector3(151.7, 9.4, 258.4),
+      rotation: Quaternion.Euler(0, 35, 0),
     },
     'Token Wearables'
   )
@@ -340,8 +340,8 @@ export function placeMuseumPieces() {
   let museum_district = new MuseumPiece(
     new GLTFShape('models/museum/museum_district.glb'),
     {
-      position: new Vector3(181.2, 17.5, 228.6),
-      rotation: Quaternion.Euler(0, 45, 0),
+      position: new Vector3(181.2, 17.9, 228.6),
+      rotation: Quaternion.Euler(0, 50, 0),
     },
     'Builder Contest 2019'
   )
@@ -349,8 +349,8 @@ export function placeMuseumPieces() {
   let builderContest = new MuseumPiece(
     new GLTFShape('models/museum/builder_winner.glb'),
     {
-      position: new Vector3(175.2, 17.5, 236.6),
-      rotation: Quaternion.Euler(0, 45, 0),
+      position: new Vector3(175.2, 17.8, 236.6),
+      rotation: Quaternion.Euler(0, 50, 0),
     },
     'First Builder Contest'
   )
@@ -358,8 +358,8 @@ export function placeMuseumPieces() {
   let builderContest2 = new MuseumPiece(
     new GLTFShape('models/museum/smart-items.glb'),
     {
-      position: new Vector3(167.3, 17.5, 244.95),
-      rotation: Quaternion.Euler(0, 45, 0),
+      position: new Vector3(169, 17.5, 243.95),
+      rotation: Quaternion.Euler(0, 50, 0),
     },
     'Creator contest'
   )
@@ -367,7 +367,7 @@ export function placeMuseumPieces() {
   let mana = new MuseumPiece(
     new GLTFShape('models/museum/mana.glb'),
     {
-      position: new Vector3(168.4, 18.5, 255.7),
+      position: new Vector3(168.4, 18.8, 255.7),
       rotation: Quaternion.Euler(0, 135, 0),
     },
     'MANA'
@@ -376,8 +376,8 @@ export function placeMuseumPieces() {
   let hackathon = new MuseumPiece(
     new GLTFShape('models/museum/hackathon_winner.glb'),
     {
-      position: new Vector3(185.7, 17.2, 252),
-      rotation: Quaternion.Euler(0, 225, 0),
+      position: new Vector3(185.7, 17.6, 252),
+      rotation: Quaternion.Euler(0, 220, 0),
     },
     'September 2019 Hackathon'
   )
@@ -385,7 +385,7 @@ export function placeMuseumPieces() {
   let hackathon2 = new MuseumPiece(
     new GLTFShape('models/museum/contest_game.glb'),
     {
-      position: new Vector3(192.9, 17.2, 245),
+      position: new Vector3(192.9, 17.7, 245),
       rotation: Quaternion.Euler(0, 225, 0),
     },
     'Hackathons'
@@ -394,8 +394,8 @@ export function placeMuseumPieces() {
   let community_contest = new MuseumPiece(
     new GLTFShape('models/museum/community_contest.glb'),
     {
-      position: new Vector3(201.5, 17.2, 236.9),
-      rotation: Quaternion.Euler(0, 225, 0),
+      position: new Vector3(199.5, 17.8, 238.2),
+      rotation: Quaternion.Euler(0, 230, 0),
     },
     'Community Wearable Contest'
   )
