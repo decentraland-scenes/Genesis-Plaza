@@ -150,15 +150,6 @@ midShiftPanel1.addComponent(
 midShiftPanel1.setParent(midRotationPanel1)
 midShiftPanel1.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let midPanel1Title = new Entity()
-midPanel1Title.addComponent(new TextShape('Board 1'))
-midPanel1Title.setParent(midShiftPanel1)
-midPanel1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let midRotationPanel2 = new Entity()
 midRotationPanel2.addComponent(
   new Transform({
@@ -176,15 +167,6 @@ midShiftPanel2.addComponent(
 midShiftPanel2.setParent(midRotationPanel2)
 midShiftPanel2.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let midPanel2Title = new Entity()
-midPanel2Title.addComponent(new TextShape('Board 2'))
-midPanel2Title.setParent(midShiftPanel2)
-midPanel2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let midRotationPanel3 = new Entity()
 midRotationPanel3.addComponent(
   new Transform({
@@ -196,20 +178,11 @@ midRotationPanel3.setParent(midCenterPiece)
 let midShiftPanel3 = new Entity()
 midShiftPanel3.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth + 0.15),
+    position: new Vector3(0, 0, midBoardWidth + 0.2),
   })
 )
 midShiftPanel3.setParent(midRotationPanel3)
 midShiftPanel3.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let midPanel3Title = new Entity()
-midPanel3Title.addComponent(new TextShape('Board 3'))
-midPanel3Title.setParent(midShiftPanel3)
-midPanel3Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 let midRotationPanel4 = new Entity()
 midRotationPanel4.addComponent(
@@ -222,20 +195,11 @@ midRotationPanel4.setParent(midCenterPiece)
 let midShiftPanel4 = new Entity()
 midShiftPanel4.addComponent(
   new Transform({
-    position: new Vector3(0, 0, midBoardWidth + 0.15),
+    position: new Vector3(0, 0, midBoardWidth + 0.2),
   })
 )
 midShiftPanel4.setParent(midRotationPanel4)
 midShiftPanel4.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let midPanel4Title = new Entity()
-midPanel4Title.addComponent(new TextShape('Board 4'))
-midPanel4Title.setParent(midShiftPanel4)
-midPanel4Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 let midRotationPanel5 = new Entity()
 midRotationPanel5.addComponent(
@@ -254,15 +218,6 @@ midShiftPanel5.addComponent(
 midShiftPanel5.setParent(midRotationPanel5)
 midShiftPanel5.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let midPanel5Title = new Entity()
-midPanel5Title.addComponent(new TextShape('Board 5'))
-midPanel5Title.setParent(midShiftPanel5)
-midPanel5Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let midRotationPanel6 = new Entity()
 midRotationPanel6.addComponent(
   new Transform({
@@ -279,15 +234,6 @@ midShiftPanel6.addComponent(
 )
 midShiftPanel6.setParent(midRotationPanel6)
 midShiftPanel6.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let midPanel6Title = new Entity()
-midPanel6Title.addComponent(new TextShape('Board 6'))
-midPanel6Title.setParent(midShiftPanel6)
-midPanel6Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 /////// TOP FLOOR
 
@@ -643,6 +589,7 @@ export class StockData extends Entity {
     let shape = new TextShape(text)
 
     shape.font = SFFont
+    shape.width = 10
 
     switch (type) {
       case StockDataTypes.BIGTITLE:
@@ -651,7 +598,7 @@ export class StockData extends Entity {
         shape.vTextAlign = 'center'
         break
       case StockDataTypes.BIGVALUE:
-        shape.fontSize = 4
+        shape.fontSize = 3
         shape.color = Color3.Green()
         shape.vTextAlign = 'center'
         break
@@ -660,14 +607,15 @@ export class StockData extends Entity {
         shape.fontSize = 3
         shape.color = Color3.White()
         shape.vTextAlign = 'center'
+        shape.width = 10
         break
       case StockDataTypes.LABEL:
-        shape.fontSize = 2
-        shape.color = Color3.Green()
+        shape.fontSize = 3
+        shape.color = Color3.White()
         shape.vTextAlign = 'left'
         break
       case StockDataTypes.VALUE:
-        shape.fontSize = 2
+        shape.fontSize = 3
         shape.color = Color3.Green()
         shape.vTextAlign = 'right'
         break
@@ -683,6 +631,9 @@ export class StockData extends Entity {
 }
 
 export function updateTradeCentrer(data: MarketData) {
+  //// LOWER FLOOR
+
+  //1
   let lowerPanel1Title = new StockData(
     StockDataTypes.BIGTITLE,
     'BTC Price',
@@ -701,6 +652,7 @@ export function updateTradeCentrer(data: MarketData) {
     lowerShiftPanel1
   )
 
+  //2
   let lowerPanel2Title = new StockData(
     StockDataTypes.BIGTITLE,
     'ETH Price',
@@ -719,6 +671,7 @@ export function updateTradeCentrer(data: MarketData) {
     lowerShiftPanel2
   )
 
+  //3
   let lowerPanel3itle = new StockData(
     StockDataTypes.BIGTITLE,
     'MANA Price',
@@ -737,6 +690,7 @@ export function updateTradeCentrer(data: MarketData) {
     lowerShiftPanel3
   )
 
+  //4
   let lowerPanel4itle = new StockData(
     StockDataTypes.BIGTITLE,
     'MANA Price',
@@ -755,6 +709,7 @@ export function updateTradeCentrer(data: MarketData) {
     lowerShiftPanel4
   )
 
+  //5
   let lowerPanel5itle = new StockData(
     StockDataTypes.TITLE,
     'DCL token transactions',
@@ -783,6 +738,7 @@ export function updateTradeCentrer(data: MarketData) {
     lowerShiftPanel5
   )
 
+  //6
   let lowerPanel6itle = new StockData(
     StockDataTypes.TITLE,
     'DCL token transactions',
@@ -813,6 +769,444 @@ export function updateTradeCentrer(data: MarketData) {
     },
     lowerShiftPanel6
   )
+
+  ///// MID FLOOR (LAND)
+
+  //1
+
+  let midPanel1Title = new StockData(
+    StockDataTypes.TITLE,
+    'Parcel + Estate sales',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel1
+  )
+
+  let midPanel1Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-0.7, 0.9, 0),
+    },
+    midShiftPanel1
+  )
+  let midPanel1Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-0.7, 0.4, 0),
+    },
+    midShiftPanel1
+  )
+  let midPanel1Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-0.7, -0.1, 0),
+    },
+    midShiftPanel1
+  )
+
+  let midPanel1Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.landSalesYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.9, 0),
+    },
+    midShiftPanel1
+  )
+
+  let midPanel1Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.landSalesWeek.toString(),
+    {
+      position: new Vector3(0.7, 0.4, 0),
+    },
+    midShiftPanel1
+  )
+
+  let midPanel1Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.landSalesMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.1, 0),
+    },
+    midShiftPanel1
+  )
+
+  //2
+
+  let midPanel2Title = new StockData(
+    StockDataTypes.TITLE,
+    'Cheapest Parcel Sold',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.9, 0),
+    },
+    midShiftPanel2
+  )
+  let midPanel2Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, 0.4, 0),
+    },
+    midShiftPanel2
+  )
+  let midPanel2Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.1, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.cheapestLandYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.9, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.cheapestLandWeek.toString(),
+    {
+      position: new Vector3(0.7, 0.4, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.cheapestLandMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.1, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.9, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.4, 0),
+    },
+    midShiftPanel2
+  )
+
+  let midPanel2Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.1, 0),
+    },
+    midShiftPanel2
+  )
+
+  //3
+
+  let midPanel3Title = new StockData(
+    StockDataTypes.TITLE,
+    'Most Expensive Single Parcel',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.9, 0),
+    },
+    midShiftPanel3
+  )
+  let midPanel3Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, 0.4, 0),
+    },
+    midShiftPanel3
+  )
+  let midPanel3Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.1, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveLandYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.9, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveLandWeek.toString(),
+    {
+      position: new Vector3(0.7, 0.4, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveLandMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.1, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.9, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.4, 0),
+    },
+    midShiftPanel3
+  )
+
+  let midPanel3Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.1, 0),
+    },
+    midShiftPanel3
+  )
+
+  //4
+
+  let midPanel4Title = new StockData(
+    StockDataTypes.TITLE,
+    'Most Expensive Estate',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.9, 0),
+    },
+    midShiftPanel4
+  )
+  let midPanel4Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, 0.4, 0),
+    },
+    midShiftPanel4
+  )
+  let midPanel4Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.1, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveEstateYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.9, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveEstateWeek.toString(),
+    {
+      position: new Vector3(0.7, 0.4, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveEstateMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.1, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.9, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.4, 0),
+    },
+    midShiftPanel4
+  )
+
+  let midPanel4Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.1, 0),
+    },
+    midShiftPanel4
+  )
+  //5
+
+  let midPanel5Title = new StockData(
+    StockDataTypes.TITLE,
+    'LAND Transaction Volume',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.9, 0),
+    },
+    midShiftPanel5
+  )
+  let midPanel5Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, 0.4, 0),
+    },
+    midShiftPanel5
+  )
+  let midPanel5Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.1, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANALandAndEstateYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.9, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANALandAndEstateWeek.toString(),
+    {
+      position: new Vector3(0.7, 0.4, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANALandAndEstateMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.1, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.9, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.4, 0),
+    },
+    midShiftPanel5
+  )
+
+  let midPanel5Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.1, 0),
+    },
+    midShiftPanel5
+  )
+
+  //6
+
+  let midPane61Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Cheapest Parcel On Sale',
+    {
+      position: new Vector3(0, 1.5, 0),
+    },
+    midShiftPanel6
+  )
+
+  ///// TOP FLOOR (WEARABLES)
+  //1
 }
 
 ////// ROOFTOP MUSIC

@@ -52,8 +52,6 @@ export class Wearable extends Entity {
 
   //   public buy(): void {
 
-  // getWearableURL(this)
-
   //   }
 }
 

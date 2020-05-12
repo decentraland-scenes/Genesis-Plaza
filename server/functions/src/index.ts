@@ -665,7 +665,7 @@ export async function getOpenSeaEventsJSON(
     }
   } catch {
     console.log('error fetching from OpenSea API')
-    console.log('url used: ', url)
+    console.log('url used: ', url, ' offset ', offset)
     if (alreadyCollected) {
       return alreadyCollected
     }
