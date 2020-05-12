@@ -11,8 +11,10 @@ export enum Radios {
 let isInRadioRange: boolean = false
 let currentRadio: Radios | null = null
 
-const musicStream = new Entity()
-engine.addEntity(musicStream)
+const musicStreamEnt = new Entity()
+engine.addEntity(musicStreamEnt)
+
+let musicStream: AudioStream | null = null
 
 let baseConsole = new Entity()
 baseConsole.addComponent(
@@ -145,22 +147,23 @@ yellowButton.addComponent(
 
 sceneMessageBus.on('setRadio', (e) => {
   //  if()  if close
-  if (musicStream.hasComponent(AudioStream)) {
-    musicStream.getComponent(AudioStream).playing = false
-    musicStream.removeComponent(AudioStream)
+  if (musicStream) {
+    musicStream.playing = false
+    musicStream = null
   }
-  LightsA.play()
-  LightsB.play()
-  LightsC.play()
   currentRadio = e.station
   radioOn(e.station)
 })
 
 function radioOn(station) {
+  LightsA.play()
+  LightsB.play()
+  LightsC.play()
   if (isInRadioRange) {
-    musicStream.addComponent(
+    musicStreamEnt.addComponent(
       new utils.Delay(100, () => {
-        musicStream.addComponentOrReplace(new AudioStream(station))
+        musicStream = new AudioStream(station)
+        musicStreamEnt.addComponentOrReplace(musicStream)
       })
     )
   }
@@ -170,7 +173,7 @@ function radioOff() {
   LightsA.stop()
   LightsB.stop()
   LightsC.stop()
-  musicStream.getComponent(AudioStream).playing = false
+  musicStream.playing = false
 }
 
 // turn on when approach
