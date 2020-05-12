@@ -185,7 +185,7 @@ export function placeTeleports() {
     teleportPos2,
     Locations.TOKI,
     'Toki Toki Land',
-    '',
+    'A christmas themed adventure.\nSave the Toki Tokis from\nan evil snowman and his henchmen.',
     'images/teleports/TokiLand.jpg'
   )
 
@@ -196,7 +196,7 @@ export function placeTeleports() {
     teleportPos3,
     Locations.MAGIC,
     'Random amazing scene',
-    '',
+    'Visit a random scene\n from a curated list of amazing places!',
     'images/example-screenshot.png'
   )
 
@@ -206,7 +206,7 @@ export function placeTeleports() {
     teleportPos4,
     Locations.BLOCK,
     'Block Runner',
-    '',
+    'A collection of competitive minigames\nthat are a lot of fun to play!',
     'images/teleports/BlockRunner.jpg'
   )
 
@@ -216,7 +216,7 @@ export function placeTeleports() {
     teleportPos5,
     Locations.CASINO,
     'Serenity Island Casino',
-    '',
+    'Play roulette and slot machines in a\n luxurious casino by the shore!',
     'images/teleports/Chateau_satoshi.jpg'
   )
 
@@ -227,7 +227,7 @@ export function placeTeleports() {
     teleportPos6,
     Locations.KOKO,
     'Koko Jones',
-    '',
+    'Visit the temple of eternal bananas\nto collect gems and face evil monkeys.\nThis scene is part of the amusement park district.',
     'images/teleports/Koko_Jones.jpg'
   )
 
@@ -247,7 +247,7 @@ export function placeTeleports() {
     teleportPos8,
     Locations.MAGIC,
     'Random amazing scene',
-    '',
+    'Visit a random scene\n from a curated list of amazing places!',
     'images/example-screenshot.png'
   )
 
@@ -257,7 +257,7 @@ export function placeTeleports() {
     teleportPos9,
     Locations.CROWD,
     'Join other players',
-    '',
+    'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
     'images/teleports/Crowd.jpg'
   )
 
@@ -268,7 +268,7 @@ export function placeTeleports() {
     teleportPos10,
     Locations.SALMONOMICON,
     'Book of Salmonomicon',
-    '',
+    'In this bizarre horror-themed game you\nmust help Mika find pages to the book\nwhile avoiding a terrible creature.',
     'images/teleports/Salmonomicon.jpg'
   )
 
@@ -278,7 +278,7 @@ export function placeTeleports() {
     teleportPos11,
     Locations.MUSEUM,
     'Museum District',
-    '',
+    'The Museum district houses the work of many\nvirtual and non-virtual artists.\nSee some wonderful kinetic sculptures and paintings.',
     'images/teleports/Museum_District.jpg'
   )
 
@@ -318,7 +318,7 @@ export function placeTeleports() {
     teleportPos15,
     Locations.CROWD,
     'Join other players',
-    '',
+    'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
     'images/teleports/Crowd.jpg'
   )
 }
