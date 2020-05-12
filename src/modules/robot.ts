@@ -77,10 +77,12 @@ export class Robot extends Entity {
   public playGoodbye(): void {
     this.stopAnimations()
     this.getComponent(Animator).getClip("Goodbye").play()
+    this.getComponent(OnPointerDown).showFeedback = false
     this.addComponentOrReplace(
       new utils.Delay(2000, () => {
         this.stopAnimations()
         this.getComponent(Animator).getClip("Idle").play()
+        this.getComponent(OnPointerDown).showFeedback = true
       })
     )
   }
