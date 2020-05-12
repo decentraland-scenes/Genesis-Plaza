@@ -2,7 +2,7 @@
 
 import { boardLocation } from './messageboard'
 import { setNewMessage } from './serverHandler'
-import { WearableData } from './wearables'
+import { WearableData, getWearableURL } from './wearables'
 import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
 
@@ -319,6 +319,23 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
     4
   )
 
+  const button = new UIImage(wBackground, wearableTexture)
+  button.name = 'wButton'
+  button.hAlign = 'center'
+  button.vAlign = 'center'
+  button.width = 215.15
+  button.height = 40
+  button.positionY = -138 + 91
+  button.sourceLeft = 0
+  button.sourceTop = 116
+  button.sourceWidth = 322
+  button.sourceHeight = 44
+  button.onClick = new OnClick(() => {
+    let url = getWearableURL(wearableData)
+    openExternalURL(url)
+    closeUI()
+  })
+
   const price = new UIText(wBackground)
   price.name = 'wearablePrice'
   price.value = String(formattedPrice)
@@ -329,7 +346,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   price.positionX = -385 / 2 + 191 + 5
   price.width = 10
   price.hTextAlign = 'left'
-  price.color = Color4.Black()
+  price.color = Color4.White()
 }
 
 function roundNumber(num, dec) {
