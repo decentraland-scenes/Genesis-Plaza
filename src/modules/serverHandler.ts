@@ -9,6 +9,7 @@ export let fireBaseServer =
 // how often to refresh scene, in seconds
 export const refreshInterval: number = 30
 
+// check server for new messageboard messages
 export class CheckServer implements ISystem {
   timer: number
   constructor(timer: number) {
@@ -25,6 +26,7 @@ export class CheckServer implements ISystem {
 
 engine.addSystem(new CheckServer(refreshInterval))
 
+// send new message to server
 export async function setNewMessage(location: string, message: string) {
   if (location == 'artichoke') {
     sceneMessageBus.emit('artichokeMessage', { text: message })
@@ -57,6 +59,7 @@ export async function getLastMessage(location: string): Promise<string> {
   }
 }
 
+// change messages displayed in the plaza
 export async function updateMessageBoards() {
   let artMessage = await getLastMessage('artichoke')
   if (artMessage) {

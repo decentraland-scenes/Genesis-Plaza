@@ -227,6 +227,7 @@ export function placeMuseumPieces() {
     new Transform({
       position: new Vector3(196.29, 18, 226.15),
       rotation: Quaternion.Euler(0, 315, 0),
+      scale: new Vector3(1.25, 1.25, 1.25),
     })
   )
   map.addComponent(new GLTFShape('models/museum/map/map_base.glb'))
@@ -241,10 +242,10 @@ export function placeMuseumPieces() {
   districts.setParent(map)
   districts.addComponent(new GLTFShape('models/museum/map/map_districts.glb'))
 
-  districts
-    .addComponent(new Animator())
-    .addClip(districtOn)
-    .addClip(districtOff)
+  districts.addComponent(new Animator())
+  districts.getComponent(Animator).addClip(districtOn)
+  districts.getComponent(Animator).addClip(districtOff)
+
   districts.addComponent(
     new OnPointerDown(
       function () {
@@ -264,7 +265,9 @@ export function placeMuseumPieces() {
   )
   plazas.addComponent(new GLTFShape('models/museum/map/map_plazas.glb'))
 
-  plazas.addComponent(new Animator()).addClip(plazasOn).addClip(plazasOff)
+  plazas.addComponent(new Animator())
+  plazas.getComponent(Animator).addClip(plazasOn)
+  plazas.getComponent(Animator).addClip(plazasOff)
 
   plazas.addComponent(
     new OnPointerDown(
@@ -285,8 +288,9 @@ export function placeMuseumPieces() {
   )
   roads.addComponent(new GLTFShape('models/museum/map/map_roads.glb'))
 
-  roads.addComponent(new Animator()).addClip(roadsOn).addClip(roadsOff)
-
+  roads.addComponent(new Animator())
+  roads.getComponent(Animator).addClip(roadsOn)
+  roads.getComponent(Animator).addClip(roadsOff)
   roads.addComponent(
     new OnPointerDown(
       function () {
@@ -472,30 +476,42 @@ export function animateMap(item: MapItems) {
   log('selected item: ', item)
   switch (currentItem) {
     case MapItems.DISTRICTS:
-      districtOff.stop
-      districtOff.play
+      districtOff.play()
+      break
     case MapItems.ROADS:
-      roadsOff.stop
-      roadsOff.play
+      roadsOn.stop()
+      roadsOff.play()
+      break
     case MapItems.PLAZAS:
-      plazasOff.stop
-      plazasOff.play
+      plazasOn.stop()
+      plazasOff.play()
+      break
   }
 
-  currentItem = item
+  if (item != currentItem) {
+    currentItem = item
 
-  switch (item) {
-    case MapItems.DISTRICTS:
-      log('clicked Districts')
-      districtOn.stop
-      districtOn.play
-    case MapItems.ROADS:
-      log('clicked Roads')
-      roadsOn.stop
-      roadsOn.play
-    case MapItems.PLAZAS:
-      log('clicked Plazas')
-      plazasOn.stop
-      plazasOn.play
+    switch (item) {
+      case MapItems.DISTRICTS:
+        log('clicked Districts')
+        districtOff.stop()
+        districtOn.stop()
+        districtOn.play()
+        break
+      case MapItems.ROADS:
+        log('clicked Roads')
+        roadsOff.stop()
+        roadsOn.stop()
+        roadsOn.play()
+        break
+      case MapItems.PLAZAS:
+        log('clicked Plazas')
+        plazasOff.stop()
+        plazasOn.stop()
+        plazasOn.play()
+        break
+    }
+  } else {
+    currentItem = null
   }
 }
