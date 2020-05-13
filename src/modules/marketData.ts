@@ -310,20 +310,11 @@ topRotationPanel4.setParent(topCenterPiece)
 let topShiftPanel4 = new Entity()
 topShiftPanel4.addComponent(
   new Transform({
-    position: new Vector3(0, 0, topBoardWidth + 0.05),
+    position: new Vector3(0, 0, topBoardWidth + 0.1),
   })
 )
 topShiftPanel4.setParent(topRotationPanel4)
 topShiftPanel4.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let topPanel4Title = new Entity()
-topPanel4Title.addComponent(new TextShape('Board 4'))
-topPanel4Title.setParent(topShiftPanel4)
-topPanel4Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 let topRotationPanel5 = new Entity()
 topRotationPanel5.addComponent(
@@ -342,15 +333,6 @@ topShiftPanel5.addComponent(
 topShiftPanel5.setParent(topRotationPanel5)
 topShiftPanel5.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let topPanel5Title = new Entity()
-topPanel5Title.addComponent(new TextShape('Board 5'))
-topPanel5Title.setParent(topShiftPanel5)
-topPanel5Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let topRotationPanel6 = new Entity()
 topRotationPanel6.addComponent(
   new Transform({
@@ -367,15 +349,6 @@ topShiftPanel6.addComponent(
 )
 topShiftPanel6.setParent(topRotationPanel6)
 topShiftPanel6.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let topPanel6Title = new Entity()
-topPanel6Title.addComponent(new TextShape('Board 6'))
-topPanel6Title.setParent(topShiftPanel6)
-topPanel6Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 ////// FLAT WEARABLE BOARDS
 
@@ -543,8 +516,6 @@ export enum StockDataTypes {
 }
 
 let SFFont = new Font(Fonts.SanFrancisco)
-
-//// CLEAR OLD TEXT SHAPES
 
 export class StockData extends Entity {
   constructor(
@@ -1336,13 +1307,72 @@ export function updateTradeCentrer(data: MarketData) {
 
   //3
 
-  //TODO
+  let topPanel3Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Most Expensive Wearable',
+    {
+      position: new Vector3(0.2, 0.9, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1.8, 0, 0),
+    },
+    topShiftPanel3
+  )
+  let topPanel3Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1.8, -0.5, 0),
+    },
+    topShiftPanel3
+  )
+  let topPanel3Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1.8, -1, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableNameYesterday,
+    {
+      position: new Vector3(1.2, 0, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableNameWeek,
+    {
+      position: new Vector3(1.2, -0.5, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableNameMonth,
+    {
+      position: new Vector3(1.2, -1, 0),
+    },
+    topShiftPanel3
+  )
 
   //4
 
   let topPanel4Title = new StockData(
     StockDataTypes.BIGTITLE,
-    'Wearable Transaction Volume',
+    'Wearable Transactions',
     {
       position: new Vector3(0, 0.9, 0),
     },
@@ -1353,7 +1383,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.LABEL,
     'Yesterday',
     {
-      position: new Vector3(-1, 0, 0),
+      position: new Vector3(-1.3, 0, 0),
     },
     topShiftPanel4
   )
@@ -1361,7 +1391,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.LABEL,
     '7 days',
     {
-      position: new Vector3(-1, -0.5, 0),
+      position: new Vector3(-1.3, -0.5, 0),
     },
     topShiftPanel4
   )
@@ -1369,7 +1399,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.LABEL,
     '30 days',
     {
-      position: new Vector3(-1, -1, 0),
+      position: new Vector3(-1.3, -1, 0),
     },
     topShiftPanel4
   )
@@ -1405,7 +1435,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.UNIT,
     'MANA',
     {
-      position: new Vector3(1.7, 0, 0),
+      position: new Vector3(2.2, 0, 0),
     },
     topShiftPanel4
   )
@@ -1414,7 +1444,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.UNIT,
     'MANA',
     {
-      position: new Vector3(1.7, -0.5, 0),
+      position: new Vector3(2.2, -0.5, 0),
     },
     topShiftPanel4
   )
@@ -1423,12 +1453,295 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.UNIT,
     'MANA',
     {
-      position: new Vector3(1.7, -1, 0),
+      position: new Vector3(2.2, -1, 0),
     },
     topShiftPanel4
   )
   //5
+
+  let topPanel5Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Wearable Transactions',
+    {
+      position: new Vector3(0, 1.05, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Title2 = new StockData(
+    StockDataTypes.TITLE,
+    'last 30 days',
+    {
+      position: new Vector3(0, 0.6, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Uncommon',
+    {
+      position: new Vector3(-1.3, 0.2, 0),
+    },
+    topShiftPanel5
+  )
+  let topPanel5Label2 = new StockData(
+    StockDataTypes.LABEL,
+    'Swanky',
+    {
+      position: new Vector3(-1.3, -0.3, 0),
+    },
+    topShiftPanel5
+  )
+  let topPanel5Label3 = new StockData(
+    StockDataTypes.LABEL,
+    'Epic',
+    {
+      position: new Vector3(-1.3, -0.8, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Label4 = new StockData(
+    StockDataTypes.LABEL,
+    'Legendary',
+    {
+      position: new Vector3(-1.3, -1.3, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Label5 = new StockData(
+    StockDataTypes.LABEL,
+    'Mythic',
+    {
+      position: new Vector3(-1.3, -1.8, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.uncommonWearableMonthSales.toString(),
+    {
+      position: new Vector3(0.7, 0.2, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.swankyWearableMonthSales.toString(),
+    {
+      position: new Vector3(0.7, -0.3, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.epicWearableMonthSales.toString(),
+    {
+      position: new Vector3(0.7, -0.8, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Value4 = new StockData(
+    StockDataTypes.VALUE,
+    data.legendaryWearableMonthSales.toString(),
+    {
+      position: new Vector3(0.7, -1.3, 0),
+    },
+    topShiftPanel5
+  )
+
+  let topPanel5Value5 = new StockData(
+    StockDataTypes.VALUE,
+    data.mythicWearableMonthSales.toString(),
+    {
+      position: new Vector3(0.7, -1.8, 0),
+    },
+    topShiftPanel5
+  )
+
   //6
+
+  let topPanel6Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Average Price',
+    {
+      position: new Vector3(0, 1.05, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Title2 = new StockData(
+    StockDataTypes.TITLE,
+    'last 30 days',
+    {
+      position: new Vector3(0, 0.6, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Uncommon',
+    {
+      position: new Vector3(-1.3, 0.2, 0),
+    },
+    topShiftPanel6
+  )
+  let topPanel6Label2 = new StockData(
+    StockDataTypes.LABEL,
+    'Swanky',
+    {
+      position: new Vector3(-1.3, -0.3, 0),
+    },
+    topShiftPanel6
+  )
+  let topPanel6Label3 = new StockData(
+    StockDataTypes.LABEL,
+    'Epic',
+    {
+      position: new Vector3(-1.3, -0.8, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Label4 = new StockData(
+    StockDataTypes.LABEL,
+    'Legendary',
+    {
+      position: new Vector3(-1.3, -1.3, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Label5 = new StockData(
+    StockDataTypes.LABEL,
+    'Mythic',
+    {
+      position: new Vector3(-1.3, -1.8, 0),
+    },
+    topShiftPanel6
+  )
+
+  let avUncommonPrice =
+    Math.floor(
+      (data.uncommonWearableMonthMANA / data.uncommonWearableMonthSales) * 100
+    ) / 100
+
+  let topPanel6Value1 = new StockData(
+    StockDataTypes.VALUE,
+    avUncommonPrice.toString(),
+    {
+      position: new Vector3(0.7, 0.2, 0),
+    },
+    topShiftPanel6
+  )
+
+  let avSwankyPrice =
+    Math.floor(
+      (data.swankyWearableMonthMANA / data.swankyWearableMonthSales) * 100
+    ) / 100
+
+  let topPanel6Value2 = new StockData(
+    StockDataTypes.VALUE,
+    avSwankyPrice.toString(),
+    {
+      position: new Vector3(0.7, -0.3, 0),
+    },
+    topShiftPanel6
+  )
+
+  let avEpicPrice =
+    Math.floor(
+      (data.epicWearableMonthMANA / data.epicWearableMonthSales) * 100
+    ) / 100
+
+  let topPanel6Value3 = new StockData(
+    StockDataTypes.VALUE,
+    avEpicPrice.toString(),
+    {
+      position: new Vector3(0.7, -0.8, 0),
+    },
+    topShiftPanel6
+  )
+
+  let avLegendaryPrice =
+    Math.floor(
+      (data.legendaryWearableMonthMANA / data.legendaryWearableMonthSales) * 100
+    ) / 100
+
+  let topPanel6Value4 = new StockData(
+    StockDataTypes.VALUE,
+    avLegendaryPrice.toString(),
+    {
+      position: new Vector3(0.7, -1.3, 0),
+    },
+    topShiftPanel6
+  )
+
+  let avMythicPrice =
+    Math.floor(
+      (data.mythicWearableMonthMANA / data.mythicWearableMonthSales) * 100
+    ) / 100
+
+  let topPanel6Value5 = new StockData(
+    StockDataTypes.VALUE,
+    avMythicPrice.toString(),
+    {
+      position: new Vector3(0.7, -1.8, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.8, 0.2, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.8, -0.3, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.8, -0.8, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Unit4 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.8, -1.3, 0),
+    },
+    topShiftPanel6
+  )
+
+  let topPanel6Unit5 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.8, -1.8, 0),
+    },
+    topShiftPanel6
+  )
 }
 
 ////// ROOFTOP MUSIC
