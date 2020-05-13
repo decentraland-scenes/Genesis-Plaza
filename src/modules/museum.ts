@@ -464,6 +464,53 @@ export function placeMuseumPieces() {
   )
 }
 
+/////////// TRADE CENTER
+
+let parcelTC = new MuseumPiece(
+  new GLTFShape('models/museum/land.glb'),
+  {
+    position: new Vector3(282.9, 11.8, 39),
+    rotation: Quaternion.Euler(0, 195, 0),
+  },
+  'LAND Parcel'
+)
+
+let parcelPuaTC = new MuseumPiece(
+  new GLTFShape('models/museum/pua.glb'),
+  {
+    position: new Vector3(282.9, 11.8, 39),
+    rotation: Quaternion.Euler(0, 195, 0),
+  },
+  'LAND Parcel'
+)
+
+let estateTC = new MuseumPiece(
+  new GLTFShape('models/museum/estate.glb'),
+  {
+    position: new Vector3(262.9, 11.3, 35.7),
+    rotation: Quaternion.Euler(0, 30, 0),
+  },
+  'Estate'
+)
+
+let estatePuaTC = new MuseumPiece(
+  new GLTFShape('models/museum/pua.glb'),
+  {
+    position: new Vector3(262.9, 11.3, 35.7),
+    rotation: Quaternion.Euler(0, 30, 0),
+  },
+  'Estate'
+)
+
+let wearableTC = new MuseumPiece(
+  new GLTFShape('models/wearables/second_floor/J/razor_blade_upper_body.glb'),
+  {
+    position: new Vector3(251, 21.6, 27.5),
+    rotation: Quaternion.Euler(0, 30, 0),
+  },
+  'Wearables'
+)
+
 export enum MapItems {
   DISTRICTS = 'districts',
   PLAZAS = 'plazas',
