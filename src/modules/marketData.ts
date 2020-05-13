@@ -356,7 +356,8 @@ let mythicBoard1 = new Entity()
 mythicBoard1.addComponent(
   new Transform({
     position: new Vector3(271.09, 21.6, 14.38),
-    rotation: Quaternion.Euler(0, 205, 0),
+    rotation: Quaternion.Euler(0, 204, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -375,7 +376,8 @@ let mythicBoard2 = new Entity()
 mythicBoard2.addComponent(
   new Transform({
     position: new Vector3(258.25, 21.6, 19.46),
-    rotation: Quaternion.Euler(0, 205, 0),
+    rotation: Quaternion.Euler(0, 204, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -394,7 +396,8 @@ let legendaryBoard1 = new Entity()
 legendaryBoard1.addComponent(
   new Transform({
     position: new Vector3(296.55, 21.6, 35.86),
-    rotation: Quaternion.Euler(0, 115, 0),
+    rotation: Quaternion.Euler(0, 114, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -413,7 +416,8 @@ let legendaryBoard2 = new Entity()
 legendaryBoard2.addComponent(
   new Transform({
     position: new Vector3(291.21, 21.6, 22.68),
-    rotation: Quaternion.Euler(0, 115, 0),
+    rotation: Quaternion.Euler(0, 114, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -428,49 +432,12 @@ legendaryBoard2Title.addComponent(
   })
 )
 
-let swankyBoard1 = new Entity()
-swankyBoard1.addComponent(
-  new Transform({
-    position: new Vector3(275.07, 21.6, 61.29),
-    rotation: Quaternion.Euler(0, 25, 0),
-  })
-)
-
-engine.addEntity(swankyBoard1)
-
-let swankyBoard1Title = new Entity()
-swankyBoard1Title.addComponent(new TextShape('Stonks'))
-swankyBoard1Title.setParent(swankyBoard1)
-swankyBoard1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
-let swankyBoard2 = new Entity()
-swankyBoard2.addComponent(
-  new Transform({
-    position: new Vector3(288.03, 21.6, 56),
-    rotation: Quaternion.Euler(0, 25, 0),
-  })
-)
-
-engine.addEntity(swankyBoard2)
-
-let swankyBoard2Title = new Entity()
-swankyBoard2Title.addComponent(new TextShape('Stonks'))
-swankyBoard2Title.setParent(swankyBoard2)
-swankyBoard2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
 let epicBoard1 = new Entity()
 epicBoard1.addComponent(
   new Transform({
     position: new Vector3(249.42, 21.6, 39.43),
-    rotation: Quaternion.Euler(0, 295, 0),
+    rotation: Quaternion.Euler(0, 294, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -489,7 +456,8 @@ let epicBoard2 = new Entity()
 epicBoard2.addComponent(
   new Transform({
     position: new Vector3(254.54, 21.6, 52.54),
-    rotation: Quaternion.Euler(0, 295, 0),
+    rotation: Quaternion.Euler(0, 294, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
   })
 )
 
@@ -504,6 +472,37 @@ epicBoard2Title.addComponent(
   })
 )
 
+let swankyBoard1 = new Entity()
+swankyBoard1.addComponent(
+  new Transform({
+    position: new Vector3(275.07, 21.6, 61.29),
+    rotation: Quaternion.Euler(0, 24, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
+  })
+)
+
+engine.addEntity(swankyBoard1)
+
+let swankyBoard2 = new Entity()
+swankyBoard2.addComponent(
+  new Transform({
+    position: new Vector3(288.03, 21.6, 56),
+    rotation: Quaternion.Euler(0, 24, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
+  })
+)
+
+engine.addEntity(swankyBoard2)
+
+let swankyBoard2Title = new Entity()
+swankyBoard2Title.addComponent(new TextShape('Stonks'))
+swankyBoard2Title.setParent(swankyBoard2)
+swankyBoard2Title.addComponent(
+  new Transform({
+    position: new Vector3(0, 1, -0.2),
+  })
+)
+
 ////// UPDATE BOARDS
 
 export enum StockDataTypes {
@@ -513,6 +512,8 @@ export enum StockDataTypes {
   LABEL = 'label',
   VALUE = 'value',
   UNIT = 'unit',
+  TINYVALUE = 'tinyvalue',
+  TINYTITLE = 'tinytitle',
 }
 
 let SFFont = new Font(Fonts.SanFrancisco)
@@ -553,6 +554,12 @@ export class StockData extends Entity {
         shape.vTextAlign = 'center'
         shape.width = 10
         break
+      case StockDataTypes.TINYTITLE:
+        shape.fontSize = 1.8
+        shape.color = Color3.White()
+        shape.vTextAlign = 'center'
+        shape.width = 10
+        break
       case StockDataTypes.LABEL:
         shape.fontSize = 3
         shape.color = Color3.White()
@@ -563,6 +570,12 @@ export class StockData extends Entity {
         shape.color = Color3.Green()
         shape.vTextAlign = 'right'
         break
+      case StockDataTypes.TINYVALUE:
+        shape.fontSize = 1.8
+        shape.color = Color3.Green()
+        shape.vTextAlign = 'right'
+        break
+
       case StockDataTypes.UNIT:
         shape.fontSize = 2
         shape.color = Color3.White()
@@ -572,6 +585,40 @@ export class StockData extends Entity {
 
     this.addComponent(shape)
   }
+}
+
+export class WearablePreview extends Entity {
+  constructor(
+    image: string,
+    transform: TranformConstructorArgs,
+    parent: Entity
+  ) {
+    super()
+    engine.addEntity(this)
+
+    this.setParent(parent)
+
+    this.addComponent(new Transform(transform))
+
+    this.getComponent(Transform).scale = new Vector3(1.5, 1.5, 1)
+
+    this.getComponent(Transform).rotation = Quaternion.Euler(180, 0, 0)
+
+    let wearableImage = new Texture(image)
+    let wearableMaterial = new Material()
+    wearableMaterial.roughness = 1
+    wearableMaterial.albedoTexture = wearableImage
+
+    this.addComponent(new PlaneShape())
+    this.addComponent(wearableMaterial)
+  }
+}
+
+// To convert values in weis
+export function toMana(longNum: number) {
+  let shortNum = longNum / 1000000000000000000
+  let squaredNum = shortNum * Math.pow(10, 4)
+  return Math.round(squaredNum) / Math.pow(10, 4)
 }
 
 export function updateTradeCentrer(data: MarketData) {
@@ -627,7 +674,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel3Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.MANAETH.toString() + ' ETH',
+    data.coins.MANAETH.toString().slice(0, 10) + ' ETH',
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -646,7 +693,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel4Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.MANAUSD.toString() + ' USD',
+    data.coins.MANAUSD.toString().slice(0, 8) + ' USD',
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -1140,11 +1187,78 @@ export function updateTradeCentrer(data: MarketData) {
 
   //6
 
-  let midPane61Title = new StockData(
-    StockDataTypes.BIGTITLE,
+  let midPane6Title = new StockData(
+    StockDataTypes.TITLE,
     'Cheapest Parcel On Sale',
     {
-      position: new Vector3(0, 1.5, 0),
+      position: new Vector3(0, 1.6, 0),
+    },
+    midShiftPanel6
+  )
+
+  let midPane6Title2 = new StockData(
+    StockDataTypes.TITLE,
+    'now in the market',
+    {
+      position: new Vector3(0, 1.3, 0),
+    },
+    midShiftPanel6
+  )
+
+  let midPane6Title3 = new StockData(
+    StockDataTypes.BIGTITLE,
+    data.cheapestLandNow.parcel.x.toString() +
+      ', ' +
+      data.cheapestLandNow.parcel.y.toString(),
+    {
+      position: new Vector3(0, 0.8, 0),
+    },
+    midShiftPanel6
+  )
+
+  let cheapParcelPrice = toMana(
+    data.cheapestLandNow.searchOrderPrice
+  ).toString()
+
+  let midPane6Value1 = new StockData(
+    StockDataTypes.VALUE,
+    cheapParcelPrice,
+    {
+      position: new Vector3(-0.8, 0, 0),
+    },
+    midShiftPanel6
+  )
+
+  let midPane6VUnit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0.8, 0, 0),
+    },
+    midShiftPanel6
+  )
+
+  let midPane6VLabel1 = new StockData(
+    StockDataTypes.LABEL,
+    'owner:',
+    {
+      position: new Vector3(-1, -0.4, 0),
+    },
+    midShiftPanel6
+  )
+
+  let shortenedOwner =
+    data.cheapestLandNow.owner.address.slice(0, 5) +
+    '...' +
+    data.cheapestLandNow.owner.address.slice(
+      data.cheapestLandNow.owner.address.length - 4
+    )
+
+  let midPane6Value2 = new StockData(
+    StockDataTypes.VALUE,
+    shortenedOwner,
+    {
+      position: new Vector3(0.5, -0.4, 0),
     },
     midShiftPanel6
   )
@@ -1742,42 +1856,140 @@ export function updateTradeCentrer(data: MarketData) {
     },
     topShiftPanel6
   )
-}
 
-////// ROOFTOP MUSIC
+  /////// FLAT SCREENS
 
-const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
+  // cheap swanky
 
-const marketMusicStreamEnt = new Entity()
-engine.addEntity(marketMusicStreamEnt)
-
-let marketMusicStream = new AudioStream(rooftopStation)
-marketMusicStream.playing = false
-marketMusicStreamEnt.addComponent(marketMusicStream)
-
-const marketRoofTrigger = new Entity()
-marketRoofTrigger.addComponent(
-  new Transform({ position: new Vector3(272, 29.7, 36) })
-)
-
-let marketRoofTriggerBox = new utils.TriggerBoxShape(
-  new Vector3(60, 6, 69),
-  Vector3.Zero()
-)
-marketRoofTrigger.addComponent(
-  new utils.TriggerComponent(
-    marketRoofTriggerBox, //shape
-    0, //layer
-    0, //triggeredByLayer
-    null, //onTriggerEnter
-    null, //onTriggerExit
-    () => {
-      marketMusicStream.playing = true
+  let cheapSwankyTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Cheapest Swanky Wearable',
+    {
+      position: new Vector3(0, 3.5, -0.2),
     },
-    () => {
-      marketMusicStream.playing = false
-    }, //onCameraExit
-    false
+    swankyBoard1
   )
-)
-engine.addEntity(marketRoofTrigger)
+
+  let cheapSwankyTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'now in the market',
+    {
+      position: new Vector3(0, 3.3, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let cheapSwankyTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.cheapSwankyNow.name,
+    {
+      position: new Vector3(0, 2.6, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let cheapSwankyPreview = new WearablePreview(
+    data.cheapSwankyNow.image,
+    {
+      position: new Vector3(0, 1.4, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let cheapSwankyValue1 = new StockData(
+    StockDataTypes.VALUE,
+    toMana(data.cheapSwankyNow.searchOrderPrice).toString(),
+    {
+      position: new Vector3(0, 0.4, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let cheapSwankyUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let cheapSwankyLabel = new StockData(
+    StockDataTypes.TINYTITLE,
+    'owner:',
+    {
+      position: new Vector3(-0.6, -0.4, -0.2),
+    },
+    swankyBoard1
+  )
+
+  let shortenedSwankyOwner =
+    data.cheapSwankyNow.owner.address.slice(0, 5) +
+    '...' +
+    data.cheapSwankyNow.owner.address.slice(
+      data.cheapSwankyNow.owner.address.length - 4
+    )
+
+  let cheapSwankyValue = new StockData(
+    StockDataTypes.TINYVALUE,
+    shortenedSwankyOwner,
+    {
+      position: new Vector3(0.5, -0.4, -0.2),
+    },
+    swankyBoard1
+  )
+
+  cheapSwankyPreview.addComponent(
+    new OnPointerDown(
+      (e) => {
+        let url =
+          'https://market.decentraland.org/contracts/' +
+          data.cheapSwankyNow.contractAddress +
+          '/tokens/' +
+          data.cheapSwankyNow.tokenId
+        openExternalURL(url)
+      },
+      {
+        hoverText: 'Open in Market',
+      }
+    )
+  )
+
+  ////// ROOFTOP MUSIC
+
+  const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
+
+  const marketMusicStreamEnt = new Entity()
+  engine.addEntity(marketMusicStreamEnt)
+
+  let marketMusicStream = new AudioStream(rooftopStation)
+  marketMusicStream.playing = false
+  marketMusicStreamEnt.addComponent(marketMusicStream)
+
+  const marketRoofTrigger = new Entity()
+  marketRoofTrigger.addComponent(
+    new Transform({ position: new Vector3(272, 29.7, 36) })
+  )
+
+  let marketRoofTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(60, 6, 69),
+    Vector3.Zero()
+  )
+  marketRoofTrigger.addComponent(
+    new utils.TriggerComponent(
+      marketRoofTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        marketMusicStream.playing = true
+      },
+      () => {
+        marketMusicStream.playing = false
+      }, //onCameraExit
+      false
+    )
+  )
+  engine.addEntity(marketRoofTrigger)
+}

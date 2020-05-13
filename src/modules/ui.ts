@@ -253,7 +253,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   rarity.fontSize = 16
   rarity.positionY = 461 / 2 + 142
   rarity.color = Color4.FromHexString('#FFFFFF88')
-  ratity.font = SFFont
+  rarity.font = SFFont
 
   let parsedDesc = wearableData.wearable.description
   if (parsedDesc.length > 45) {

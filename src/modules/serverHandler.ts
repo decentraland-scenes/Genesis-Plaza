@@ -132,7 +132,7 @@ export type ParcelData = {
   id: string
   name: string
   searchOrderPrice: number
-  parcel: { x: number; y: number }
+  parcel: { x: number; y: number; tokenId: string }
   owner: { address: string }
 }
 

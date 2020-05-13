@@ -172,7 +172,7 @@ export type ParcelData = {
   id: string
   name: string
   searchOrderPrice: number
-  parcel: { x: number; y: number }
+  parcel: { x: number; y: number; tokenId: string }
   owner: { address: string }
 }
 
@@ -232,10 +232,6 @@ export type MarketData = {
   cheapEpicNow: WearableData | null
   cheapLegendaryNow: WearableData | null
   cheapMythicNow: WearableData | null
-  //expensiveSwankyWeek: WearableData | null
-  //expensiveEpicWeek: WearableData | null
-  //expensiveLegendaryWeek: WearableData | null
-  //expensiveMythicWeek: WearableData | null
 }
 
 export enum Direction {
@@ -356,14 +352,7 @@ async function updateMarketData() {
     cheapEpicNow: null,
     cheapLegendaryNow: null,
     cheapMythicNow: null,
-    //    expensiveSwankyWeek: null,
-    //    expensiveEpicWeek: null,
-    //    expensiveLegendaryWeek: null,
-    //    expensiveMythicWeek: null,
   }
-
-  // cheapest parcel now
-  // largest estate sold?
 
   let dateNow = Math.floor(Date.now() / 1000)
 
@@ -763,30 +752,6 @@ async function updateMarketData() {
     dateNow
   )
 
-  //   dataToSend.expensiveSwankyWeek = await getMarketplaceWearable(
-  //     Rarity.SWANKY,
-  //     Direction.DESC,
-  //     dateWeekAgo
-  //   )
-
-  //   dataToSend.expensiveEpicWeek = await getMarketplaceWearable(
-  //     Rarity.EPIC,
-  //     Direction.DESC,
-  //     dateWeekAgo
-  //   )
-
-  //   dataToSend.expensiveLegendaryWeek = await getMarketplaceWearable(
-  //     Rarity.LEGENDARY,
-  //     Direction.DESC,
-  //     dateWeekAgo
-  //   )
-
-  //   dataToSend.expensiveMythicWeek = await getMarketplaceWearable(
-  //     Rarity.MYTHIC,
-  //     Direction.DESC,
-  //     dateWeekAgo
-  //   )
-
   dataToSend.cheapestLandNow = await getMarketplaceParcel(dateNow)
 
   console.log('DATA TO SEND: ', dataToSend)
@@ -923,7 +888,7 @@ export async function getMarketplaceWearable(
     `, orderBy: searchOrderPrice, first:1, where:{ searchWearableRarity: ` +
     rarity +
     `, category: wearable, searchOrderStatus:open, searchOrderExpiresAt_gt:` +
-    maxDate +
+    maxDate * 1000 +
     `
   }) {
 	id
@@ -960,13 +925,13 @@ export async function getMarketplaceParcel(maxDate: number) {
   let query =
     ` {
 			nfts(orderBy: searchOrderPrice, orderDirection: asc,  first: 1, where:{ category: parcel, searchOrderStatus:open, searchOrderExpiresAt_gt: ` +
-    maxDate +
+    maxDate * 1000 +
     `})
 				{
 				  id
 				   name
 			  searchOrderPrice
-			  parcel{x,y}
+			  parcel{x,y, tokenId}
 			  owner{address}
 		  }
 		  }
