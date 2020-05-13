@@ -265,15 +265,6 @@ topShiftPanel1.addComponent(
 topShiftPanel1.setParent(topRotationPanel1)
 topShiftPanel1.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let topPanel1Title = new Entity()
-topPanel1Title.addComponent(new TextShape('Board 1'))
-topPanel1Title.setParent(topShiftPanel1)
-topPanel1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let topRotationPanel2 = new Entity()
 topRotationPanel2.addComponent(
   new Transform({
@@ -291,15 +282,6 @@ topShiftPanel2.addComponent(
 topShiftPanel2.setParent(topRotationPanel2)
 topShiftPanel2.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
 
-let topPanel2Title = new Entity()
-topPanel2Title.addComponent(new TextShape('Board 2'))
-topPanel2Title.setParent(topShiftPanel2)
-topPanel2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
-
 let topRotationPanel3 = new Entity()
 topRotationPanel3.addComponent(
   new Transform({
@@ -316,15 +298,6 @@ topShiftPanel3.addComponent(
 )
 topShiftPanel3.setParent(topRotationPanel3)
 topShiftPanel3.getComponent(Transform).rotate(new Vector3(1, 0, 0), -30)
-
-let topPanel3Title = new Entity()
-topPanel3Title.addComponent(new TextShape('Board 3'))
-topPanel3Title.setParent(topShiftPanel3)
-topPanel3Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-  })
-)
 
 let topRotationPanel4 = new Entity()
 topRotationPanel4.addComponent(
@@ -1205,8 +1178,255 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel6
   )
 
+  //TODO
+
   ///// TOP FLOOR (WEARABLES)
   //1
+
+  let topPanel1Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Wearable Sales',
+    {
+      position: new Vector3(0, 0.9, 0),
+    },
+    topShiftPanel1
+  )
+
+  let topPanel1Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-0.7, 0.3, 0),
+    },
+    topShiftPanel1
+  )
+  let topPanel1Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-0.7, -0.2, 0),
+    },
+    topShiftPanel1
+  )
+  let topPanel1Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-0.7, -0.7, 0),
+    },
+    topShiftPanel1
+  )
+
+  let topPanel1Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.wearableSalesYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.3, 0),
+    },
+    topShiftPanel1
+  )
+
+  let topPanel1Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.wearableSalesWeek.toString(),
+    {
+      position: new Vector3(0.7, -0.2, 0),
+    },
+    topShiftPanel1
+  )
+
+  let topPanel1Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.wearableSalesMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.7, 0),
+    },
+    topShiftPanel1
+  )
+
+  //2
+
+  let topPanel2Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Most Expensive Wearable',
+    {
+      position: new Vector3(0, 0.9, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.3, 0),
+    },
+    topShiftPanel2
+  )
+  let topPanel2Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, -0.2, 0),
+    },
+    topShiftPanel2
+  )
+  let topPanel2Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.7, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.3, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableWeek.toString(),
+    {
+      position: new Vector3(0.7, -0.2, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.expensiveWearableMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.7, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.3, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.2, 0),
+    },
+    topShiftPanel2
+  )
+
+  let topPanel2Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.7, 0),
+    },
+    topShiftPanel2
+  )
+
+  //3
+
+  let topPanel3Title = new StockData(
+    StockDataTypes.BIGTITLE,
+    'Wearable Transaction Volume',
+    {
+      position: new Vector3(0, 0.9, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Label1 = new StockData(
+    StockDataTypes.LABEL,
+    'Yesterday',
+    {
+      position: new Vector3(-1, 0.3, 0),
+    },
+    topShiftPanel3
+  )
+  let topPanel3Label2 = new StockData(
+    StockDataTypes.LABEL,
+    '7 days',
+    {
+      position: new Vector3(-1, -0.2, 0),
+    },
+    topShiftPanel3
+  )
+  let topPanel3Label3 = new StockData(
+    StockDataTypes.LABEL,
+    '30 days',
+    {
+      position: new Vector3(-1, -0.7, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value1 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANAWearablesYesterday.toString(),
+    {
+      position: new Vector3(0.7, 0.3, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value2 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANAWearablesWeek.toString(),
+    {
+      position: new Vector3(0.7, -0.2, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Value3 = new StockData(
+    StockDataTypes.VALUE,
+    data.totalMANAWearablesMonth.toString(),
+    {
+      position: new Vector3(0.7, -0.7, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Unit1 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, 0.3, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Unit2 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.2, 0),
+    },
+    topShiftPanel3
+  )
+
+  let topPanel3Unit3 = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(1.7, -0.7, 0),
+    },
+    topShiftPanel3
+  )
+
+  //4
+  //5
+  //6
 }
 
 ////// ROOFTOP MUSIC
