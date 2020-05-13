@@ -142,18 +142,17 @@ export class NFTWindow {
     })
 
     // Sound
-    this.sound.addComponent(
-      new Transform({
-        position: new Vector3(8, 0, 8),
-      })
-    )
+    this.sound.addComponent(new Transform())
     this.sound.addComponent(
       new AudioSource(resources.sounds.navigationBackward)
     )
     engine.addEntity(this.sound)
   }
 
-  public openNFTWindow(id: number): void {
+  public openNFTWindow(id: number, audioTransform: Vector3): void {
+
+    this.sound.getComponent(Transform).position = audioTransform // Sets the close button audio's position
+
     for (let i = 0; i < nftData.length; i++) {
       if (id == nftData[i].id) {
         this.nftType.value = nftData[i].type.name
@@ -184,7 +183,7 @@ export class NFTWindow {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false
-    this.nftImage.visible = false
+    this.nftImage.source = resources.textures.blank // Fix issue with the previous artwork showing up
     this.nftDetails.visible = false
     this.nftDirectLink.visible = false
     this.sound.getComponent(AudioSource).playOnce()
