@@ -17,7 +17,7 @@ class CameraTrackSystem implements ISystem {
   }
 }
 
-//engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -29,15 +29,15 @@ setTriggerAreas()
 
 ///TELEPORTERS
 
-// placeTeleports()
+placeTeleports()
 
 /// MUSEUM
 
-// placeMuseumPieces()
+placeMuseumPieces()
 
 /// VIDEO SCEREEN
 
-// addScreen()
+addScreen()
 
 //// WEARABLES
 
@@ -52,4 +52,4 @@ addFaceUserSystem(dummyTarget)
 addRobots(dummyTarget)
 
 //// NFTS
-// addNFTs()
+addNFTs()
