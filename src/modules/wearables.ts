@@ -1,4 +1,9 @@
-import { openWearableUI, wearableClassic, wearableNotForSale } from './ui'
+import {
+  openWearableUI,
+  wearableClassic,
+  wearableNotForSale,
+  openLoadingUI,
+} from './ui'
 
 export class Wearable extends Entity {
   wearableName: string
@@ -35,6 +40,7 @@ export class Wearable extends Entity {
               'This item is part of the classic collection of wearables. You can find it in your inventory.'
             )
           } else {
+            openLoadingUI()
             let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
             if (info.data.nfts.length > 0) {
               openWearableUI(thisWearable, info.data.nfts[0])

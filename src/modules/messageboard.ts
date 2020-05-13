@@ -2,19 +2,24 @@ import { openMessageBoardUI } from './ui'
 
 export let boardLocation = null
 
+let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
+
 /// ARTICHOKE
 const ArtichokeFloatingText = new Entity()
 export let ArtichokeFloatingTextShape = new TextShape('Write something')
 ArtichokeFloatingTextShape.color = Color3.FromHexString('#8040E2')
+ArtichokeFloatingTextShape.font = SFHeavyFont
 ArtichokeFloatingText.addComponent(ArtichokeFloatingTextShape)
 ArtichokeFloatingText.addComponent(
   new Transform({
-    position: new Vector3(47, 12.5, 37),
+    position: new Vector3(51, 15.5, 31.7),
     scale: new Vector3(1, 1, 1),
     rotation: Quaternion.Euler(0, 180, 0),
   })
 )
 engine.addEntity(ArtichokeFloatingText)
+
+ArtichokeFloatingText.getComponent(Transform).rotate(new Vector3(1, 0, 0), -15)
 
 // TOWER
 
@@ -47,7 +52,8 @@ for (let i = 0; i < maxCharacters; i++) {
   letter.setParent(TowerFloatingText)
   letter.addComponent(new TextShape(''))
   letter.getComponent(TextShape).fontSize = 22
-  letter.getComponent(TextShape).color = Color3.Blue() //Color3.FromHexString('#8040E2')
+  letter.getComponent(TextShape).color = Color3.Blue()
+  letter.getComponent(TextShape).font = SFHeavyFont
   letter.addComponent(
     new Transform({
       position: new Vector3(
@@ -68,10 +74,10 @@ for (let i = 0; i < maxCharacters; i++) {
 // })
 
 let ArtichokeUIOpener = new Entity()
-ArtichokeUIOpener.addComponent(new BoxShape()) // GLTFShape('models/Message.glb'))
+ArtichokeUIOpener.addComponent(new GLTFShape('models/artichoke_message.glb')) // GLTFShape('models/Message.glb'))
 ArtichokeUIOpener.addComponent(
   new Transform({
-    position: new Vector3(42, 10, 40),
+    position: new Vector3(42, 8.4, 43),
     scale: new Vector3(1, 1, 1),
   })
 )
@@ -112,13 +118,12 @@ TowerUIOpener.addComponent(
 engine.addEntity(TowerUIOpener)
 
 export function setTowerText(text: string) {
-  let editedText = text.trim().slice(0, maxCharacters - 3)
   for (let i = 0; i <= maxCharacters - 1; i++) {
     let letter = towerLetters[i]
     let textShape = letter.getComponent(TextShape)
 
-    if (i < editedText.length) {
-      textShape.value = editedText[i]
+    if (i < text.length) {
+      textShape.value = text[i]
     } else {
       textShape.value = ''
     }

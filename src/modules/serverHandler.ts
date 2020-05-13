@@ -21,21 +21,21 @@ export class CheckServer implements ISystem {
   totalMarketTime: number
   constructor(messageTimer: number, marketTimer: number) {
     this.totalMessageTime = messageTimer
-    this.totalMarketTime = marketTimer
+    //this.totalMarketTime = marketTimer
     this.messageTimer = 0
-    this.marketTimer = 0
+    //this.marketTimer = 0
   }
   update(dt: number) {
     this.messageTimer -= dt
-    this.marketTimer -= dt
+    //this.marketTimer -= dt
     if (this.messageTimer < 0) {
       this.messageTimer = this.totalMessageTime
       updateMessageBoards()
     }
-    if (this.marketTimer < 0) {
-      this.marketTimer = this.totalMarketTime
-      updateMarketData()
-    }
+    // if (this.marketTimer < 0) {
+    //   this.marketTimer = this.totalMarketTime
+    //   updateMarketData()
+    // }
   }
 }
 
@@ -44,10 +44,14 @@ engine.addSystem(new CheckServer(messageRefreshInterval, marketRefreshInterval))
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
 export async function setNewMessage(location: string, message: string) {
+  let trimmedMessage: string = ''
+
   if (location == 'artichoke') {
-    sceneMessageBus.emit('artichokeMessage', { text: message })
+    let trimmedMessage = message.trim().slice(0, 26)
+    sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
   } else if (location == 'tower') {
-    sceneMessageBus.emit('towerMessage', { text: message })
+    let trimmedMessage = message.trim().slice(0, 40 - 3)
+    sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
     //setTowerText(newText)
   }
   try {
@@ -56,7 +60,7 @@ export async function setNewMessage(location: string, message: string) {
       'addmessage/?location=' +
       location +
       '&message=' +
-      message
+      trimmedMessage
     log('new message ', url)
     fetch(url, { method: 'POST' })
   } catch {
@@ -128,7 +132,7 @@ export type ParcelData = {
   id: string
   name: string
   searchOrderPrice: number
-  parcel: { x: number; y: number }
+  parcel: { x: number; y: number; tokenId: string }
   owner: { address: string }
 }
 
@@ -203,16 +207,7 @@ export type MarketData = {
 
 let marketData: MarketData | null = null
 
-export async function getMarketData(): Promise<MarketData> {
-  try {
-    let url = awsServer + 'market/marketData.json'
-    let response = await fetch(url).then()
-    let json = await response.json()
-    return json
-  } catch {
-    log('error fetching from AWS server')
-  }
-}
+updateMarketData()
 
 export async function updateMarketData() {
   let newMarketData = await getMarketData()
@@ -223,4 +218,15 @@ export async function updateMarketData() {
   }
   log('MARKET DATA: ', marketData)
   updateTradeCentrer(marketData)
+}
+
+export async function getMarketData(): Promise<MarketData> {
+  try {
+    let url = awsServer + 'market/marketData.json'
+    let response = await fetch(url).then()
+    let json = await response.json()
+    return json
+  } catch {
+    log('error fetching from AWS server')
+  }
 }

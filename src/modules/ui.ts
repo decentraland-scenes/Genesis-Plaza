@@ -31,6 +31,8 @@ export function updateOpenUITime() {
   UIOpenTime = +Date.now()
 }
 
+let SFFont = new Font(Fonts.SanFrancisco)
+
 ////////  MESSAGE BOARD
 
 const messageBoardTexture = new Texture('images/inputText.png')
@@ -81,9 +83,25 @@ export function openMessageBoardUI(opener: Entity) {
 
 const wearableTexture = new Texture('images/wearablesModal.png')
 const wearableColors = new Texture('images/wearable-colors.png')
+const loadingIcon = new Texture('images/clockIcon.png')
 
 let wBackground = new UIImage(screenSpaceUI, wearableTexture)
 wBackground.visible = false
+
+export function openLoadingUI() {
+  updateOpenUITime()
+  wBackground.visible = false
+  wBackground = new UIImage(screenSpaceUI, loadingIcon)
+  wBackground.visible = true
+  wBackground.sourceTop = 0
+  wBackground.sourceLeft = 0
+  wBackground.sourceHeight = 58
+  wBackground.sourceWidth = 36
+  wBackground.height = 58
+  wBackground.width = 36
+  wBackground.hAlign = 'center'
+  wBackground.vAlign = 'center'
+}
 
 export function wearableClassic(wearable: Entity) {
   updateOpenUITime()
@@ -224,6 +242,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   name.fontSize = 16
   name.positionY = 461 / 2 + 121
   name.color = Color4.White()
+  name.font = SFFont
 
   const rarity = new UIText(wBackground)
   rarity.name = 'wearableRarity'
@@ -234,6 +253,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   rarity.fontSize = 16
   rarity.positionY = 461 / 2 + 142
   rarity.color = Color4.FromHexString('#FFFFFF88')
+  rarity.font = SFFont
 
   let parsedDesc = wearableData.wearable.description
   if (parsedDesc.length > 45) {
@@ -251,6 +271,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   desc.width = 10
   desc.hTextAlign = 'left'
   desc.color = Color4.Black()
+  desc.font = SFFont
 
   let shortenedOwner =
     wearableData.owner.address.slice(0, 5) +
@@ -268,6 +289,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   owner.width = 10
   owner.hTextAlign = 'left'
   owner.color = Color4.Black()
+  owner.font = SFFont
 
   const collection = new UIText(wBackground)
   collection.name = 'wearableCollection'
@@ -280,6 +302,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   collection.width = 10
   collection.hTextAlign = 'left'
   collection.color = Color4.Black()
+  collection.font = SFFont
 
   const category = new UIText(wBackground)
   category.name = 'wearableCategory'
@@ -291,6 +314,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   category.positionX = -385 / 2 + 205 + 5
   category.width = 10
   category.color = Color4.Black()
+  category.font = SFFont
 
   let genderString: string
   if (wearableData.wearable.bodyShapes.length == 2) {
@@ -313,6 +337,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   gender.positionX = -385 / 2 + 205 + 5
   gender.width = 10
   gender.color = Color4.Black()
+  gender.font = SFFont
 
   let formattedPrice = roundNumber(
     wearableData.searchOrderPrice / 1000000000000000000,
@@ -347,6 +372,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   price.width = 10
   price.hTextAlign = 'left'
   price.color = Color4.White()
+  price.font = SFFont
 }
 
 function roundNumber(num, dec) {
@@ -417,6 +443,7 @@ export function openTeleportUI(teleport: Teleport) {
   name.fontSize = 16
   name.color = Color4.Black()
   name.width = '10px'
+  name.font = SFFont
 
   const desc = new UIText(tBackground)
   desc.name = 'tDesc'
@@ -429,6 +456,7 @@ export function openTeleportUI(teleport: Teleport) {
   desc.positionX = 14.51 - 268 / 2
   desc.color = Color4.Black()
   desc.width = '10px'
+  desc.font = SFFont
 
   const coordinates = new UIText(tBackground)
   coordinates.name = 'tCoords'
@@ -441,6 +469,7 @@ export function openTeleportUI(teleport: Teleport) {
   coordinates.fontSize = 14
   coordinates.color = Color4.Black()
   coordinates.width = '10px'
+  coordinates.font = SFFont
 
   const button = new UIImage(tBackground, teleportUITexture)
   button.name = 'tButton'
