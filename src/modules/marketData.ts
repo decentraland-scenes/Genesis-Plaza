@@ -357,127 +357,73 @@ mythicBoard1.addComponent(
   new Transform({
     position: new Vector3(271.09, 21.6, 14.38),
     rotation: Quaternion.Euler(0, 204, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(mythicBoard1)
 
-let mythicBoard1Title = new Entity()
-mythicBoard1Title.addComponent(new TextShape('Stonks'))
-mythicBoard1Title.setParent(mythicBoard1)
-mythicBoard1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
 let mythicBoard2 = new Entity()
 mythicBoard2.addComponent(
   new Transform({
     position: new Vector3(258.25, 21.6, 19.46),
-    rotation: Quaternion.Euler(0, 204, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    rotation: Quaternion.Euler(0, 203, 0),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(mythicBoard2)
 
-let mythicBoard2Title = new Entity()
-mythicBoard2Title.addComponent(new TextShape('Stonks'))
-mythicBoard2Title.setParent(mythicBoard2)
-mythicBoard2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
 let legendaryBoard1 = new Entity()
 legendaryBoard1.addComponent(
   new Transform({
-    position: new Vector3(296.55, 21.6, 35.86),
-    rotation: Quaternion.Euler(0, 114, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    position: new Vector3(296.2, 21.6, 35.56),
+    rotation: Quaternion.Euler(0, 113, 0),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(legendaryBoard1)
-
-let legendaryBoard1Title = new Entity()
-legendaryBoard1Title.addComponent(new TextShape('Stonks'))
-legendaryBoard1Title.setParent(legendaryBoard1)
-legendaryBoard1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
 
 let legendaryBoard2 = new Entity()
 legendaryBoard2.addComponent(
   new Transform({
     position: new Vector3(291.21, 21.6, 22.68),
     rotation: Quaternion.Euler(0, 114, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(legendaryBoard2)
 
-let legendaryBoard2Title = new Entity()
-legendaryBoard2Title.addComponent(new TextShape('Stonks'))
-legendaryBoard2Title.setParent(legendaryBoard2)
-legendaryBoard2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
 let epicBoard1 = new Entity()
 epicBoard1.addComponent(
   new Transform({
     position: new Vector3(249.42, 21.6, 39.43),
-    rotation: Quaternion.Euler(0, 294, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    rotation: Quaternion.Euler(0, 293, 0),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(epicBoard1)
 
-let epicBoard1Title = new Entity()
-epicBoard1Title.addComponent(new TextShape('Stonks'))
-epicBoard1Title.setParent(epicBoard1)
-epicBoard1Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
-
 let epicBoard2 = new Entity()
 epicBoard2.addComponent(
   new Transform({
     position: new Vector3(254.54, 21.6, 52.54),
-    rotation: Quaternion.Euler(0, 294, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    rotation: Quaternion.Euler(0, 293, 0),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(epicBoard2)
-
-let epicBoard2Title = new Entity()
-epicBoard2Title.addComponent(new TextShape('Stonks'))
-epicBoard2Title.setParent(epicBoard2)
-epicBoard2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
 
 let swankyBoard1 = new Entity()
 swankyBoard1.addComponent(
   new Transform({
     position: new Vector3(275.07, 21.6, 61.29),
     rotation: Quaternion.Euler(0, 24, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
@@ -488,20 +434,11 @@ swankyBoard2.addComponent(
   new Transform({
     position: new Vector3(288.03, 21.6, 56),
     rotation: Quaternion.Euler(0, 24, 0),
-    scale: new Vector3(0.8, 0.8, 0.8),
+    scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
 
 engine.addEntity(swankyBoard2)
-
-let swankyBoard2Title = new Entity()
-swankyBoard2Title.addComponent(new TextShape('Stonks'))
-swankyBoard2Title.setParent(swankyBoard2)
-swankyBoard2Title.addComponent(
-  new Transform({
-    position: new Vector3(0, 1, -0.2),
-  })
-)
 
 ////// UPDATE BOARDS
 
@@ -555,7 +492,7 @@ export class StockData extends Entity {
         shape.width = 10
         break
       case StockDataTypes.TINYTITLE:
-        shape.fontSize = 1.8
+        shape.fontSize = 2
         shape.color = Color3.White()
         shape.vTextAlign = 'center'
         shape.width = 10
@@ -571,7 +508,7 @@ export class StockData extends Entity {
         shape.vTextAlign = 'right'
         break
       case StockDataTypes.TINYVALUE:
-        shape.fontSize = 1.8
+        shape.fontSize = 2
         shape.color = Color3.Green()
         shape.vTextAlign = 'right'
         break
@@ -1865,7 +1802,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYTITLE,
     'Cheapest Swanky Wearable',
     {
-      position: new Vector3(0, 3.5, -0.2),
+      position: new Vector3(0, 3.8, -0.2),
     },
     swankyBoard1
   )
@@ -1874,7 +1811,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYTITLE,
     'now in the market',
     {
-      position: new Vector3(0, 3.3, -0.2),
+      position: new Vector3(0, 3.6, -0.2),
     },
     swankyBoard1
   )
@@ -1883,7 +1820,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYVALUE,
     data.cheapSwankyNow.name,
     {
-      position: new Vector3(0, 2.6, -0.2),
+      position: new Vector3(0, 2.9, -0.2),
     },
     swankyBoard1
   )
@@ -1891,7 +1828,7 @@ export function updateTradeCentrer(data: MarketData) {
   let cheapSwankyPreview = new WearablePreview(
     data.cheapSwankyNow.image,
     {
-      position: new Vector3(0, 1.4, -0.2),
+      position: new Vector3(0, 1.5, -0.2),
     },
     swankyBoard1
   )
@@ -1953,6 +1890,514 @@ export function updateTradeCentrer(data: MarketData) {
         hoverText: 'Open in Market',
       }
     )
+  )
+
+  /// expensive swanky
+
+  let expensiveSwankyTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Priciest Swanky Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.2),
+    },
+    swankyBoard2
+  )
+
+  let expensiveSwankyTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'sold in last 30 days',
+    {
+      position: new Vector3(0, 3.6, -0.2),
+    },
+    swankyBoard2
+  )
+
+  let expensiveSwankyTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.swankyWearableMonthExpensive.name,
+    {
+      position: new Vector3(0, 2.9, -0.2),
+    },
+    swankyBoard2
+  )
+
+  let expensiveSwankyPreview = new WearablePreview(
+    data.swankyWearableMonthExpensive.image,
+    {
+      position: new Vector3(0, 1.5, -0.2),
+    },
+    swankyBoard2
+  )
+
+  let expensiveSwankyValue1 = new StockData(
+    StockDataTypes.VALUE,
+    data.swankyWearableMonthExpensive.price.toString(),
+    {
+      position: new Vector3(0, 0.4, -0.2),
+    },
+    swankyBoard2
+  )
+
+  let expensiveSwankyUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.2),
+    },
+    swankyBoard2
+  )
+
+  // cheap epic
+
+  let cheapEpicTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Cheapest Epic Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.1),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'now in the market',
+    {
+      position: new Vector3(0, 3.6, -0.1),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.cheapEpicNow.name,
+    {
+      position: new Vector3(0, 2.9, -0.1),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicPreview = new WearablePreview(
+    data.cheapEpicNow.image,
+    {
+      position: new Vector3(0, 1.5, -0.05),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicValue1 = new StockData(
+    StockDataTypes.VALUE,
+    toMana(data.cheapEpicNow.searchOrderPrice).toString(),
+    {
+      position: new Vector3(0, 0.4, -0.1),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.1),
+    },
+    epicBoard1
+  )
+
+  let cheapEpicLabel = new StockData(
+    StockDataTypes.TINYTITLE,
+    'owner:',
+    {
+      position: new Vector3(-0.6, -0.4, -0.1),
+    },
+    epicBoard1
+  )
+
+  let shortenedepicOwner =
+    data.cheapEpicNow.owner.address.slice(0, 5) +
+    '...' +
+    data.cheapEpicNow.owner.address.slice(
+      data.cheapEpicNow.owner.address.length - 4
+    )
+
+  let cheapEpicValue = new StockData(
+    StockDataTypes.TINYVALUE,
+    shortenedepicOwner,
+    {
+      position: new Vector3(0.5, -0.4, -0.1),
+    },
+    epicBoard1
+  )
+
+  cheapEpicPreview.addComponent(
+    new OnPointerDown(
+      (e) => {
+        let url =
+          'https://market.decentraland.org/contracts/' +
+          data.cheapEpicNow.contractAddress +
+          '/tokens/' +
+          data.cheapEpicNow.tokenId
+        openExternalURL(url)
+      },
+      {
+        hoverText: 'Open in Market',
+      }
+    )
+  )
+
+  /// expensive epic
+
+  let expensiveEpicTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Priciest Epic Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.2),
+    },
+    epicBoard2
+  )
+
+  let expensiveEpicTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'sold in last 30 days',
+    {
+      position: new Vector3(0, 3.6, -0.2),
+    },
+    epicBoard2
+  )
+
+  let expensiveEpicTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.epicWearableMonthExpensive.name,
+    {
+      position: new Vector3(0, 2.9, -0.2),
+    },
+    epicBoard2
+  )
+
+  let expensiveEpicPreview = new WearablePreview(
+    data.epicWearableMonthExpensive.image,
+    {
+      position: new Vector3(0, 1.5, -0.2),
+    },
+    epicBoard2
+  )
+
+  let expensiveEpicValue1 = new StockData(
+    StockDataTypes.VALUE,
+    data.epicWearableMonthExpensive.price.toString(),
+    {
+      position: new Vector3(0, 0.4, -0.2),
+    },
+    epicBoard2
+  )
+
+  let expensiveEpicUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.2),
+    },
+    epicBoard2
+  )
+
+  // cheap legendary
+
+  let cheapLegendaryTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Cheapest Legendary Wearable',
+    {
+      position: new Vector3(-0.2, 3.8, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'now in the market',
+    {
+      position: new Vector3(-0.2, 3.6, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.cheapLegendaryNow.name,
+    {
+      position: new Vector3(-0.2, 2.9, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryPreview = new WearablePreview(
+    data.cheapLegendaryNow.image,
+    {
+      position: new Vector3(-0.2, 1.5, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryValue1 = new StockData(
+    StockDataTypes.VALUE,
+    toMana(data.cheapLegendaryNow.searchOrderPrice).toString(),
+    {
+      position: new Vector3(-0.2, 0.4, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(-0.2, 0.1, 0),
+    },
+    legendaryBoard1
+  )
+
+  let cheapLegendaryLabel = new StockData(
+    StockDataTypes.TINYTITLE,
+    'owner:',
+    {
+      position: new Vector3(-0.8, -0.4, 0),
+    },
+    legendaryBoard1
+  )
+
+  let shortenedLegendaryOwner =
+    data.cheapLegendaryNow.owner.address.slice(0, 5) +
+    '...' +
+    data.cheapLegendaryNow.owner.address.slice(
+      data.cheapLegendaryNow.owner.address.length - 4
+    )
+
+  let cheapLegendaryValue = new StockData(
+    StockDataTypes.TINYVALUE,
+    shortenedLegendaryOwner,
+    {
+      position: new Vector3(0.3, -0.4, 0),
+    },
+    legendaryBoard1
+  )
+
+  cheapLegendaryPreview.addComponent(
+    new OnPointerDown(
+      (e) => {
+        let url =
+          'https://market.decentraland.org/contracts/' +
+          data.cheapLegendaryNow.contractAddress +
+          '/tokens/' +
+          data.cheapLegendaryNow.tokenId
+        openExternalURL(url)
+      },
+      {
+        hoverText: 'Open in Market',
+      }
+    )
+  )
+
+  /// expensive legendary
+
+  let expensiveLegendaryTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Priciest Legendary Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  let expensiveLegendaryTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'sold in last 30 days',
+    {
+      position: new Vector3(0, 3.6, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  let expensiveLegendaryTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.legendaryWearableMonthExpensive.name,
+    {
+      position: new Vector3(0, 2.9, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  let expensiveLegendaryPreview = new WearablePreview(
+    data.legendaryWearableMonthExpensive.image,
+    {
+      position: new Vector3(0, 1.5, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  let expensiveLegendaryValue1 = new StockData(
+    StockDataTypes.VALUE,
+    data.legendaryWearableMonthExpensive.price.toString(),
+    {
+      position: new Vector3(0, 0.4, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  let expensiveLegendaryUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.2),
+    },
+    legendaryBoard2
+  )
+
+  // cheap mythic
+
+  let cheapMythicTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Cheapest Mythic Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'now in the market',
+    {
+      position: new Vector3(0, 3.6, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.cheapMythicNow.name,
+    {
+      position: new Vector3(0, 2.9, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicPreview = new WearablePreview(
+    data.cheapMythicNow.image,
+    {
+      position: new Vector3(0, 1.5, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicValue1 = new StockData(
+    StockDataTypes.VALUE,
+    toMana(data.cheapMythicNow.searchOrderPrice).toString(),
+    {
+      position: new Vector3(0, 0.4, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let cheapMythicLabel = new StockData(
+    StockDataTypes.TINYTITLE,
+    'owner:',
+    {
+      position: new Vector3(-0.6, -0.4, -0.1),
+    },
+    mythicBoard1
+  )
+
+  let shortenedMythicOwner =
+    data.cheapMythicNow.owner.address.slice(0, 5) +
+    '...' +
+    data.cheapMythicNow.owner.address.slice(
+      data.cheapMythicNow.owner.address.length - 4
+    )
+
+  let cheapMythicValue = new StockData(
+    StockDataTypes.TINYVALUE,
+    shortenedMythicOwner,
+    {
+      position: new Vector3(0.5, -0.4, -0.1),
+    },
+    mythicBoard1
+  )
+
+  cheapMythicPreview.addComponent(
+    new OnPointerDown(
+      (e) => {
+        let url =
+          'https://market.decentraland.org/contracts/' +
+          data.cheapMythicNow.contractAddress +
+          '/tokens/' +
+          data.cheapMythicNow.tokenId
+        openExternalURL(url)
+      },
+      {
+        hoverText: 'Open in Market',
+      }
+    )
+  )
+
+  /// expensive mythic
+
+  let expensiveMythicTitle = new StockData(
+    StockDataTypes.TINYTITLE,
+    'Priciest Mythic Wearable',
+    {
+      position: new Vector3(0, 3.8, -0.2),
+    },
+    mythicBoard2
+  )
+
+  let expensiveMythicTitle2 = new StockData(
+    StockDataTypes.TINYTITLE,
+    'sold in last 30 days',
+    {
+      position: new Vector3(0, 3.6, -0.2),
+    },
+    mythicBoard2
+  )
+
+  let expensiveMythicTitle3 = new StockData(
+    StockDataTypes.TINYVALUE,
+    data.mythicWearableMonthExpensive.name,
+    {
+      position: new Vector3(0, 2.9, -0.2),
+    },
+    mythicBoard2
+  )
+
+  let expensiveMythicPreview = new WearablePreview(
+    data.mythicWearableMonthExpensive.image,
+    {
+      position: new Vector3(0, 1.5, -0.2),
+    },
+    mythicBoard2
+  )
+
+  let expensiveMythicValue1 = new StockData(
+    StockDataTypes.VALUE,
+    data.mythicWearableMonthExpensive.price.toString(),
+    {
+      position: new Vector3(0, 0.4, -0.2),
+    },
+    mythicBoard2
+  )
+
+  let expensiveMythicUnit = new StockData(
+    StockDataTypes.UNIT,
+    'MANA',
+    {
+      position: new Vector3(0, 0.1, -0.2),
+    },
+    mythicBoard2
   )
 
   ////// ROOFTOP MUSIC
