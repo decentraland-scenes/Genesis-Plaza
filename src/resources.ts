@@ -31,6 +31,6 @@ export default {
     closeButton: new Texture("images/ui/closeButton.png"),
   },
   trigger: {
-    triggerShape: new utils.TriggerSphereShape(5, Vector3.Zero()), // Trigger sphere with a radius of 4m
+    triggerShape: new utils.TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
   },
 }
