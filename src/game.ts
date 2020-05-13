@@ -25,11 +25,11 @@ addBuildings()
 
 /// ELEVATORS
 
-setTriggerAreas()
+// setTriggerAreas()
 
 ///TELEPORTERS
 
-placeTeleports()
+// placeTeleports()
 
 /// MUSEUM
 
@@ -37,11 +37,11 @@ placeMuseumPieces()
 
 /// VIDEO SCEREEN
 
-addScreen()
+// addScreen()
 
 //// WEARABLES
 
-addWearables()
+// addWearables()
 
 //// ROBOTS
 const dummyTarget = new Entity()
