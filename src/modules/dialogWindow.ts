@@ -94,6 +94,7 @@ export class DialogWindow {
     // this.labelE.positionX = -52
     this.labelE.positionX = 64
     this.labelE.positionY = -19
+    this.labelE.isPointerBlocker = false
 
     // Button F
     this.buttonF = new UIImage(this.container, resources.textures.buttonF)
@@ -120,6 +121,7 @@ export class DialogWindow {
     // this.labelF.positionX = 64
     this.labelF.positionX = -56
     this.labelF.positionY = -19
+    this.labelF.isPointerBlocker = false
 
     // Left Click Icon
     this.leftClickIcon = new UIImage(
