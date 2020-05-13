@@ -38,7 +38,7 @@ export class NFTWindow {
     this.nftType.font = new Font(Fonts.SanFrancisco_Semibold)
     this.nftType.fontSize = 16
     this.nftType.fontWeight = "normal"
-    this.nftType.color = new Color4(1, 0.1, 0.4)
+    this.nftType.color = new Color4(1.2, 0.07, 0.38)
     this.nftType.value = "Not Found"
     this.nftType.visible = false
 
@@ -121,7 +121,7 @@ export class NFTWindow {
     this.nftDirectLink.positionY = -233
     this.nftDirectLink.fontSize = 10
     this.nftDirectLink.font = new Font(Fonts.SanFrancisco)
-    this.nftDirectLink.color = new Color4(1, 0.1, 0.4)
+    this.nftDirectLink.color = new Color4(1.2, 0.07, 0.38)
     this.nftDirectLink.value = "Not Found"
     this.nftDirectLink.visible = false
 
