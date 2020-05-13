@@ -180,7 +180,7 @@ export class NFTWindow {
     openExternalURL(link)
   }
 
-  private closeNFTWindow(): void {
+  public closeNFTWindow(): void {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false

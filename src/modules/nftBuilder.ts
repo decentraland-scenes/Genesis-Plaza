@@ -1,6 +1,8 @@
+import utils from "../../node_modules/decentraland-ecs-utils/index"
 import { NFT } from "./nft"
 import { nftData } from "./nftData"
 import { NFTWindow } from "./nftWindow"
+import resources from "../resources"
 
 export function addNFTs(): void {
   // UI Elements
@@ -11,9 +13,9 @@ export function addNFTs(): void {
   const cryptoKittiesNFT = new NFT(
     new NFTShape("ethereum://" + nftData[0].address),
     new Transform({
-      position: new Vector3(126.986, 5, 93.886),
+      position: new Vector3(126.94, 5, 93.823),
       rotation: Quaternion.Euler(0, 36.068 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.75, 0.75, 1.5),
     nftData[0].id,
@@ -23,9 +25,9 @@ export function addNFTs(): void {
   const makersPlaceNFT1 = new NFT(
     new NFTShape("ethereum://" + nftData[1].address),
     new Transform({
-      position: new Vector3(124.09, 5, 95.932),
+      position: new Vector3(124.055, 5, 95.885),
       rotation: Quaternion.Euler(0, 36.068 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.0, 1.0, 1.5),
     nftData[1].id,
@@ -35,9 +37,9 @@ export function addNFTs(): void {
   const knownOriginNFT1 = new NFT(
     new NFTShape("ethereum://" + nftData[2].address),
     new Transform({
-      position: new Vector3(116.128, 5, 102.427),
+      position: new Vector3(116.075, 5, 102.364),
       rotation: Quaternion.Euler(0, 40.278 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.5, 0.0),
     nftData[2].id,
@@ -47,9 +49,9 @@ export function addNFTs(): void {
   const axieInfinityNFT = new NFT(
     new NFTShape("ethereum://" + nftData[3].address),
     new Transform({
-      position: new Vector3(113.456, 5, 104.882),
+      position: new Vector3(113.39, 5, 104.817),
       rotation: Quaternion.Euler(0, 45.432 + 180, 0),
-      scale: new Vector3(5, 5, 5),
+      scale: new Vector3(5, 5, 2),
     }),
     new Color3(1.25, 1.25, 1.25),
     nftData[3].id,
@@ -59,11 +61,11 @@ export function addNFTs(): void {
   const myCryptoHeroesNFT = new NFT(
     new NFTShape("ethereum://" + nftData[4].address),
     new Transform({
-      position: new Vector3(107.044, 5, 113.523),
+      position: new Vector3(106.977, 5, 113.486),
       rotation: Quaternion.Euler(0, 61.533 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
-    new Color3(.25, .5, 1.5),
+    new Color3(0.25, 0.5, 1.5),
     nftData[4].id,
     nftWindow
   )
@@ -71,23 +73,23 @@ export function addNFTs(): void {
   const mlbChampionsNFT = new NFT(
     new NFTShape("ethereum://" + nftData[5].address),
     new Transform({
-      position: new Vector3(105.319, 5, 116.704),
+      position: new Vector3(105.261, 5, 116.672),
       rotation: Quaternion.Euler(0, 61.533 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.25, 0.25, 0.25),
     nftData[5].id,
     nftWindow
   )
 
-    const blockchainCutiesNFT = new NFT(
+  const blockchainCutiesNFT = new NFT(
     new NFTShape("ethereum://" + nftData[6].address),
     new Transform({
-      position: new Vector3(111.684, 5, 120.155),
+      position: new Vector3(111.754, 5, 120.193),
       rotation: Quaternion.Euler(0, 61.533, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
-    new Color3(.35, 1.25, .45),
+    new Color3(0.35, 1.25, 0.45),
     nftData[6].id,
     nftWindow
   )
@@ -95,9 +97,9 @@ export function addNFTs(): void {
   const hyperDragonsNFT = new NFT(
     new NFTShape("ethereum://" + nftData[7].address),
     new Transform({
-      position: new Vector3(113.389, 5, 116.963),
+      position: new Vector3(113.465, 5, 117.004),
       rotation: Quaternion.Euler(0, 61.533, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 1.0, 1.0),
     nftData[7].id,
@@ -107,10 +109,10 @@ export function addNFTs(): void {
   const chainGuardiansNFT = new NFT(
     new NFTShape("ethereum://" + nftData[8].address),
     new Transform({
-      position: new Vector3(118.599, 5, 109.949),
+      position: new Vector3(118.655, 5, 110.005),
       rotation: Quaternion.Euler(0, 44.895, 0),
 
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.0, 1.0, 1.5),
     nftData[8].id,
@@ -120,9 +122,9 @@ export function addNFTs(): void {
   const cryptoMorphNFT = new NFT(
     new NFTShape("ethereum://" + nftData[9].address),
     new Transform({
-      position: new Vector3(120.942, 5, 107.783),
+      position: new Vector3(120.991, 5, 107.84),
       rotation: Quaternion.Euler(0, 40.278, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.9, 0.25, 1.25),
     nftData[9].id,
@@ -132,9 +134,9 @@ export function addNFTs(): void {
   const josieNFT = new NFT(
     new NFTShape("ethereum://" + nftData[10].address),
     new Transform({
-      position: new Vector3(128.366, 5, 101.803),
+      position: new Vector3(128.412, 5, 101.866),
       rotation: Quaternion.Euler(0, 36.068, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.5, 0.0),
     nftData[10].id,
@@ -144,9 +146,9 @@ export function addNFTs(): void {
   const superRareNFT = new NFT(
     new NFTShape("ethereum://" + nftData[11].address),
     new Transform({
-      position: new Vector3(131.236, 5, 99.722),
+      position: new Vector3(131.283, 5, 99.787),
       rotation: Quaternion.Euler(0, 36.068, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.25, 0.5, 1.5),
     nftData[11].id,
@@ -156,9 +158,9 @@ export function addNFTs(): void {
   const makersPlaceNFT2 = new NFT(
     new NFTShape("ethereum://" + nftData[12].address),
     new Transform({
-      position: new Vector3(136.137, 5, 89.15),
+      position: new Vector3(136.106, 5, 89.079),
       rotation: Quaternion.Euler(0, 23.725 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.0, 1.0, 1.0),
     nftData[12].id,
@@ -168,9 +170,9 @@ export function addNFTs(): void {
   const makersPlaceNFT3 = new NFT(
     new NFTShape("ethereum://" + nftData[13].address),
     new Transform({
-      position: new Vector3(139.395, 5, 95.625),
+      position: new Vector3(139.43, 5, 95.704),
       rotation: Quaternion.Euler(0, 23.725, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.0, 0.0),
     nftData[13].id,
@@ -180,9 +182,9 @@ export function addNFTs(): void {
   const knownOriginNFT2 = new NFT(
     new NFTShape("ethereum://" + nftData[14].address),
     new Transform({
-      position: new Vector3(101.054, 5, 125.838),
+      position: new Vector3(100.982, 5, 125.806),
       rotation: Quaternion.Euler(0, 65.83 + 180, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 0.0, 1.5),
     nftData[14].id,
@@ -192,12 +194,40 @@ export function addNFTs(): void {
   const knownOriginNFT3 = new NFT(
     new NFTShape("ethereum://" + nftData[15].address),
     new Transform({
-      position: new Vector3(107.734, 5, 128.663),
+      position: new Vector3(107.804, 5, 128.694),
       rotation: Quaternion.Euler(0, 65.83, 0),
-      scale: new Vector3(4, 4, 4),
+      scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 0.0, 1.5),
     nftData[15].id,
     nftWindow
   )
+
+  // Trigger
+  const nftTrigger = new Entity()
+  nftTrigger.addComponent(
+    new Transform({
+      position: new Vector3(120.491, 5, 108.638),
+    })
+  )
+  let triggerBox = new utils.TriggerBoxShape(
+    new Vector3(60, 10, 60),
+    Vector3.Zero()
+  )
+  nftTrigger.addComponent(
+    new utils.TriggerComponent(
+      triggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      null, //onCameraEnter
+      () => {
+        log("exit trigger area")
+        nftWindow.closeNFTWindow()
+      }, //onCameraExit
+      false // enableDebug
+    )
+  )
+  engine.addEntity(nftTrigger)
 }
