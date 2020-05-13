@@ -173,7 +173,7 @@ export const nftData = [
   },
   {
     id: 12,
-    images: "images/nfts/makersPlaceIcebergInLight.png",
+    images: "images/nfts/makersPlaceIcebergInTheLight.png",
     type: { name: "MakersPlace", link: "https://makersplace.com/" },
     title: { name: "Iceberg in the Light", fontSize: 24 },
     details: {
