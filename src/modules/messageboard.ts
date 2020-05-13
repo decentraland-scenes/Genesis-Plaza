@@ -2,10 +2,13 @@ import { openMessageBoardUI } from './ui'
 
 export let boardLocation = null
 
+let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
+
 /// ARTICHOKE
 const ArtichokeFloatingText = new Entity()
 export let ArtichokeFloatingTextShape = new TextShape('Write something')
 ArtichokeFloatingTextShape.color = Color3.FromHexString('#8040E2')
+ArtichokeFloatingTextShape.font = SFHeavyFont
 ArtichokeFloatingText.addComponent(ArtichokeFloatingTextShape)
 ArtichokeFloatingText.addComponent(
   new Transform({
@@ -49,7 +52,8 @@ for (let i = 0; i < maxCharacters; i++) {
   letter.setParent(TowerFloatingText)
   letter.addComponent(new TextShape(''))
   letter.getComponent(TextShape).fontSize = 22
-  letter.getComponent(TextShape).color = Color3.Blue() //Color3.FromHexString('#8040E2')
+  letter.getComponent(TextShape).color = Color3.Blue()
+  letter.getComponent(TextShape).font = SFHeavyFont
   letter.addComponent(
     new Transform({
       position: new Vector3(
