@@ -81,9 +81,25 @@ export function openMessageBoardUI(opener: Entity) {
 
 const wearableTexture = new Texture('images/wearablesModal.png')
 const wearableColors = new Texture('images/wearable-colors.png')
+const loadingIcon = new Texture('images/clockIcon.png')
 
 let wBackground = new UIImage(screenSpaceUI, wearableTexture)
 wBackground.visible = false
+
+export function openLoadingUI() {
+  updateOpenUITime()
+  wBackground.visible = false
+  wBackground = new UIImage(screenSpaceUI, loadingIcon)
+  wBackground.visible = true
+  wBackground.sourceTop = 0
+  wBackground.sourceLeft = 0
+  wBackground.sourceHeight = 58
+  wBackground.sourceWidth = 36
+  wBackground.height = 58
+  wBackground.width = 36
+  wBackground.hAlign = 'center'
+  wBackground.vAlign = 'center'
+}
 
 export function wearableClassic(wearable: Entity) {
   updateOpenUITime()
