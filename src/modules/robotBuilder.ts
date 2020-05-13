@@ -97,8 +97,8 @@ export function addRobots(dummyTarget: Entity) {
   const bob = new Robot(
     resources.models.robots.bob,
     new Transform({
-      position: new Vector3(171, 11.5, 263.435),
-      rotation: Quaternion.Euler(0, 215, 0)
+      position: new Vector3(165.573, 11.5, 252.79),
+      rotation: Quaternion.Euler(0, 35, 0)
     }),
     RobotID.Whale
   )
