@@ -161,6 +161,13 @@ export type WearableData = {
   }
 }
 
+export type WearableDataMini = {
+  name: string
+  price: number
+  image: string
+  rarity: string
+}
+
 export type ParcelData = {
   id: string
   name: string
@@ -200,17 +207,35 @@ export type MarketData = {
   expensiveWearableYesterday: number
   expensiveWearableWeek: number
   expensiveWearableMonth: number
+  expensiveWearableNameYesterday: string
+  expensiveWearableNameWeek: string
+  expensiveWearableNameMonth: string
+  uncommonWearableMonthSales: number
+  uncommonWearableMonthMANA: number
+  uncommonWearableMonthExpensive: WearableDataMini | null
+  swankyWearableMonthSales: number
+  swankyWearableMonthMANA: number
+  swankyWearableMonthExpensive: WearableDataMini | null
+  epicWearableMonthSales: number
+  epicWearableMonthMANA: number
+  epicWearableMonthExpensive: WearableDataMini | null
+  legendaryWearableMonthSales: number
+  legendaryWearableMonthMANA: number
+  legendaryWearableMonthExpensive: WearableDataMini | null
+  mythicWearableMonthSales: number
+  mythicWearableMonthMANA: number
+  mythicWearableMonthExpensive: WearableDataMini | null
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
   cheapSwankyNow: WearableData | null
-  expensiveSwankyWeek: WearableData | null
   cheapEpicNow: WearableData | null
-  expensiveEpicWeek: WearableData | null
   cheapLegendaryNow: WearableData | null
-  expensiveLegendaryWeek: WearableData | null
   cheapMythicNow: WearableData | null
-  expensiveMythicWeek: WearableData | null
+  //expensiveSwankyWeek: WearableData | null
+  //expensiveEpicWeek: WearableData | null
+  //expensiveLegendaryWeek: WearableData | null
+  //expensiveMythicWeek: WearableData | null
 }
 
 export enum Direction {
@@ -219,7 +244,7 @@ export enum Direction {
 }
 
 export enum Rarity {
-  COMMOMN = '"common"',
+  COMMON = '"common"',
   UNCOMMON = '"uncommon"',
   SWANKY = '"swanky"',
   EPIC = '"epic"',
@@ -306,17 +331,35 @@ async function updateMarketData() {
     expensiveWearableYesterday: 0,
     expensiveWearableWeek: 0,
     expensiveWearableMonth: 0,
+    expensiveWearableNameYesterday: '',
+    expensiveWearableNameWeek: '',
+    expensiveWearableNameMonth: '',
+    uncommonWearableMonthSales: 0,
+    uncommonWearableMonthMANA: 0,
+    uncommonWearableMonthExpensive: null,
+    swankyWearableMonthSales: 0,
+    swankyWearableMonthMANA: 0,
+    swankyWearableMonthExpensive: null,
+    epicWearableMonthSales: 0,
+    epicWearableMonthMANA: 0,
+    epicWearableMonthExpensive: null,
+    legendaryWearableMonthSales: 0,
+    legendaryWearableMonthMANA: 0,
+    legendaryWearableMonthExpensive: null,
+    mythicWearableMonthSales: 0,
+    mythicWearableMonthMANA: 0,
+    mythicWearableMonthExpensive: null,
     totalMANAWearablesYesterday: 0,
     totalMANAWearablesWeek: 0,
     totalMANAWearablesMonth: 0,
     cheapSwankyNow: null,
-    expensiveSwankyWeek: null,
     cheapEpicNow: null,
-    expensiveEpicWeek: null,
     cheapLegendaryNow: null,
-    expensiveLegendaryWeek: null,
     cheapMythicNow: null,
-    expensiveMythicWeek: null,
+    //    expensiveSwankyWeek: null,
+    //    expensiveEpicWeek: null,
+    //    expensiveLegendaryWeek: null,
+    //    expensiveMythicWeek: null,
   }
 
   // cheapest parcel now
@@ -511,22 +554,25 @@ async function updateMarketData() {
   }
   dataToSend.landSalesMonth = monthLandSales.length
 
-  //// WEARABLES
+  //// WEARABLES YESTERDAY
 
-  // wearables Yesterday
   for (let i = 0; i < yesterdayWearablesSales.length; i++) {
     if (yesterdayWearablesSales[i].payment_token.symbol != 'MANA') {
       continue
     }
 
-    if (
-      toMana(yesterdayWearablesSales[i].total_price) >
-        dataToSend.expensiveWearableYesterday ||
-      dataToSend.expensiveWearableYesterday == 0
-    ) {
-      dataToSend.expensiveWearableYesterday = toMana(
-        yesterdayWearablesSales[i].total_price
-      )
+    if (yesterdayWearablesSales[i].asset) {
+      if (
+        toMana(yesterdayWearablesSales[i].total_price) >
+          dataToSend.expensiveWearableYesterday ||
+        dataToSend.expensiveWearableYesterday == 0
+      ) {
+        dataToSend.expensiveWearableYesterday = toMana(
+          yesterdayWearablesSales[i].total_price
+        )
+        dataToSend.expensiveWearableNameYesterday =
+          yesterdayWearablesSales[i].asset.name
+      }
     }
 
     dataToSend.totalMANAWearablesYesterday += toMana(
@@ -535,20 +581,23 @@ async function updateMarketData() {
   }
   dataToSend.wearableSalesYesterday = yesterdayWearablesSales.length
 
-  // wearables WEEK
+  //// WEARABLES WEEK
   for (let i = 0; i < weekWearablesSales.length; i++) {
     if (weekWearablesSales[i].payment_token.symbol != 'MANA') {
       continue
     }
 
-    if (
-      toMana(weekWearablesSales[i].total_price) >
-        dataToSend.expensiveWearableWeek ||
-      dataToSend.expensiveWearableWeek == 0
-    ) {
-      dataToSend.expensiveWearableWeek = toMana(
-        weekWearablesSales[i].total_price
-      )
+    if (weekWearablesSales[i].asset) {
+      if (
+        toMana(weekWearablesSales[i].total_price) >
+          dataToSend.expensiveWearableWeek ||
+        dataToSend.expensiveWearableWeek == 0
+      ) {
+        dataToSend.expensiveWearableWeek = toMana(
+          weekWearablesSales[i].total_price
+        )
+        dataToSend.expensiveWearableNameWeek = weekWearablesSales[i].asset.name
+      }
     }
 
     dataToSend.totalMANAWearablesWeek += toMana(
@@ -557,21 +606,129 @@ async function updateMarketData() {
   }
   dataToSend.wearableSalesWeek = weekWearablesSales.length
 
-  /// wearabes MONTH
+  //// WEARABLES MONTH
 
   for (let i = 0; i < monthWearablesSales.length; i++) {
     if (monthWearablesSales[i].payment_token.symbol != 'MANA') {
       continue
     }
 
-    if (
-      toMana(monthWearablesSales[i].total_price) >
-        dataToSend.expensiveWearableMonth ||
-      dataToSend.expensiveWearableMonth == 0
-    ) {
-      dataToSend.expensiveWearableMonth = toMana(
-        monthWearablesSales[i].total_price
-      )
+    if (monthWearablesSales[i].asset) {
+      if (
+        toMana(monthWearablesSales[i].total_price) >
+          dataToSend.expensiveWearableMonth ||
+        dataToSend.expensiveWearableMonth == 0
+      ) {
+        dataToSend.expensiveWearableNameMonth =
+          monthWearablesSales[i].asset.name
+
+        dataToSend.expensiveWearableMonth = toMana(
+          monthWearablesSales[i].total_price
+        )
+      }
+
+      let rarity = rarityFromDesc(monthWearablesSales[i].asset.description)
+
+      switch (rarity) {
+        case Rarity.UNCOMMON:
+          dataToSend.uncommonWearableMonthMANA += toMana(
+            monthWearablesSales[i].total_price
+          )
+          dataToSend.uncommonWearableMonthSales += 1
+
+          if (
+            !dataToSend.uncommonWearableMonthExpensive ||
+            toMana(monthWearablesSales[i].total_price) >
+              dataToSend.uncommonWearableMonthExpensive.price
+          ) {
+            dataToSend.uncommonWearableMonthExpensive = {
+              name: monthWearablesSales[i].asset.name,
+              price: toMana(monthWearablesSales[i].total_price),
+              image: monthWearablesSales[i].asset.image_thumbnail_url,
+              rarity: rarity,
+            }
+          }
+
+          break
+        case Rarity.SWANKY:
+          dataToSend.swankyWearableMonthMANA += toMana(
+            monthWearablesSales[i].total_price
+          )
+          dataToSend.swankyWearableMonthSales += 1
+
+          if (
+            !dataToSend.swankyWearableMonthExpensive ||
+            toMana(monthWearablesSales[i].total_price) >
+              dataToSend.swankyWearableMonthExpensive.price
+          ) {
+            dataToSend.swankyWearableMonthExpensive = {
+              name: monthWearablesSales[i].asset.name,
+              price: toMana(monthWearablesSales[i].total_price),
+              image: monthWearablesSales[i].asset.image_thumbnail_url,
+              rarity: rarity,
+            }
+          }
+          break
+        case Rarity.EPIC:
+          dataToSend.epicWearableMonthMANA += toMana(
+            monthWearablesSales[i].total_price
+          )
+          dataToSend.epicWearableMonthSales += 1
+
+          if (
+            !dataToSend.epicWearableMonthExpensive ||
+            toMana(monthWearablesSales[i].total_price) >
+              dataToSend.epicWearableMonthExpensive.price
+          ) {
+            dataToSend.epicWearableMonthExpensive = {
+              name: monthWearablesSales[i].asset.name,
+              price: toMana(monthWearablesSales[i].total_price),
+              image: monthWearablesSales[i].asset.image_thumbnail_url,
+              rarity: rarity,
+            }
+          }
+          break
+        case Rarity.LEGENDARY:
+          dataToSend.legendaryWearableMonthMANA += toMana(
+            monthWearablesSales[i].total_price
+          )
+          dataToSend.legendaryWearableMonthSales += 1
+
+          if (
+            !dataToSend.legendaryWearableMonthExpensive ||
+            toMana(monthWearablesSales[i].total_price) >
+              dataToSend.legendaryWearableMonthExpensive.price
+          ) {
+            dataToSend.legendaryWearableMonthExpensive = {
+              name: monthWearablesSales[i].asset.name,
+              price: toMana(monthWearablesSales[i].total_price),
+              image: monthWearablesSales[i].asset.image_thumbnail_url,
+              rarity: rarity,
+            }
+          }
+          break
+        case Rarity.MYTHIC:
+          dataToSend.mythicWearableMonthMANA += toMana(
+            monthWearablesSales[i].total_price
+          )
+          dataToSend.mythicWearableMonthSales += 1
+
+          if (
+            !dataToSend.mythicWearableMonthExpensive ||
+            toMana(monthWearablesSales[i].total_price) >
+              dataToSend.mythicWearableMonthExpensive.price
+          ) {
+            dataToSend.mythicWearableMonthExpensive = {
+              name: monthWearablesSales[i].asset.name,
+              price: toMana(monthWearablesSales[i].total_price),
+              image: monthWearablesSales[i].asset.image_thumbnail_url,
+              rarity: rarity,
+            }
+          }
+          break
+        case Rarity.UNIQUE:
+          break
+      }
     }
 
     dataToSend.totalMANAWearablesMonth += toMana(
@@ -580,17 +737,12 @@ async function updateMarketData() {
   }
   dataToSend.wearableSalesMonth = monthWearablesSales.length
 
-  // wearable sales examples
+  //// wearable sales examples
 
   dataToSend.cheapSwankyNow = await getMarketplaceWearable(
     Rarity.SWANKY,
     Direction.ASC,
     dateNow
-  )
-  dataToSend.expensiveSwankyWeek = await getMarketplaceWearable(
-    Rarity.SWANKY,
-    Direction.DESC,
-    dateWeekAgo
   )
 
   dataToSend.cheapEpicNow = await getMarketplaceWearable(
@@ -598,21 +750,11 @@ async function updateMarketData() {
     Direction.ASC,
     dateNow
   )
-  dataToSend.expensiveEpicWeek = await getMarketplaceWearable(
-    Rarity.EPIC,
-    Direction.DESC,
-    dateWeekAgo
-  )
 
   dataToSend.cheapLegendaryNow = await getMarketplaceWearable(
     Rarity.LEGENDARY,
     Direction.ASC,
     dateNow
-  )
-  dataToSend.expensiveLegendaryWeek = await getMarketplaceWearable(
-    Rarity.LEGENDARY,
-    Direction.DESC,
-    dateWeekAgo
   )
 
   dataToSend.cheapMythicNow = await getMarketplaceWearable(
@@ -620,17 +762,72 @@ async function updateMarketData() {
     Direction.ASC,
     dateNow
   )
-  dataToSend.expensiveMythicWeek = await getMarketplaceWearable(
-    Rarity.MYTHIC,
-    Direction.DESC,
-    dateWeekAgo
-  )
+
+  //   dataToSend.expensiveSwankyWeek = await getMarketplaceWearable(
+  //     Rarity.SWANKY,
+  //     Direction.DESC,
+  //     dateWeekAgo
+  //   )
+
+  //   dataToSend.expensiveEpicWeek = await getMarketplaceWearable(
+  //     Rarity.EPIC,
+  //     Direction.DESC,
+  //     dateWeekAgo
+  //   )
+
+  //   dataToSend.expensiveLegendaryWeek = await getMarketplaceWearable(
+  //     Rarity.LEGENDARY,
+  //     Direction.DESC,
+  //     dateWeekAgo
+  //   )
+
+  //   dataToSend.expensiveMythicWeek = await getMarketplaceWearable(
+  //     Rarity.MYTHIC,
+  //     Direction.DESC,
+  //     dateWeekAgo
+  //   )
 
   dataToSend.cheapestLandNow = await getMarketplaceParcel(dateNow)
 
   console.log('DATA TO SEND: ', dataToSend)
 
   uploadMarketData(dataToSend)
+}
+
+export function rarityFromDesc(desc: string) {
+  //"DCL Wearable 2754/5000"
+  //"DCL Wearable 659/1000"
+  //"DCL Wearable 17/100"
+  //"DCL Wearable 17/10"
+
+  let type: Rarity = Rarity.COMMON
+  // fetch everything after last slash
+  let tokenCount = desc.match('([^/]+$)')
+
+  if (tokenCount) {
+    switch (tokenCount[1]) {
+      case '10000':
+        type = Rarity.UNCOMMON
+        break
+      case '5000':
+        type = Rarity.SWANKY
+        break
+      case '1000':
+        type = Rarity.EPIC
+        break
+      case '100':
+        type = Rarity.LEGENDARY
+        break
+      case '10':
+        type = Rarity.MYTHIC
+        break
+      case '1':
+        type = Rarity.UNIQUE
+        break
+    }
+  }
+
+  return type
 }
 
 export async function getOpenSeaEventsJSON(

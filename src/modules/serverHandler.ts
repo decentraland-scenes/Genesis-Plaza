@@ -139,6 +139,13 @@ export type CoinData = {
   MANAUSD: number
 }
 
+export type WearableDataMini = {
+  name: string
+  price: number
+  image: string
+  rarity: string
+}
+
 export type MarketData = {
   coins: CoinData | null
   landSalesYesterday: number
@@ -163,17 +170,35 @@ export type MarketData = {
   expensiveWearableYesterday: number
   expensiveWearableWeek: number
   expensiveWearableMonth: number
+  expensiveWearableNameYesterday: string
+  expensiveWearableNameWeek: string
+  expensiveWearableNameMonth: string
+  uncommonWearableMonthSales: number
+  uncommonWearableMonthMANA: number
+  uncommonWearableMonthExpensive: WearableDataMini | null
+  swankyWearableMonthSales: number
+  swankyWearableMonthMANA: number
+  swankyWearableMonthExpensive: WearableDataMini | null
+  epicWearableMonthSales: number
+  epicWearableMonthMANA: number
+  epicWearableMonthExpensive: WearableDataMini | null
+  legendaryWearableMonthSales: number
+  legendaryWearableMonthMANA: number
+  legendaryWearableMonthExpensive: WearableDataMini | null
+  mythicWearableMonthSales: number
+  mythicWearableMonthMANA: number
+  mythicWearableMonthExpensive: WearableDataMini | null
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
   cheapSwankyNow: WearableData | null
-  expensiveSwankyWeek: WearableData | null
   cheapEpicNow: WearableData | null
-  expensiveEpicWeek: WearableData | null
   cheapLegendaryNow: WearableData | null
-  expensiveLegendaryWeek: WearableData | null
   cheapMythicNow: WearableData | null
-  expensiveMythicWeek: WearableData | null
+  //expensiveSwankyWeek: WearableData | null
+  //expensiveEpicWeek: WearableData | null
+  //expensiveLegendaryWeek: WearableData | null
+  //expensiveMythicWeek: WearableData | null
 }
 
 let marketData: MarketData | null = null
