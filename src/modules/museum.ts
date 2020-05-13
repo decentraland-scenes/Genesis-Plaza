@@ -511,6 +511,78 @@ let wearableTC = new MuseumPiece(
   'Wearables'
 )
 
+/////// GARDEN
+
+let builderScene = new MuseumPiece(
+  new GLTFShape('models/garden/booth_builder_scene.glb'),
+  {
+	position: new Vector3(132.59, 2, 39.8),
+   
+    rotation: Quaternion.Euler(0, 0, 0),
+  },
+  'Builder scene'
+)
+
+let smartItemScene = new MuseumPiece(
+  new GLTFShape('models/garden/booth_smart_items.glb'),
+  {
+	
+	position: new Vector3(106, 2, 27.7),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  'Smart Item scene'
+)
+
+let creatorProgram = new Entity()
+creatorProgram.addComponent(
+  new Transform({
+	position: new Vector3(126.24, 2, 30.6),
+    rotation: Quaternion.Euler(0, 45 + 270, 0),
+  })
+)
+creatorProgram.addComponent(new GLTFShape('models/garden/creator-contest.glb'))
+engine.addEntity(creatorProgram)
+creatorProgram.addComponent(
+  new OnPointerDown((e) => {
+    openExternalURL(
+      'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
+    )
+  },{ hoverText: "Learn more"})
+)
+
+let builderLink = new Entity()
+builderLink.addComponent(
+  new Transform({
+    position: new Vector3(121.6, 2, 20.5),
+    rotation: Quaternion.Euler(0, 0, 0),
+  })
+)
+builderLink.addComponent(new GLTFShape('models/garden/builder.glb'))
+engine.addEntity(builderLink)
+builderLink.addComponent(
+  new OnPointerDown((e) => {
+    openExternalURL('https://builder.decentraland.org')
+  }{ hoverText: "Try the Builder"})
+)
+
+let docsLink = new Entity()
+docsLink.addComponent(
+  new Transform({
+    position: new Vector3(113.8, 2, 20.5),
+    rotation: Quaternion.Euler(0, 0, 0),
+  })
+)
+docsLink.addComponent(new GLTFShape('models/garden/docs.glb'))
+
+docsLink.addComponent(
+  new OnPointerDown((e) => {
+    openExternalURL('https://docs.decentraland.org')
+  }{ hoverText: "Read the Docs"})
+)
+engine.addEntity(docsLink)
+
+///// MAP HELPERS
+
 export enum MapItems {
   DISTRICTS = 'districts',
   PLAZAS = 'plazas',
