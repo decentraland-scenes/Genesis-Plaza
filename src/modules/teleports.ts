@@ -64,6 +64,11 @@ export class Teleport extends Entity {
     //   })
     // )
     Particles.setParent(this)
+
+    let teleportFloor = new Entity()
+    teleportFloor.addComponent(new GLTFShape('models/teleports/teleport.glb'))
+    teleportFloor.addComponent(new Transform({}))
+    teleportFloor.setParent(this)
   }
 
   public travel(): void {
