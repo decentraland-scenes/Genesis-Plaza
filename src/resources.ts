@@ -3,6 +3,8 @@ import utils from "../node_modules/decentraland-ecs-utils/index"
 export default {
   sounds: {
     robot: new AudioClip("sounds/robot.mp3"),
+    navigationForward: new AudioClip("sounds/navigationForward.mp3"),
+    navigationBackward: new AudioClip("sounds/navigationBackward.mp3"),
   },
   models: {
     standard: {
@@ -25,8 +27,10 @@ export default {
     buttonF: new Texture("images/ui/buttonF.png"),
     leftClickIcon: new Texture("images/ui/leftClickIcon.png"),
     textPanel: new Texture("images/ui/textPanel.png"),
+    nftPanel: new Texture("images/ui/nftPanel.png"),
+    closeButton: new Texture("images/ui/closeButton.png"),
   },
   trigger: {
-    triggerShape: new utils.TriggerSphereShape(5, Vector3.Zero()) // Trigger sphere with a radius of 4m
+    triggerShape: new utils.TriggerSphereShape(5, Vector3.Zero()), // Trigger sphere with a radius of 4m
   },
 }
