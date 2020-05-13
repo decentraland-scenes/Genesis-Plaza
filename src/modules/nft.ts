@@ -25,7 +25,7 @@ export class NFT extends Entity {
       new OnPointerDown(
         (e): void => {
           this.getComponent(AudioSource).playOnce()
-          nftWindow.openNFTWindow(this.id)
+          nftWindow.openNFTWindow(this.id, transform.position)
         },
         {
           button: ActionButton.POINTER,
