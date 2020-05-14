@@ -5,8 +5,8 @@ import { addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museum'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
-import { addFaceUserSystem } from './modules/faceUserSystem'
-import { addRobots } from './modules/robotBuilder'
+import { addFaceUserSystem } from './modules/npcFaceUserSystem'
+import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
 import {
   updateMessageBoards,

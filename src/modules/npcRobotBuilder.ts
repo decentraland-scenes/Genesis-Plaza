@@ -1,8 +1,8 @@
-import { DialogWindow, ConfirmMode } from "./dialogWindow"
-import { Robot, RobotID } from "./robot"
+import { DialogWindow, ConfirmMode } from "./npcDialogWindow"
+import { Robot, RobotID } from "./npcRobot"
 import resources from "../resources"
 import utils from "../../node_modules/decentraland-ecs-utils/index"
-import { TrackUserSlerp } from "./faceUserSystem"
+import { TrackUserSlerp } from "./npcFaceUserSystem"
 
 /*
   Main = 0 (Alice)

@@ -1,8 +1,8 @@
 import utils from "../../node_modules/decentraland-ecs-utils/index"
-import { robots } from './robotBuilder'
-import { robotDialog } from './dialogData'
+import { robots } from './npcRobotBuilder'
+import { robotDialog } from './npcDialogData'
 import resources from '../resources'
-import { TrackUserSlerp } from './faceUserSystem'
+import { TrackUserSlerp } from './npcFaceUserSystem'
 
 export enum ConfirmMode {
   Confirm = 0,
@@ -254,7 +254,7 @@ export class DialogWindow {
 
       this.isDialogOpen = false
       this.container.visible = false
-      this.portrait.visible = false
+      this.portrait.source = resources.textures.blank // Fix issue with the previous portrait showing up
       this.text.visible = false
       this.buttonE.visible = false
       this.labelE.visible = false

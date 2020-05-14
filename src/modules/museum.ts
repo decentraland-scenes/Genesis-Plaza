@@ -1,12 +1,12 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
-import { DialogWindow } from './dialogWindow' // Fixes issue with modules not loading
-import { dialogWindow, robots } from './robotBuilder'
-import { RobotID } from './robot'
+import { DialogWindow } from './npcDialogWindow' // Fixes issue with modules not loading
+import { dialogWindow, robots } from './npcRobotBuilder'
+import { RobotID } from './npcRobot'
+
+// To check if the user has clicked on another item (with another id)
+let currentSelectedItemID: string
 
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
-  // To check if the user has clicked on another item (with another id)
-  let currentSelectedItemID: string
-
   if (!dialogWindow.isDialogOpen) {
     currentSelectedItemID = piece.uuid
     robots[robotID].playTalk()
