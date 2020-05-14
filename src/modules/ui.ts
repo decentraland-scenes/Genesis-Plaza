@@ -88,13 +88,13 @@ export function openMessageBoardConfirmation(opener: Entity) {
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
   messagebg.width = 848
-  messagebg.height = 117
+  messagebg.height = 177
   messagebg.hAlign = 'center'
   messagebg.vAlign = 'center'
   messagebg.sourceLeft = 78
   messagebg.sourceTop = 323
   messagebg.sourceWidth = 848
-  messagebg.sourceHeight = 117
+  messagebg.sourceHeight = 177
   messagebg.visible = true
 }
 
