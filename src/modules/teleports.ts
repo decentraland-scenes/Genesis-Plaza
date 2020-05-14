@@ -173,157 +173,151 @@ export function placeTeleports() {
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
-  //1
-  let dragonRush = new Teleport(
-    new GLTFShape('models/teleports/dragon_rush.glb'),
-    teleportPos1,
-    Locations.DRAGONRUSH,
-    'Dragon Rush',
-    '',
-    'images/teleports/Dragon_Race.jpg'
-  )
+  let teleports = [
+    {
+      name: 'Dragon Rush',
+      model: new GLTFShape('models/teleports/dragon_rush.glb'),
+      location: Locations.DRAGONRUSH,
+      transform: teleportPos1,
+      screenshot: 'images/teleports/Dragon_Race.jpg',
+      description:
+        'Fly on the back of a dragon, need we\nsay more?\nScene by the amusement park district.',
+    },
+    {
+      name: 'Toki Toki Land',
+      model: new GLTFShape('models/teleports/toki_land.glb'),
+      location: Locations.TOKI,
+      transform: teleportPos2,
+      screenshot: 'images/teleports/TokiLand.jpg',
+      description:
+        'A christmas themed adventure.\nSave the Toki Tokis from\nan evil snowman and his henchmen.',
+    },
+    {
+      name: 'Random amazing scene',
+      model: new GLTFShape('models/teleports/star.glb'),
+      location: Locations.MAGIC,
+      transform: teleportPos3,
+      screenshot: 'images/example-screenshot.png',
+      description:
+        'Visit a random scene from\na curated list of amazing places!\n',
+    },
+    {
+      name: 'Block Runner',
+      model: new GLTFShape('models/teleports/block_runner.glb'),
+      location: Locations.BLOCK,
+      transform: teleportPos4,
+      screenshot: 'images/teleports/BlockRunner.jpg',
+      description:
+        'A collection of competitive minigames\nthat are a lot of fun to play!\n',
+    },
+    {
+      name: 'Serenity Island Casino',
+      model: new GLTFShape('models/teleports/roulette.glb'),
+      location: Locations.CASINO,
+      transform: teleportPos5,
+      screenshot: 'images/teleports/Chateau_satoshi.jpg',
+      description:
+        'Play roulette and slot machines in a\nluxurious casino by the shore!\n',
+    },
+    {
+      name: 'Koko Jones',
+      model: new GLTFShape('models/teleports/koko_jones.glb'),
+      location: Locations.KOKO,
+      transform: teleportPos6,
+      screenshot: 'images/teleports/Koko_Jones.jpg',
+      description:
+        'Visit the temple of eternal bananas\nto collect gems and face evil monkeys\nScene by the amusement park district.',
+    },
+    {
+      name: 'Fruit Catcher',
+      model: new GLTFShape('models/teleports/fruit_catcher.glb'),
+      location: Locations.FRUIT,
+      transform: teleportPos7,
+      screenshot: 'images/teleports/Fruit_Catcher.jpg',
+      description:
+        'Catch as many fruits as you can,\navoid bombs! Compete for the\nhighest score!',
+    },
+    {
+      name: 'Random amazing scene',
+      model: new GLTFShape('models/teleports/star.glb'),
+      location: Locations.MAGIC,
+      transform: teleportPos8,
+      screenshot: 'images/example-screenshot.png',
+      description:
+        'Visit a random scene from\na curated list of amazing places!\n',
+    },
+    {
+      name: 'Join other players',
+      model: new GLTFShape('models/teleports/crowd.glb'),
+      location: Locations.CROWD,
+      transform: teleportPos9,
+      screenshot: 'images/teleports/Crowd.jpg',
+      description:
+        'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
+    },
+    {
+      name: 'Book of Salmonomicon',
+      model: new GLTFShape('models/teleports/salmonomicon.glb'),
+      location: Locations.SALMONOMICON,
+      transform: teleportPos10,
+      screenshot: 'images/teleports/Salmonomicon.jpg',
+      description:
+        'In this bizarre horror-themed game\nhelp Mika out and defeat a\nterrible creature.',
+    },
+    {
+      name: 'Museum District',
+      model: new GLTFShape('models/teleports/museum_district.glb'),
+      location: Locations.MUSEUM,
+      transform: teleportPos11,
+      screenshot: 'images/teleports/Museum_District.jpg',
+      description:
+        'The Museum district houses works\nfrom digital and traditional artists.\nSuperb moving sculptures & paintings.',
+    },
+    {
+      name: 'Click a Mole',
+      model: new GLTFShape('models/teleports/click_a_mole.glb'),
+      location: Locations.MOLES,
+      transform: teleportPos12,
+      screenshot: 'images/teleports/ClickAMole.jpg',
+      description: 'Whack the moles before they hide!\n\n',
+    },
+    {
+      name: 'Tomb Chaser',
+      model: new GLTFShape('models/teleports/tomb_chaser.glb'),
+      location: Locations.TOMBCHASER,
+      transform: teleportPos13,
+      screenshot: 'images/teleports/Tomb_Chaser.jpg',
+      description:
+        'Speed run through an ancient pyramid\navoiding obstacles as you try to keep\nup, in this exciting game.',
+    },
+    {
+      name: 'Infinity Engine',
+      model: new GLTFShape('models/teleports/infinity_engine.glb'),
+      location: Locations.INFINITY,
+      transform: teleportPos14,
+      screenshot: 'images/teleports/Infinity_Engine.jpg',
+      description:
+        'Mine for loot underground, then\ndefend a train from\nbandits.',
+    },
+    {
+      name: 'Join other players',
+      model: new GLTFShape('models/teleports/crowd.glb'),
+      location: Locations.CROWD,
+      transform: teleportPos15,
+      screenshot: 'images/teleports/Crowd.jpg',
+      description:
+        'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
+    },
+  ]
 
-  //2
-
-  let toki = new Teleport(
-    new GLTFShape('models/teleports/toki_land.glb'),
-    teleportPos2,
-    Locations.TOKI,
-    'Toki Toki Land',
-    'A christmas themed adventure.\nSave the Toki Tokis from\nan evil snowman and his henchmen.',
-    'images/teleports/TokiLand.jpg'
-  )
-
-  //3
-
-  let magic2 = new Teleport(
-    new GLTFShape('models/teleports/star.glb'),
-    teleportPos3,
-    Locations.MAGIC,
-    'Random amazing scene',
-    'Visit a random scene\n from a curated list of amazing places!',
-    'images/example-screenshot.png'
-  )
-
-  //4
-  let blockRunner = new Teleport(
-    new GLTFShape('models/teleports/block_runner.glb'),
-    teleportPos4,
-    Locations.BLOCK,
-    'Block Runner',
-    'A collection of competitive minigames\nthat are a lot of fun to play!',
-    'images/teleports/BlockRunner.jpg'
-  )
-
-  //5
-  let roulette = new Teleport(
-    new GLTFShape('models/teleports/roulette.glb'),
-    teleportPos5,
-    Locations.CASINO,
-    'Serenity Island Casino',
-    'Play roulette and slot machines in a\n luxurious casino by the shore!',
-    'images/teleports/Chateau_satoshi.jpg'
-  )
-
-  // 6
-
-  let koko = new Teleport(
-    new GLTFShape('models/teleports/koko_jones.glb'),
-    teleportPos6,
-    Locations.KOKO,
-    'Koko Jones',
-    'Visit the temple of eternal bananas\nto collect gems and face evil monkeys.\nThis scene is part of the amusement park district.',
-    'images/teleports/Koko_Jones.jpg'
-  )
-
-  //7
-  let fruit = new Teleport(
-    new GLTFShape('models/teleports/fruit_catcher.glb'),
-    teleportPos7,
-    Locations.FRUIT,
-    'Fruit Catcher',
-    'Catch as many fruits as you can,\navoid bombs! Compete for the\nhighest score!',
-    'images/teleports/Fruit_Catcher.jpg'
-  )
-
-  //8
-  let magic14 = new Teleport(
-    new GLTFShape('models/teleports/star.glb'),
-    teleportPos8,
-    Locations.MAGIC,
-    'Random amazing scene',
-    'Visit a random scene\n from a curated list of amazing places!',
-    'images/example-screenshot.png'
-  )
-
-  //9
-  let crowd = new Teleport(
-    new GLTFShape('models/teleports/crowd.glb'),
-    teleportPos9,
-    Locations.CROWD,
-    'Join other players',
-    'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
-    'images/teleports/Crowd.jpg'
-  )
-
-  // 10  (crowd!)
-
-  let salmonomicon = new Teleport(
-    new GLTFShape('models/teleports/salmonomicon.glb'),
-    teleportPos10,
-    Locations.SALMONOMICON,
-    'Book of Salmonomicon',
-    'In this bizarre horror-themed game you\nmust help Mika find pages to the book\nwhile avoiding a terrible creature.',
-    'images/teleports/Salmonomicon.jpg'
-  )
-
-  // 11
-  let museum = new Teleport(
-    new GLTFShape('models/teleports/museum_district.glb'),
-    teleportPos11,
-    Locations.MUSEUM,
-    'Museum District',
-    'The Museum district houses the work of many\nvirtual and non-virtual artists.\nSee some wonderful kinetic sculptures and paintings.',
-    'images/teleports/Museum_District.jpg'
-  )
-
-  // 12
-  let mole = new Teleport(
-    new GLTFShape('models/teleports/click_a_mole.glb'),
-    teleportPos12,
-    Locations.MOLES,
-    'Click a Mole',
-    'Whack the moles before they hide!',
-    'images/teleports/ClickAMole.jpg'
-  )
-
-  // 13
-  let tombChaser = new Teleport(
-    new GLTFShape('models/teleports/tomb_chaser.glb'),
-    teleportPos13,
-    Locations.TOMBCHASER,
-    'Tomb Chaser',
-    '',
-    'images/teleports/Tomb_Chaser.jpg'
-  )
-
-  // 14
-  let infinity = new Teleport(
-    new GLTFShape('models/teleports/infinity_engine.glb'),
-    teleportPos14,
-    Locations.INFINITY,
-    'Infinity Engine',
-    'Mine for loot underground, then\ndefend a train from\nbandits.',
-    'images/teleports/Infinity_Engine.jpg'
-  )
-
-  // 15  (crowd!)
-  let crowd2 = new Teleport(
-    new GLTFShape('models/teleports/crowd.glb'),
-    teleportPos15,
-    Locations.CROWD,
-    'Join other players',
-    'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
-    'images/teleports/Crowd.jpg'
-  )
+  for (let i of teleports) {
+    let t = new Teleport(
+      i.model,
+      i.transform,
+      i.location,
+      i.name,
+      i.description,
+      i.screenshot
+    )
+  }
 }
