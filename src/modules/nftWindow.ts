@@ -24,8 +24,8 @@ export class NFTWindow {
 
     // NFT Panel
     this.nftPanel = new UIImage(this.container, resources.textures.nftPanel)
-    this.nftPanel.sourceWidth = 960
-    this.nftPanel.sourceHeight = 1200
+    this.nftPanel.sourceWidth = 720
+    this.nftPanel.sourceHeight = 900
     this.nftPanel.width = 480
     this.nftPanel.height = 600
 
