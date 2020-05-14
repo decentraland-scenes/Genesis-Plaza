@@ -137,7 +137,7 @@ export function addRobots(dummyTarget: Entity) {
             ].getComponent(Transform).position
             if (!robots[i].hasComponent(TrackUserSlerp))
               robots[i].addComponent(new TrackUserSlerp())
-          }
+          } 
         },
         {
           button: ActionButton.POINTER,

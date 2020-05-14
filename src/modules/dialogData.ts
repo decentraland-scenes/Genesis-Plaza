@@ -901,7 +901,7 @@ export const robotDialog: Dialogs[] = [
       },
       {
         text:
-          "The road ahead is long but the day will come when everything gets decided in a fully decenrtalized way.",
+          "The road ahead is long but the day will come when everything gets decided in a fully decentralized way.",
         positionY: 6,
         isEndOfDialog: true,
       },
