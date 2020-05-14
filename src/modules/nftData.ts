@@ -83,18 +83,18 @@ export const nftData = [
   },
   {
     id: 6,
-    images: "images/nfts/blockchainCutiesKingSlayerI.png",
+    images: "images/nfts/blockchainCutiesDecentralander.png",
     type: { name: "BlockchainCuties", link: "https://blockchaincuties.com/" },
-    title: { name: "King Slayer I", fontSize: 24 },
+    title: { name: "Decentralander Gen0Lev10 Noble", fontSize: 20 },
     details: {
-      info: "Generation 0 / Lightning-fast / Powerful",
+      info: "Generation 0 / Fast / Powerless",
       fontSize: 15,
     },
     directLink: {
-      link: "https://blockchaincuties.com/pet/77606",
+      link: "https://blockchaincuties.com/pet/64359",
       fontSize: 11,
     },
-    address: "0xd73be539d6b2076bab83ca6ba62dfe189abc6bbe/77606",
+    address: "0xd73be539d6b2076bab83ca6ba62dfe189abc6bbe/64359",
   },
   {
     id: 7,
