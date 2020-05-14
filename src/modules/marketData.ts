@@ -411,7 +411,7 @@ let epicBoard2 = new Entity()
 epicBoard2.addComponent(
   new Transform({
     position: new Vector3(254.54, 21.6, 52.54),
-    rotation: Quaternion.Euler(0, 293, 0),
+    rotation: Quaternion.Euler(0, 292, 0),
     scale: new Vector3(0.7, 0.7, 0.7),
   })
 )
@@ -1953,7 +1953,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYTITLE,
     'Cheapest Epic Wearable',
     {
-      position: new Vector3(0, 3.8, -0.1),
+      position: new Vector3(0, 3.8, -0.05),
     },
     epicBoard1
   )
@@ -1962,7 +1962,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYTITLE,
     'now in the market',
     {
-      position: new Vector3(0, 3.6, -0.1),
+      position: new Vector3(0, 3.6, -0.05),
     },
     epicBoard1
   )
@@ -1971,7 +1971,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYVALUE,
     data.cheapEpicNow.name,
     {
-      position: new Vector3(0, 2.9, -0.1),
+      position: new Vector3(0, 2.9, -0.05),
     },
     epicBoard1
   )
@@ -1979,7 +1979,7 @@ export function updateTradeCentrer(data: MarketData) {
   let cheapEpicPreview = new WearablePreview(
     data.cheapEpicNow.image,
     {
-      position: new Vector3(0, 1.5, -0.05),
+      position: new Vector3(0, 1.5, 0),
     },
     epicBoard1
   )
@@ -1988,7 +1988,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.VALUE,
     toMana(data.cheapEpicNow.searchOrderPrice).toString(),
     {
-      position: new Vector3(0, 0.4, -0.1),
+      position: new Vector3(0, 0.4, -0.05),
     },
     epicBoard1
   )
@@ -1997,7 +1997,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.UNIT,
     'MANA',
     {
-      position: new Vector3(0, 0.1, -0.1),
+      position: new Vector3(0, 0.1, -0.05),
     },
     epicBoard1
   )
@@ -2006,7 +2006,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.TINYTITLE,
     'owner:',
     {
-      position: new Vector3(-0.6, -0.4, -0.1),
+      position: new Vector3(-0.6, -0.4, -0.05),
     },
     epicBoard1
   )

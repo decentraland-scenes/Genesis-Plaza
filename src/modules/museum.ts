@@ -1,7 +1,7 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
-import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not loading
-import { dialogWindow, robots } from "./robotBuilder"
-import { RobotID } from "./robot"
+import { DialogWindow } from './dialogWindow' // Fixes issue with modules not loading
+import { dialogWindow, robots } from './robotBuilder'
+import { RobotID } from './robot'
 
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
   if (!dialogWindow.isDialogOpen) {
@@ -13,7 +13,7 @@ function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
         dialogWindow.isDialogOpen = true
       })
     )
-  } 
+  }
 }
 
 export class MuseumPiece extends Entity {
@@ -312,7 +312,7 @@ export function placeMuseumPieces() {
         animateMap(MapItems.DISTRICTS)
         openPieceInfoWindow(districts, RobotID.Whale, 53)
       },
-      { hoverText: 'Districts' },
+      { hoverText: 'Districts' }
     )
   )
 
@@ -478,49 +478,6 @@ export function placeMuseumPieces() {
     69
   )
 
-  // ... fillers?
-
-  // covid
-  // halloween
-  // university district
-  // satoshi district
-
-  //   //   let wearable = new MuseumPiece(
-  //   //     new GLTFShape('models/museum/.glb'),
-  //   //     {
-  //   //       position: new Vector3(189.2, 19.5, 222),
-  //   //       rotation: Quaternion.Euler(0, 315, 0),
-  //   //     },
-  //   //     'Declaration'
-  //   //   )
-
-  //   let names = new MuseumPiece(
-  //     new GLTFShape('models/museum/names.glb'),
-  //     {
-  //       position: new Vector3(179.8, 18.5, 230),
-  //       rotation: Quaternion.Euler(0, 45, 0),
-  //     },
-  //     'Names'
-  //   )
-
-  //   let landing = new MuseumPiece(
-  //     new GLTFShape('models/museum/landing.glb'),
-  //     {
-  //       position: new Vector3(167.3, 18.5, 244.95),
-  //       rotation: Quaternion.Euler(0, 45, 0),
-  //     },
-  //     'Landing'
-  //   )
-
-  //   let parcel2 = new MuseumPiece(
-  //     new GLTFShape('models/museum/land.glb'),
-  //     {
-  //       position: new Vector3(171, 18.5, 257.7),
-  //       rotation: Quaternion.Euler(0, 135, 0),
-  //     },
-  //     'Parcel'
-  //   )
-
   ////////  WEARABLES BUILDING
 
   /*
@@ -561,7 +518,7 @@ export function placeMuseumPieces() {
 let parcelTC = new MuseumPiece(
   new GLTFShape('models/museum/land.glb'),
   {
-    position: new Vector3(282.9, 11.8, 39),
+    position: new Vector3(282.9, 11, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
   'LAND Parcel',
@@ -572,16 +529,16 @@ let parcelTC = new MuseumPiece(
 let parcelPuaTC = new MuseumPiece(
   new GLTFShape('models/museum/pua.glb'),
   {
-    position: new Vector3(282.9, 11.8, 39),
+    position: new Vector3(282.9, 11, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
-  'LAND Parcel',
+  'LAND Parcel'
 )
 
 let estateTC = new MuseumPiece(
   new GLTFShape('models/museum/estate.glb'),
   {
-    position: new Vector3(262.9, 11.3, 35.7),
+    position: new Vector3(262.9, 11, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
   'Estate',
@@ -592,16 +549,16 @@ let estateTC = new MuseumPiece(
 let estatePuaTC = new MuseumPiece(
   new GLTFShape('models/museum/pua.glb'),
   {
-    position: new Vector3(262.9, 11.3, 35.7),
+    position: new Vector3(262.9, 11, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
-  'Estate',
+  'Estate'
 )
 
 let wearableTC = new MuseumPiece(
   new GLTFShape('models/wearables/second_floor/J/razor_blade_upper_body.glb'),
   {
-    position: new Vector3(251, 21.6, 27.5),
+    position: new Vector3(254.6, 21.6, 22.6),
     rotation: Quaternion.Euler(0, 30, 0),
   },
   'Wearables',
@@ -614,9 +571,9 @@ let wearableTC = new MuseumPiece(
 let builderScene = new MuseumPiece(
   new GLTFShape('models/garden/booth_builder_scene.glb'),
   {
-	position: new Vector3(132.59, 2, 39.8),
-   
-    rotation: Quaternion.Euler(0, 0, 0),
+    position: new Vector3(132.59, 2, 39.8),
+
+    rotation: Quaternion.Euler(0, 90, 0),
   },
   'Builder scene',
   RobotID.Garden,
@@ -626,8 +583,7 @@ let builderScene = new MuseumPiece(
 let smartItemScene = new MuseumPiece(
   new GLTFShape('models/garden/booth_smart_items.glb'),
   {
-	
-	position: new Vector3(106, 2, 27.7),
+    position: new Vector3(106, 2, 27.7),
     rotation: Quaternion.Euler(0, 180, 0),
   },
   'Smart Item scene',
@@ -638,18 +594,21 @@ let smartItemScene = new MuseumPiece(
 let creatorProgram = new Entity()
 creatorProgram.addComponent(
   new Transform({
-	position: new Vector3(126.24, 2, 30.6),
+    position: new Vector3(126.24, 2, 30.6),
     rotation: Quaternion.Euler(0, 45 + 270, 0),
   })
 )
 creatorProgram.addComponent(new GLTFShape('models/garden/creator-contest.glb'))
 engine.addEntity(creatorProgram)
 creatorProgram.addComponent(
-  new OnPointerDown((e) => {
-    openExternalURL(
-      'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
-    )
-  },{ hoverText: "Learn more"})
+  new OnPointerDown(
+    (e) => {
+      openExternalURL(
+        'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
+      )
+    },
+    { hoverText: 'Learn more' }
+  )
 )
 
 let builderLink = new Entity()
@@ -662,9 +621,12 @@ builderLink.addComponent(
 builderLink.addComponent(new GLTFShape('models/garden/builder.glb'))
 engine.addEntity(builderLink)
 builderLink.addComponent(
-  new OnPointerDown((e) => {
-    openExternalURL('https://builder.decentraland.org')
-  },{ hoverText: "Try the Builder"})
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://builder.decentraland.org')
+    },
+    { hoverText: 'Try the Builder' }
+  )
 )
 
 let docsLink = new Entity()
@@ -677,9 +639,12 @@ docsLink.addComponent(
 docsLink.addComponent(new GLTFShape('models/garden/docs.glb'))
 
 docsLink.addComponent(
-  new OnPointerDown((e) => {
-    openExternalURL('https://docs.decentraland.org')
-  },{ hoverText: "Read the Docs"})
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://docs.decentraland.org')
+    },
+    { hoverText: 'Read the Docs' }
+  )
 )
 engine.addEntity(docsLink)
 
