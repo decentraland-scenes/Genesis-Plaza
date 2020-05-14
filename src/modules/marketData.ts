@@ -1,5 +1,6 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { MarketData } from './serverHandler'
+import { invisibleMaterial } from './museumItems'
 
 /////// GET DATA FROM SERVER
 
@@ -1123,6 +1124,29 @@ export function updateTradeCentrer(data: MarketData) {
   )
 
   //6
+  // link to parcel on market
+  let linkToParcel = new Entity()
+  linkToParcel.setParent(midShiftPanel6)
+  linkToParcel.addComponent(new PlaneShape())
+  linkToParcel.addComponent(
+    new Transform({
+      position: new Vector3(0, 0.5, -0.25),
+      scale: new Vector3(3, 3, 3),
+    })
+  )
+  linkToParcel.addComponent(invisibleMaterial)
+  linkToParcel.addComponent(
+    new OnPointerDown(
+      (e) => {
+        let url =
+          'https://market.decentraland.org/contracts/0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d/tokens/' +
+          data.cheapestLandNow.parcel.tokenId
+        openExternalURL(url)
+      },
+      { hoverText: 'Open in Market' }
+    )
+  )
+  engine.addEntity(linkToParcel)
 
   let midPane6Title = new StockData(
     StockDataTypes.TITLE,
@@ -1161,7 +1185,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.VALUE,
     cheapParcelPrice,
     {
-      position: new Vector3(-0.8, 0, 0),
+      position: new Vector3(-0.65, 0, 0),
     },
     midShiftPanel6
   )
@@ -1170,7 +1194,7 @@ export function updateTradeCentrer(data: MarketData) {
     StockDataTypes.UNIT,
     'MANA',
     {
-      position: new Vector3(0.8, 0, 0),
+      position: new Vector3(0.65, 0, 0),
     },
     midShiftPanel6
   )
