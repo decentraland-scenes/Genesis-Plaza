@@ -3,11 +3,11 @@ import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not lo
 import { dialogWindow, robots } from "./robotBuilder"
 import { RobotID } from "./robot"
 
+// To check if the user has clicked on another item (with another id)
+let currentSelectedItemID: string
+
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
   
-  // To check if the user has clicked on another item (with another id)
-  let currentSelectedItemID: string
-
   if (!dialogWindow.isDialogOpen) {
     currentSelectedItemID = piece.uuid
     robots[robotID].playTalk()
