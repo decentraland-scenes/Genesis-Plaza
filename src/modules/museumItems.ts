@@ -530,8 +530,8 @@ export function placeMuseumPieces() {
 
 /////////// TRADE CENTER
 
-let invisibleMaterial = new BasicMaterial()
-invisibleMaterial.texture = new Texture('models/transparent-texture.png')
+export let invisibleMaterial = new BasicMaterial()
+invisibleMaterial.texture = new Texture('images/transparent-texture.png')
 invisibleMaterial.alphaTest = 1
 
 let parcelTC = new MuseumPiece(
@@ -574,16 +574,61 @@ let estatePuaTC = new MuseumPiece(
   'Estate'
 )
 
-let wearableTC = new MuseumPiece(
-  new GLTFShape('models/wearables/second_floor/J/razor_blade_upper_body.glb'),
+let mythicInfo = new MuseumPiece(
+  new BoxShape(),
   {
-    position: new Vector3(254.6, 21.6, 22.6),
-    rotation: Quaternion.Euler(0, 30, 0),
+    position: new Vector3(264.5, 22.7, 16.25),
+    rotation: Quaternion.Euler(0, 204, 0),
+    scale: new Vector3(5.8, 1.2, 1.2),
   },
   'Wearables',
   RobotID.Trade,
   18
 )
+
+mythicInfo.addComponent(invisibleMaterial)
+
+let epicInfo = new MuseumPiece(
+  new BoxShape(),
+  {
+    position: new Vector3(251.4, 22.7, 46.13),
+    rotation: Quaternion.Euler(0, 293, 0),
+    scale: new Vector3(5.8, 1.2, 1.2),
+  },
+  'Wearables',
+  RobotID.Trade,
+  18
+)
+
+epicInfo.addComponent(invisibleMaterial)
+
+let legendaryInfo = new MuseumPiece(
+  new BoxShape(),
+  {
+    position: new Vector3(294.7, 22.7, 28.83),
+    rotation: Quaternion.Euler(0, 114, 0),
+    scale: new Vector3(5.8, 1.2, 1.2),
+  },
+  'Wearables',
+  RobotID.Trade,
+  18
+)
+
+legendaryInfo.addComponent(invisibleMaterial)
+
+let swankyInfo = new MuseumPiece(
+  new BoxShape(),
+  {
+    position: new Vector3(281.4, 22.7, 59.17),
+    rotation: Quaternion.Euler(0, 24, 0),
+    scale: new Vector3(5.8, 1.2, 1.2),
+  },
+  'Wearables',
+  RobotID.Trade,
+  18
+)
+
+swankyInfo.addComponent(invisibleMaterial)
 
 /////// GARDEN
 
