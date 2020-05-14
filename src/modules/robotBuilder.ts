@@ -14,10 +14,14 @@ import { TrackUserSlerp } from "./faceUserSystem"
   Whale = 6 (Bob)
 */
 
+// UI elements
+const canvas = new UICanvas()
+export const dialogWindow = new DialogWindow(canvas)
+
+// Robots
 export const robots: Robot[] = []
 
 export function addRobots(dummyTarget: Entity) {
-  // Robots
   const ringShape = resources.models.robots.rings
 
   const alice = new Robot(
@@ -71,7 +75,7 @@ export function addRobots(dummyTarget: Entity) {
     resources.models.robots.charlie,
     new Transform({
       position: new Vector3(269.5, 5.35, 42.6),
-      rotation: Quaternion.Euler(0, -90, 0)
+      rotation: Quaternion.Euler(0, -90, 0),
     }),
     RobotID.Trade
   )
@@ -80,7 +84,7 @@ export function addRobots(dummyTarget: Entity) {
   charlieRings.addComponent(ringShape)
   charlieRings.addComponent(
     new Transform({
-      position: new Vector3(0, -0.55, -.2),
+      position: new Vector3(0, -0.55, -0.2),
     })
   )
   charlieRings.setParent(charlie)
@@ -88,7 +92,7 @@ export function addRobots(dummyTarget: Entity) {
   const marsha = new Robot(
     resources.models.robots.marsha,
     new Transform({
-      position: new Vector3(50.945, 9.65, 31.10),
+      position: new Vector3(50.945, 9.65, 31.1),
     }),
     RobotID.Artichoke
   )
@@ -98,7 +102,7 @@ export function addRobots(dummyTarget: Entity) {
     resources.models.robots.bob,
     new Transform({
       position: new Vector3(165.573, 11.5, 252.79),
-      rotation: Quaternion.Euler(0, 35, 0)
+      rotation: Quaternion.Euler(0, 35, 0),
     }),
     RobotID.Whale
   )
@@ -112,19 +116,16 @@ export function addRobots(dummyTarget: Entity) {
   )
   bobRings.setParent(bob)
 
-  // UI elements
-  const canvas = new UICanvas()
-  const dialogWindow = new DialogWindow(canvas)
-
   // ISSUE: Modules do not load when these components are refactored to be part of the Robot class
   // Add user interaction
   for (let i = 0; i < robots.length; i++) {
     robots[i].addComponent(
       new OnPointerDown(
         (): void => {
-
           // Added to prevent user from accidentally clicking on the robot again
-          let isGoodbyePlaying =  robots[i].getComponent(Animator).getClip("Goodbye").playing
+          let isGoodbyePlaying = robots[i]
+            .getComponent(Animator)
+            .getClip("Goodbye").playing
 
           if (!dialogWindow.isDialogOpen && !isGoodbyePlaying) {
             robots[i].playHello()
@@ -141,7 +142,7 @@ export function addRobots(dummyTarget: Entity) {
         {
           button: ActionButton.POINTER,
           showFeedback: true,
-          hoverText: 'Talk',
+          hoverText: "Talk",
           distance: resources.trigger.triggerShape.radius,
         }
       )
@@ -155,7 +156,7 @@ export function addRobots(dummyTarget: Entity) {
         null, //onTriggerExit
         null, //onCameraEnter
         () => {
-          log('exit trigger area')
+          log("exit trigger area")
           dialogWindow.closeDialogWindow()
         }, //onCameraExit
         false // enableDebug
@@ -166,22 +167,22 @@ export function addRobots(dummyTarget: Entity) {
   // Global button events for progressing the dialog
   const input = Input.instance
 
-  input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (): void => {
-    log('LMB Clicked')
+  input.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, (): void => {
+    log("LMB Clicked")
     if (dialogWindow.isDialogOpen && !dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Next)
     }
   })
 
-  input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (): void => {
-    log('E Key Pressed')
+  input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (): void => {
+    log("E Key Pressed")
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Confirm)
     }
   })
 
-  input.subscribe('BUTTON_DOWN', ActionButton.SECONDARY, false, (): void => {
-    log('F Key Pressed')
+  input.subscribe("BUTTON_DOWN", ActionButton.SECONDARY, false, (): void => {
+    log("F Key Pressed")
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Cancel)
     }

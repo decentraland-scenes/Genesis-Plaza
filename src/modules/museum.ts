@@ -1,10 +1,30 @@
+import utils from '../../node_modules/decentraland-ecs-utils/index'
+import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not loading
+import { dialogWindow, robots } from "./robotBuilder"
+import { RobotID } from "./robot"
+
+function openPieceInfoWindow(piece: MuseumPiece, robotID: RobotID, textID: number) {
+  if (!dialogWindow.isDialogOpen) {
+    robots[robotID].playTalk()
+    dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
+    // HACK: To avoid clashing with the input subscribe button down event
+    piece.addComponentOrReplace(
+      new utils.Delay(30, () => {
+        dialogWindow.isDialogOpen = true
+      })
+    )
+  } 
+}
+
 export class MuseumPiece extends Entity {
   model: GLTFShape
   name: string
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
-    name: string
+    name: string,
+    robotID?: RobotID,
+    textID?: number
   ) {
     super()
     engine.addEntity(this)
@@ -19,7 +39,7 @@ export class MuseumPiece extends Entity {
     this.addComponent(
       new OnPointerDown(
         function () {
-          //askAboutPiece(thisPiece)
+          openPieceInfoWindow(thisPiece, robotID, textID)
         },
         { hoverText: this.name }
       )
@@ -445,13 +465,25 @@ export function placeMuseumPieces() {
 
   ////////  WEARABLES BUILDING
 
+  /*
+  Main = 0 (Alice)
+  Shell = 1 (Ron)
+  Agora = 2 (Bela)
+  Garden = 3 (Betty)
+  Trade = 4 (Charlie)
+  Artichoke = 5 (Marsha)
+  Whale = 6 (Bob)
+*/
+
   let xmax_wearables = new MuseumPiece(
     new GLTFShape('models/wearables/xmas_stand.glb'),
     {
       position: new Vector3(279.67, 9.5, 145),
       rotation: Quaternion.Euler(0, 180, 0),
     },
-    'About X-Mas Wearables'
+    'About X-Mas Wearables',
+    RobotID.Shell,
+    14
   )
 
   let halloween_wearables = new MuseumPiece(
@@ -460,7 +492,9 @@ export function placeMuseumPieces() {
       position: new Vector3(265.38, 9.5, 114),
       rotation: Quaternion.Euler(0, 150, 0),
     },
-    'About Halloween Wearables'
+    'About Halloween Wearables',
+    RobotID.Shell,
+    15
   )
 }
 
@@ -562,7 +596,7 @@ engine.addEntity(builderLink)
 builderLink.addComponent(
   new OnPointerDown((e) => {
     openExternalURL('https://builder.decentraland.org')
-  }{ hoverText: "Try the Builder"})
+  },{ hoverText: "Try the Builder"})
 )
 
 let docsLink = new Entity()
@@ -577,7 +611,7 @@ docsLink.addComponent(new GLTFShape('models/garden/docs.glb'))
 docsLink.addComponent(
   new OnPointerDown((e) => {
     openExternalURL('https://docs.decentraland.org')
-  }{ hoverText: "Read the Docs"})
+  },{ hoverText: "Read the Docs"})
 )
 engine.addEntity(docsLink)
 
