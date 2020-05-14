@@ -906,7 +906,7 @@ export const robotDialog: Dialogs[] = [
         isEndOfDialog: true,
       },
 
-      // The Start
+      // Vision
       {
         text:
           "Decentraland really took shape in 2017 amongst an exciting wave of enthusiasm around blockchain technologies.",
@@ -961,7 +961,7 @@ export const robotDialog: Dialogs[] = [
         isEndOfDialog: true,
       },
 
-      // Avatar Selfie
+      // First avatars
       {
         text:
           "Slowly things started to get more concrete. These guys were the first fun lively avatars we had. Don't they look happy?",

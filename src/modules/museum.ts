@@ -68,6 +68,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 105, 0),
     },
     'DAO',
+    RobotID.Whale,
+    8
   )
 
   let vision = new MuseumPiece(
@@ -76,7 +78,9 @@ export function placeMuseumPieces() {
       position: new Vector3(162, 9.4, 269.4),
       rotation: Quaternion.Euler(0, 208, 0),
     },
-    'The Vision'
+    'The Vision',
+    RobotID.Whale,
+    13
   )
 
   let firstPixels = new MuseumPiece(
@@ -85,7 +89,9 @@ export function placeMuseumPieces() {
       position: new Vector3(168.24, 9.5, 266.3),
       rotation: Quaternion.Euler(0, 208, 0),
     },
-    'First Experiments'
+    'First Experiments',
+    RobotID.Whale,
+    15
   )
 
   let first3D = new MuseumPiece(
@@ -94,7 +100,9 @@ export function placeMuseumPieces() {
       position: new Vector3(174.5, 9.7, 262.5),
       rotation: Quaternion.Euler(0, 208, 0),
     },
-    'First 3D Version'
+    'First 3D Version',
+    RobotID.Whale,
+    18
   )
 
   let declaration = new MuseumPiece(
@@ -103,7 +111,9 @@ export function placeMuseumPieces() {
       position: new Vector3(183.9, 10, 254.7),
       rotation: Quaternion.Euler(0, 220, 0),
     },
-    'Declaration of independance'
+    'Declaration of independance',
+    RobotID.Whale,
+    19
   )
 
   let old_logo = new MuseumPiece(
@@ -112,7 +122,9 @@ export function placeMuseumPieces() {
       position: new Vector3(189.2, 10.4, 250),
       rotation: Quaternion.Euler(0, 212, 0),
     },
-    'Original Logo'
+    'Original Logo',
+    RobotID.Whale,
+    20
   )
 
   let first_avatars = new MuseumPiece(
@@ -121,7 +133,9 @@ export function placeMuseumPieces() {
       position: new Vector3(193.7, 10.45, 245.95),
       rotation: Quaternion.Euler(0, 230, 0),
     },
-    'First Avatars'
+    'First Avatars',
+    RobotID.Whale,
+    21
   )
 
   let first_auction = new MuseumPiece(
@@ -130,7 +144,9 @@ export function placeMuseumPieces() {
       position: new Vector3(198.5, 10.5, 240.7),
       rotation: Quaternion.Euler(0, 230, 0),
     },
-    'First Land Auction'
+    'First Land Auction',
+    RobotID.Whale,
+    30
   )
 
   let avatar1 = new MuseumPiece(
@@ -139,7 +155,9 @@ export function placeMuseumPieces() {
       position: new Vector3(200.99, 10.7, 234.22),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    22
   )
 
   let avatar2 = new MuseumPiece(
@@ -148,7 +166,9 @@ export function placeMuseumPieces() {
       position: new Vector3(199, 10.3, 231.8),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    23
   )
   let avatar3 = new MuseumPiece(
     new GLTFShape('models/museum/avatars/square-robot-avatar.glb'),
@@ -156,7 +176,9 @@ export function placeMuseumPieces() {
       position: new Vector3(196.8, 10.3, 229.7),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    25
   )
 
   let avatar5 = new MuseumPiece(
@@ -165,7 +187,9 @@ export function placeMuseumPieces() {
       position: new Vector3(194.38, 10.3, 227),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    26
   )
 
   let avatar6 = new MuseumPiece(
@@ -174,7 +198,9 @@ export function placeMuseumPieces() {
       position: new Vector3(191.59, 10.8, 224.95),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    27
   )
 
   let avatar7 = new MuseumPiece(
@@ -183,7 +209,9 @@ export function placeMuseumPieces() {
       position: new Vector3(188.7, 10.8, 223),
       rotation: Quaternion.Euler(0, 315, 0),
     },
-    'Avatar'
+    'Avatar',
+    RobotID.Whale,
+    28
   )
 
   let second_auction = new MuseumPiece(
@@ -192,7 +220,9 @@ export function placeMuseumPieces() {
       position: new Vector3(182.6, 10.5, 226.5),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Second Land Auction'
+    'Second Land Auction',
+    RobotID.Whale,
+    32
   )
 
   let new_logo = new MuseumPiece(
@@ -201,7 +231,9 @@ export function placeMuseumPieces() {
       position: new Vector3(177, 10.45, 233.3),
       rotation: Quaternion.Euler(0, 52, 0),
     },
-    'New Logo'
+    'New Logo',
+    RobotID.Whale,
+    34
   )
 
   let landing = new MuseumPiece(
@@ -210,7 +242,9 @@ export function placeMuseumPieces() {
       position: new Vector3(171.8, 10.5, 239.9),
       rotation: Quaternion.Euler(0, 50, 0),
     },
-    'Landing'
+    'Landing',
+    RobotID.Whale,
+    36
   )
 
   let builder = new MuseumPiece(
@@ -219,7 +253,9 @@ export function placeMuseumPieces() {
       position: new Vector3(165.9, 9.8, 246),
       rotation: Quaternion.Euler(0, 45, 0),
     },
-    'Builder'
+    'Builder',
+    RobotID.Whale,
+    39
   )
 
   let names = new MuseumPiece(
@@ -228,7 +264,9 @@ export function placeMuseumPieces() {
       position: new Vector3(159.8, 9.5, 251.9),
       rotation: Quaternion.Euler(0, 42, 0),
     },
-    'Virtual identity'
+    'Virtual identity',
+    RobotID.Whale,
+    42
   )
 
   let wearables = new MuseumPiece(
@@ -237,7 +275,9 @@ export function placeMuseumPieces() {
       position: new Vector3(151.7, 9.4, 258.4),
       rotation: Quaternion.Euler(0, 35, 0),
     },
-    'Token Wearables'
+    'Token Wearables',
+    RobotID.Whale,
+    43
   )
 
   ///// UPSTAIRS
@@ -272,7 +312,7 @@ export function placeMuseumPieces() {
         animateMap(MapItems.DISTRICTS)
         //askAboutPiece(thisPiece)
       },
-      { hoverText: 'Districts' }
+      { hoverText: 'Districts' },
     )
   )
 
