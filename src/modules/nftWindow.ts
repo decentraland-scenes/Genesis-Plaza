@@ -155,11 +155,11 @@ export class NFTWindow {
 
     for (let i = 0; i < nftData.length; i++) {
       if (id == nftData[i].id) {
+        this.nftImage.source = new Texture(nftData[i].images)
         this.nftType.value = nftData[i].type.name
         this.nftTypeLink = nftData[i].type.link
         this.nftTitle.value = nftData[i].title.name
         this.nftTitle.fontSize = nftData[i].title.fontSize
-        this.nftImage.source = new Texture(nftData[i].images)
         this.nftDetails.value = nftData[i].details.info
         this.nftDetails.fontSize = nftData[i].details.fontSize
         this.nftDirectLink.value = nftData[i].directLink.link
@@ -183,7 +183,8 @@ export class NFTWindow {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false
-    this.nftImage.source = resources.textures.blank // Fix issue with the previous artwork showing up
+    // this.nftImage.source = resources.textures.blank // Fix issue with the previous artwork showing up
+    this.nftImage.visible = false
     this.nftDetails.visible = false
     this.nftDirectLink.visible = false
     this.sound.getComponent(AudioSource).playOnce()

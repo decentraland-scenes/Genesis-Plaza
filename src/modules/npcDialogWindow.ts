@@ -254,7 +254,8 @@ export class DialogWindow {
 
       this.isDialogOpen = false
       this.container.visible = false
-      this.portrait.source = resources.textures.blank // Fix issue with the previous portrait showing up
+      // this.portrait.source = resources.textures.blank // Fix issue with the previous portrait showing up
+      this.portrait.visible = false
       this.text.visible = false
       this.buttonE.visible = false
       this.labelE.visible = false
