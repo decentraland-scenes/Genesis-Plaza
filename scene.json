@@ -408,26 +408,12 @@
   "tags": [],
   "spawnPoints": [
     {
-      "name": "center",
-      "default": true,
-      "position": {
-        "x": [154, 162.7],
-        "y": 2,
-        "z": [148, 156]
-      },
-      "cameraTarget": {
-        "x": 158,
-        "y": 1,
-        "z": 184
-      }
-    },
-    {
       "name": "tradeCenter",
-      "default": false,
+      "default": true,
       "position": {
         "x": [226.1, 230],
         "y": 2,
-        "z": [87, 90.7]
+        "z": [90.7, 87]
       },
       "cameraTarget": {
         "x": 240,
@@ -437,7 +423,7 @@
     },
     {
       "name": "shell",
-      "default": false,
+      "default": true,
       "position": {
         "x": [296, 301],
         "y": 2,
@@ -451,7 +437,7 @@
     },
     {
       "name": "whale",
-      "default": false,
+      "default": true,
       "position": {
         "x": [201, 207],
         "y": 2,
@@ -465,7 +451,7 @@
     },
     {
       "name": "agora",
-      "default": false,
+      "default": true,
       "position": {
         "x": [87.7, 93],
         "y": 2,
@@ -479,7 +465,7 @@
     },
     {
       "name": "tower",
-      "default": false,
+      "default": true,
       "position": {
         "x": [25.3, 29.8],
         "y": 2,
@@ -493,7 +479,7 @@
     },
     {
       "name": "tower2",
-      "default": false,
+      "default": true,
       "position": {
         "x": [86.9, 93.9],
         "y": 2,
@@ -503,6 +489,20 @@
         "x": 45,
         "y": 1,
         "z": 119
+      }
+    },
+    {
+      "name": "center",
+      "default": true,
+      "position": {
+        "x": [154, 162.7],
+        "y": 2,
+        "z": [148, 156]
+      },
+      "cameraTarget": {
+        "x": 158,
+        "y": 1,
+        "z": 184
       }
     }
   ]

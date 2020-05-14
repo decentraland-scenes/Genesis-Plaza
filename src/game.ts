@@ -5,25 +5,19 @@ import { addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museum'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
-import { addFaceUserSystem } from './modules/npcFaceUserSystem'
-import { addRobots } from './modules/npcRobotBuilder'
+import { addFaceUserSystem } from './modules/faceUserSystem'
+import { addRobots } from './modules/robotBuilder'
 import { addNFTs } from './modules/nftBuilder'
-import {
-  updateMessageBoards,
-  updateMarketData,
-  CheckServer,
-  messageRefreshInterval,
-} from './modules/serverHandler'
 
 //////// HACK TO LOG POSITIONS
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//   }
-// }
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(Camera.instance.position)
+  }
+}
 
-// engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -59,10 +53,3 @@ addRobots(dummyTarget)
 
 //// NFTS
 addNFTs()
-
-//// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
-//updateMessageBoards()
-engine.addSystem(new CheckServer(messageRefreshInterval))
-
-/// FETCH DATA FOR TRADE CENTER
-updateMarketData()

@@ -1,7 +1,7 @@
 export function addBuildings() {
   // AGORA BUILDING
 
-  // add agora
+  //add agora
   let agora = new Entity()
   agora.addComponent(new GLTFShape('models/agora.glb'))
   agora.addComponent(
