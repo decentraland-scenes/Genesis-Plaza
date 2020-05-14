@@ -1,4 +1,8 @@
-import { ArtichokeFloatingTextShape, setTowerText } from './messageboard'
+import {
+  ArtichokeFloatingTextShape,
+  setTowerText,
+  MessageBoards,
+} from './messageboard'
 import { updateTradeCentrer } from './marketData'
 
 export const sceneMessageBus = new MessageBus()
@@ -7,19 +11,13 @@ export let awsServer = 'https://genesis-plaza.s3.us-east-2.amazonaws.com/'
 export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
 
-// how often to refresh scene, in seconds
-export const messageRefreshInterval: number = 30
-
-// how often to refresh scene, in seconds  (30 minutes)
-export const marketRefreshInterval: number = 1800
-
 // check server for new messageboard messages
 export class CheckServer implements ISystem {
   messageTimer: number
   totalMessageTime: number
   constructor(messageTimer: number) {
     this.totalMessageTime = messageTimer
-    this.messageTimer = 0
+    this.messageTimer = 0.5
   }
   update(dt: number) {
     this.messageTimer -= dt
@@ -32,18 +30,20 @@ export class CheckServer implements ISystem {
 
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
-export async function setNewMessage(location: string, message: string) {
-  let trimmedMessage: string = ''
-
-  if (location == 'artichoke') {
-    let trimmedMessage = message.trim().slice(0, 20)
-    sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
-  } else if (location == 'tower') {
-    let trimmedMessage = message.trim().slice(0, 40 - 3)
-    sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
-    //setTowerText(newText)
-  }
+export async function setNewMessage(location: MessageBoards, message: string) {
   try {
+    let trimmedMessage: string
+    log('location: ', location, 'message: ', message)
+
+    if (location == MessageBoards.ARTICHOKE) {
+      trimmedMessage = message.substr(0, 20)
+      sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
+    } else if (location === MessageBoards.TOWER) {
+      trimmedMessage = message.substr(0, 40 - 3)
+      sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
+      //setTowerText(newText)
+    }
+
     let url =
       fireBaseServer +
       'addmessage/?location=' +
@@ -73,12 +73,15 @@ export async function getLastMessage(location: string): Promise<string> {
 
 // change text displayed in the plaza
 export async function updateMessageBoards() {
+  log('checking boards')
   let artMessage = await getLastMessage('artichoke')
+  log('setting Artichoke message : ', artMessage)
   if (artMessage) {
     ArtichokeFloatingTextShape.value = artMessage
   }
 
   let towerMessage = await getLastMessage('tower')
+  log('setting Tower message : ', towerMessage)
   if (towerMessage) {
     setTowerText(towerMessage)
   }
@@ -119,6 +122,7 @@ export type WearableData = {
 
 export type ParcelData = {
   id: string
+
   name: string
   searchOrderPrice: number
   parcel: { x: number; y: number; tokenId: string }
@@ -188,10 +192,6 @@ export type MarketData = {
   cheapEpicNow: WearableData | null
   cheapLegendaryNow: WearableData | null
   cheapMythicNow: WearableData | null
-  //expensiveSwankyWeek: WearableData | null
-  //expensiveEpicWeek: WearableData | null
-  //expensiveLegendaryWeek: WearableData | null
-  //expensiveMythicWeek: WearableData | null
 }
 
 let marketData: MarketData | null = null

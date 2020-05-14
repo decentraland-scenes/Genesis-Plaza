@@ -1,10 +1,10 @@
 // UI
 
-import { boardLocation } from './messageboard'
 import { setNewMessage } from './serverHandler'
 import { WearableData, getWearableURL } from './wearables'
 import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
+import { MessageBoards } from './messageboard'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -40,7 +40,10 @@ const messageBoardTexture = new Texture('images/inputText.png')
 export let messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
 messagebg.visible = false
 
-export function openMessageBoardUI(opener: Entity) {
+export function openMessageBoardUI(
+  opener: Entity,
+  boardLocation: MessageBoards
+) {
   updateOpenUITime()
   messagebg.visible = false
   UIOpener = opener

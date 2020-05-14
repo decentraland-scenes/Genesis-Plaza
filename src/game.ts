@@ -12,18 +12,17 @@ import {
   updateMessageBoards,
   updateMarketData,
   CheckServer,
-  messageRefreshInterval,
 } from './modules/serverHandler'
 
 //////// HACK TO LOG POSITIONS
 
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(Camera.instance.position)
-  }
-}
+// class CameraTrackSystem implements ISystem {
+//   update() {
+//     log(Camera.instance.position)
+//   }
+// }
 
-engine.addSystem(new CameraTrackSystem())
+// engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -62,6 +61,9 @@ addNFTs()
 
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
 //updateMessageBoards()
+// how often to refresh scene, in seconds
+const messageRefreshInterval: number = 30
+// start system
 engine.addSystem(new CheckServer(messageRefreshInterval))
 
 /// FETCH DATA FOR TRADE CENTER

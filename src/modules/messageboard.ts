@@ -1,8 +1,11 @@
 import { openMessageBoardUI } from './ui'
 
-export let boardLocation = null
-
 let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
+
+export enum MessageBoards {
+  ARTICHOKE = 'artichoke',
+  TOWER = 'tower',
+}
 
 /// ARTICHOKE
 const ArtichokeFloatingText = new Entity()
@@ -84,8 +87,7 @@ ArtichokeUIOpener.addComponent(
 ArtichokeUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
-      boardLocation = 'artichoke'
-      openMessageBoardUI(ArtichokeUIOpener)
+      openMessageBoardUI(ArtichokeUIOpener, MessageBoards.ARTICHOKE)
     },
     {
       button: ActionButton.POINTER,
@@ -106,8 +108,7 @@ TowerUIOpener.addComponent(
 TowerUIOpener.addComponent(
   new OnPointerDown(
     (e) => {
-      boardLocation = 'tower'
-      openMessageBoardUI(TowerUIOpener)
+      openMessageBoardUI(TowerUIOpener, MessageBoards.TOWER)
     },
     {
       button: ActionButton.POINTER,
