@@ -980,7 +980,7 @@ export const robotDialog: Dialogs[] = [
       // Fox Avatar
       {
         text:
-          "Then came the fox and the robots. This dude looked so cool, didn't he?",
+          "Then came the fox and the robots. This dude looks so cool, doesn't he?",
         positionY: 18,
       },
       {
