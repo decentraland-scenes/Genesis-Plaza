@@ -85,91 +85,91 @@ export class Teleport extends Entity {
 export function placeTeleports() {
   // artichoke & garden
   let teleportPos1 = new Transform({
-    position: new Vector3(81.7, 0.5, 18.45),
+    position: new Vector3(81.7, 0.3, 18.45),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 
   // garden & hallway
   let teleportPos2 = new Transform({
-    position: new Vector3(100.19, 1, 69),
+    position: new Vector3(100.19, 0.3, 69),
     rotation: Quaternion.Euler(0, 225, 0),
   })
 
   // garden & market
   let teleportPos3 = new Transform({
-    position: new Vector3(177.5, 1, 51),
+    position: new Vector3(177.5, 0.3, 51),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 
   // garden & rock
   let teleportPos4 = new Transform({
-    position: new Vector3(189.84, 1, 68),
+    position: new Vector3(189.84, 0.3, 68),
     rotation: Quaternion.Euler(0, 270, 0),
   })
 
   // rock & market
   let teleportPos5 = new Transform({
-    position: new Vector3(210.19, 1, 68.8),
+    position: new Vector3(210.19, 0.45, 68.8),
     rotation: Quaternion.Euler(0, 90, 0),
   })
 
   // sculpture & wearables
   let teleportPos6 = new Transform({
-    position: new Vector3(211.19, 1, 119.5),
+    position: new Vector3(211.19, 0.3, 119.5),
     rotation: Quaternion.Euler(0, 270, 0),
   })
 
   // wearables - west
   let teleportPos7 = new Transform({
-    position: new Vector3(226.8, 1, 132.8),
+    position: new Vector3(226.8, 0.3, 132.8),
     rotation: Quaternion.Euler(0, 90, 0),
   })
 
   // wearables - NW
   let teleportPos8 = new Transform({
-    position: new Vector3(228.3, 1, 168.8),
+    position: new Vector3(228.3, 0.45, 168.8),
     rotation: Quaternion.Euler(0, 135, 0),
   })
 
   // wearables - N
   let teleportPos9 = new Transform({
-    position: new Vector3(261.2, 1, 174.4),
+    position: new Vector3(261.2, 0.3, 174.4),
     rotation: Quaternion.Euler(0, 135, 0),
   })
 
   // whale - S
   let teleportPos10 = new Transform({
-    position: new Vector3(222.7, 1, 203.8),
+    position: new Vector3(222.7, 0.45, 203.8),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
   // center - N
   let teleportPos11 = new Transform({
-    position: new Vector3(174.71, 1, 209.8),
+    position: new Vector3(174.71, 0.4, 209.8),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
   // whale & mountains
   let teleportPos12 = new Transform({
-    position: new Vector3(97.63, 0.5, 249.46),
+    position: new Vector3(97.63, 0.3, 249.46),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 
   // tower- east
   let teleportPos13 = new Transform({
-    position: new Vector3(89.42, 1, 101.4),
+    position: new Vector3(89.42, 0.3, 101.4),
     rotation: Quaternion.Euler(0, 0, 0),
   })
 
   // tower- south
   let teleportPos14 = new Transform({
-    position: new Vector3(17.44, 1, 75.3),
+    position: new Vector3(17.44, 0.25, 75.3),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 
   // center - N2
   let teleportPos15 = new Transform({
-    position: new Vector3(145.45, 1, 210),
+    position: new Vector3(145.45, 0.7, 210),
     rotation: Quaternion.Euler(0, 45, 0),
   })
 

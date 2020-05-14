@@ -35,7 +35,7 @@ export class MuseumPiece extends Entity {
   model: GLTFShape
   name: string
   constructor(
-    model: GLTFShape,
+    model: GLTFShape | BoxShape,
     transform: TranformConstructorArgs,
     name: string,
     robotID?: RobotID,
@@ -529,6 +529,10 @@ export function placeMuseumPieces() {
 }
 
 /////////// TRADE CENTER
+
+let invisibleMaterial = new BasicMaterial()
+invisibleMaterial.texture = new Texture('models/transparent-texture.png')
+invisibleMaterial.alphaTest = 1
 
 let parcelTC = new MuseumPiece(
   new GLTFShape('models/museum/land.glb'),

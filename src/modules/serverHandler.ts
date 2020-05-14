@@ -36,7 +36,7 @@ export async function setNewMessage(location: string, message: string) {
   let trimmedMessage: string = ''
 
   if (location == 'artichoke') {
-    let trimmedMessage = message.trim().slice(0, 22)
+    let trimmedMessage = message.trim().slice(0, 20)
     sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
   } else if (location == 'tower') {
     let trimmedMessage = message.trim().slice(0, 40 - 3)

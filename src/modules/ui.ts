@@ -88,13 +88,13 @@ export function openMessageBoardConfirmation(opener: Entity) {
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
   messagebg.width = 848
-  messagebg.height = 117
+  messagebg.height = 177
   messagebg.hAlign = 'center'
   messagebg.vAlign = 'center'
   messagebg.sourceLeft = 78
   messagebg.sourceTop = 323
   messagebg.sourceWidth = 848
-  messagebg.sourceHeight = 117
+  messagebg.sourceHeight = 177
   messagebg.visible = true
 }
 
@@ -161,10 +161,11 @@ export function wearableNotForSale(wearable: Entity) {
 }
 
 export function openWearableUI(wearable: Entity, wearableData: WearableData) {
-  const wearableThumnail = new Texture(wearableData.image)
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
+
+  const wearableThumnail = new Texture(wearableData.image)
 
   let backgroundOffset = -70
 
