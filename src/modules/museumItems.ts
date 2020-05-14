@@ -2,6 +2,16 @@ import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { DialogWindow } from './npcDialogWindow' // Fixes issue with modules not loading
 import { dialogWindow, robots } from './npcRobotBuilder'
 import { RobotID } from './npcRobot'
+import resources from "../resources"
+
+// Museum click audio
+const openDialogSound = new Entity()
+openDialogSound.addComponent(new Transform())
+// This seems to work even when player moves as oppose to getting the transform from the item
+// as the items transform might not be matching their position visuallly
+openDialogSound.getComponent(Transform).position = Camera.instance.position 
+openDialogSound.addComponent(new AudioSource(resources.sounds.navigationForward))
+engine.addEntity(openDialogSound)
 
 // To check if the user has clicked on another item (with another id)
 let currentSelectedItemID: string
@@ -9,6 +19,7 @@ let currentSelectedItemID: string
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
   if (!dialogWindow.isDialogOpen) {
     currentSelectedItemID = piece.uuid
+    openDialogSound.getComponent(AudioSource).playOnce()
     robots[robotID].playTalk()
     dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
     // HACK: To avoid clashing with the input subscribe button down event
@@ -19,7 +30,7 @@ function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
     )
   } else if (dialogWindow.isDialogOpen && piece.uuid != currentSelectedItemID) {
     dialogWindow.isDialogOpen = false
-
+    openDialogSound.getComponent(AudioSource).playOnce()
     currentSelectedItemID = piece.uuid
     robots[robotID].playTalk()
     dialogWindow.openDialogWindow(robotID, textID)
