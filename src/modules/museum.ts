@@ -1,7 +1,7 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not loading
 import { dialogWindow, robots } from "./robotBuilder"
-import { RobotID } from "./robot"
+import { RobotID, Robot } from "./robot"
 
 function openPieceInfoWindow(piece: MuseumPiece, robotID: RobotID, textID: number) {
   if (!dialogWindow.isDialogOpen) {
@@ -554,7 +554,9 @@ let builderScene = new MuseumPiece(
    
     rotation: Quaternion.Euler(0, 0, 0),
   },
-  'Builder scene'
+  'Builder scene',
+  RobotID.Garden,
+  34
 )
 
 let smartItemScene = new MuseumPiece(
@@ -564,7 +566,9 @@ let smartItemScene = new MuseumPiece(
 	position: new Vector3(106, 2, 27.7),
     rotation: Quaternion.Euler(0, 180, 0),
   },
-  'Smart Item scene'
+  'Smart Item scene',
+  RobotID.Garden,
+  35
 )
 
 let creatorProgram = new Entity()
