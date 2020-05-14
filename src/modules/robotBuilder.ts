@@ -123,12 +123,14 @@ export function addRobots(dummyTarget: Entity) {
       new OnPointerDown(
         (): void => {
 
+          // Added to prevent user from accidentally clicking on the robot again
           let isGoodbyePlaying =  robots[i].getComponent(Animator).getClip("Goodbye").playing
 
           if (!dialogWindow.isDialogOpen && !isGoodbyePlaying) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
+            dialogWindow.isDialogOpen = true
             dummyTarget.getComponent(Transform).position = robots[
               i
             ].getComponent(Transform).position
@@ -139,7 +141,7 @@ export function addRobots(dummyTarget: Entity) {
         {
           button: ActionButton.POINTER,
           showFeedback: true,
-          hoverText: "Talk",
+          hoverText: 'Talk',
           distance: resources.trigger.triggerShape.radius,
         }
       )
@@ -153,7 +155,7 @@ export function addRobots(dummyTarget: Entity) {
         null, //onTriggerExit
         null, //onCameraEnter
         () => {
-          log("exit trigger area")
+          log('exit trigger area')
           dialogWindow.closeDialogWindow()
         }, //onCameraExit
         false // enableDebug
@@ -164,22 +166,22 @@ export function addRobots(dummyTarget: Entity) {
   // Global button events for progressing the dialog
   const input = Input.instance
 
-  input.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, (): void => {
-    log("LMB Clicked")
+  input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (): void => {
+    log('LMB Clicked')
     if (dialogWindow.isDialogOpen && !dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Next)
     }
   })
 
-  input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (): void => {
-    log("E Key Pressed")
+  input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (): void => {
+    log('E Key Pressed')
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Confirm)
     }
   })
 
-  input.subscribe("BUTTON_DOWN", ActionButton.SECONDARY, false, (): void => {
-    log("F Key Pressed")
+  input.subscribe('BUTTON_DOWN', ActionButton.SECONDARY, false, (): void => {
+    log('F Key Pressed')
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Cancel)
     }
