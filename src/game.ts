@@ -2,7 +2,7 @@
 import { placeTeleports } from './modules/teleports'
 import { setTriggerAreas } from './modules/elevators'
 import { addWearables } from './modules/wearables'
-import { placeMuseumPieces } from './modules/museum'
+import { placeMuseumPieces } from './modules/museumItems'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/npcFaceUserSystem'

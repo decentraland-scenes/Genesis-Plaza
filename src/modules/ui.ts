@@ -161,10 +161,11 @@ export function wearableNotForSale(wearable: Entity) {
 }
 
 export function openWearableUI(wearable: Entity, wearableData: WearableData) {
-  const wearableThumnail = new Texture(wearableData.image)
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
+
+  const wearableThumnail = new Texture(wearableData.image)
 
   let backgroundOffset = -70
 
