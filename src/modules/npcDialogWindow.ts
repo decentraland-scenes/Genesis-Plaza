@@ -1,8 +1,8 @@
 import utils from "../../node_modules/decentraland-ecs-utils/index"
-import { robots } from './robotBuilder'
-import { robotDialog } from './dialogData'
+import { robots } from './npcRobotBuilder'
+import { robotDialog } from './npcDialogData'
 import resources from '../resources'
-import { TrackUserSlerp } from './faceUserSystem'
+import { TrackUserSlerp } from './npcFaceUserSystem'
 
 export enum ConfirmMode {
   Confirm = 0,
