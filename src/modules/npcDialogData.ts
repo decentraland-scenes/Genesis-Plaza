@@ -213,7 +213,7 @@ export const robotDialog: Dialogs[] = [
           positionY: 10,
         },
         text:
-          "Hi, I’m a tailor – a crafter of wearable items. Would you like to learn more about wearables?",
+          "Hi there, I’m a tailor – a crafter of wearable items. Would you like to learn more about wearables?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -288,6 +288,23 @@ export const robotDialog: Dialogs[] = [
         text:
           "I hope you found this information useful and have fun expressing yourself with your new wearables!",
         positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // --- YELLOW TEXT ---
+      // Christmas
+      {
+        text:
+          "These wearables are from the Cyberchristmas 2019 collection. Real flashy huh?",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Halloween
+      {
+        text:
+          "These wearables are from the Halloween 2019 collection. Pretty creepy looking huh?",
+        positionY: 18,
         isEndOfDialog: true,
       },
     ],
@@ -563,6 +580,28 @@ export const robotDialog: Dialogs[] = [
         positionY: 6,
         isEndOfDialog: true,
       },
+
+      // --- YELLOW TEXT ---
+      // Builder
+      {
+        text:
+          "This is what a basic Builder scene looks like. There are tons of prefab items you can just drag and drop to create an experience of your own.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Smart Items
+      {
+        text:
+          "This is what a Builder scene looks like with some smart items in it.",
+        positionY: 18,
+      },
+      {
+        text:
+          "Smart items can be dragged in just as easily as other items, but can make things so much more interesting!",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
     ],
   },
 
@@ -605,11 +644,6 @@ export const robotDialog: Dialogs[] = [
       },
       {
         text:
-          "This living sculpture behind me is a dynamic representation of the Marketplace.",
-        positionY: 18,
-      },
-      {
-        text:
           "As more trading happens on the platform, it grows and moves faster.",
         positionY: 18,
       },
@@ -624,9 +658,9 @@ export const robotDialog: Dialogs[] = [
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
-        ifPressE: 9,
+        ifPressE: 8,
         labelF: { label: "NO", fontSize: 14, positionX: -56, positionY: -19 },
-        ifPressF: 13,
+        ifPressF: 12,
       },
       {
         text:
@@ -652,6 +686,66 @@ export const robotDialog: Dialogs[] = [
         text:
           "Remember to visit market.decentraland.org - over there you can buy or sell LAND, wearables or unique names. Happy shopping!",
         positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // --- YELLOW TEXT ---
+      // Parcels
+      {
+        text:
+          "All of Decentraland is made up of parcels of LAND. Each parcel is 16x16 meters (~17.5 yards)",
+        positionY: 18,
+      },
+      {
+        text:
+          "Some parcels of LAND are plazas or bits of road, those are owned by the Decentraland DAO.",
+        positionY: 18,
+      },
+      {
+        text:
+          "Together they make up all the public spaces of Decentraland and therefore cannot be traded on the market.",
+        positionY: 6,
+      },
+      {
+        text:
+          "People buy and sell LAND in the Marketplace. A parcel in a good location can go for lots of money.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Estate
+      {
+        text:
+          "If you have several adjacent parcels of LAND, you can form an Estate to group these together and trade them as a single token.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Wearable Rarity
+      {
+        text:
+          "Not all wearables are created equal. We have a few categories available to help distinguish their rarity.",
+        positionY: 6,
+      },
+      {
+        text:
+          "If a wearable is 'Epic' then there are a maximum of 1000 of its kind in circulation.",
+        positionY: 18,
+      },
+      {
+        text:
+          "If a wearable is 'Legendary' then there are only 100 of its kind.",
+        positionY: 18,
+      },
+      {
+        text:
+          "If a wearable is 'Mythic' then there are just 10. If it is 'Unique' then...well you get the picture.",
+        positionY: 18,
+      },
+      {
+        text:
+          "'Swanky', 'Common' and 'Uncommon' rarities are relatively abundant.",
+        positionY: 18,
         isEndOfDialog: true,
       },
     ],
@@ -692,12 +786,7 @@ export const robotDialog: Dialogs[] = [
       },
       {
         text:
-          "When you write into the chat box, what you send can be read by all players nearby. ",
-        positionY: 18,
-      },
-      {
-        text:
-          "You can also add people to your friends list and then message them privately.",
+          "When you write into the chat box, what you send can be read by all players nearby.",
         positionY: 18,
       },
       {
@@ -787,6 +876,424 @@ export const robotDialog: Dialogs[] = [
         positionY: 6,
         isEndOfDialog: true,
       },
+
+      // --- YELLOW TEXT ---
+      // DAO
+      {
+        text:
+          "A DAO is a Decentralized Autonomous Organization - the embodiment of decentralization.",
+        positionY: 6,
+      },
+      {
+        text:
+          "An entity that carries out its functions following pre-established rules that no person can alter. To put it another way, it's governance as code.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Through a DAO, we can guarantee that what the community votes for is truly what gets done, and that nobody can stop that.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Decentraland is moving towards delegating more and more to a DAO.",
+        positionY: 18,
+      },
+      {
+        text:
+          "The road ahead is long but the day will come when everything gets decided in a fully decentralized way.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Vision
+      {
+        text:
+          "Decentraland really took shape in 2017 amongst an exciting wave of enthusiasm around blockchain technologies.",
+        positionY: 6,
+      },
+      {
+        text:
+          "The transparency and fairness that smart contracts might bring has the potential to transform the way we interact with the world.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // First Experiments
+      {
+        text:
+          "The first few versions of Decentraland were not actually Ethereum-based!",
+        positionY: 18,
+      },
+      {
+        text:
+          "It actually started as a fork of Bitcoin back in 2015 before Ethereum was even launched.",
+        positionY: 18,
+      },
+      {
+        text:
+          "This map was the first little experiment with tokenized land as 2D pixels, each one is minted by miners.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // First 3D Version
+      {
+        text:
+          "The first 3D versions were based on hexagon-shaped land. Though quite limited, it was an exciting experiment already.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Declaration
+      {
+        text:
+          "A sign on this early 3D version spelled out a brave declaration of what we were setting off to build!",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Original Logo
+      {
+        text:
+          "Our first logo was quite nice and unique - makes me feel nostalgic just looking at it...",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // First avatars
+      {
+        text:
+          "Slowly things started to get more concrete. These guys were the first fun lively avatars we had. Don't they look happy?",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // First Avatar
+      {
+        text:
+          "This guy was around in the early days. All he could do was float and move his head around - well if you ask me, that's plenty already.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Fox Avatar
+      {
+        text:
+          "Then came the fox and the robots. This dude looks so cool, doesn't he?",
+        positionY: 18,
+      },
+      {
+        text:
+          "At the time, they were designed for VR so the hands and head were meant to match VR controllers.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Robot Avatar 1
+      {
+        text:
+          "Floating made it simpler, as we didn't have to think about legs or walking animations - oh and I know all about that...",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Robot Avatar 2
+      {
+        text:
+          "Look at this classy little fellow, now here's someone I can relate to! Well at least for me that is, you know?",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Avatar Male
+      {
+        text:
+          "And that brings us to the latest in human-shaped avatars! Like the one you're sporting now.",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Avatar Female
+      {
+        text:
+          "Fully animated, super customizeable, charismatic, and fun. A huge leap forward!",
+        positionY: 18,
+      },
+      {
+        text:
+          "Even though... you know, *cough* robots are *cough* the future. *cough* Sorry did you say something?",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // First Auction
+      {
+        text:
+          "And then came the LAND auctions! The definitive map of Genesis City was laid out before each parcel was sold.",
+        positionY: 6,
+      },
+      {
+        text:
+          "That marked the start of a virtual real-estate market that continues to flourish to this day.",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Second Auction
+      {
+        text:
+          "Not all land was sold on the first auction, 9,300 parcels remained unsold.",
+        positionY: 18,
+      },
+      {
+        text:
+          "So in December 2018 came the second auction, that sold off the remaining ones to the community.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // New Logo
+      {
+        text:
+          "Decentraland needed a more modern look and with it a new logo. The design needed to look great even when viewed at a smaller scale.",
+        positionY: 6,
+      },
+      {
+        text: "So in early 2019 this beauty was created... looking sleek right?",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Landing
+      {
+        text:
+          "At the time, the world was still in closed beta so we needed something attractive for those that could not yet enter.",
+        positionY: 6,
+      },
+      {
+        text:
+          "We built a pretty slick landing site with a beautiful 3D intro that made the promise of a 3D world more real.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Come to think of it... this plaza we're on resembles that vision quite a lot - how cool is that?",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Builder
+      {
+        text:
+          "With 90,000 parcels of LAND to fill, creating content needs to be fun and easy to enable mass adoption.",
+        positionY: 6,
+      },
+      {
+        text:
+          "So on April 2018, we launched the Builder. A visual tool designed to make content creation simple.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Head on over to builder.decentraland.org to get building right away! ",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Player Passport
+      {
+        text:
+          "Another important milestone was creating player passports, which linked a player's identity to an ethereum wallet.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Token Wearables
+      {
+        text:
+          "With the addition of tokenized wearables, players were now able to customize their avatars a lot further.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Beyond the collection of basic wearables, we started giving out special ones that were more elaborate in design and also much rarer.",
+        positionY: 6,
+      },
+      {
+        text:
+          "A few of these were given out during the Halloween event and also in the Christmas event, as well as the official launch event.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Parcel
+      {
+        text:
+          "All of Decentraland is made up of parcels of LAND. Each parcel is 16x16meters (~17.5 yards)",
+        positionY: 18,
+      },
+      {
+        text:
+          "Most parcels are privately owned and the owner of the LAND can do anything they want with it. Create a game, a virtual store, anything they like.",
+        positionY: 6,
+      },
+      {
+        text:
+          "LAND parcels start empty until the owner or someone with permission from the owner uploads content onto it.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+      
+      // Estate
+      {
+        text:
+          "With several adjacent parcels of LAND, you can form an Estate to group these together and trade them as a single token.",
+        positionY: 6,
+        isEndOfDialog: true
+      },
+      
+      // Roads
+      {
+        text:
+          "Roads guarantee easy movement through the world even if people build towering structures in their privately-owned land.",
+        positionY: 6,
+        isEndOfDialog: true
+      },
+
+      // Plazas
+      {
+        text:
+          "There are several plazas in Decentraland like the one we're in. Plazas are open to everyone and are owned by the Decentraland DAO.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Each plaza has its own special theme so get out there and explore them!",
+        positionY: 18,
+        isEndOfDialog: true
+      },
+
+      // Districts
+      {
+        text:
+          "Districts are special privately-owned parcels of LAND. They appear as violet colored boxes on the map.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Districts are owned by groups of people, who during the early days got together around a common theme and proposal.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Many districts are thriving communities with a specific goal.",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Museum District
+      {
+        text:
+          "The museum district is a great example of a Distict. This one focuses on providing artists a place to display their work.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Amongst the other districts, you can find a university, a convention center, a vegas-themed area, a virtual shopping mall...",
+        positionY: 6,
+      },
+      {
+        text:
+          ".. an amusement park, a place for music festivals, a gamer's battleground and so much more!",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Builder Constest April 2019
+      {
+        text:
+          "With the launch of the Builder back in April 2019, there was a contest for creating the best scenes using just the Builder.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Even with the limitations of that first version, the community blew us away with their creativity!",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Builder Constest December 2019
+      {
+        text:
+          "With the release of Smart items in December 2019 came another creator contest using the Builder.",
+        positionY: 6,
+      },
+      {
+        text:
+          "This time, people could add items that were interactive, enabling all sorts of fun game mechanics.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Again, it was amazing to see what can be created with a library of simple building blocks.",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Mana
+      {
+        text:
+          "MANA is the virtual currency that powers Decentraland. This currency is used both in-world and outside.",
+        positionY: 6,
+      },
+      {
+        text:
+          "It can be used to perform in-world transactions on top of trading LAND, wearables and unique names in the marketplace.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Hackathon 2019
+      {
+        text:
+          "Many great scenes are created by developers writing code. We've had a few game jams with amazing results.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+      // Hackathon September 2019
+      {
+        text:
+          "A huge number of really high-quality scenes were submitted at these competitions and there are many out there now.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Some of which you can visit via one of the teleporters located on this plaza!",
+        positionY: 18,
+        isEndOfDialog: true,
+      },
+
+      // Community Wearables
+      {
+        text:
+          "At the start of 2020, we launched a contest where the community was invited to come up with designs for wearables.",
+        positionY: 6,
+      },
+      {
+        text:
+          "These were then crafted by the DCL team following the specifications set out by the contestants.",
+        positionY: 6,
+      },
+      {
+        text:
+          "Some really fun and imaginative ideas came out from that. You can see some of those wearables circling around in the marketplace.",
+        positionY: 6,
+        isEndOfDialog: true,
+      },
+
+
     ],
   },
 ]

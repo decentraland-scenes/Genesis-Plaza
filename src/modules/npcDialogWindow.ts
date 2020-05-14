@@ -1,7 +1,8 @@
-import { robots } from "./robotBuilder"
-import { robotDialog } from "./dialogData"
-import resources from "../resources"
-import { TrackUserSlerp } from "./faceUserSystem"
+import utils from "../../node_modules/decentraland-ecs-utils/index"
+import { robots } from './npcRobotBuilder'
+import { robotDialog } from './npcDialogData'
+import resources from '../resources'
+import { TrackUserSlerp } from './npcFaceUserSystem'
 
 export enum ConfirmMode {
   Confirm = 0,
@@ -28,8 +29,8 @@ export class DialogWindow {
     // Container
     this.container = new UIContainerRect(canvas)
     this.container.adaptWidth = true
-    this.container.width = "100%"
-    this.container.vAlign = "bottom"
+    this.container.width = '100%'
+    this.container.vAlign = 'bottom'
     this.container.positionY = 100
     this.container.visible = false
 
@@ -61,10 +62,10 @@ export class DialogWindow {
     this.text.textWrapping = true
     this.text.width = 340
     this.text.positionX = 10
-    this.text.hAlign = "center"
-    this.text.vAlign = "center"
+    this.text.hAlign = 'center'
+    this.text.vAlign = 'center'
     this.text.fontSize = 14
-    this.text.fontWeight = "normal"
+    this.text.fontWeight = 'normal'
     this.text.color = Color4.Black()
     this.text.isPointerBlocker = false
 
@@ -86,15 +87,14 @@ export class DialogWindow {
     // Label E Text
     this.labelE = new UIText(this.container)
     this.labelE.adaptWidth = true
-    this.labelE.hAlign = "center"
-    this.labelE.vAlign = "center"
+    this.labelE.hAlign = 'center'
+    this.labelE.vAlign = 'center'
 
-    this.labelE.fontWeight = "bold"
+    this.labelE.fontWeight = 'bold'
     this.labelE.color = Color4.White()
     // this.labelE.positionX = -52
     this.labelE.positionX = 64
     this.labelE.positionY = -19
-    this.labelE.isPointerBlocker = false
 
     // Button F
     this.buttonF = new UIImage(this.container, resources.textures.buttonF)
@@ -114,14 +114,13 @@ export class DialogWindow {
     // Label F Text
     this.labelF = new UIText(this.container)
     this.labelF.adaptWidth = true
-    this.labelF.hAlign = "center"
-    this.labelF.vAlign = "center"
-    this.labelF.fontWeight = "bold"
+    this.labelF.hAlign = 'center'
+    this.labelF.vAlign = 'center'
+    this.labelF.fontWeight = 'bold'
     this.labelF.color = Color4.White()
     // this.labelF.positionX = 64
     this.labelF.positionX = -56
     this.labelF.positionY = -19
-    this.labelF.isPointerBlocker = false
 
     // Left Click Icon
     this.leftClickIcon = new UIImage(
@@ -138,7 +137,8 @@ export class DialogWindow {
   }
 
   public openDialogWindow(botId: number, textId: number): void {
-    this.isDialogOpen = true
+
+    // this.isDialogOpen = true
 
     // Set current active bot and text
     this.activeBotId = botId
@@ -147,14 +147,13 @@ export class DialogWindow {
     let robotText = robotDialog[botId].dialogs[textId]
 
     // Set portrait
-    if (robotText.portrait) {
-      // Portrait is always set at the 0 index of the robot's dialog
-      this.portrait.source = new Texture(robotDialog[botId].dialogs[0].portrait.path) 
-      
-      this.portrait.positionX = robotText.portrait.positionX
-      this.portrait.positionY = robotText.portrait.positionY
-      this.portrait.visible = true
-    }
+    // Portrait is always set at the 0 index of the robot's dialog
+    this.portrait.source = new Texture(
+      robotDialog[botId].dialogs[0].portrait.path
+    )
+    this.portrait.positionX = robotDialog[botId].dialogs[0].portrait.positionX
+    this.portrait.positionY = robotDialog[botId].dialogs[0].portrait.positionY
+    this.portrait.visible = true
 
     // Set text
     this.text.value = robotText.text
@@ -208,24 +207,24 @@ export class DialogWindow {
 
     if (robotText.isQuestion) {
       // Button E and label
-      if (robotText.labelE["positionX"] || robotText.labelE["positionY"]) {
-        this.labelE.positionX = robotText.labelE["positionX"]
-        this.labelE.positionY = robotText.labelE["positionY"]
+      if (robotText.labelE['positionX'] || robotText.labelE['positionY']) {
+        this.labelE.positionX = robotText.labelE['positionX']
+        this.labelE.positionY = robotText.labelE['positionY']
       }
       this.buttonE.visible = true
-      this.labelE.value = robotText.labelE["label"]
-      this.labelE.fontSize = robotText.labelE["fontSize"]
+      this.labelE.value = robotText.labelE['label']
+      this.labelE.fontSize = robotText.labelE['fontSize']
       this.labelE.visible = true
 
       // Button F and label
-      if (robotText.labelF["positionX"] || robotText.labelF["positionY"]) {
-        this.labelF.positionX = robotText.labelF["positionX"]
-        this.labelF.positionY = robotText.labelF["positionY"]
+      if (robotText.labelF['positionX'] || robotText.labelF['positionY']) {
+        this.labelF.positionX = robotText.labelF['positionX']
+        this.labelF.positionY = robotText.labelF['positionY']
       }
 
       this.buttonF.visible = true
-      this.labelF.value = robotText.labelF["label"]
-      this.labelF.fontSize = robotText.labelF["fontSize"]
+      this.labelF.value = robotText.labelF['label']
+      this.labelF.fontSize = robotText.labelF['fontSize']
       this.labelF.visible = true
 
       // Mouse icon
@@ -243,15 +242,19 @@ export class DialogWindow {
     // Stop robot from tracking the user
     if (this.isDialogOpen) {
       for (let i = 0; i < robots.length; i++) {
-        if (this.activeBotId == robots[i].robotID) {
+        // Play goodbye animation after talking to user
+        if (this.activeBotId == robots[i].robotID && robots[i].hasComponent(TrackUserSlerp)) {
           robots[i].removeComponent(TrackUserSlerp)
           robots[i].playGoodbye()
+        } else {
+          // Play idle animation after talking about an item e.g. museum piece, wearables etc.
+          robots[i].playIdle()
         }
       }
 
       this.isDialogOpen = false
       this.container.visible = false
-      this.portrait.visible = false
+      this.portrait.source = resources.textures.blank // Fix issue with the previous portrait showing up
       this.text.visible = false
       this.buttonE.visible = false
       this.labelE.visible = false

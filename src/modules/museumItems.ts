@@ -37,7 +37,9 @@ export class MuseumPiece extends Entity {
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
-    name: string
+    name: string,
+    robotID?: RobotID,
+    textID?: number
   ) {
     super()
     engine.addEntity(this)
@@ -52,7 +54,7 @@ export class MuseumPiece extends Entity {
     this.addComponent(
       new OnPointerDown(
         function () {
-          //askAboutPiece(thisPiece)
+          openPieceInfoWindow(thisPiece, robotID, textID)
         },
         { hoverText: this.name }
       )
@@ -323,7 +325,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.DISTRICTS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(districts, RobotID.Whale, 53)
       },
       { hoverText: 'Districts' }
     )
@@ -346,7 +348,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.PLAZAS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(plazas, RobotID.Whale, 51)
       },
       { hoverText: 'Plazas' }
     )
@@ -368,7 +370,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.ROADS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(roads, RobotID.Whale, 50)
       },
       { hoverText: 'Roads' }
     )
@@ -493,6 +495,16 @@ export function placeMuseumPieces() {
 
   ////////  WEARABLES BUILDING
 
+  /*
+  Main = 0 (Alice)
+  Shell = 1 (Ron)
+  Agora = 2 (Bela)
+  Garden = 3 (Betty)
+  Trade = 4 (Charlie)
+  Artichoke = 5 (Marsha)
+  Whale = 6 (Bob)
+*/
+
   let xmax_wearables = new MuseumPiece(
     new GLTFShape('models/wearables/xmas_stand.glb'),
     {
@@ -521,7 +533,7 @@ export function placeMuseumPieces() {
 let parcelTC = new MuseumPiece(
   new GLTFShape('models/museum/land.glb'),
   {
-    position: new Vector3(282.9, 11.8, 39),
+    position: new Vector3(282.9, 11, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
   'LAND Parcel',
@@ -532,7 +544,7 @@ let parcelTC = new MuseumPiece(
 let parcelPuaTC = new MuseumPiece(
   new GLTFShape('models/museum/pua.glb'),
   {
-    position: new Vector3(282.9, 11.8, 39),
+    position: new Vector3(282.9, 11, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
   'LAND Parcel'
@@ -541,7 +553,7 @@ let parcelPuaTC = new MuseumPiece(
 let estateTC = new MuseumPiece(
   new GLTFShape('models/museum/estate.glb'),
   {
-    position: new Vector3(262.9, 11.3, 35.7),
+    position: new Vector3(262.9, 11, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
   'Estate',
@@ -552,7 +564,7 @@ let estateTC = new MuseumPiece(
 let estatePuaTC = new MuseumPiece(
   new GLTFShape('models/museum/pua.glb'),
   {
-    position: new Vector3(262.9, 11.3, 35.7),
+    position: new Vector3(262.9, 11, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
   'Estate'
@@ -561,7 +573,7 @@ let estatePuaTC = new MuseumPiece(
 let wearableTC = new MuseumPiece(
   new GLTFShape('models/wearables/second_floor/J/razor_blade_upper_body.glb'),
   {
-    position: new Vector3(251, 21.6, 27.5),
+    position: new Vector3(254.6, 21.6, 22.6),
     rotation: Quaternion.Euler(0, 30, 0),
   },
   'Wearables',
@@ -576,7 +588,7 @@ let builderScene = new MuseumPiece(
   {
     position: new Vector3(132.59, 2, 39.8),
 
-    rotation: Quaternion.Euler(0, 0, 0),
+    rotation: Quaternion.Euler(0, 90, 0),
   },
   'Builder scene',
   RobotID.Garden,

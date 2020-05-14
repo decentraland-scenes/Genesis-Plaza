@@ -47,23 +47,23 @@ export function openMessageBoardUI(opener: Entity) {
 
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
-  messagebg.width = 1024
-  messagebg.height = 1024 / 4
+  messagebg.width = 998
+  messagebg.height = 261
   messagebg.hAlign = 'center'
   messagebg.vAlign = 'center'
-  messagebg.sourceLeft = 0
+  messagebg.sourceLeft = 13
   messagebg.sourceTop = 0
-  messagebg.sourceWidth = 1024
-  messagebg.sourceHeight = 1024 / 4
+  messagebg.sourceWidth = 998
+  messagebg.sourceHeight = 261
   messagebg.visible = true
 
   const message = new UIInputText(messagebg)
   message.name = 'mbMessage'
-  message.width = '650px'
-  message.height = '100px'
+  message.width = '677px'
+  message.height = '74'
   message.hAlign = 'center'
   message.vAlign = 'center'
-  message.positionY = -30
+  message.positionY = 130.5 - 129 - 37
   message.fontSize = 30
   message.vTextAlign = 'center'
   message.hTextAlign = 'center'
@@ -76,7 +76,26 @@ export function openMessageBoardUI(opener: Entity) {
     //FloatingTextShape.value = x.text
     let newText = x.text.substr(0, 50)
     setNewMessage(boardLocation, newText)
+    openMessageBoardConfirmation(opener)
   })
+}
+
+export function openMessageBoardConfirmation(opener: Entity) {
+  updateOpenUITime()
+  messagebg.visible = false
+  UIOpener = opener
+
+  messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
+  messagebg.name = 'mmbBackground'
+  messagebg.width = 848
+  messagebg.height = 117
+  messagebg.hAlign = 'center'
+  messagebg.vAlign = 'center'
+  messagebg.sourceLeft = 78
+  messagebg.sourceTop = 323
+  messagebg.sourceWidth = 848
+  messagebg.sourceHeight = 117
+  messagebg.visible = true
 }
 
 //////// WEARABLES UI
