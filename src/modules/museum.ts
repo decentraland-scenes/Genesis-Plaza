@@ -1,7 +1,7 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not loading
 import { dialogWindow, robots } from "./robotBuilder"
-import { RobotID, Robot } from "./robot"
+import { RobotID } from "./robot"
 
 function openPieceInfoWindow(piece: MuseumPiece, robotID: RobotID, textID: number) {
   if (!dialogWindow.isDialogOpen) {
@@ -67,7 +67,7 @@ export function placeMuseumPieces() {
       position: new Vector3(119.7, 11.5, 280.3),
       rotation: Quaternion.Euler(0, 105, 0),
     },
-    'DAO'
+    'DAO',
   )
 
   let vision = new MuseumPiece(
@@ -506,7 +506,9 @@ let parcelTC = new MuseumPiece(
     position: new Vector3(282.9, 11.8, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
-  'LAND Parcel'
+  'LAND Parcel',
+  RobotID.Trade,
+  13
 )
 
 let parcelPuaTC = new MuseumPiece(
@@ -515,7 +517,7 @@ let parcelPuaTC = new MuseumPiece(
     position: new Vector3(282.9, 11.8, 39),
     rotation: Quaternion.Euler(0, 195, 0),
   },
-  'LAND Parcel'
+  'LAND Parcel',
 )
 
 let estateTC = new MuseumPiece(
@@ -524,7 +526,9 @@ let estateTC = new MuseumPiece(
     position: new Vector3(262.9, 11.3, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
-  'Estate'
+  'Estate',
+  RobotID.Trade,
+  17
 )
 
 let estatePuaTC = new MuseumPiece(
@@ -533,7 +537,7 @@ let estatePuaTC = new MuseumPiece(
     position: new Vector3(262.9, 11.3, 35.7),
     rotation: Quaternion.Euler(0, 30, 0),
   },
-  'Estate'
+  'Estate',
 )
 
 let wearableTC = new MuseumPiece(
@@ -542,7 +546,9 @@ let wearableTC = new MuseumPiece(
     position: new Vector3(251, 21.6, 27.5),
     rotation: Quaternion.Euler(0, 30, 0),
   },
-  'Wearables'
+  'Wearables',
+  RobotID.Trade,
+  18
 )
 
 /////// GARDEN
