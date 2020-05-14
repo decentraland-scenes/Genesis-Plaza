@@ -29,7 +29,7 @@ setTriggerAreas()
 
 ///TELEPORTERS
 
-// placeTeleports()
+placeTeleports()
 
 /// MUSEUM
 
@@ -37,7 +37,7 @@ placeMuseumPieces()
 
 /// VIDEO SCEREEN
 
-// addScreen()
+addScreen()
 
 //// WEARABLES
 
@@ -52,4 +52,4 @@ addFaceUserSystem(dummyTarget)
 addRobots(dummyTarget)
 
 //// NFTS
-// addNFTs()
+addNFTs()
