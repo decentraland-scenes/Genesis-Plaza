@@ -89,7 +89,7 @@ export function addNFTs(): void {
       rotation: Quaternion.Euler(0, 61.533, 0),
       scale: new Vector3(4, 4, 2),
     }),
-    new Color3(0.35, 1.25, 0.45),
+    new Color3(1.0, 1.1, 0.85),
     nftData[6].id,
     nftWindow
   )
