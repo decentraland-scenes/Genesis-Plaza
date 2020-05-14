@@ -3,7 +3,7 @@ import { DialogWindow } from "./dialogWindow" // Fixes issue with modules not lo
 import { dialogWindow, robots } from "./robotBuilder"
 import { RobotID } from "./robot"
 
-function openPieceInfoWindow(piece: MuseumPiece, robotID: RobotID, textID: number) {
+function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
   if (!dialogWindow.isDialogOpen) {
     robots[robotID].playTalk()
     dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
@@ -310,7 +310,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.DISTRICTS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(districts, RobotID.Whale, 53)
       },
       { hoverText: 'Districts' },
     )
@@ -333,7 +333,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.PLAZAS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(plazas, RobotID.Whale, 51)
       },
       { hoverText: 'Plazas' }
     )
@@ -355,7 +355,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.ROADS)
-        //askAboutPiece(thisPiece)
+        openPieceInfoWindow(roads, RobotID.Whale, 50)
       },
       { hoverText: 'Roads' }
     )
@@ -367,7 +367,9 @@ export function placeMuseumPieces() {
       position: new Vector3(193, 17.4, 223.5),
       rotation: Quaternion.Euler(0, 195, 0),
     },
-    'LAND Parcel'
+    'LAND Parcel',
+    RobotID.Whale,
+    46
   )
 
   let parcelPua = new MuseumPiece(
@@ -385,7 +387,9 @@ export function placeMuseumPieces() {
       position: new Vector3(199.2, 17.4, 230),
       rotation: Quaternion.Euler(0, 30, 0),
     },
-    'Estate'
+    'Estate',
+    RobotID.Whale,
+    49
   )
 
   let estatePua = new MuseumPiece(
@@ -403,7 +407,9 @@ export function placeMuseumPieces() {
       position: new Vector3(181.2, 17.9, 228.6),
       rotation: Quaternion.Euler(0, 50, 0),
     },
-    'Builder Contest 2019'
+    'Builder Contest 2019',
+    RobotID.Whale,
+    56
   )
 
   let builderContest = new MuseumPiece(
@@ -412,7 +418,9 @@ export function placeMuseumPieces() {
       position: new Vector3(175.2, 17.8, 236.6),
       rotation: Quaternion.Euler(0, 50, 0),
     },
-    'First Builder Contest'
+    'First Builder Contest',
+    RobotID.Whale,
+    59
   )
 
   let builderContest2 = new MuseumPiece(
@@ -421,7 +429,9 @@ export function placeMuseumPieces() {
       position: new Vector3(169, 17.5, 243.95),
       rotation: Quaternion.Euler(0, 50, 0),
     },
-    'Creator contest'
+    'Creator contest',
+    RobotID.Whale,
+    61
   )
 
   let mana = new MuseumPiece(
@@ -430,7 +440,9 @@ export function placeMuseumPieces() {
       position: new Vector3(168.4, 18.8, 255.7),
       rotation: Quaternion.Euler(0, 135, 0),
     },
-    'MANA'
+    'MANA',
+    RobotID.Whale,
+    64
   )
 
   let hackathon = new MuseumPiece(
@@ -439,7 +451,9 @@ export function placeMuseumPieces() {
       position: new Vector3(185.7, 17.6, 252),
       rotation: Quaternion.Euler(0, 220, 0),
     },
-    'September 2019 Hackathon'
+    'September 2019 Hackathon',
+    RobotID.Whale,
+    66
   )
 
   let hackathon2 = new MuseumPiece(
@@ -448,7 +462,9 @@ export function placeMuseumPieces() {
       position: new Vector3(192.9, 17.7, 245),
       rotation: Quaternion.Euler(0, 225, 0),
     },
-    'Hackathons'
+    'Hackathons',
+    RobotID.Whale,
+    67
   )
 
   let community_contest = new MuseumPiece(
@@ -457,7 +473,9 @@ export function placeMuseumPieces() {
       position: new Vector3(199.5, 17.8, 238.2),
       rotation: Quaternion.Euler(0, 230, 0),
     },
-    'Community Wearable Contest'
+    'Community Wearable Contest',
+    RobotID.Whale,
+    69
   )
 
   // ... fillers?
