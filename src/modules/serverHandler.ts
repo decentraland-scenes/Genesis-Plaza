@@ -16,30 +16,19 @@ export const marketRefreshInterval: number = 1800
 // check server for new messageboard messages
 export class CheckServer implements ISystem {
   messageTimer: number
-  marketTimer: number
   totalMessageTime: number
-  totalMarketTime: number
-  constructor(messageTimer: number, marketTimer: number) {
+  constructor(messageTimer: number) {
     this.totalMessageTime = messageTimer
-    //this.totalMarketTime = marketTimer
     this.messageTimer = 0
-    //this.marketTimer = 0
   }
   update(dt: number) {
     this.messageTimer -= dt
-    //this.marketTimer -= dt
     if (this.messageTimer < 0) {
       this.messageTimer = this.totalMessageTime
       updateMessageBoards()
     }
-    // if (this.marketTimer < 0) {
-    //   this.marketTimer = this.totalMarketTime
-    //   updateMarketData()
-    // }
   }
 }
-
-engine.addSystem(new CheckServer(messageRefreshInterval, marketRefreshInterval))
 
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
@@ -47,7 +36,7 @@ export async function setNewMessage(location: string, message: string) {
   let trimmedMessage: string = ''
 
   if (location == 'artichoke') {
-    let trimmedMessage = message.trim().slice(0, 26)
+    let trimmedMessage = message.trim().slice(0, 22)
     sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
   } else if (location == 'tower') {
     let trimmedMessage = message.trim().slice(0, 40 - 3)
@@ -206,8 +195,6 @@ export type MarketData = {
 }
 
 let marketData: MarketData | null = null
-
-updateMarketData()
 
 export async function updateMarketData() {
   let newMarketData = await getMarketData()

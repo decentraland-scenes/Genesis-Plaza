@@ -8,6 +8,12 @@ import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/faceUserSystem'
 import { addRobots } from './modules/robotBuilder'
 import { addNFTs } from './modules/nftBuilder'
+import {
+  updateMessageBoards,
+  updateMarketData,
+  CheckServer,
+  messageRefreshInterval,
+} from './modules/serverHandler'
 
 //////// HACK TO LOG POSITIONS
 
@@ -53,3 +59,10 @@ addRobots(dummyTarget)
 
 //// NFTS
 addNFTs()
+
+//// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
+//updateMessageBoards()
+engine.addSystem(new CheckServer(messageRefreshInterval))
+
+/// FETCH DATA FOR TRADE CENTER
+updateMarketData()
