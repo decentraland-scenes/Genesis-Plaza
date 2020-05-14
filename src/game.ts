@@ -13,16 +13,17 @@ import {
   updateMarketData,
   CheckServer,
 } from './modules/serverHandler'
+import { AmbientSound } from './modules/ambient'
 
 //////// HACK TO LOG POSITIONS
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//   }
-// }
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(Camera.instance.position)
+  }
+}
 
-// engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -68,3 +69,27 @@ engine.addSystem(new CheckServer(messageRefreshInterval))
 
 /// FETCH DATA FOR TRADE CENTER
 updateMarketData()
+
+//// AMBIENT SOUNDS
+
+let forest1 = new AmbientSound(
+  { position: new Vector3(215, 2, 183) },
+  'sounds/Forest.mp3',
+  0,
+  true
+)
+
+let forest2 = new AmbientSound(
+  { position: new Vector3(127, 2, 110) },
+  'sounds/Forest2.mp3',
+  0,
+  true
+)
+
+let thunder = new AmbientSound(
+  { position: new Vector3(43, 45, 113) },
+  'sounds/thunder.mp3',
+  0,
+  true,
+  0.2
+)
