@@ -76,7 +76,6 @@ export function openMessageBoardUI(
   message.isPointerBlocker = true
   message.visible = true
   message.onTextSubmit = new OnTextSubmit((x) => {
-    //FloatingTextShape.value = x.text
     let newText = x.text.substr(0, 50)
     setNewMessage(boardLocation, newText)
     openMessageBoardConfirmation(opener)
@@ -134,12 +133,12 @@ export function wearableClassic(wearable: Entity) {
   wBackground.name = 'wearablebackground'
   wBackground.visible = true
   wBackground.positionY = 100
-  wBackground.sourceTop = 0
-  wBackground.sourceLeft = 0
-  wBackground.sourceHeight = 45.67
-  wBackground.sourceWidth = 203
-  wBackground.height = 45.67
-  wBackground.width = 203
+  wBackground.sourceTop = 14
+  wBackground.sourceLeft = 16
+  wBackground.sourceHeight = 48
+  wBackground.sourceWidth = 301
+  wBackground.height = 48
+  wBackground.width = 301
   wBackground.hAlign = 'center'
   wBackground.vAlign = 'center'
 }
@@ -153,12 +152,12 @@ export function wearableNotForSale(wearable: Entity) {
   wBackground.name = 'wearablebackground'
   wBackground.visible = true
   wBackground.positionY = 100
-  wBackground.sourceTop = 58
-  wBackground.sourceLeft = 0
-  wBackground.sourceHeight = 45.67
-  wBackground.sourceWidth = 173
-  wBackground.height = 45.67
-  wBackground.width = 173
+  wBackground.sourceTop = 75
+  wBackground.sourceLeft = 13
+  wBackground.sourceHeight = 54
+  wBackground.sourceWidth = 255
+  wBackground.height = 48
+  wBackground.width = 249
   wBackground.hAlign = 'center'
   wBackground.vAlign = 'center'
 }
@@ -176,8 +175,8 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   wBackground.name = 'wearablebackground'
   wBackground.visible = true
   wBackground.positionY = backgroundOffset
-  wBackground.sourceTop = 172
-  wBackground.sourceLeft = 0
+  wBackground.sourceTop = 186
+  wBackground.sourceLeft = 6
   wBackground.sourceHeight = 461
   wBackground.sourceWidth = 385
   wBackground.height = 461
@@ -231,8 +230,8 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   closeIcon.visible = true
   closeIcon.positionY = 461 / 2 + 144 + 12
   closeIcon.positionX = 354 / 2
-  closeIcon.sourceTop = 0
-  closeIcon.sourceLeft = 219
+  closeIcon.sourceTop = 4
+  closeIcon.sourceLeft = 328
   closeIcon.sourceHeight = 24
   closeIcon.sourceWidth = 24
   closeIcon.height = 24
@@ -373,8 +372,8 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   button.width = 322
   button.height = 44
   button.positionY = 461 / 2 - 395 - 20 + 9
-  button.sourceLeft = 0
-  button.sourceTop = 116
+  button.sourceLeft = 6
+  button.sourceTop = 138
   button.sourceWidth = 322
   button.sourceHeight = 44
   button.onClick = new OnClick(() => {
@@ -446,8 +445,8 @@ export function openTeleportUI(teleport: Teleport) {
   closeIcon.visible = true
   closeIcon.positionY = 172 / 2 + 91 + 72
   closeIcon.positionX = 121
-  closeIcon.sourceTop = 0
-  closeIcon.sourceLeft = 219
+  closeIcon.sourceTop = 4
+  closeIcon.sourceLeft = 328
   closeIcon.sourceHeight = 24
   closeIcon.sourceWidth = 24
   closeIcon.height = 24
@@ -532,6 +531,12 @@ const allUIImages = engine.getComponentGroup(UIImage)
 
 // Instance the input object
 const input = Input.instance
+
+//E button event
+input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
+  if (checkUIOpen()) {
+  }
+})
 
 //button down event
 input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
