@@ -438,6 +438,23 @@ export function openTeleportUI(teleport: Teleport) {
   screenshot.sourceWidth = 536
   screenshot.sourceHeight = 344
 
+  let closeIcon = new UIImage(tBackground, wearableTexture)
+  closeIcon.name = 'closeIcon'
+  closeIcon.visible = true
+  closeIcon.positionY = 172 / 2 + 91 + 72
+  closeIcon.positionX = 121
+  closeIcon.sourceTop = 0
+  closeIcon.sourceLeft = 219
+  closeIcon.sourceHeight = 24
+  closeIcon.sourceWidth = 24
+  closeIcon.height = 24
+  closeIcon.width = 24
+  closeIcon.hAlign = 'center'
+  closeIcon.vAlign = 'center'
+  closeIcon.onClick = new OnClick(() => {
+    closeUI()
+  })
+
   const icon = new UIImage(tBackground, teleportUITexture)
   icon.name = 'tIcon'
   icon.width = 9.67
