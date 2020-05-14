@@ -24,8 +24,8 @@ export class NFTWindow {
 
     // NFT Panel
     this.nftPanel = new UIImage(this.container, resources.textures.nftPanel)
-    this.nftPanel.sourceWidth = 960
-    this.nftPanel.sourceHeight = 1200
+    this.nftPanel.sourceWidth = 720
+    this.nftPanel.sourceHeight = 900
     this.nftPanel.width = 480
     this.nftPanel.height = 600
 
@@ -79,8 +79,8 @@ export class NFTWindow {
       this.container,
       resources.textures.nftPanel // Default image if nothing is found ...
     )
-    this.nftImage.sourceWidth = 1024
-    this.nftImage.sourceHeight = 1024
+    this.nftImage.sourceWidth = 512
+    this.nftImage.sourceHeight = 512
     this.nftImage.width = 384
     this.nftImage.height = 384
     this.nftImage.visible = false
@@ -183,7 +183,6 @@ export class NFTWindow {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false
-    // this.nftImage.source = resources.textures.blank // Fix issue with the previous artwork showing up
     this.nftImage.visible = false
     this.nftDetails.visible = false
     this.nftDirectLink.visible = false

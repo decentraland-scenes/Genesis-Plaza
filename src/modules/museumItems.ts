@@ -4,6 +4,9 @@ import { dialogWindow, robots } from './npcRobotBuilder'
 import { RobotID } from './npcRobot'
 import resources from "../resources"
 
+// TODO: Still one more issue to resolve with user / bots / items interaction
+// when an item info window is open - you can't chat to a bot
+
 // Museum click audio
 const openDialogSound = new Entity()
 openDialogSound.addComponent(new Transform())
