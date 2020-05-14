@@ -79,8 +79,8 @@ export class NFTWindow {
       this.container,
       resources.textures.nftPanel // Default image if nothing is found ...
     )
-    this.nftImage.sourceWidth = 1024
-    this.nftImage.sourceHeight = 1024
+    this.nftImage.sourceWidth = 512
+    this.nftImage.sourceHeight = 512
     this.nftImage.width = 384
     this.nftImage.height = 384
     this.nftImage.visible = false
