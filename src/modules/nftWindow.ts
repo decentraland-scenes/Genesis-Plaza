@@ -183,7 +183,6 @@ export class NFTWindow {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false
-    // this.nftImage.source = resources.textures.blank // Fix issue with the previous artwork showing up
     this.nftImage.visible = false
     this.nftDetails.visible = false
     this.nftDirectLink.visible = false

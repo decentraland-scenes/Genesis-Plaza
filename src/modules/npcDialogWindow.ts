@@ -36,8 +36,8 @@ export class DialogWindow {
 
     // Text Panel
     this.textPanel = new UIImage(this.container, resources.textures.textPanel)
-    this.textPanel.sourceWidth = 1026
-    this.textPanel.sourceHeight = 326
+    this.textPanel.sourceWidth = 768
+    this.textPanel.sourceHeight = 244
     this.textPanel.width = 512
     this.textPanel.height = 162
     this.textPanel.onClick = new OnClick((): void => {
@@ -46,8 +46,8 @@ export class DialogWindow {
 
     // Portrait
     this.portrait = new UIImage(this.container, resources.textures.blank)
-    this.portrait.sourceWidth = 512
-    this.portrait.sourceHeight = 512
+    this.portrait.sourceWidth = 384
+    this.portrait.sourceHeight = 384
     this.portrait.width = 256
     this.portrait.height = 256
     this.portrait.positionX = -256
@@ -254,7 +254,6 @@ export class DialogWindow {
 
       this.isDialogOpen = false
       this.container.visible = false
-      // this.portrait.source = resources.textures.blank // Fix issue with the previous portrait showing up
       this.portrait.visible = false
       this.text.visible = false
       this.buttonE.visible = false
