@@ -139,11 +139,17 @@ export function addRobots(dummyTarget: Entity) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
+
+            // HACK: To avoid clashing with the input subscribe PRIMARY button down event
+            robots[i].addComponentOrReplace(
+              new utils.Delay(30, () => {
+                dialogWindow.isDialogOpen = true
+              })
+            )
             dialogWindow.isDialogOpen = true
             // used for closing UI when walking away or clicking
             updateOpenUITime()
             setUiOpener(robots[i])
-
             dummyTarget.getComponent(Transform).position = robots[
               i
             ].getComponent(Transform).position
@@ -152,7 +158,7 @@ export function addRobots(dummyTarget: Entity) {
           }
         },
         {
-          button: ActionButton.POINTER,
+          button: ActionButton.PRIMARY,
           showFeedback: true,
           hoverText: 'Talk',
           distance: resources.trigger.triggerShape.radius,

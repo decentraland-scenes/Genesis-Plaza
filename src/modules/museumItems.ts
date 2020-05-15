@@ -64,7 +64,11 @@ export class MuseumPiece extends Entity {
         function () {
           openPieceInfoWindow(thisPiece, robotID, textID)
         },
-        { hoverText: this.name }
+        {
+          button: ActionButton.PRIMARY,
+          showFeedback: true,
+          hoverText: this.name
+        }
       )
     )
   }
@@ -336,7 +340,11 @@ export function placeMuseumPieces() {
         animateMap(MapItems.DISTRICTS)
         openPieceInfoWindow(districts, RobotID.Whale, 53)
       },
-      { hoverText: 'Districts' }
+      {
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Districts' 
+      }
     )
   )
 
@@ -360,7 +368,11 @@ export function placeMuseumPieces() {
         animateMap(MapItems.PLAZAS)
         openPieceInfoWindow(plazas, RobotID.Whale, 51)
       },
-      { hoverText: 'Plazas' }
+      {
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Plazas' 
+      }
     )
   )
 
@@ -384,7 +396,11 @@ export function placeMuseumPieces() {
         animateMap(MapItems.ROADS)
         openPieceInfoWindow(roads, RobotID.Whale, 50)
       },
-      { hoverText: 'Roads' }
+      {
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Roads' 
+      }
     )
   )
 
