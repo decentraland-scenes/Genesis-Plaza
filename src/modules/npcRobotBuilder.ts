@@ -138,16 +138,21 @@ export function addRobots(dummyTarget: Entity) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
-            dialogWindow.isDialogOpen = true
+            // HACK: To avoid clashing with the input subscribe PRIMARY button down event
+            robots[i].addComponentOrReplace(
+              new utils.Delay(30, () => {
+                dialogWindow.isDialogOpen = true
+              })
+            )
             dummyTarget.getComponent(Transform).position = robots[
               i
             ].getComponent(Transform).position
             if (!robots[i].hasComponent(TrackUserSlerp))
               robots[i].addComponent(new TrackUserSlerp())
-          } 
+          }
         },
         {
-          button: ActionButton.POINTER,
+          button: ActionButton.PRIMARY,
           showFeedback: true,
           hoverText: "Talk",
           distance: resources.trigger.triggerShape.radius,
