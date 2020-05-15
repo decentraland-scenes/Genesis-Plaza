@@ -80,7 +80,7 @@ let forest1 = new AmbientSound(
 )
 
 let forest2 = new AmbientSound(
-  { position: new Vector3(127, 2, 110) },
+  { position: new Vector3(117, 2, 42) },
   'sounds/Forest2.mp3',
   0,
   true

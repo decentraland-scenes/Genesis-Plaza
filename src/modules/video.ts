@@ -12,10 +12,11 @@ export function addScreen() {
   )
   e.getComponent(Transform).rotate(new Vector3(1, 0, 0), 10)
   const v = new VideoTexture(
-    new VideoClip('https://theuniverse.club/live/bbb/index.m3u8')
+    new VideoClip('https://theuniverse.club/live/genesisplaza/index.m3u8')
   )
-  const mat = new BasicMaterial()
-  mat.texture = v
+  const mat = new Material()
+  mat.albedoTexture = v
+  mat.roughness = 1
 
   e.addComponent(mat)
   engine.addEntity(e)
