@@ -1,8 +1,9 @@
-import { DialogWindow, ConfirmMode } from "./npcDialogWindow"
-import { Robot, RobotID } from "./npcRobot"
-import resources from "../resources"
-import utils from "../../node_modules/decentraland-ecs-utils/index"
-import { TrackUserSlerp } from "./npcFaceUserSystem"
+import { DialogWindow, ConfirmMode } from './npcDialogWindow'
+import { Robot, RobotID } from './npcRobot'
+import resources from '../resources'
+import utils from '../../node_modules/decentraland-ecs-utils/index'
+import { TrackUserSlerp } from './npcFaceUserSystem'
+import { updateOpenUITime, setUiOpener } from './ui'
 
 /*
   Main = 0 (Alice)
@@ -132,18 +133,26 @@ export function addRobots(dummyTarget: Entity) {
           // Added to prevent user from accidentally clicking on the robot again
           let isGoodbyePlaying = robots[i]
             .getComponent(Animator)
-            .getClip("Goodbye").playing
+            .getClip('Goodbye').playing
 
           if (!dialogWindow.isDialogOpen && !isGoodbyePlaying) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
+<<<<<<< HEAD
             // HACK: To avoid clashing with the input subscribe PRIMARY button down event
             robots[i].addComponentOrReplace(
               new utils.Delay(30, () => {
                 dialogWindow.isDialogOpen = true
               })
             )
+=======
+            dialogWindow.isDialogOpen = true
+            // used for closing UI when walking away or clicking
+            updateOpenUITime()
+            setUiOpener(robots[i])
+
+>>>>>>> 4b3059b9a4cefb59ffd0a20d019a57c5dc561fdb
             dummyTarget.getComponent(Transform).position = robots[
               i
             ].getComponent(Transform).position
@@ -154,7 +163,7 @@ export function addRobots(dummyTarget: Entity) {
         {
           button: ActionButton.PRIMARY,
           showFeedback: true,
-          hoverText: "Talk",
+          hoverText: 'Talk',
           distance: resources.trigger.triggerShape.radius,
         }
       )
@@ -168,7 +177,7 @@ export function addRobots(dummyTarget: Entity) {
         null, //onTriggerExit
         null, //onCameraEnter
         () => {
-          log("exit trigger area")
+          log('exit trigger area')
           dialogWindow.closeDialogWindow()
         }, //onCameraExit
         false // enableDebug
@@ -179,22 +188,22 @@ export function addRobots(dummyTarget: Entity) {
   // Global button events for progressing the dialog
   const input = Input.instance
 
-  input.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, (): void => {
-    log("LMB Clicked")
+  input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (): void => {
+    log('LMB Clicked')
     if (dialogWindow.isDialogOpen && !dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Next)
     }
   })
 
-  input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (): void => {
-    log("E Key Pressed")
+  input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (): void => {
+    log('E Key Pressed')
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Confirm)
     }
   })
 
-  input.subscribe("BUTTON_DOWN", ActionButton.SECONDARY, false, (): void => {
-    log("F Key Pressed")
+  input.subscribe('BUTTON_DOWN', ActionButton.SECONDARY, false, (): void => {
+    log('F Key Pressed')
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Cancel)
     }

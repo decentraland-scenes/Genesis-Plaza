@@ -3,7 +3,7 @@ import { DialogWindow } from './npcDialogWindow' // Fixes issue with modules not
 import { dialogWindow, robots } from './npcRobotBuilder'
 import { RobotID } from './npcRobot'
 import resources from '../resources'
-import { openDialogSound } from './ui'
+import { openDialogSound, updateOpenUITime, setUiOpener } from './ui'
 
 // TODO: Still one more issue to resolve with user / bots / items interaction
 // when an item info window is open - you can't chat to a bot
@@ -12,6 +12,8 @@ import { openDialogSound } from './ui'
 let currentSelectedItemID: string
 
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
+  updateOpenUITime()
+  setUiOpener(piece)
   if (!dialogWindow.isDialogOpen) {
     currentSelectedItemID = piece.uuid
     openDialogSound.getComponent(AudioSource).playOnce()

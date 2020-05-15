@@ -1,9 +1,10 @@
-import { nftData } from "./nftData"
-import resources from "../resources"
+import { nftData } from './nftData'
+import resources from '../resources'
+import { updateOpenUITime, setUiOpener } from './ui'
 
 export class NFTWindow {
   private container: UIContainerRect
-  private nftPanel: UIImage
+  public nftPanel: UIImage
   private nftImage: UIImage
   private nftType: UIText
   private nftTypeBlankButton: UIImage
@@ -17,8 +18,8 @@ export class NFTWindow {
   constructor(canvas: UICanvas) {
     // Container
     this.container = new UIContainerRect(canvas)
-    this.container.width = "100%"
-    this.container.height = "100%"
+    this.container.width = '100%'
+    this.container.height = '100%'
     this.container.positionY = 25
     this.container.visible = false
 
@@ -31,15 +32,15 @@ export class NFTWindow {
 
     // NFT Type
     this.nftType = new UIText(this.container)
-    this.nftType.hAlign = "center"
-    this.nftType.vAlign = "center"
+    this.nftType.hAlign = 'center'
+    this.nftType.vAlign = 'center'
     this.nftType.positionX = -143
     this.nftType.positionY = 265
     this.nftType.font = new Font(Fonts.SanFrancisco_Semibold)
     this.nftType.fontSize = 16
-    this.nftType.fontWeight = "normal"
+    this.nftType.fontWeight = 'normal'
     this.nftType.color = new Color4(1.2, 0.07, 0.38)
-    this.nftType.value = "Not Found"
+    this.nftType.value = 'Not Found'
     this.nftType.visible = false
 
     // NFT Type Blank Button
@@ -62,15 +63,15 @@ export class NFTWindow {
 
     // NFT Title
     this.nftTitle = new UIText(this.container)
-    this.nftTitle.hAlign = "center"
-    this.nftTitle.vAlign = "center"
+    this.nftTitle.hAlign = 'center'
+    this.nftTitle.vAlign = 'center'
     this.nftTitle.positionX = -143
     this.nftTitle.positionY = 232
     this.nftTitle.font = new Font(Fonts.SanFrancisco_Heavy)
     this.nftTitle.fontSize = 24
-    this.nftTitle.fontWeight = "bold"
+    this.nftTitle.fontWeight = 'bold'
     this.nftTitle.color = Color4.Black()
-    this.nftTitle.value = "Not Found"
+    this.nftTitle.value = 'Not Found'
     this.nftTitle.isPointerBlocker = false
     this.nftTitle.visible = false
 
@@ -104,25 +105,25 @@ export class NFTWindow {
     // NFT Details
     this.nftDetails = new UIText(this.container)
     this.nftDetails.adaptWidth = true
-    this.nftDetails.hAlign = "center"
-    this.nftDetails.vAlign = "center"
+    this.nftDetails.hAlign = 'center'
+    this.nftDetails.vAlign = 'center'
     this.nftDetails.positionY = -208
     this.nftDetails.fontSize = 18
     this.nftDetails.font = new Font(Fonts.SanFrancisco_Semibold)
     this.nftDetails.color = Color4.Black()
-    this.nftDetails.value = "Not Found"
+    this.nftDetails.value = 'Not Found'
     this.nftDetails.visible = false
 
     // NFT Direct Link
     this.nftDirectLink = new UIText(this.container)
     this.nftDirectLink.adaptWidth = true
-    this.nftDirectLink.hAlign = "center"
-    this.nftDirectLink.vAlign = "center"
+    this.nftDirectLink.hAlign = 'center'
+    this.nftDirectLink.vAlign = 'center'
     this.nftDirectLink.positionY = -233
     this.nftDirectLink.fontSize = 10
     this.nftDirectLink.font = new Font(Fonts.SanFrancisco)
     this.nftDirectLink.color = new Color4(1.2, 0.07, 0.38)
-    this.nftDirectLink.value = "Not Found"
+    this.nftDirectLink.value = 'Not Found'
     this.nftDirectLink.visible = false
 
     // Direct Link Blank Button

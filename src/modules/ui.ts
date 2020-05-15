@@ -4,6 +4,8 @@ import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
+import { dialogWindow } from './npcRobotBuilder'
+import { nftWindow } from './nftBuilder'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -23,14 +25,26 @@ openDialogSound.addComponent(
 )
 engine.addEntity(openDialogSound)
 
-export function closeUI() {
+export function closeUI(npc?: boolean) {
   messagebg.visible = false
   tBackground.visible = false
   wBackground.visible = false
+  nftWindow.closeNFTWindow(false)
+
+  // if the NPC UI is explicitly closed
+  if (npc) {
+    dialogWindow.closeDialogWindow()
+  }
 }
 
 export function checkUIOpen(): boolean {
-  if (messagebg.visible || tBackground.visible || wBackground.visible) {
+  if (
+    messagebg.visible ||
+    tBackground.visible ||
+    wBackground.visible ||
+    dialogWindow.isDialogOpen ||
+    nftWindow.container.visible
+  ) {
     return true
   } else {
     return false
@@ -39,6 +53,10 @@ export function checkUIOpen(): boolean {
 
 export function updateOpenUITime() {
   UIOpenTime = +Date.now()
+}
+
+export function setUiOpener(ent: Entity) {
+  UIOpener = ent
 }
 
 let SFFont = new Font(Fonts.SanFrancisco)
@@ -558,23 +576,30 @@ input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
 input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
   const currentTime = +Date.now()
 
+  // Won't close the UI if it was just opened
   if (checkUIOpen() && currentTime - UIOpenTime > 100) {
+    // If click is meant to advance the conversation, don't close the UI
+    // if (dialogWindow.isDialogOpen && dialogWindow.leftClickIcon.visible) {
+    //   return
+    // }
     closeUI()
-    log('clicked on the close image ', messagebg.visible)
   }
 })
 
 class UIDistanceSystem implements ISystem {
   update() {
     if (checkUIOpen()) {
+      log('UI VISIBLE')
       let dist = distance(
         Camera.instance.position,
         UIOpener.getGlobalPosition()
       )
       log(dist)
 
-      if (dist > 16 * 16) {
-        closeUI()
+      // if player walks too far from entity
+      if (dist > 8 * 8) {
+        // close all UIs, including NPC
+        closeUI(true)
       }
     }
   }

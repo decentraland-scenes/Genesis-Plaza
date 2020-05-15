@@ -18,7 +18,7 @@ export class DialogWindow {
   private labelE: UIText
   private buttonF: UIImage
   private labelF: UIText
-  private leftClickIcon: UIImage
+  public leftClickIcon: UIImage
   public isDialogOpen: boolean
   public isQuestionPanel: boolean
   public activeBotId: number
@@ -44,7 +44,10 @@ export class DialogWindow {
     })
 
     // Portrait
-    this.portrait = new UIImage(this.container, new Texture("images/portraits/alice.png"))
+    this.portrait = new UIImage(
+      this.container,
+      new Texture('images/portraits/alice.png')
+    )
     this.portrait.sourceWidth = 384
     this.portrait.sourceHeight = 384
     this.portrait.width = 256
@@ -136,7 +139,6 @@ export class DialogWindow {
   }
 
   public openDialogWindow(botId: number, textId: number): void {
-
     // this.isDialogOpen = true
 
     // Set current active bot and text
@@ -242,7 +244,10 @@ export class DialogWindow {
     if (this.isDialogOpen) {
       for (let i = 0; i < robots.length; i++) {
         // Play goodbye animation after talking to user
-        if (this.activeBotId == robots[i].robotID && robots[i].hasComponent(TrackUserSlerp)) {
+        if (
+          this.activeBotId == robots[i].robotID &&
+          robots[i].hasComponent(TrackUserSlerp)
+        ) {
           robots[i].removeComponent(TrackUserSlerp)
           robots[i].playGoodbye()
         } else {
