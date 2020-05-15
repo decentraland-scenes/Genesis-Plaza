@@ -237,7 +237,7 @@ export function setTriggerAreas() {
   )
 
   let trainElevatorTriggerBox = new utils.TriggerBoxShape(
-    new Vector3(2, 1, 2),
+    new Vector3(2, 2, 2),
     Vector3.Zero()
   )
   trainElevatorTrigger.addComponent(
@@ -249,16 +249,16 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
+        log('triggered train elevator')
         sceneMessageBus.emit('trainElevator', {})
-        log('triggered!')
       },
       null, //onCameraExit
-      true
+      false
     )
   )
   engine.addEntity(trainElevatorTrigger)
 
-  function activaTetrainElevator() {
+  function activaeTrainElevator() {
     train_elevator_anim.stop()
     train_elevator_anim.play()
   }
@@ -286,7 +286,7 @@ export function setTriggerAreas() {
   const balloonTrigger = new Entity()
   balloonTrigger.addComponent(
     new Transform({
-      position: new Vector3(79, 2, 180.5),
+      position: new Vector3(80, 2, 181),
       rotation: Quaternion.Euler(0, 45, 0),
     })
   )
@@ -308,7 +308,7 @@ export function setTriggerAreas() {
         log('triggered balloon')
       },
       null, //onCameraExit
-      true
+      false
     )
   )
   engine.addEntity(balloonTrigger)
@@ -319,7 +319,7 @@ export function setTriggerAreas() {
     balloon_anim.stop()
     balloon_anim.play()
     balloon.addComponentOrReplace(
-      new utils.Delay(10000, () => {
+      new utils.Delay(150 * 1000, () => {
         ballonIsFlying = false
       })
     )
@@ -348,7 +348,7 @@ export function setTriggerAreas() {
   const station1Trigger = new Entity()
   station1Trigger.addComponent(
     new Transform({
-      position: new Vector3(234, 7, 143),
+      position: new Vector3(234.5, 7, 143),
       rotation: Quaternion.Euler(0, 45, 0),
     })
   )
@@ -373,7 +373,7 @@ export function setTriggerAreas() {
         log('triggered!')
       },
       null, //onCameraExit
-      true
+      false
     )
   )
   engine.addEntity(station1Trigger)
@@ -387,7 +387,7 @@ export function setTriggerAreas() {
     //currentTrainStation =
 
     train.addComponentOrReplace(
-      new utils.Delay(10000, () => {
+      new utils.Delay(100 * 1000, () => {
         trainIsMoving = false
       })
     )
@@ -410,7 +410,7 @@ export function setTriggerAreas() {
   })
 
   sceneMessageBus.on('trainElevator', (e) => {
-    activaTetrainElevator()
+    activaeTrainElevator()
   })
 
   sceneMessageBus.on('startBalloon', (e) => {
