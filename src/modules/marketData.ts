@@ -1146,7 +1146,7 @@ export function updateTradeCentrer(data: MarketData) {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Open in Market'
+        hoverText: 'Open in Market',
       }
     )
   )
@@ -1852,6 +1852,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     swankyBoard1
   )
+  cheapSwankyTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#3AD682'
+  )
 
   let cheapSwankyPreview = new WearablePreview(
     data.cheapSwankyNow.image,
@@ -1868,6 +1871,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.2),
     },
     swankyBoard1
+  )
+  cheapSwankyValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#3AD682'
   )
 
   let cheapSwankyUnit = new StockData(
@@ -1903,6 +1909,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     swankyBoard1
   )
+  cheapSwankyValue.getComponent(TextShape).color = Color3.FromHexString(
+    '#3AD682'
+  )
 
   cheapSwankyPreview.addComponent(
     new OnPointerDown(
@@ -1917,7 +1926,7 @@ export function updateTradeCentrer(data: MarketData) {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Open in Market'
+        hoverText: 'Open in Market',
       }
     )
   )
@@ -1950,6 +1959,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     swankyBoard2
   )
+  expensiveSwankyTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#3AD682'
+  )
 
   let expensiveSwankyPreview = new WearablePreview(
     data.swankyWearableMonthExpensive.image,
@@ -1966,6 +1978,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.2),
     },
     swankyBoard2
+  )
+  expensiveSwankyValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#3AD682'
   )
 
   let expensiveSwankyUnit = new StockData(
@@ -2005,6 +2020,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     epicBoard1
   )
+  cheapEpicTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#6297F2'
+  )
 
   let cheapEpicPreview = new WearablePreview(
     data.cheapEpicNow.image,
@@ -2021,6 +2039,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.05),
     },
     epicBoard1
+  )
+  cheapEpicValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#6297F2'
   )
 
   let cheapEpicUnit = new StockData(
@@ -2056,6 +2077,7 @@ export function updateTradeCentrer(data: MarketData) {
     },
     epicBoard1
   )
+  cheapEpicValue.getComponent(TextShape).color = Color3.FromHexString('#6297F2')
 
   cheapEpicPreview.addComponent(
     new OnPointerDown(
@@ -2070,7 +2092,7 @@ export function updateTradeCentrer(data: MarketData) {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Open in Market'
+        hoverText: 'Open in Market',
       }
     )
   )
@@ -2103,6 +2125,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     epicBoard2
   )
+  expensiveEpicTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#6297F2'
+  )
 
   let expensiveEpicPreview = new WearablePreview(
     data.epicWearableMonthExpensive.image,
@@ -2119,6 +2144,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.2),
     },
     epicBoard2
+  )
+  expensiveEpicValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#6297F2'
   )
 
   let expensiveEpicUnit = new StockData(
@@ -2158,6 +2186,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     legendaryBoard1
   )
+  cheapLegendaryTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#9E55E2'
+  )
 
   let cheapLegendaryPreview = new WearablePreview(
     data.cheapLegendaryNow.image,
@@ -2174,6 +2205,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(-0.2, 0.4, 0),
     },
     legendaryBoard1
+  )
+  cheapLegendaryValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#9E55E2'
   )
 
   let cheapLegendaryUnit = new StockData(
@@ -2209,6 +2243,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     legendaryBoard1
   )
+  cheapLegendaryValue.getComponent(TextShape).color = Color3.FromHexString(
+    '#9E55E2'
+  )
 
   cheapLegendaryPreview.addComponent(
     new OnPointerDown(
@@ -2223,7 +2260,7 @@ export function updateTradeCentrer(data: MarketData) {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Open in Market'
+        hoverText: 'Open in Market',
       }
     )
   )
@@ -2256,6 +2293,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     legendaryBoard2
   )
+  expensiveLegendaryTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#9E55E2'
+  )
 
   let expensiveLegendaryPreview = new WearablePreview(
     data.legendaryWearableMonthExpensive.image,
@@ -2272,6 +2312,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.2),
     },
     legendaryBoard2
+  )
+  expensiveLegendaryValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#9E55E2'
   )
 
   let expensiveLegendaryUnit = new StockData(
@@ -2311,6 +2354,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard1
   )
+  cheapMythicTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
+  )
 
   let cheapMythicPreview = new WearablePreview(
     data.cheapMythicNow.image,
@@ -2327,6 +2373,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.1),
     },
     mythicBoard1
+  )
+  cheapMythicValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
   )
 
   let cheapMythicUnit = new StockData(
@@ -2346,6 +2395,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard1
   )
+  cheapMythicLabel.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
+  )
 
   let shortenedMythicOwner =
     data.cheapMythicNow.owner.address.slice(0, 5) +
@@ -2362,6 +2414,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard1
   )
+  cheapMythicValue.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
+  )
 
   cheapMythicPreview.addComponent(
     new OnPointerDown(
@@ -2376,7 +2431,7 @@ export function updateTradeCentrer(data: MarketData) {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Open in Market'
+        hoverText: 'Open in Market',
       }
     )
   )
@@ -2409,6 +2464,9 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard2
   )
+  expensiveMythicTitle3.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
+  )
 
   let expensiveMythicPreview = new WearablePreview(
     data.mythicWearableMonthExpensive.image,
@@ -2425,6 +2483,9 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.4, -0.2),
     },
     mythicBoard2
+  )
+  expensiveMythicValue1.getComponent(TextShape).color = Color3.FromHexString(
+    '#E43EC6'
   )
 
   let expensiveMythicUnit = new StockData(
