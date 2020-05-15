@@ -213,20 +213,5 @@ export function addNFTs(): void {
     new Vector3(60, 10, 60),
     Vector3.Zero()
   )
-  nftTrigger.addComponent(
-    new utils.TriggerComponent(
-      triggerBox, //shape
-      0, //layer
-      0, //triggeredByLayer
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      null, //onCameraEnter
-      () => {
-        log('exit trigger area')
-        nftWindow.closeNFTWindow(false)
-      }, //onCameraExit
-      false // enableDebug
-    )
-  )
   engine.addEntity(nftTrigger)
 }
