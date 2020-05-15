@@ -17,13 +17,13 @@ import { AmbientSound } from './modules/ambient'
 
 //////// HACK TO LOG POSITIONS
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//   }
-// }
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(Camera.instance.position)
+  }
+}
 
-// engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 

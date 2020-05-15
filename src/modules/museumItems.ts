@@ -67,7 +67,7 @@ export class MuseumPiece extends Entity {
         {
           button: ActionButton.PRIMARY,
           showFeedback: true,
-          hoverText: this.name
+          hoverText: this.name,
         }
       )
     )
@@ -343,7 +343,7 @@ export function placeMuseumPieces() {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Districts' 
+        hoverText: 'Districts',
       }
     )
   )
@@ -371,7 +371,7 @@ export function placeMuseumPieces() {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Plazas' 
+        hoverText: 'Plazas',
       }
     )
   )
@@ -399,7 +399,7 @@ export function placeMuseumPieces() {
       {
         button: ActionButton.PRIMARY,
         showFeedback: true,
-        hoverText: 'Roads' 
+        hoverText: 'Roads',
       }
     )
   )
@@ -699,7 +699,7 @@ creatorProgram.addComponent(
         'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
       )
     },
-    { hoverText: 'Learn more' }
+    { hoverText: 'Learn more', button: ActionButton.PRIMARY }
   )
 )
 
@@ -718,14 +718,14 @@ builderLink.addComponent(
     (e) => {
       openExternalURL('https://builder.decentraland.org')
     },
-    { hoverText: 'Try the Builder' }
+    { hoverText: 'Try the Builder', button: ActionButton.PRIMARY }
   )
 )
 
 let docsLink = new Entity()
 docsLink.addComponent(
   new Transform({
-    position: new Vector3(113.8, 1.5, 20.5),
+    position: new Vector3(121.6, 1.5, 17.5),
     rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(1.5, 1.5, 1.5),
   })
@@ -737,10 +737,52 @@ docsLink.addComponent(
     (e) => {
       openExternalURL('https://docs.decentraland.org')
     },
-    { hoverText: 'Read the Docs' }
+    { hoverText: 'Read the Docs', button: ActionButton.PRIMARY }
   )
 )
 engine.addEntity(docsLink)
+
+let discordLink = new Entity()
+discordLink.addComponent(
+  new Transform({
+    position: new Vector3(113.6, 1.5, 20.5),
+    rotation: Quaternion.Euler(0, 0, 0),
+    scale: new Vector3(1, 1, 1),
+  })
+)
+discordLink.addComponent(new GLTFShape('models/garden/discord.glb'))
+
+discordLink.addComponent(
+  new OnPointerDown(
+    (e) => {
+      openExternalURL(
+        'https://discord.com/channels/417796904760639509/433376431603580970'
+      )
+    },
+    { hoverText: 'Join the Discussion', button: ActionButton.PRIMARY }
+  )
+)
+engine.addEntity(discordLink)
+
+let twitterLink = new Entity()
+twitterLink.addComponent(
+  new Transform({
+    position: new Vector3(113.6, 1.5, 17.5),
+    rotation: Quaternion.Euler(0, 0, 0),
+    scale: new Vector3(1, 1, 1),
+  })
+)
+twitterLink.addComponent(new GLTFShape('models/garden/twitter.glb'))
+
+twitterLink.addComponent(
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://twitter.com/decentraland')
+    },
+    { hoverText: 'Follow Us!', button: ActionButton.PRIMARY }
+  )
+)
+engine.addEntity(twitterLink)
 
 ///// MAP HELPERS
 
