@@ -1,10 +1,9 @@
-// UI
-
 import { setNewMessage } from './serverHandler'
 import { WearableData, getWearableURL } from './wearables'
 import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
+import resources from '../resources'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -12,6 +11,17 @@ screenSpaceUI.visible = true
 export var UIOpenTime = 0
 
 export var UIOpener: Entity
+
+// Open dialog sound
+export const openDialogSound = new Entity()
+openDialogSound.addComponent(new Transform())
+// This seems to work even when player moves as oppose to getting the transform from the item
+// as the items transform might not be matching their position visuallly
+openDialogSound.getComponent(Transform).position = Camera.instance.position
+openDialogSound.addComponent(
+  new AudioSource(resources.sounds.navigationForward)
+)
+engine.addEntity(openDialogSound)
 
 export function closeUI() {
   messagebg.visible = false
@@ -47,6 +57,7 @@ export function openMessageBoardUI(
   updateOpenUITime()
   messagebg.visible = false
   UIOpener = opener
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
@@ -86,6 +97,7 @@ export function openMessageBoardConfirmation(opener: Entity) {
   updateOpenUITime()
   messagebg.visible = false
   UIOpener = opener
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
@@ -128,6 +140,7 @@ export function wearableClassic(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -147,6 +160,7 @@ export function wearableNotForSale(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -166,6 +180,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   const wearableThumnail = new Texture(wearableData.image)
 
@@ -412,6 +427,7 @@ export function openTeleportUI(teleport: Teleport) {
   updateOpenUITime()
   UIOpener = teleport
   tBackground.visible = false
+  openDialogSound.getComponent(AudioSource).playOnce()
 
   const screenshotTexture = new Texture(teleport.screenshot)
 
