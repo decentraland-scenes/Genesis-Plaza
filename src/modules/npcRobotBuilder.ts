@@ -139,20 +139,17 @@ export function addRobots(dummyTarget: Entity) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
-<<<<<<< HEAD
+
             // HACK: To avoid clashing with the input subscribe PRIMARY button down event
             robots[i].addComponentOrReplace(
               new utils.Delay(30, () => {
                 dialogWindow.isDialogOpen = true
               })
             )
-=======
             dialogWindow.isDialogOpen = true
             // used for closing UI when walking away or clicking
             updateOpenUITime()
             setUiOpener(robots[i])
-
->>>>>>> 4b3059b9a4cefb59ffd0a20d019a57c5dc561fdb
             dummyTarget.getComponent(Transform).position = robots[
               i
             ].getComponent(Transform).position
