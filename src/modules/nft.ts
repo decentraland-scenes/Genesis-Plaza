@@ -1,5 +1,6 @@
-import { NFTWindow } from "./nftWindow"
-import resources from "../resources"
+import { NFTWindow } from './nftWindow'
+import resources from '../resources'
+import { updateOpenUITime, setUiOpener } from './ui'
 
 export class NFT extends Entity {
   public id: number
@@ -9,7 +10,7 @@ export class NFT extends Entity {
     transform: Transform,
     color: Color3,
     id: number,
-    nftWindow: NFTWindow,
+    nftWindow: NFTWindow
   ) {
     super()
     engine.addEntity(this)
@@ -26,11 +27,14 @@ export class NFT extends Entity {
         (e): void => {
           this.getComponent(AudioSource).playOnce()
           nftWindow.openNFTWindow(this.id, transform.position)
+          // used for closing UI when walking away or clicking
+          updateOpenUITime()
+          setUiOpener(this)
         },
         {
           button: ActionButton.POINTER,
           showFeedback: true,
-          hoverText: "More Info",
+          hoverText: 'More Info',
           distance: 8,
         }
       )

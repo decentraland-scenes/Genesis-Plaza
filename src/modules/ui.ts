@@ -4,6 +4,8 @@ import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
+import { dialogWindow } from './npcRobotBuilder'
+import { nftWindow } from './nftBuilder'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -27,10 +29,18 @@ export function closeUI() {
   messagebg.visible = false
   tBackground.visible = false
   wBackground.visible = false
+  dialogWindow.closeDialogWindow()
+  nftWindow.closeNFTWindow(false)
 }
 
 export function checkUIOpen(): boolean {
-  if (messagebg.visible || tBackground.visible || wBackground.visible) {
+  if (
+    messagebg.visible ||
+    tBackground.visible ||
+    wBackground.visible ||
+    dialogWindow.isDialogOpen ||
+    nftWindow.container.visible
+  ) {
     return true
   } else {
     return false
@@ -39,6 +49,10 @@ export function checkUIOpen(): boolean {
 
 export function updateOpenUITime() {
   UIOpenTime = +Date.now()
+}
+
+export function setUiOpener(ent: Entity) {
+  UIOpener = ent
 }
 
 let SFFont = new Font(Fonts.SanFrancisco)
@@ -567,13 +581,14 @@ input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
 class UIDistanceSystem implements ISystem {
   update() {
     if (checkUIOpen()) {
+      log('UI VISIBLE')
       let dist = distance(
         Camera.instance.position,
         UIOpener.getGlobalPosition()
       )
       log(dist)
 
-      if (dist > 16 * 16) {
+      if (dist > 8 * 8) {
         closeUI()
       }
     }
