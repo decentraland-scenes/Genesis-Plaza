@@ -25,12 +25,16 @@ openDialogSound.addComponent(
 )
 engine.addEntity(openDialogSound)
 
-export function closeUI() {
+export function closeUI(npc?: boolean) {
   messagebg.visible = false
   tBackground.visible = false
   wBackground.visible = false
-  dialogWindow.closeDialogWindow()
   nftWindow.closeNFTWindow(false)
+
+  // if the NPC UI is explicitly closed
+  if (npc) {
+    dialogWindow.closeDialogWindow()
+  }
 }
 
 export function checkUIOpen(): boolean {
@@ -572,9 +576,13 @@ input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
 input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
   const currentTime = +Date.now()
 
+  // Won't close the UI if it was just opened
   if (checkUIOpen() && currentTime - UIOpenTime > 100) {
+    // If click is meant to advance the conversation, don't close the UI
+    // if (dialogWindow.isDialogOpen && dialogWindow.leftClickIcon.visible) {
+    //   return
+    // }
     closeUI()
-    log('clicked on the close image ', messagebg.visible)
   }
 })
 
@@ -588,8 +596,10 @@ class UIDistanceSystem implements ISystem {
       )
       log(dist)
 
+      // if player walks too far from entity
       if (dist > 8 * 8) {
-        closeUI()
+        // close all UIs, including NPC
+        closeUI(true)
       }
     }
   }
