@@ -580,15 +580,15 @@ const input = Input.instance
 //E button event
 input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
   // Open wearable link if wearable menu open
-  if (wBackground.visible && UIOpener instanceof Wearable) {
-    if (!UIOpener.wearableData) {
-      return
-    }
-    let url = getWearableURL(UIOpener.wearableData)
-    log('traveling to wearable link!', url)
-    openExternalURL(url)
-    closeUI()
-  }
+  //   if (wBackground.visible && UIOpener instanceof Wearable) {
+  //     if (!UIOpener.wearableData) {
+  //       return
+  //     }
+  //     let url = getWearableURL(UIOpener.wearableData)
+  //     log('traveling to wearable link!', url)
+  //     openExternalURL(url)
+  //     closeUI()
+  //   }
 })
 
 //button down event
