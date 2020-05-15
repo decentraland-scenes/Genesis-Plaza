@@ -44,7 +44,7 @@ export class DialogWindow {
     })
 
     // Portrait
-    this.portrait = new UIImage(this.container, resources.textures.blank)
+    this.portrait = new UIImage(this.container, new Texture("images/portraits/alice.png"))
     this.portrait.sourceWidth = 384
     this.portrait.sourceHeight = 384
     this.portrait.width = 256
