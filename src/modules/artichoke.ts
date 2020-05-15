@@ -69,7 +69,11 @@ blueButton.addComponent(
       })
       blueButton.press()
     },
-    { hoverText: 'Rave' }
+    {
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Rave'
+    }
   )
 )
 
@@ -87,7 +91,11 @@ greenButton.addComponent(
       })
       greenButton.press()
     },
-    { hoverText: 'DCL Interviews' }
+    {
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'DCL Interviews'
+    }
   )
 )
 
@@ -105,7 +113,11 @@ lightBlueButton.addComponent(
       })
       lightBlueButton.press()
     },
-    { hoverText: 'Delta' }
+    {
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Delta'
+    }
   )
 )
 
@@ -123,7 +135,11 @@ redButton.addComponent(
       })
       redButton.press()
     },
-    { hoverText: 'Signs' }
+    {
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Signs'
+    }
   )
 )
 
@@ -141,7 +157,11 @@ yellowButton.addComponent(
       })
       yellowButton.press()
     },
-    { hoverText: 'Signs' }
+    {
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Signs'
+    }
   )
 )
 

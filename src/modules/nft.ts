@@ -32,7 +32,7 @@ export class NFT extends Entity {
           setUiOpener(this)
         },
         {
-          button: ActionButton.POINTER,
+          button: ActionButton.PRIMARY,
           showFeedback: true,
           hoverText: 'More Info',
           distance: 8,

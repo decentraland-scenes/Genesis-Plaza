@@ -51,7 +51,11 @@ export class Wearable extends Entity {
           }
           // openUI1(wearableName, this)
         },
-        { hoverText: 'Info' }
+        {
+          button: ActionButton.PRIMARY,
+          showFeedback: true,
+          hoverText: 'Info'
+        }
       )
     )
   }

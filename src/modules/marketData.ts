@@ -1143,7 +1143,11 @@ export function updateTradeCentrer(data: MarketData) {
           data.cheapestLandNow.parcel.tokenId
         openExternalURL(url)
       },
-      { hoverText: 'Open in Market' }
+      {
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Open in Market'
+      }
     )
   )
   engine.addEntity(linkToParcel)
@@ -1911,7 +1915,9 @@ export function updateTradeCentrer(data: MarketData) {
         openExternalURL(url)
       },
       {
-        hoverText: 'Open in Market',
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Open in Market'
       }
     )
   )
@@ -2062,7 +2068,9 @@ export function updateTradeCentrer(data: MarketData) {
         openExternalURL(url)
       },
       {
-        hoverText: 'Open in Market',
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Open in Market'
       }
     )
   )
@@ -2213,7 +2221,9 @@ export function updateTradeCentrer(data: MarketData) {
         openExternalURL(url)
       },
       {
-        hoverText: 'Open in Market',
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Open in Market'
       }
     )
   )
@@ -2364,7 +2374,9 @@ export function updateTradeCentrer(data: MarketData) {
         openExternalURL(url)
       },
       {
-        hoverText: 'Open in Market',
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: 'Open in Market'
       }
     )
   )

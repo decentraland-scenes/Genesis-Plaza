@@ -90,8 +90,9 @@ ArtichokeUIOpener.addComponent(
       openMessageBoardUI(ArtichokeUIOpener, MessageBoards.ARTICHOKE)
     },
     {
-      button: ActionButton.POINTER,
-      hoverText: 'Write something',
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Write something'
     }
   )
 )
@@ -111,8 +112,9 @@ TowerUIOpener.addComponent(
       openMessageBoardUI(TowerUIOpener, MessageBoards.TOWER)
     },
     {
-      button: ActionButton.POINTER,
-      hoverText: 'Write something',
+      button: ActionButton.PRIMARY,
+      showFeedback: true,
+      hoverText: 'Write something'
     }
   )
 )
