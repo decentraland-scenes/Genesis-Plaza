@@ -578,10 +578,6 @@ input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
 
   // Won't close the UI if it was just opened
   if (checkUIOpen() && currentTime - UIOpenTime > 100) {
-    // If click is meant to advance the conversation, don't close the UI
-    // if (dialogWindow.isDialogOpen && dialogWindow.leftClickIcon.visible) {
-    //   return
-    // }
     closeUI()
   }
 })
