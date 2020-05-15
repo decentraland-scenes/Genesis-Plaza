@@ -484,13 +484,13 @@ export function openTeleportUI(teleport: Teleport) {
   screenshot.sourceWidth = 536
   screenshot.sourceHeight = 344
 
-  let closeIcon = new UIImage(tBackground, wearableTexture)
+  let closeIcon = new UIImage(tBackground, teleportUITexture)
   closeIcon.name = 'closeIcon'
   closeIcon.visible = true
   closeIcon.positionY = 172 / 2 + 91 + 72
   closeIcon.positionX = 121
-  closeIcon.sourceTop = 4
-  closeIcon.sourceLeft = 328
+  closeIcon.sourceTop = 0
+  closeIcon.sourceLeft = 244
   closeIcon.sourceHeight = 24
   closeIcon.sourceWidth = 24
   closeIcon.height = 24
@@ -579,6 +579,7 @@ const input = Input.instance
 
 //E button event
 input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
+  const currentTime = +Date.now()
   // Open wearable link if wearable menu open
   //   if (wBackground.visible && UIOpener instanceof Wearable) {
   //     if (!UIOpener.wearableData) {
@@ -589,6 +590,15 @@ input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
   //     openExternalURL(url)
   //     closeUI()
   //   }
+
+  // travel to teleport location
+  if (
+    tBackground.visible &&
+    UIOpener instanceof Teleport &&
+    currentTime - UIOpenTime > 200
+  ) {
+    UIOpener.travel()
+  }
 })
 
 //button down event

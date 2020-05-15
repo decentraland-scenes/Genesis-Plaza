@@ -55,7 +55,7 @@ export class Teleport extends Entity {
         {
           button: ActionButton.PRIMARY,
           showFeedback: true,
-          hoverText: this.name
+          hoverText: this.name,
         }
       )
     )
@@ -201,7 +201,7 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/star.glb'),
       location: Locations.MAGIC,
       transform: teleportPos3,
-      screenshot: 'images/example-screenshot.png',
+      screenshot: 'images/teleports/Magic.png',
       description:
         'Visit a random scene from\na curated list of amazing places!\n',
     },
@@ -246,7 +246,7 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/star.glb'),
       location: Locations.MAGIC,
       transform: teleportPos8,
-      screenshot: 'images/example-screenshot.png',
+      screenshot: 'images/teleports/Magic.png',
       description:
         'Visit a random scene from\na curated list of amazing places!\n',
     },
