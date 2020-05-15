@@ -30,7 +30,8 @@ export function addRobots(dummyTarget: Entity) {
       position: new Vector3(155, 2.25, 159),
       rotation: Quaternion.Euler(0, 150, 0),
     }),
-    RobotID.Main
+    RobotID.Main,
+    resources.sounds.alice
   )
   robots.push(alice)
   const aliceRings = new Entity()
@@ -48,7 +49,8 @@ export function addRobots(dummyTarget: Entity) {
       position: new Vector3(297, 11.365, 123),
       rotation: Quaternion.Euler(0, -110, 0),
     }),
-    RobotID.Shell
+    RobotID.Shell,
+    resources.sounds.ron
   )
   robots.push(ron)
 
@@ -58,7 +60,8 @@ export function addRobots(dummyTarget: Entity) {
       position: new Vector3(37.27, 4, 265.32),
       rotation: Quaternion.Euler(0, 90, 0),
     }),
-    RobotID.Agora
+    RobotID.Agora,
+    resources.sounds.bela
   )
   robots.push(bela)
 
@@ -67,7 +70,8 @@ export function addRobots(dummyTarget: Entity) {
     new Transform({
       position: new Vector3(117.657, 3.6, 39.98),
     }),
-    RobotID.Garden
+    RobotID.Garden,
+    resources.sounds.betty
   )
   robots.push(betty)
 
@@ -77,7 +81,8 @@ export function addRobots(dummyTarget: Entity) {
       position: new Vector3(269.5, 5.35, 42.6),
       rotation: Quaternion.Euler(0, -90, 0),
     }),
-    RobotID.Trade
+    RobotID.Trade,
+    resources.sounds.charlie
   )
   robots.push(charlie)
   const charlieRings = new Entity()
@@ -94,7 +99,8 @@ export function addRobots(dummyTarget: Entity) {
     new Transform({
       position: new Vector3(50.945, 9.65, 31.1),
     }),
-    RobotID.Artichoke
+    RobotID.Artichoke,
+    resources.sounds.marsha
   )
   robots.push(marsha)
 
@@ -104,7 +110,8 @@ export function addRobots(dummyTarget: Entity) {
       position: new Vector3(165.573, 11.5, 252.79),
       rotation: Quaternion.Euler(0, 35, 0),
     }),
-    RobotID.Whale
+    RobotID.Whale,
+    resources.sounds.bob
   )
   robots.push(bob)
   const bobRings = new Entity()

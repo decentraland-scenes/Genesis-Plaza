@@ -2,7 +2,13 @@ import utils from "../node_modules/decentraland-ecs-utils/index"
 
 export default {
   sounds: {
-    robot: new AudioClip("sounds/robot.mp3"),
+    alice: new AudioClip("sounds/alice.mp3"),
+    bela: new AudioClip("sounds/bela.mp3"),
+    betty: new AudioClip("sounds/betty.mp3"),
+    bob: new AudioClip("sounds/bob.mp3"),
+    charlie: new AudioClip("sounds/charlie.mp3"),
+    marsha: new AudioClip("sounds/marsha.mp3"),
+    ron: new AudioClip("sounds/ron.mp3"),
     navigationForward: new AudioClip("sounds/navigationForward.mp3"),
     navigationBackward: new AudioClip("sounds/navigationBackward.mp3"),
   },

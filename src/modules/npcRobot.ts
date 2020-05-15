@@ -19,6 +19,7 @@ export class Robot extends Entity {
     robotModel: GLTFShape,
     robotTransform: Transform,
     robotID: RobotID,
+    robotSound: AudioClip
   ) {
     super()
     engine.addEntity(this)
@@ -27,7 +28,7 @@ export class Robot extends Entity {
     this.robotID = robotID
 
     // Sound
-    this.addComponent(new AudioSource(resources.sounds.robot))
+    this.addComponent(new AudioSource(robotSound))
 
     // Animations
     this.addComponent(new Animator())
