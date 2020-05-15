@@ -52,7 +52,11 @@ export class Teleport extends Entity {
         async function () {
           openTeleportUI(thisTeleport)
         },
-        { hoverText: this.name }
+        {
+          button: ActionButton.PRIMARY,
+          showFeedback: true,
+          hoverText: this.name
+        }
       )
     )
 
