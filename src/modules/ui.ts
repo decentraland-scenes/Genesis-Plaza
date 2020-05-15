@@ -17,13 +17,22 @@ export var UIOpener: Entity
 // Open dialog sound
 export const openDialogSound = new Entity()
 openDialogSound.addComponent(new Transform())
-// This seems to work even when player moves as oppose to getting the transform from the item
+// This seems to work even when the player moves as oppose to getting the transform from the item
 // as the items transform might not be matching their position visuallly
 openDialogSound.getComponent(Transform).position = Camera.instance.position
 openDialogSound.addComponent(
   new AudioSource(resources.sounds.navigationForward)
 )
 engine.addEntity(openDialogSound)
+
+// Close dialog sound
+export const closeDialogSound = new Entity()
+closeDialogSound.addComponent(new Transform())
+closeDialogSound.getComponent(Transform).position = Camera.instance.position
+closeDialogSound.addComponent(
+  new AudioSource(resources.sounds.navigationBackward)
+)
+engine.addEntity(closeDialogSound)
 
 export function closeUI(npc?: boolean) {
   messagebg.visible = false
@@ -272,6 +281,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   closeIcon.hAlign = 'center'
   closeIcon.vAlign = 'center'
   closeIcon.onClick = new OnClick(() => {
+    closeDialogSound.getComponent(AudioSource).playOnce()
     closeUI()
   })
 
@@ -488,6 +498,7 @@ export function openTeleportUI(teleport: Teleport) {
   closeIcon.hAlign = 'center'
   closeIcon.vAlign = 'center'
   closeIcon.onClick = new OnClick(() => {
+    closeDialogSound.getComponent(AudioSource).playOnce()
     closeUI()
   })
 

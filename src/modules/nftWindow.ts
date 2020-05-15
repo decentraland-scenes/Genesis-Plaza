@@ -3,7 +3,7 @@ import resources from '../resources'
 import { updateOpenUITime, setUiOpener } from './ui'
 
 export class NFTWindow {
-  private container: UIContainerRect
+  public container: UIContainerRect
   public nftPanel: UIImage
   private nftImage: UIImage
   private nftType: UIText
