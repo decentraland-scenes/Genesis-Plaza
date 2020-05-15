@@ -37,7 +37,7 @@ export const robotDialog: Dialogs[] = [
           positionY: 5,
         },
         text:
-          "Hi, welcome to Genesis Plaza! Would you like to learn more about this place?",
+          "Hi, I'm Alice - welcome to Genesis Plaza! Would you like to learn more about this place?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -213,7 +213,7 @@ export const robotDialog: Dialogs[] = [
           positionY: 10,
         },
         text:
-          "Hi there, I’m a tailor – a crafter of wearable items. Would you like to learn more about wearables?",
+          "Hi! I'm Ron – a crafter of wearable items. Would you like to learn more about wearables?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -315,7 +315,7 @@ export const robotDialog: Dialogs[] = [
     dialogs: [
       {
         text:
-          "Hey, would you like to learn more about how the community shapes Decentraland?",
+          "Hello, I'm Bela - would you like to learn more about how the community shapes Decentraland?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -381,7 +381,7 @@ export const robotDialog: Dialogs[] = [
     dialogs: [
       {
         text:
-          "Hi, I’m a content creator! Would you like to learn about how content in Decentraland is made?",
+          "Hi, I'm Betty - a content creator! Would you like to learn about how content in Decentraland is made?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -610,7 +610,7 @@ export const robotDialog: Dialogs[] = [
     dialogs: [
       {
         text:
-          "Hi, I’m a trader. Would you like to learn more about the Decentraland Marketplace?",
+          "Hey, I'm Charlie - a master trader. Would you like to learn more about the Decentraland Marketplace?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -756,7 +756,7 @@ export const robotDialog: Dialogs[] = [
     dialogs: [
       {
         text:
-          "Hi, I’m here to have fun! Would you like to learn more about how to interact with other players?",
+          "Hey there! My name is Marsha and I’m here to have fun! Would you like to learn more about how to interact with other players?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
@@ -828,7 +828,7 @@ export const robotDialog: Dialogs[] = [
     dialogs: [
       {
         text:
-          "Hi, I'm a blockchain specialist. Would you like to learn more about how Decentraland started?",
+          "G'day human! My name is Bob and I'm a robot. Would you like to learn more about the history of Decentraland and how it all started?",
         positionY: 24,
         isQuestion: true,
         labelE: { label: "YES", fontSize: 14, positionX: 64, positionY: -19 },
