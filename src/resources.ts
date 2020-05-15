@@ -35,6 +35,7 @@ export default {
     textPanel: new Texture("images/ui/textPanel.png"),
     nftPanel: new Texture("images/ui/nftPanel.png"),
     closeButton: new Texture("images/ui/closeButton.png"),
+    placeholder: new Texture("images/ui/placeholder.png"),
   },
   trigger: {
     triggerShape: new utils.TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
