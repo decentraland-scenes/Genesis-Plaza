@@ -2,7 +2,6 @@ import utils from "../../node_modules/decentraland-ecs-utils/index"
 import { NFT } from "./nft"
 import { nftData } from "./nftData"
 import { NFTWindow } from "./nftWindow"
-import resources from "../resources"
 
 export function addNFTs(): void {
   // UI Elements

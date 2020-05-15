@@ -1,4 +1,3 @@
-import utils from "../../node_modules/decentraland-ecs-utils/index"
 import { robots } from './npcRobotBuilder'
 import { robotDialog } from './npcDialogData'
 import resources from '../resources'
