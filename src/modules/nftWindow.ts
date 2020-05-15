@@ -56,7 +56,7 @@ export class NFTWindow {
     this.nftTypeBlankButton.visible = true
     this.nftTypeBlankButton.isPointerBlocker = true
     this.nftTypeBlankButton.onClick = new OnClick((): void => {
-      this.closeNFTWindow()
+      this.closeNFTWindow(true)
       this.openExternalLink(this.nftTypeLink)
     })
 
@@ -98,7 +98,7 @@ export class NFTWindow {
     closeButton.positionY = 265
     closeButton.isPointerBlocker = true
     closeButton.onClick = new OnClick((): void => {
-      this.closeNFTWindow()
+      this.closeNFTWindow(true)
     })
 
     // NFT Details
@@ -137,7 +137,7 @@ export class NFTWindow {
     this.nftDirectLinkBlankButton.height = 15
     this.nftDirectLinkBlankButton.visible = true
     this.nftDirectLinkBlankButton.onClick = new OnClick((): void => {
-      this.closeNFTWindow()
+      this.closeNFTWindow(true)
       this.openExternalLink(this.nftDirectLink.value)
     })
 
@@ -150,7 +150,6 @@ export class NFTWindow {
   }
 
   public openNFTWindow(id: number, audioTransform: Vector3): void {
-
     this.sound.getComponent(Transform).position = audioTransform // Sets the close button audio's position
 
     for (let i = 0; i < nftData.length; i++) {
@@ -179,13 +178,14 @@ export class NFTWindow {
     openExternalURL(link)
   }
 
-  public closeNFTWindow(): void {
+  public closeNFTWindow(playAudio: boolean): void {
     this.container.visible = false
     this.nftType.visible = false
     this.nftTitle.visible = false
     this.nftImage.visible = false
     this.nftDetails.visible = false
     this.nftDirectLink.visible = false
-    this.sound.getComponent(AudioSource).playOnce()
+
+    if (playAudio) this.sound.getComponent(AudioSource).playOnce()
   }
 }

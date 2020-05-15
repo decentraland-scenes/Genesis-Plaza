@@ -223,7 +223,7 @@ export function addNFTs(): void {
       null, //onCameraEnter
       () => {
         log("exit trigger area")
-        nftWindow.closeNFTWindow()
+        nftWindow.closeNFTWindow(false)
       }, //onCameraExit
       false // enableDebug
     )
