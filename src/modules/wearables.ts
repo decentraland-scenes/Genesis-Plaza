@@ -54,7 +54,7 @@ export class Wearable extends Entity {
         {
           button: ActionButton.PRIMARY,
           showFeedback: true,
-          hoverText: 'Info'
+          hoverText: 'Info',
         }
       )
     )
@@ -201,7 +201,7 @@ export function addWearables() {
       position: new Vector3(274.5, 10.5, 113.1),
       rotation: Quaternion.Euler(0, 60, 0),
     },
-    'MANA Hat'
+    'Decentraland Hat'
   )
 
   const M_Mask_Skull = new Wearable(
@@ -326,7 +326,7 @@ export function addWearables() {
       position: new Vector3(290.4, 10.5, 140.9),
       rotation: Quaternion.Euler(0, 180, 0),
     },
-    'Decentraland Hat'
+    'MANA Hat'
   )
 
   const Tiara_Bee = new Wearable(

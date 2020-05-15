@@ -55,7 +55,7 @@ for (let i = 0; i < maxCharacters; i++) {
   letter.setParent(TowerFloatingText)
   letter.addComponent(new TextShape(''))
   letter.getComponent(TextShape).fontSize = 22
-  letter.getComponent(TextShape).color = Color3.Blue()
+  letter.getComponent(TextShape).color = Color3.White() //Color3.Blue()
   letter.getComponent(TextShape).font = SFHeavyFont
   letter.addComponent(
     new Transform({
@@ -92,7 +92,7 @@ ArtichokeUIOpener.addComponent(
     {
       button: ActionButton.PRIMARY,
       showFeedback: true,
-      hoverText: 'Write something'
+      hoverText: 'Write something',
     }
   )
 )
@@ -114,7 +114,7 @@ TowerUIOpener.addComponent(
     {
       button: ActionButton.PRIMARY,
       showFeedback: true,
-      hoverText: 'Write something'
+      hoverText: 'Write something',
     }
   )
 )
