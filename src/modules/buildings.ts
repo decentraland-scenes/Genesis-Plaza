@@ -198,6 +198,16 @@ msg_welcome.addComponent(new Transform({
 ))
 engine.addEntity(msg_welcome)
 
+//add core_art
+let core_art = new Entity()
+core_art.addComponent(new GLTFShape("models/core_art.glb"))
+core_art.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+
+}
+))
+engine.addEntity(core_art)
+
   // THE GARDEN (CREATORS BUILDING)
 
   //add garden
