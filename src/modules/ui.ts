@@ -1,5 +1,5 @@
 import { setNewMessage } from './serverHandler'
-import { WearableData, getWearableURL } from './wearables'
+import { WearableData, getWearableURL, Wearable } from './wearables'
 import { Teleport } from './teleports'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
@@ -422,7 +422,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   price.hAlign = 'center'
   price.fontSize = 15
   price.positionY = 461 / 2 - 395 + 6
-  price.positionX = -385 / 2 + 191 + 5
+  price.positionX = -385 / 2 + 191 + 5 + 20
   price.width = 10
   price.hTextAlign = 'left'
   price.color = Color4.White()
@@ -568,7 +568,15 @@ const input = Input.instance
 
 //E button event
 input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
-  if (checkUIOpen()) {
+  // Open wearable link if wearable menu open
+  if (wBackground.visible && UIOpener instanceof Wearable) {
+    if (!UIOpener.wearableData) {
+      return
+    }
+    let url = getWearableURL(UIOpener.wearableData)
+    log('traveling to wearable link!', url)
+    openExternalURL(url)
+    closeUI()
   }
 })
 
@@ -585,12 +593,10 @@ input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
 class UIDistanceSystem implements ISystem {
   update() {
     if (checkUIOpen()) {
-      log('UI VISIBLE')
       let dist = distance(
         Camera.instance.position,
         UIOpener.getGlobalPosition()
       )
-      log(dist)
 
       // if player walks too far from entity
       if (dist > 8 * 8) {

@@ -11,6 +11,7 @@ export class Wearable extends Entity {
   buttonAnim = new AnimationState('Action', { looping: false })
   id: string
   isDefault: boolean = false
+  wearableData: WearableData
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
@@ -43,6 +44,7 @@ export class Wearable extends Entity {
             openLoadingUI()
             let info = await getWearableOnSale(wearableName.toLocaleLowerCase())
             if (info.data.nfts.length > 0) {
+              thisWearable.wearableData = info.data.nfts[0]
               openWearableUI(thisWearable, info.data.nfts[0])
             } else {
               wearableNotForSale(thisWearable)
