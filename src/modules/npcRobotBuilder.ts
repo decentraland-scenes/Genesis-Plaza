@@ -124,6 +124,11 @@ export function addRobots(dummyTarget: Entity) {
   )
   bobRings.setParent(bob)
 
+  // Dummy entity to add a Delay component so that it doesn't clash 
+  // with the robots Delay component used in animations
+  const dummyDelay = new Entity()
+  engine.addEntity(dummyDelay)
+
   // ISSUE: Modules do not load when these components are refactored to be part of the Robot class
   // Add user interaction
   for (let i = 0; i < robots.length; i++) {
@@ -141,12 +146,11 @@ export function addRobots(dummyTarget: Entity) {
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
 
             // HACK: To avoid clashing with the input subscribe PRIMARY button down event
-            robots[i].addComponentOrReplace(
+            dummyDelay.addComponentOrReplace(
               new utils.Delay(30, () => {
                 dialogWindow.isDialogOpen = true
               })
             )
-            dialogWindow.isDialogOpen = true
             // used for closing UI when walking away or clicking
             updateOpenUITime()
             setUiOpener(robots[i])
