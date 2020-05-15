@@ -210,6 +210,59 @@ export function setTriggerAreas() {
     shell_elevator_anim.play()
   }
 
+  ///////  TRAIN ELEVATOR
+
+  let train_elevator = new Entity()
+  train_elevator.addComponent(new GLTFShape('models/train_elevator.glb'))
+  train_elevator.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(train_elevator)
+
+  let train_elevator_anim = new AnimationState('TrainElevator_Action', {
+    looping: false,
+  })
+
+  train_elevator.addComponent(new Animator())
+  train_elevator.getComponent(Animator).addClip(train_elevator_anim)
+
+  const trainElevatorTrigger = new Entity()
+  trainElevatorTrigger.addComponent(
+    new Transform({
+      position: new Vector3(229.7, 1.3, 143),
+      rotation: Quaternion.Euler(0, 45, 0),
+    })
+  )
+
+  let trainElevatorTriggerBox = new utils.TriggerBoxShape(
+    new Vector3(2, 1, 2),
+    Vector3.Zero()
+  )
+  trainElevatorTrigger.addComponent(
+    new utils.TriggerComponent(
+      trainElevatorTriggerBox, //shape
+      0, //layer
+      0, //triggeredByLayer
+      null, //onTriggerEnter
+      null, //onTriggerExit
+      () => {
+        //onCameraEnter
+        sceneMessageBus.emit('trainElevator', {})
+        log('triggered!')
+      },
+      null, //onCameraExit
+      true
+    )
+  )
+  engine.addEntity(trainElevatorTrigger)
+
+  function activaTetrainElevator() {
+    train_elevator_anim.stop()
+    train_elevator_anim.play()
+  }
+
   //// BALOOON
 
   let ballonIsFlying: boolean = false
@@ -223,7 +276,7 @@ export function setTriggerAreas() {
   )
   engine.addEntity(balloon)
 
-  let balloon_anim = new AnimationState('Cube.079|Cube.079|Cube.079Action|', {
+  let balloon_anim = new AnimationState('Balloon_Action', {
     looping: false,
   })
 
@@ -233,7 +286,7 @@ export function setTriggerAreas() {
   const balloonTrigger = new Entity()
   balloonTrigger.addComponent(
     new Transform({
-      position: new Vector3(228.5, 3.5, 185.9),
+      position: new Vector3(79, 2, 180.5),
       rotation: Quaternion.Euler(0, 45, 0),
     })
   )
@@ -252,10 +305,10 @@ export function setTriggerAreas() {
       () => {
         //onCameraEnter
         sceneMessageBus.emit('startBalloon', {})
-        log('triggered!')
+        log('triggered balloon')
       },
       null, //onCameraExit
-      false
+      true
     )
   )
   engine.addEntity(balloonTrigger)
@@ -284,7 +337,7 @@ export function setTriggerAreas() {
   )
   train.addComponent(new Animator())
   engine.addEntity(train)
-  let train1_anim = new AnimationState('Action', {
+  let train1_anim = new AnimationState('Train_Action', {
     looping: false,
   })
   train.getComponent(Animator).addClip(train1_anim)
@@ -295,7 +348,7 @@ export function setTriggerAreas() {
   const station1Trigger = new Entity()
   station1Trigger.addComponent(
     new Transform({
-      position: new Vector3(234, 7.9, 142),
+      position: new Vector3(234, 7, 143),
       rotation: Quaternion.Euler(0, 45, 0),
     })
   )
@@ -303,7 +356,7 @@ export function setTriggerAreas() {
   //position: new Vector3(52, 7, 224),
 
   let TrainTriggerBox = new utils.TriggerBoxShape(
-    new Vector3(2, 1, 4),
+    new Vector3(2, 2, 6),
     Vector3.Zero()
   )
   station1Trigger.addComponent(
@@ -315,7 +368,7 @@ export function setTriggerAreas() {
       null, //onTriggerExit
       () => {
         //onCameraEnter
-        if (currentTrainStation != 1) return
+        // if (currentTrainStation != 1) return
         sceneMessageBus.emit('startTrain', { station: 1 })
         log('triggered!')
       },
@@ -354,6 +407,10 @@ export function setTriggerAreas() {
 
   sceneMessageBus.on('shellElevator', (e) => {
     activateShellElevator()
+  })
+
+  sceneMessageBus.on('trainElevator', (e) => {
+    activaTetrainElevator()
   })
 
   sceneMessageBus.on('startBalloon', (e) => {
