@@ -113,7 +113,7 @@ export function placeMuseumPieces() {
   )
 
   let firstPixels = new MuseumPiece(
-    new GLTFShape('models/museum/pixels-beginning'),
+    new GLTFShape('models/museum/pixels-beginning.glb'),
     {
       position: new Vector3(168.24, 9.5, 266.3),
       rotation: Quaternion.Euler(0, 208, 0),
