@@ -2,7 +2,7 @@ import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { DialogWindow } from './npcDialogWindow' // Fixes issue with modules not loading
 import { dialogWindow, robots } from './npcRobotBuilder'
 import { RobotID } from './npcRobot'
-import resources from "../resources"
+import resources from '../resources'
 
 // TODO: Still one more issue to resolve with user / bots / items interaction
 // when an item info window is open - you can't chat to a bot
@@ -12,8 +12,10 @@ const openDialogSound = new Entity()
 openDialogSound.addComponent(new Transform())
 // This seems to work even when player moves as oppose to getting the transform from the item
 // as the items transform might not be matching their position visuallly
-openDialogSound.getComponent(Transform).position = Camera.instance.position 
-openDialogSound.addComponent(new AudioSource(resources.sounds.navigationForward))
+openDialogSound.getComponent(Transform).position = Camera.instance.position
+openDialogSound.addComponent(
+  new AudioSource(resources.sounds.navigationForward)
+)
 engine.addEntity(openDialogSound)
 
 // To check if the user has clicked on another item (with another id)
@@ -334,6 +336,7 @@ export function placeMuseumPieces() {
   districts.addComponent(new Animator())
   districts.getComponent(Animator).addClip(districtOn)
   districts.getComponent(Animator).addClip(districtOff)
+  districtOn.stop()
 
   districts.addComponent(
     new OnPointerDown(
@@ -357,6 +360,7 @@ export function placeMuseumPieces() {
   plazas.addComponent(new Animator())
   plazas.getComponent(Animator).addClip(plazasOn)
   plazas.getComponent(Animator).addClip(plazasOff)
+  plazasOn.stop()
 
   plazas.addComponent(
     new OnPointerDown(
@@ -380,6 +384,8 @@ export function placeMuseumPieces() {
   roads.addComponent(new Animator())
   roads.getComponent(Animator).addClip(roadsOn)
   roads.getComponent(Animator).addClip(roadsOff)
+  roadsOn.stop()
+
   roads.addComponent(
     new OnPointerDown(
       function () {
