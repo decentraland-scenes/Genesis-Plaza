@@ -706,7 +706,7 @@ creatorProgram.addComponent(
 let builderLink = new Entity()
 builderLink.addComponent(
   new Transform({
-    position: new Vector3(121.6, 1.5, 20.5),
+    position: new Vector3(121.6, 1.2, 20.5),
     rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(1.5, 1.5, 1.5),
   })
@@ -725,7 +725,7 @@ builderLink.addComponent(
 let docsLink = new Entity()
 docsLink.addComponent(
   new Transform({
-    position: new Vector3(121.6, 1.5, 17.5),
+    position: new Vector3(121.6, 1.2, 17.5),
     rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(1.5, 1.5, 1.5),
   })
