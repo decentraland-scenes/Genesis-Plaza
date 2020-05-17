@@ -5,7 +5,7 @@ _a few screenshots of the genesis plaza._
 ![screenshots](https://github.com/decentraland-scenes/Genesis-Plaza/blob/master/screenshots/genesis-plaza-final.jpg)
 
 ## Description
-The newly revamped Genesis Plaza.
+The newly revamped [Genesis Plaza](https://play.decentraland.org/).
 
 ## Links
 - [NPC Dialogue](https://docs.google.com/spreadsheets/d/1cpD_T0jgLFA0zrU5izp5y60Q2nof2ok-Eof1mbTBfgE/edit?usp=sharing) 
