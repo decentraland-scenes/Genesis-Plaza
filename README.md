@@ -1,5 +1,10 @@
 # Genesis-Plaza
 
+_a few screenshots of the genesis plaza._
+
+![screenshots](https://github.com/decentraland-scenes/nft-wall-example-scene/blob/master/screenshots/genesis-plaza-final.jpg)
+
+## Description
 The newly revamped Genesis Plaza.
 
 ## Links
