@@ -11,3 +11,4 @@ node_modules
 *.tsx
 Dockerfile
 dist
+screenshots
