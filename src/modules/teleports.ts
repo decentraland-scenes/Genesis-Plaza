@@ -54,7 +54,6 @@ export class Teleport extends Entity {
         },
         {
           button: ActionButton.PRIMARY,
-          showFeedback: true,
           hoverText: this.name,
         }
       )

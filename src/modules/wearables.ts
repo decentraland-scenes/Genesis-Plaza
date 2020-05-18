@@ -55,7 +55,6 @@ export class Wearable extends Entity {
         },
         {
           button: ActionButton.PRIMARY,
-          showFeedback: true,
           hoverText: 'Info',
         }
       )

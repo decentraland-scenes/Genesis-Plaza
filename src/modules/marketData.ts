@@ -1145,7 +1145,6 @@ export function updateTradeCentrer(data: MarketData) {
       },
       {
         button: ActionButton.PRIMARY,
-        showFeedback: true,
         hoverText: 'Open in Market',
       }
     )
@@ -1925,7 +1924,6 @@ export function updateTradeCentrer(data: MarketData) {
       },
       {
         button: ActionButton.PRIMARY,
-        showFeedback: true,
         hoverText: 'Open in Market',
       }
     )
@@ -2091,7 +2089,6 @@ export function updateTradeCentrer(data: MarketData) {
       },
       {
         button: ActionButton.PRIMARY,
-        showFeedback: true,
         hoverText: 'Open in Market',
       }
     )
@@ -2259,7 +2256,6 @@ export function updateTradeCentrer(data: MarketData) {
       },
       {
         button: ActionButton.PRIMARY,
-        showFeedback: true,
         hoverText: 'Open in Market',
       }
     )
@@ -2430,7 +2426,6 @@ export function updateTradeCentrer(data: MarketData) {
       },
       {
         button: ActionButton.PRIMARY,
-        showFeedback: true,
         hoverText: 'Open in Market',
       }
     )

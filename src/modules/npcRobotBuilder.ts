@@ -163,7 +163,6 @@ export function addRobots(dummyTarget: Entity) {
         },
         {
           button: ActionButton.PRIMARY,
-          showFeedback: true,
           hoverText: 'Talk',
           distance: resources.trigger.triggerShape.radius,
         }

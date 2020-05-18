@@ -37,7 +37,6 @@ export class NFT extends Entity {
         },
         {
           button: ActionButton.PRIMARY,
-          showFeedback: true,
           hoverText: "More Info",
           distance: 8,
         }

@@ -71,7 +71,6 @@ blueButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Rave'
     }
   )
@@ -93,7 +92,6 @@ greenButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'DCL Interviews'
     }
   )
@@ -115,7 +113,6 @@ lightBlueButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Delta'
     }
   )
@@ -137,7 +134,6 @@ redButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Signs'
     }
   )
@@ -159,7 +155,6 @@ yellowButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Signs'
     }
   )

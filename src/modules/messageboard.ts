@@ -91,7 +91,6 @@ ArtichokeUIOpener.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Write something',
     }
   )
@@ -113,7 +112,6 @@ TowerUIOpener.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      showFeedback: true,
       hoverText: 'Write something',
     }
   )
