@@ -1,42 +1,31 @@
 import utils from "../../node_modules/decentraland-ecs-utils/index"
 import { DialogWindow } from "./npcDialogWindow" // Fixes issue with modules not loading
 import { dialogWindow, robots } from "./npcRobotBuilder"
+import { TrackUserSlerp } from "./npcFaceUserSystem"
 import { RobotID } from "./npcRobot"
 import resources from "../resources"
 import { openDialogSound, updateOpenUITime, setUiOpener } from "./ui"
 
-// TODO: Still one more issue to resolve with user / bots / items interaction
-// when an item info window is open - you can't chat to a bot
-
-// To check if the user has clicked on another item (with another id)
-let currentSelectedItemID: string
-
+// Opens informational dialog about a piece
 function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
+  // used for closing UI when walking away or clicking
   updateOpenUITime()
   setUiOpener(piece)
-  if (!dialogWindow.isDialogOpen) {
-    currentSelectedItemID = piece.uuid
-    openDialogSound.getComponent(AudioSource).playOnce()
-    robots[robotID].playTalk()
-    dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
-    // HACK: To avoid clashing with the input subscribe button down event
-    piece.addComponentOrReplace(
-      new utils.Delay(30, () => {
-        dialogWindow.isDialogOpen = true
-      })
-    )
-  } else if (dialogWindow.isDialogOpen && piece.uuid != currentSelectedItemID) {
-    dialogWindow.isDialogOpen = false
-    openDialogSound.getComponent(AudioSource).playOnce()
-    currentSelectedItemID = piece.uuid
-    robots[robotID].playTalk()
-    dialogWindow.openDialogWindow(robotID, textID)
-    piece.addComponentOrReplace(
-      new utils.Delay(30, () => {
-        dialogWindow.isDialogOpen = true
-      })
-    )
-  }
+
+  dialogWindow.isInfoPanel = true
+  openDialogSound.getComponent(AudioSource).playOnce()
+  robots[robotID].playTalk()
+  dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
+  // HACK: To avoid clashing with the input subscribe button down event
+  piece.addComponentOrReplace(
+    new utils.Delay(30, () => {
+      dialogWindow.isDialogOpen = true
+    })
+  )
+
+  // Stop robot from tracking the user
+  if (robots[robotID].hasComponent(TrackUserSlerp))
+    robots[robotID].removeComponent(TrackUserSlerp)
 }
 
 export class MuseumPiece extends Entity {

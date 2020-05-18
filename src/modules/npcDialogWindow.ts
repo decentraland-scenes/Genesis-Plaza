@@ -20,6 +20,7 @@ export class DialogWindow {
   private labelF: UIText
   public leftClickIcon: UIImage
   public isDialogOpen: boolean
+  public isInfoPanel: boolean
   public isQuestionPanel: boolean
   public activeBotId: number
   public activeTextId: number
@@ -257,6 +258,7 @@ export class DialogWindow {
       }
 
       this.isDialogOpen = false
+      this.isInfoPanel = false
       this.container.visible = false
       this.portrait.visible = false
       this.text.visible = false
