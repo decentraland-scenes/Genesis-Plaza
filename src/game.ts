@@ -1,6 +1,6 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 import { placeTeleports } from './modules/teleports'
-import { setTriggerAreas } from './modules/elevators'
+import { placePlatforms } from './modules/elevators'
 import { addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museumItems'
 import { addScreen } from './modules/video'
@@ -13,9 +13,9 @@ import {
   updateMarketData,
   CheckServer,
 } from './modules/serverHandler'
-import { AmbientSound } from './modules/ambient'
+import { AmbientSound } from './modules/ambientSound'
 
-//////// HACK TO LOG POSITIONS
+//////// LOG PLAYER POSITION
 
 // class CameraTrackSystem implements ISystem {
 //   update() {
@@ -29,9 +29,9 @@ import { AmbientSound } from './modules/ambient'
 
 addBuildings()
 
-/// ELEVATORS
+/// MOVING PLATFORMS
 
-setTriggerAreas()
+placePlatforms()
 
 ///TELEPORTERS
 

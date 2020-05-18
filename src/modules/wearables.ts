@@ -8,7 +8,6 @@ import {
 export class Wearable extends Entity {
   wearableName: string
   model: GLTFShape
-  buttonAnim = new AnimationState('Action', { looping: false })
   id: string
   isDefault: boolean = false
   wearableData: WearableData
@@ -23,8 +22,6 @@ export class Wearable extends Entity {
 
     this.addComponent(model)
     this.addComponent(new Transform(transform))
-
-    this.addComponent(new Animator())
 
     if (isDefault) {
       this.isDefault = true
