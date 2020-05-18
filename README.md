@@ -13,6 +13,7 @@ The newly revamped [Genesis Plaza](https://play.decentraland.org/).
 - [Teleporter Data](https://docs.google.com/spreadsheets/d/1Hhv_B8lq9hDAmONi9iqcBRZXN2TIoaNx6SKs71Cfqj8/edit?usp=sharing)
 
 ## Acknowledgements
+- Thank you to [Polygonal Mind](https://www.polygonalmind.com/) for providing sample code of the NPC used in [Tomb Chaser](https://play.decentraland.org/?position=12,46) 
 - _alice.mp3_ modified from (https://freesound.org/people/mik300z/sounds/103525/)
 - _bela.mp3_ modified from (https://freesound.org/people/AderuMoro/sounds/213282/)
 - _betty_.mp3_ modified from (https://freesfx.co.uk/Category/Robots/83)
