@@ -144,14 +144,14 @@ export class NFTWindow {
 
     // Sound
     this.sound.addComponent(new Transform())
+    this.sound.getComponent(Transform).position = Camera.instance.position
     this.sound.addComponent(
       new AudioSource(resources.sounds.navigationBackward)
     )
     engine.addEntity(this.sound)
   }
 
-  public openNFTWindow(id: number, audioTransform: Vector3): void {
-    this.sound.getComponent(Transform).position = audioTransform // Sets the close button audio's position
+  public openNFTWindow(id: number): void {
 
     for (let i = 0; i < nftData.length; i++) {
       if (id == nftData[i].id) {
