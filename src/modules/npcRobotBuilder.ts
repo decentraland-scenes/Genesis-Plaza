@@ -135,15 +135,7 @@ export function addRobots(dummyTarget: Entity) {
     robots[i].addComponent(
       new OnPointerDown(
         (): void => {
-          // Added to prevent user from accidentally clicking on the robot again
-          let isGoodbyePlaying = robots[i]
-            .getComponent(Animator)
-            .getClip("Goodbye").playing
-
-          if (
-            (!dialogWindow.isDialogOpen && !isGoodbyePlaying) ||
-            dialogWindow.isInfoPanel
-          ) {
+          if (!dialogWindow.isDialogOpen || dialogWindow.isInfoPanel) {
             robots[i].playHello()
             robots[i].getComponent(AudioSource).playOnce()
             dialogWindow.openDialogWindow(robots[i].robotID, 0)
@@ -201,7 +193,11 @@ export function addRobots(dummyTarget: Entity) {
 
   input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (): void => {
     log("E Key Pressed")
-    if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel && !dialogWindow.isInfoPanel) {
+    if (
+      dialogWindow.isDialogOpen &&
+      dialogWindow.isQuestionPanel &&
+      !dialogWindow.isInfoPanel
+    ) {
       dialogWindow.confirmText(ConfirmMode.Confirm)
     }
   })
