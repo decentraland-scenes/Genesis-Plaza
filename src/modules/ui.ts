@@ -70,6 +70,8 @@ export function setUiOpener(ent: Entity) {
 
 let SFFont = new Font(Fonts.SanFrancisco)
 
+let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
+
 ////////  MESSAGE BOARD
 
 const messageBoardTexture = new Texture('images/inputText.png')
@@ -306,7 +308,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   name.fontSize = 16
   name.positionY = 461 / 2 + 121
   name.color = Color4.White()
-  name.font = SFFont
+  name.font = SFHeavyFont
 
   const rarity = new UIText(wBackground)
   rarity.name = 'wearableRarity'
@@ -317,7 +319,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   rarity.fontSize = 16
   rarity.positionY = 461 / 2 + 142
   rarity.color = Color4.FromHexString('#FFFFFF88')
-  rarity.font = SFFont
+  rarity.font = SFHeavyFont
 
   let parsedDesc = wearableData.wearable.description
   if (parsedDesc.length > 45) {
@@ -531,7 +533,7 @@ export function openTeleportUI(teleport: Teleport) {
   name.fontSize = 16
   name.color = Color4.Black()
   name.width = '10px'
-  name.font = SFFont
+  name.font = SFHeavyFont
 
   const desc = new UIText(tBackground)
   desc.name = 'tDesc'
