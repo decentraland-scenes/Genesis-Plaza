@@ -1,5 +1,4 @@
 import utils from "../../node_modules/decentraland-ecs-utils/index"
-import resources from "../resources"
 
 // For dialog windows
 export enum RobotID {
@@ -78,14 +77,10 @@ export class Robot extends Entity {
   public playGoodbye(): void {
     this.stopAnimations()
     this.getComponent(Animator).getClip("Goodbye").play()
-    // Removed: not sure if this was causing the feedback text to stay permanently on the screen
-    // this.getComponent(OnPointerDown).showFeedback = false
     this.addComponentOrReplace(
       new utils.Delay(2000, () => {
         this.stopAnimations()
         this.getComponent(Animator).getClip("Idle").play()
-        // Removed: not sure if this was causing the feedback text to stay permanently on the screen
-        // this.getComponent(OnPointerDown).showFeedback = true
       })
     )
   }

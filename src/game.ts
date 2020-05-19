@@ -1,6 +1,6 @@
 //import utils from '../node_modules/decentraland-ecs-utils/index'
 import { placeTeleports } from './modules/teleports'
-import { placePlatforms } from './modules/elevators'
+import { placePlatforms } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import { placeMuseumPieces } from './modules/museumItems'
 import { addScreen } from './modules/video'
