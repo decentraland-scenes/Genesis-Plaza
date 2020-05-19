@@ -452,6 +452,9 @@ let tBackground = new UIImage(screenSpaceUI, teleportUITexture)
 tBackground.visible = false
 
 export function openTeleportUI(teleport: Teleport) {
+  if (tBackground.visible) {
+    return
+  }
   updateOpenUITime()
   UIOpener = teleport
   tBackground.visible = false
@@ -471,6 +474,7 @@ export function openTeleportUI(teleport: Teleport) {
   tBackground.sourceWidth = 268
   tBackground.sourceHeight = 182
   tBackground.visible = true
+  tBackground.isPointerBlocker = true
 
   const screenshot = new UIImage(tBackground, screenshotTexture)
   screenshot.name = 'tScreenshot'
@@ -483,6 +487,7 @@ export function openTeleportUI(teleport: Teleport) {
   screenshot.sourceTop = 0
   screenshot.sourceWidth = 536
   screenshot.sourceHeight = 344
+  screenshot.isPointerBlocker = true
 
   let closeIcon = new UIImage(tBackground, teleportUITexture)
   closeIcon.name = 'closeIcon'
