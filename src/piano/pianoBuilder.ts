@@ -1,7 +1,6 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import resources from "../resources"
 import { PianoKey, keys } from './pianoKey'
-import { TriggerBoxShape } from '../../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
 
 // For piano for transforming the piano
 const pianoBase = new Entity()
