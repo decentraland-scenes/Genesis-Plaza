@@ -21,7 +21,7 @@ openDialogSound.addComponent(new Transform())
 // as the items transform might not be matching their position visuallly
 openDialogSound.getComponent(Transform).position = Camera.instance.position
 openDialogSound.addComponent(
-  new AudioSource(resources.sounds.navigationForward)
+  new AudioSource(resources.sounds.ui.navigationForward)
 )
 engine.addEntity(openDialogSound)
 
@@ -30,7 +30,7 @@ export const closeDialogSound = new Entity()
 closeDialogSound.addComponent(new Transform())
 closeDialogSound.getComponent(Transform).position = Camera.instance.position
 closeDialogSound.addComponent(
-  new AudioSource(resources.sounds.navigationBackward)
+  new AudioSource(resources.sounds.ui.navigationBackward)
 )
 engine.addEntity(closeDialogSound)
 

@@ -146,7 +146,7 @@ export class NFTWindow {
     this.sound.addComponent(new Transform())
     this.sound.getComponent(Transform).position = Camera.instance.position
     this.sound.addComponent(
-      new AudioSource(resources.sounds.navigationBackward)
+      new AudioSource(resources.sounds.ui.navigationBackward)
     )
     engine.addEntity(this.sound)
   }
