@@ -16,16 +16,17 @@ import {
   CheckServer,
 } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
+import { addZenquencer } from './zenquencer/zenquencerBuilder'
 
 //////// LOG PLAYER POSITION
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//   }
-// }
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(Camera.instance.position)
+  }
+}
 
-// engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -67,6 +68,10 @@ addMural()
 
 //// Piano
 addPiano()
+
+//// Sequencer Fountain
+
+addZenquencer()
 
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
 //updateMessageBoards()
