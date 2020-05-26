@@ -31,67 +31,67 @@ addBuildings()
 
 /// MOVING PLATFORMS
 
-// placePlatforms()
+placePlatforms()
 
-// ///TELEPORTERS
+///TELEPORTERS
 
-// placeTeleports()
+placeTeleports()
 
-// /// MUSEUM
+/// MUSEUM
 
-// placeMuseumPieces()
+placeMuseumPieces()
 
-// /// VIDEO SCEREEN
+/// VIDEO SCEREEN
 
-// addScreen()
+addScreen()
 
-// //// WEARABLES
+//// WEARABLES
 
-// addWearables()
+addWearables()
 
-// //// ROBOTS
-// const dummyTarget = new Entity()
-// dummyTarget.addComponent(new PlaneShape())
-// dummyTarget.addComponent(new Transform())
+//// ROBOTS
+const dummyTarget = new Entity()
+dummyTarget.addComponent(new PlaneShape())
+dummyTarget.addComponent(new Transform())
 
-// addFaceUserSystem(dummyTarget)
-// addRobots(dummyTarget)
+addFaceUserSystem(dummyTarget)
+addRobots(dummyTarget)
 
-// //// NFTS
-// addNFTs()
+//// NFTS
+addNFTs()
 
-// //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
-// //updateMessageBoards()
-// // how often to refresh scene, in seconds
-// const messageRefreshInterval: number = 30
-// // start system
-// engine.addSystem(new CheckServer(messageRefreshInterval))
+//// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
+//updateMessageBoards()
+// how often to refresh scene, in seconds
+const messageRefreshInterval: number = 30
+// start system
+engine.addSystem(new CheckServer(messageRefreshInterval))
 
-// /// FETCH DATA FOR TRADE CENTER
-// updateMarketData()
+/// FETCH DATA FOR TRADE CENTER
+updateMarketData()
 
-// //// AMBIENT SOUNDS
+//// AMBIENT SOUNDS
 
-// let forest1 = new AmbientSound(
-//   { position: new Vector3(215, 2, 183) },
-//   'sounds/Forest.mp3',
-//   0,
-//   true,
-//   0.6
-// )
+let forest1 = new AmbientSound(
+  { position: new Vector3(215, 2, 183) },
+  'sounds/Forest.mp3',
+  0,
+  true,
+  0.6
+)
 
-// let forest2 = new AmbientSound(
-//   { position: new Vector3(117, 2, 42) },
-//   'sounds/Forest2.mp3',
-//   0,
-//   true,
-//   0.6
-// )
+let forest2 = new AmbientSound(
+  { position: new Vector3(117, 2, 42) },
+  'sounds/Forest2.mp3',
+  0,
+  true,
+  0.6
+)
 
-// let thunder = new AmbientSound(
-//   { position: new Vector3(43, 45, 113) },
-//   'sounds/thunder.mp3',
-//   0,
-//   true,
-//   0.2
-// )
+let thunder = new AmbientSound(
+  { position: new Vector3(43, 45, 113) },
+  'sounds/thunder.mp3',
+  0,
+  true,
+  0.2
+)
