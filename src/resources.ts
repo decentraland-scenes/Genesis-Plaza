@@ -61,6 +61,7 @@ export default {
   models: {
     standard: {
       pianoBase: new GLTFShape("models/piano/pianoBase.glb"),
+      muralWall: new GLTFShape("models/mural/muralWall.glb"),
     },
     robots: {
       alice: new GLTFShape('models/robots/alice.glb'),
