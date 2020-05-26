@@ -29,6 +29,46 @@ app.get('/hello-world', (req: any, res: any) => {
   return res.status(200).send('Hello World!')
 })
 
+app.post('/update-mural', async (req: any, res: any) => {
+  let realm = req.query.realm
+  let tiles = req.body.tiles
+
+  updateMuralJSON(tiles, realm)
+
+  return res.status(200).send('Updated Mural')
+})
+
+app.get('/mural', async (req: any, res: any) => {
+  let realm = req.query.realm
+  let url =
+    'https://genesis-plaza.s3.us-east-2.amazonaws.com/mural/' +
+    realm +
+    'tiles.json'
+  let currentMural: number[] = await getMuralJSON(url)
+
+  return res.status(200).json({ tiles: currentMural })
+})
+
+app.post('/update-sequencer', async (req: any, res: any) => {
+  let stones = req.body.stones
+  let realm = req.query.realm
+  updateSeqJSON(stones, realm)
+
+  return res.status(200).send('Updated Sequencer')
+})
+
+app.get('/sequencer', async (req: any, res: any) => {
+  let realm = req.query.realm
+  let url =
+    'https://genesis-plaza.s3.us-east-2.amazonaws.com/sequencer/' +
+    realm +
+    '/stones.json'
+
+  let currentSeq: number[][] = await getSeqJSON(url)
+
+  return res.status(200).json({ stones: currentSeq })
+})
+
 app.get('/update-market', (req: any, res: any) => {
   updateMarketData()
   return res.status(200).send('Updated Market Data!')
@@ -117,7 +157,7 @@ export async function updateMessageJSON(
   newMessage: string,
   location: string
 ) {
-  let currentMessages: string[] = await getMeessageJSON(url)
+  let currentMessages: string[] = await getMessageJSON(url)
   console.log('old messages: ', currentMessages)
 
   currentMessages.push(newMessage)
@@ -128,11 +168,85 @@ export async function updateMessageJSON(
   })
 }
 
-export async function getMeessageJSON(url: string): Promise<string[]> {
+export async function getMessageJSON(url: string): Promise<string[]> {
   try {
     let response = await fetch(url).then()
     let json = await response.json()
     return json.messages
+  } catch {
+    console.log('error fetching from AWS server')
+    console.log('url used: ', url)
+    return []
+  }
+}
+
+///// Stone sequencer
+
+export async function updateSeqJSON(stones: number[][], realm: string) {
+  var upload = new AWS.S3.ManagedUpload({
+    params: {
+      Bucket: 'genesis-plaza',
+      Key: 'sequencer/' + realm + '/stones.json',
+      Body: JSON.stringify({ stones: stones }),
+      ACL: 'public-read',
+      ContentType: 'application/json; charset=utf-8',
+    },
+  })
+
+  var promise = upload.promise()
+
+  promise.then(
+    function (data: any) {
+      console.log('Successfully uploaded mural JSON')
+    },
+    function (err: any) {
+      console.log('There was an error uploading mural json file: ', err.message)
+    }
+  )
+}
+
+export async function getSeqJSON(url: string): Promise<any> {
+  try {
+    let response = await fetch(url).then()
+    let json = await response.json()
+    return json.stones
+  } catch {
+    console.log('error fetching from AWS server')
+    console.log('url used: ', url)
+    return []
+  }
+}
+
+///// Pixel Mural
+
+export async function updateMuralJSON(tiles: number[], realm: string) {
+  var upload = new AWS.S3.ManagedUpload({
+    params: {
+      Bucket: 'genesis-plaza',
+      Key: 'mural/' + realm + '/tiles.json',
+      Body: JSON.stringify({ tiles: tiles }),
+      ACL: 'public-read',
+      ContentType: 'application/json; charset=utf-8',
+    },
+  })
+
+  var promise = upload.promise()
+
+  promise.then(
+    function (data: any) {
+      console.log('Successfully uploaded mural JSON')
+    },
+    function (err: any) {
+      console.log('There was an error uploading mural json file: ', err.message)
+    }
+  )
+}
+
+export async function getMuralJSON(url: string): Promise<number[]> {
+  try {
+    let response = await fetch(url).then()
+    let json = await response.json()
+    return json.tiles
   } catch {
     console.log('error fetching from AWS server')
     console.log('url used: ', url)
@@ -213,9 +327,9 @@ export type MarketData = {
   uncommonWearableMonthSales: number
   uncommonWearableMonthMANA: number
   uncommonWearableMonthExpensive: WearableDataMini | null
-  swankyWearableMonthSales: number
-  swankyWearableMonthMANA: number
-  swankyWearableMonthExpensive: WearableDataMini | null
+  rareWearableMonthSales: number
+  rareWearableMonthMANA: number
+  rareWearableMonthExpensive: WearableDataMini | null
   epicWearableMonthSales: number
   epicWearableMonthMANA: number
   epicWearableMonthExpensive: WearableDataMini | null
@@ -228,7 +342,7 @@ export type MarketData = {
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
-  cheapSwankyNow: WearableData | null
+  cheapRareNow: WearableData | null
   cheapEpicNow: WearableData | null
   cheapLegendaryNow: WearableData | null
   cheapMythicNow: WearableData | null
@@ -242,7 +356,7 @@ export enum Direction {
 export enum Rarity {
   COMMON = '"common"',
   UNCOMMON = '"uncommon"',
-  SWANKY = '"swanky"',
+  RARE = '"rare"',
   EPIC = '"epic"',
   LEGENDARY = '"legendary"',
   MYTHIC = '"mythic"',
@@ -333,9 +447,9 @@ async function updateMarketData() {
     uncommonWearableMonthSales: 0,
     uncommonWearableMonthMANA: 0,
     uncommonWearableMonthExpensive: null,
-    swankyWearableMonthSales: 0,
-    swankyWearableMonthMANA: 0,
-    swankyWearableMonthExpensive: null,
+    rareWearableMonthSales: 0,
+    rareWearableMonthMANA: 0,
+    rareWearableMonthExpensive: null,
     epicWearableMonthSales: 0,
     epicWearableMonthMANA: 0,
     epicWearableMonthExpensive: null,
@@ -348,7 +462,7 @@ async function updateMarketData() {
     totalMANAWearablesYesterday: 0,
     totalMANAWearablesWeek: 0,
     totalMANAWearablesMonth: 0,
-    cheapSwankyNow: null,
+    cheapRareNow: null,
     cheapEpicNow: null,
     cheapLegendaryNow: null,
     cheapMythicNow: null,
@@ -639,18 +753,18 @@ async function updateMarketData() {
           }
 
           break
-        case Rarity.SWANKY:
-          dataToSend.swankyWearableMonthMANA += toMana(
+        case Rarity.RARE:
+          dataToSend.rareWearableMonthMANA += toMana(
             monthWearablesSales[i].total_price
           )
-          dataToSend.swankyWearableMonthSales += 1
+          dataToSend.rareWearableMonthSales += 1
 
           if (
-            !dataToSend.swankyWearableMonthExpensive ||
+            !dataToSend.rareWearableMonthExpensive ||
             toMana(monthWearablesSales[i].total_price) >
-              dataToSend.swankyWearableMonthExpensive.price
+              dataToSend.rareWearableMonthExpensive.price
           ) {
-            dataToSend.swankyWearableMonthExpensive = {
+            dataToSend.rareWearableMonthExpensive = {
               name: monthWearablesSales[i].asset.name,
               price: toMana(monthWearablesSales[i].total_price),
               image: monthWearablesSales[i].asset.image_thumbnail_url,
@@ -728,8 +842,8 @@ async function updateMarketData() {
 
   //// wearable sales examples
 
-  dataToSend.cheapSwankyNow = await getMarketplaceWearable(
-    Rarity.SWANKY,
+  dataToSend.cheapRareNow = await getMarketplaceWearable(
+    Rarity.RARE,
     Direction.ASC,
     dateNow
   )
@@ -775,7 +889,7 @@ export function rarityFromDesc(desc: string) {
         type = Rarity.UNCOMMON
         break
       case '5000':
-        type = Rarity.SWANKY
+        type = Rarity.RARE
         break
       case '1000':
         type = Rarity.EPIC

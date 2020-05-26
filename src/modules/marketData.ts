@@ -419,8 +419,8 @@ epicBoard2.addComponent(
 
 engine.addEntity(epicBoard2)
 
-let swankyBoard1 = new Entity()
-swankyBoard1.addComponent(
+let rareBoard1 = new Entity()
+rareBoard1.addComponent(
   new Transform({
     position: new Vector3(275.07, 21.6, 61.29),
     rotation: Quaternion.Euler(0, 24, 0),
@@ -428,10 +428,10 @@ swankyBoard1.addComponent(
   })
 )
 
-engine.addEntity(swankyBoard1)
+engine.addEntity(rareBoard1)
 
-let swankyBoard2 = new Entity()
-swankyBoard2.addComponent(
+let rareBoard2 = new Entity()
+rareBoard2.addComponent(
   new Transform({
     position: new Vector3(288.03, 21.6, 56),
     rotation: Quaternion.Euler(0, 24, 0),
@@ -439,7 +439,7 @@ swankyBoard2.addComponent(
   })
 )
 
-engine.addEntity(swankyBoard2)
+engine.addEntity(rareBoard2)
 
 ////// UPDATE BOARDS
 
@@ -1565,7 +1565,7 @@ export function updateTradeCentrer(data: MarketData) {
   )
   let topPanel5Label2 = new StockData(
     StockDataTypes.LABEL,
-    'Swanky',
+    'Rare',
     {
       position: new Vector3(-1.3, -0.3, 0),
     },
@@ -1609,7 +1609,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel5Value2 = new StockData(
     StockDataTypes.VALUE,
-    data.swankyWearableMonthSales.toString(),
+    data.rareWearableMonthSales.toString(),
     {
       position: new Vector3(0.7, -0.3, 0),
     },
@@ -1673,7 +1673,7 @@ export function updateTradeCentrer(data: MarketData) {
   )
   let topPanel6Label2 = new StockData(
     StockDataTypes.LABEL,
-    'Swanky',
+    'Rare',
     {
       position: new Vector3(-1.3, -0.3, 0),
     },
@@ -1720,14 +1720,14 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel6
   )
 
-  let avSwankyPrice =
+  let avRarePrice =
     Math.floor(
-      (data.swankyWearableMonthMANA / data.swankyWearableMonthSales) * 100
+      (data.rareWearableMonthMANA / data.rareWearableMonthSales) * 100
     ) / 100
 
   let topPanel6Value2 = new StockData(
     StockDataTypes.VALUE,
-    avSwankyPrice.toString(),
+    avRarePrice.toString(),
     {
       position: new Vector3(0.7, -0.3, 0),
     },
@@ -1823,103 +1823,101 @@ export function updateTradeCentrer(data: MarketData) {
 
   /////// FLAT SCREENS
 
-  // cheap swanky
+  // cheap Rare
 
-  let cheapSwankyTitle = new StockData(
+  let cheapRareTitle = new StockData(
     StockDataTypes.TINYTITLE,
-    'Cheapest Swanky Wearable',
+    'Cheapest Rare Wearable',
     {
       position: new Vector3(0, 3.8, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
 
-  let cheapSwankyTitle2 = new StockData(
+  let cheapRareTitle2 = new StockData(
     StockDataTypes.TINYTITLE,
     'now in the market',
     {
       position: new Vector3(0, 3.6, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
 
-  let cheapSwankyTitle3 = new StockData(
+  let cheapRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.cheapSwankyNow.name,
+    data.cheapRareNow.name,
     {
       position: new Vector3(0, 2.9, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
-  cheapSwankyTitle3.getComponent(TextShape).color = Color3.FromHexString(
+  cheapRareTitle3.getComponent(TextShape).color = Color3.FromHexString(
     '#3AD682'
   )
 
-  let cheapSwankyPreview = new WearablePreview(
-    data.cheapSwankyNow.image,
+  let cheapRarePreview = new WearablePreview(
+    data.cheapRareNow.image,
     {
       position: new Vector3(0, 1.5, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
 
-  let cheapSwankyValue1 = new StockData(
+  let cheapRareValue1 = new StockData(
     StockDataTypes.VALUE,
-    toMana(data.cheapSwankyNow.searchOrderPrice).toString(),
+    toMana(data.cheapRareNow.searchOrderPrice).toString(),
     {
       position: new Vector3(0, 0.4, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
-  cheapSwankyValue1.getComponent(TextShape).color = Color3.FromHexString(
+  cheapRareValue1.getComponent(TextShape).color = Color3.FromHexString(
     '#3AD682'
   )
 
-  let cheapSwankyUnit = new StockData(
+  let cheapRareUnit = new StockData(
     StockDataTypes.UNIT,
     'MANA',
     {
       position: new Vector3(0, 0.1, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
 
-  let cheapSwankyLabel = new StockData(
+  let cheapRareLabel = new StockData(
     StockDataTypes.TINYTITLE,
     'owner:',
     {
       position: new Vector3(-0.6, -0.4, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
 
-  let shortenedSwankyOwner =
-    data.cheapSwankyNow.owner.address.slice(0, 5) +
+  let shortenedRareOwner =
+    data.cheapRareNow.owner.address.slice(0, 5) +
     '...' +
-    data.cheapSwankyNow.owner.address.slice(
-      data.cheapSwankyNow.owner.address.length - 4
+    data.cheapRareNow.owner.address.slice(
+      data.cheapRareNow.owner.address.length - 4
     )
 
-  let cheapSwankyValue = new StockData(
+  let cheapRareValue = new StockData(
     StockDataTypes.TINYVALUE,
-    shortenedSwankyOwner,
+    shortenedRareOwner,
     {
       position: new Vector3(0.5, -0.4, -0.2),
     },
-    swankyBoard1
+    rareBoard1
   )
-  cheapSwankyValue.getComponent(TextShape).color = Color3.FromHexString(
-    '#3AD682'
-  )
+  cheapRareValue.getComponent(TextShape).color = Color3.FromHexString('#3AD682')
 
-  cheapSwankyPreview.addComponent(
+  cheapRarePreview.addComponent(
     new OnPointerDown(
       (e) => {
         let url =
           'https://market.decentraland.org/contracts/' +
-          data.cheapSwankyNow.contractAddress +
+          data.cheapRareNow.contractAddress +
           '/tokens/' +
-          data.cheapSwankyNow.tokenId
+          data.cheapRareNow.tokenId
         openExternalURL(url)
       },
       {
@@ -1929,65 +1927,65 @@ export function updateTradeCentrer(data: MarketData) {
     )
   )
 
-  /// expensive swanky
+  /// expensive rare
 
-  let expensiveSwankyTitle = new StockData(
+  let expensiveRareTitle = new StockData(
     StockDataTypes.TINYTITLE,
-    'Priciest Swanky Wearable',
+    'Priciest Rare Wearable',
     {
       position: new Vector3(0, 3.8, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
 
-  let expensiveSwankyTitle2 = new StockData(
+  let expensiveRareTitle2 = new StockData(
     StockDataTypes.TINYTITLE,
     'sold in last 30 days',
     {
       position: new Vector3(0, 3.6, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
 
-  let expensiveSwankyTitle3 = new StockData(
+  let expensiveRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.swankyWearableMonthExpensive.name,
+    data.rareWearableMonthExpensive.name,
     {
       position: new Vector3(0, 2.9, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
-  expensiveSwankyTitle3.getComponent(TextShape).color = Color3.FromHexString(
+  expensiveRareTitle3.getComponent(TextShape).color = Color3.FromHexString(
     '#3AD682'
   )
 
-  let expensiveSwankyPreview = new WearablePreview(
-    data.swankyWearableMonthExpensive.image,
+  let expensiveRarePreview = new WearablePreview(
+    data.rareWearableMonthExpensive.image,
     {
       position: new Vector3(0, 1.5, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
 
-  let expensiveSwankyValue1 = new StockData(
+  let expensiveRareValue1 = new StockData(
     StockDataTypes.VALUE,
-    data.swankyWearableMonthExpensive.price.toString(),
+    data.rareWearableMonthExpensive.price.toString(),
     {
       position: new Vector3(0, 0.4, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
-  expensiveSwankyValue1.getComponent(TextShape).color = Color3.FromHexString(
+  expensiveRareValue1.getComponent(TextShape).color = Color3.FromHexString(
     '#3AD682'
   )
 
-  let expensiveSwankyUnit = new StockData(
+  let expensiveRareUnit = new StockData(
     StockDataTypes.UNIT,
     'MANA',
     {
       position: new Vector3(0, 0.1, -0.2),
     },
-    swankyBoard2
+    rareBoard2
   )
 
   // cheap epic

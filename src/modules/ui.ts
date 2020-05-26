@@ -263,7 +263,11 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
       wRarityColor.sourceLeft = 385
       wRarityColor.sourceTop = 175
       break
-    case 'swanky':
+    case 'rare':
+      wRarityColor.sourceLeft = 385
+      wRarityColor.sourceTop = 175 + 350
+      break
+    case 'swanky': // redundant, but left just in case
       wRarityColor.sourceLeft = 385
       wRarityColor.sourceTop = 175 + 350
       break

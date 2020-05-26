@@ -173,9 +173,9 @@ export type MarketData = {
   uncommonWearableMonthSales: number
   uncommonWearableMonthMANA: number
   uncommonWearableMonthExpensive: WearableDataMini | null
-  swankyWearableMonthSales: number
-  swankyWearableMonthMANA: number
-  swankyWearableMonthExpensive: WearableDataMini | null
+  rareWearableMonthSales: number
+  rareWearableMonthMANA: number
+  rareWearableMonthExpensive: WearableDataMini | null
   epicWearableMonthSales: number
   epicWearableMonthMANA: number
   epicWearableMonthExpensive: WearableDataMini | null
@@ -188,7 +188,7 @@ export type MarketData = {
   totalMANAWearablesYesterday: number
   totalMANAWearablesWeek: number
   totalMANAWearablesMonth: number
-  cheapSwankyNow: WearableData | null
+  cheapRareNow: WearableData | null
   cheapEpicNow: WearableData | null
   cheapLegendaryNow: WearableData | null
   cheapMythicNow: WearableData | null
