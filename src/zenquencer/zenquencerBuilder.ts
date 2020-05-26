@@ -17,7 +17,7 @@ export function addZenquencer(): void {
   pool.addComponent(resources.models.pool)
   pool.addComponent(
     new Transform({
-      position: new Vector3(127, 0.4, 226.7),
+      position: new Vector3(127, 0.4, 225),
       rotation: Quaternion.Euler(0, 90, 0),
     })
   )
@@ -46,7 +46,7 @@ export function addZenquencer(): void {
   )
   engine.addEntity(pool)
 
-  let seqOffset = new Vector3(124, 0.7, 219.2)
+  let seqOffset = new Vector3(124, 0.7, 217.5)
   let seqLength = 16
 
   // Kalimba sounds
@@ -87,7 +87,7 @@ export function addZenquencer(): void {
   let tube = new Entity()
   tube.addComponent(
     new Transform({
-      position: new Vector3(127, 0.4, 226.7),
+      position: new Vector3(127, 0.4, 225),
       rotation: Quaternion.Euler(0, 270, 0),
     })
   )
