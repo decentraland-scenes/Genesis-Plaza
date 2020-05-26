@@ -75,7 +75,7 @@ export function addMural(): void {
     for (let i = 0; i < MURAL_HEIGHT; i++) {
       for (let j = 0; j < MURAL_WIDTH; j++) {
         let colorIndex: number
-        if (currentTiles[i * MURAL_WIDTH + j]) {
+        if (currentTiles && currentTiles[i * MURAL_WIDTH + j]) {
           colorIndex = currentTiles[i * MURAL_WIDTH + j]
           tileNumbers.push(colorIndex)
         } else {
