@@ -23,7 +23,7 @@ export class NFT extends Entity {
     // Sound
     this.sound.addComponent(new Transform())
     this.sound.getComponent(Transform).position = Camera.instance.position
-    this.sound.addComponent(new AudioSource(resources.sounds.navigationForward))
+    this.sound.addComponent(new AudioSource(resources.sounds.ui.navigationForward))
     engine.addEntity(this.sound)
 
     this.addComponent(

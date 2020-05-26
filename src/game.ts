@@ -8,6 +8,8 @@ import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/npcFaceUserSystem'
 import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
+import { addMural } from './mural/muralBuilder'
+import { addPiano } from './piano/pianoBuilder'
 import {
   updateMessageBoards,
   updateMarketData,
@@ -59,6 +61,12 @@ addRobots(dummyTarget)
 
 //// NFTS
 addNFTs()
+
+//// Mural
+addMural()
+
+//// Piano
+addPiano()
 
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
 //updateMessageBoards()
