@@ -1,6 +1,7 @@
 import { MusicalDrop, drops, loopPlayer } from './musicalDrops'
 import { changeSequencer } from './serverHandler'
 import { sceneMessageBus } from '../modules/serverHandler'
+import resources from './resources'
 
 // export const sceneMessageBus = new MessageBus()
 
@@ -51,7 +52,7 @@ export class Stone extends Entity {
     )
 
     this.drop = new MusicalDrop(
-      new GLTFShape('models/music-drop.glb'),
+      new GLTFShape('models/zenquencer/music-drop.glb'),
       new Transform({
         position: new Vector3(0, 0, 0),
       }),

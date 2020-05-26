@@ -46,7 +46,7 @@ export function addZenquencer(): void {
   )
   engine.addEntity(pool)
 
-  let seqOffset = new Vector3(124, 0.4, 219.2)
+  let seqOffset = new Vector3(124, 0.7, 219.2)
   let seqLength = 16
 
   // Kalimba sounds
@@ -91,12 +91,10 @@ export function addZenquencer(): void {
       rotation: Quaternion.Euler(0, 270, 0),
     })
   )
-  let energyAnimation = new AnimationState('Energy_Action', { looping: false })
   tube.addComponent(new Animator()).addClip(energyAnimation)
   tube.addComponent(resources.models.tube)
   engine.addEntity(tube)
 
-  let linear = new Entity()
   linear.addComponent(
     new Transform({
       position: new Vector3(-9.54, 1.48, 4.59),
@@ -115,7 +113,6 @@ export function addZenquencer(): void {
     )
   )
 
-  let random = new Entity()
   random.addComponent(
     new Transform({
       position: new Vector3(-9.54, 1.49, 4.33),
@@ -337,3 +334,10 @@ export function addZenquencer(): void {
     }
   }
 }
+
+// define some entities and components outside the initiate function so they can be called externally
+export let linear = new Entity()
+export let random = new Entity()
+export let energyAnimation = new AnimationState('Energy_Action', {
+  looping: false,
+})
