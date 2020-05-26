@@ -1,13 +1,15 @@
 import { tileNumbers } from './tile'
-
-export let awsServer = 'https://genesis-plaza.s3.us-east-2.amazonaws.com/'
-export let fireBaseServer =
-  'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
+import { awsServer, fireBaseServer } from '../modules/serverHandler'
+import { playerRealm, setRealm } from '../modules/realmData'
+import utils from '../../node_modules/decentraland-ecs-utils/index'
 
 // get lastest mural state
 export async function getMural(): Promise<number[]> {
   try {
-    let url = awsServer + 'mural/tiles.json'
+    if (!playerRealm) {
+      await setRealm()
+    }
+    let url = awsServer + 'mural/' + playerRealm + '/tiles.json'
     let response = await fetch(url).then()
     let json = await response.json()
     return json.tiles
@@ -18,17 +20,28 @@ export async function getMural(): Promise<number[]> {
 
 // update mural
 export async function changeMural() {
-  try {
-    let url = fireBaseServer + 'update-mural'
-    let body = JSON.stringify({ tiles: tileNumbers })
-    let headers = {}
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: body,
-    })
-    return response.json()
-  } catch {
-    log('error fetching from AWS server')
+  if (!playerRealm) {
+    await setRealm()
   }
+  muralChanger.addComponentOrReplace(
+    // Only send request if no more changes come over the next second
+    new utils.Delay(1000, async function () {
+      try {
+        let url = fireBaseServer + 'update-mural?realm=' + playerRealm
+        let body = JSON.stringify({ tiles: tileNumbers })
+        let headers = {}
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body,
+        })
+        return response.json()
+      } catch {
+        log('error fetching from AWS server')
+      }
+    })
+  )
 }
+
+let muralChanger = new Entity()
+engine.addEntity(muralChanger)

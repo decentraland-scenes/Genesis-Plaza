@@ -35,13 +35,15 @@ export function addMural(): void {
       0, //triggeredByLayer
       null, //onTriggerEnter
       null, //onTriggerExit
-      () => {
+      async function () {
         //onCameraEnter
 
         // Check if the mural has tiles
         if (tiles.length < 1) {
           log('triggered!')
-          buildTiles()
+          await buildTiles()
+        } else {
+          await updateMural()
         }
       },
       null, //onCameraExit
@@ -67,14 +69,23 @@ export function addMural(): void {
   let isRed = true
 
   // Build mural
-  function buildTiles(): void {
+  async function buildTiles() {
+    let currentTiles = await getMural()
+
     for (let i = 0; i < MURAL_HEIGHT; i++) {
       for (let j = 0; j < MURAL_WIDTH; j++) {
-        // Default color pattern (brick)
         let colorIndex: number
-        if (i % 2 != 0) isRed = !isRed
-        if (j % 2 != 0) isRed = !isRed
-        isRed ? (colorIndex = 1) : (colorIndex = 2)
+        if (currentTiles[i * MURAL_WIDTH + j]) {
+          colorIndex = currentTiles[i * MURAL_WIDTH + j]
+          tileNumbers.push(colorIndex)
+        } else {
+          // Default color pattern (brick)
+
+          if (i % 2 != 0) isRed = !isRed
+          if (j % 2 != 0) isRed = !isRed
+          isRed ? (colorIndex = 0) : (colorIndex = 1)
+          tileNumbers.push(null)
+        }
 
         const tile = new Tile(
           boxShape,
@@ -83,19 +94,18 @@ export function addMural(): void {
             scale: new Vector3(TILE_SIZE, TILE_SIZE, 0.125),
           }),
           tileIndex,
-          colorIndex
+          colorIndex + 1
         )
         tile.setParent(muralTransform)
         tileIndex = tiles.push(tile)
-        tileNumbers.push(null)
+
         xPosition += TILE_SIZE + 0.02 // Adding a small gap
       }
       xPosition = START_POS_X
       yPosition -= TILE_SIZE + 0.02
     }
+    return
   }
-
-  updateMural()
 
   async function updateMural() {
     let currentTiles = await getMural()
