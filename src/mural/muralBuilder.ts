@@ -21,7 +21,7 @@ let muralTriggerBox = new utils.TriggerBoxShape(
 
 // Mural wall
 const muralWall = new Entity()
-muralWall.addComponent(resources.models.standard.muralWall)
+muralWall.addComponent(resources.models.standard.muralStoneWall)
 muralWall.addComponent(
   new Transform({
     position: new Vector3(160, 0, 24),
