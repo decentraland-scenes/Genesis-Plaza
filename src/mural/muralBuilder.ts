@@ -16,8 +16,8 @@ export function addMural(): void {
 
   // create trigger area object, setting size and relative position
   let muralTriggerBox = new utils.TriggerBoxShape(
-    new Vector3(40, 4, 40),
-    new Vector3(0, 2, 0)
+    new Vector3(60, 4, 60),
+    new Vector3(0, 2, 10)
   )
 
   // Mural wall
@@ -27,33 +27,6 @@ export function addMural(): void {
     new Transform({
       position: new Vector3(160, 0, 24),
     })
-  )
-  muralWall.addComponent(
-    new utils.TriggerComponent(
-      muralTriggerBox, //shape
-      0, //layer
-      0, //triggeredByLayer
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      async function () {
-        //onCameraEnter
-
-        // Check if the mural has tiles
-        if (tiles.length < 1) {
-          log('camera enter')
-          await addTiles()
-        } else {
-          await updateMural()
-        }
-      },
-      () => {
-        if (tiles.length > 0) {
-          log('camera exit')
-          removeTiles()
-        }
-      }, //onCameraExit
-      false //debug
-    )
   )
   engine.addEntity(muralWall)
 
@@ -74,7 +47,7 @@ export function addMural(): void {
   let isRed = true
 
   // Build mural
-  async function addTiles() {
+  async function buildTiles() {
     let currentTiles = await getMural()
 
     for (let i = 0; i < MURAL_HEIGHT; i++) {
@@ -84,12 +57,12 @@ export function addMural(): void {
           colorIndex = currentTiles[i * MURAL_WIDTH + j]
           tileNumbers.push(colorIndex)
         } else {
-          // Default color pattern (brick)
 
-          if (i % 2 != 0) isRed = !isRed
-          if (j % 2 != 0) isRed = !isRed
-          isRed ? (colorIndex = 0) : (colorIndex = 1)
-          tileNumbers.push(null)
+        // Default color pattern (brick)
+        if (i % 2 != 0) isRed = !isRed
+        if (j % 2 != 0) isRed = !isRed
+        isRed ? (colorIndex = 0) : (colorIndex = 1)
+        tileNumbers.push(null)
         }
 
         const tile = new Tile(
@@ -112,15 +85,6 @@ export function addMural(): void {
     return
   }
 
-  function removeTiles(): void {
-    let tilesLength = tiles.length
-    for (let i = 0; i < tilesLength; i++) {
-      engine.removeEntity(tiles.pop())
-      xPosition = START_POS_X
-      yPosition = START_POS_Y
-    }
-  }
-
   async function updateMural() {
     let currentTiles = await getMural()
 
@@ -133,4 +97,6 @@ export function addMural(): void {
       tiles[i].setColor(currentTiles[i])
     }
   }
+
+  buildTiles() // Build mural
 }
