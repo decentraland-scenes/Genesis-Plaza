@@ -232,6 +232,7 @@ export function addZenquencer(): void {
     loopPlayer.playingMode = 1
     loopPlayer.currentBeat = -1
     loopPlayer.durationLeft = loopDuration
+    loopPlayer.currentLoop = 0
     linear.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0)
     random.getComponent(Transform).rotation = Quaternion.Euler(0, 180, 0)
     neutral.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0)
@@ -243,6 +244,7 @@ export function addZenquencer(): void {
     loopPlayer.playingMode = 2
     loopPlayer.currentBeat = -1
     loopPlayer.durationLeft = loopDuration
+    loopPlayer.currentLoop = 0
     random.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0)
     linear.getComponent(Transform).rotation = Quaternion.Euler(0, 180, 0)
     neutral.getComponent(Transform).rotation = Quaternion.Euler(0, 0, 0)
