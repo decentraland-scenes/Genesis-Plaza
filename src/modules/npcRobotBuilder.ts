@@ -173,7 +173,7 @@ export function addRobots(dummyTarget: Entity) {
         null, //onTriggerExit
         null, //onCameraEnter
         () => {
-          log("exit trigger area")
+
           dialogWindow.closeDialogWindow()
         }, //onCameraExit
         false // enableDebug
@@ -185,14 +185,12 @@ export function addRobots(dummyTarget: Entity) {
   const input = Input.instance
 
   input.subscribe("BUTTON_DOWN", ActionButton.POINTER, false, (): void => {
-    log("LMB Clicked")
     if (dialogWindow.isDialogOpen && !dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Next)
     }
   })
 
   input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, false, (): void => {
-    log("E Key Pressed")
     if (
       dialogWindow.isDialogOpen &&
       dialogWindow.isQuestionPanel &&
@@ -203,7 +201,6 @@ export function addRobots(dummyTarget: Entity) {
   })
 
   input.subscribe("BUTTON_DOWN", ActionButton.SECONDARY, false, (): void => {
-    log("F Key Pressed")
     if (dialogWindow.isDialogOpen && dialogWindow.isQuestionPanel) {
       dialogWindow.confirmText(ConfirmMode.Cancel)
     }

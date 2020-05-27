@@ -40,7 +40,6 @@ export function addMural(): void {
 
         // Check if the mural has tiles
         if (tiles.length < 1) {
-          log('triggered!')
           await buildTiles()
         } else {
           await updateMural()

@@ -44,7 +44,6 @@ export class PianoKey extends Entity {
         null, //onTriggerExit
         () => {
           //onCameraEnter
-          log('enter trigger: ', sound.url)
           sceneMessageBus.emit('noteOn', { note: this.note })
         },
         () => {
