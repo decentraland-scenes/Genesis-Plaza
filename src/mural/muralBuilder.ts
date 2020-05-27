@@ -22,7 +22,7 @@ export function addMural(): void {
 
   // Mural wall
   const muralWall = new Entity()
-  muralWall.addComponent(resources.models.standard.muralStoneWall)
+  muralWall.addComponent(resources.models.standard.muralWall)
   muralWall.addComponent(
     new Transform({
       position: new Vector3(160, 0, 24),
@@ -40,13 +40,18 @@ export function addMural(): void {
 
         // Check if the mural has tiles
         if (tiles.length < 1) {
-          log('triggered!')
-          await buildTiles()
+          log('camera enter')
+          await addTiles()
         } else {
           await updateMural()
         }
       },
-      null, //onCameraExit
+      () => {
+        if (tiles.length > 0) {
+          log('camera exit')
+          removeTiles()
+        }
+      }, //onCameraExit
       false //debug
     )
   )
@@ -69,7 +74,7 @@ export function addMural(): void {
   let isRed = true
 
   // Build mural
-  async function buildTiles() {
+  async function addTiles() {
     let currentTiles = await getMural()
 
     for (let i = 0; i < MURAL_HEIGHT; i++) {
@@ -105,6 +110,15 @@ export function addMural(): void {
       yPosition -= TILE_SIZE + 0.02
     }
     return
+  }
+
+  function removeTiles(): void {
+    let tilesLength = tiles.length
+    for (let i = 0; i < tilesLength; i++) {
+      engine.removeEntity(tiles.pop())
+      xPosition = START_POS_X
+      yPosition = START_POS_Y
+    }
   }
 
   async function updateMural() {
