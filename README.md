@@ -1,6 +1,6 @@
 # Genesis-Plaza
 
-_a few screenshots of the genesis plaza._
+_A few screenshots of the genesis plaza._
 
 ![screenshots](https://github.com/decentraland-scenes/Genesis-Plaza/blob/master/screenshots/genesis-plaza-final.jpg)
 
