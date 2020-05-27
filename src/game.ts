@@ -10,23 +10,20 @@ import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
 import { addMural } from './mural/muralBuilder'
 import { addPiano } from './piano/pianoBuilder'
-import {
-  updateMessageBoards,
-  updateMarketData,
-  CheckServer,
-} from './modules/serverHandler'
+import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 
 //////// LOG PLAYER POSITION
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//   }
-// }
+class CameraTrackSystem implements ISystem {
+  update() {
+    log(Camera.instance.position)
+    log(Camera.instance.rotation.eulerAngles)
+  }
+}
 
-// engine.addSystem(new CameraTrackSystem())
+engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
@@ -72,13 +69,6 @@ addPiano()
 //// Sequencer Fountain
 
 addZenquencer()
-
-//// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
-//updateMessageBoards()
-// how often to refresh scene, in seconds
-const messageRefreshInterval: number = 30
-// start system
-engine.addSystem(new CheckServer(messageRefreshInterval))
 
 /// FETCH DATA FOR TRADE CENTER
 updateMarketData()

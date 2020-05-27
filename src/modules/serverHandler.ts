@@ -2,6 +2,7 @@ import {
   ArtichokeFloatingTextShape,
   setTowerText,
   MessageBoards,
+  serverChecker,
 } from './messageboard'
 import { updateTradeCentrer } from './marketData'
 
@@ -39,6 +40,7 @@ export async function setNewMessage(location: MessageBoards, message: string) {
       trimmedMessage = message.substr(0, 20)
       sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
     } else if (location === MessageBoards.TOWER) {
+      log('new message from tower')
       trimmedMessage = message.substr(0, 40 - 3)
       sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
       //setTowerText(newText)
@@ -52,6 +54,8 @@ export async function setNewMessage(location: MessageBoards, message: string) {
       trimmedMessage
     log('new message ', url)
     fetch(url, { method: 'POST' })
+
+    serverChecker.messageTimer = serverChecker.totalMessageTime
   } catch {
     log('error sending to firebase server')
   }
