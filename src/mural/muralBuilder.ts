@@ -82,6 +82,8 @@ export function addMural(): void {
       xPosition = START_POS_X
       yPosition -= TILE_SIZE + 0.02
     }
+
+    await updateMural() // Tak
     return
   }
 
