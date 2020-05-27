@@ -20,9 +20,11 @@ export class Stone extends Entity {
     shape: GLTFShape,
     transform: Transform,
     sound: AudioClip,
-    index: number
+    index: number,
+    parent: Entity
   ) {
     super()
+    this.setParent(parent)
     engine.addEntity(this)
     this.addComponent(shape)
     this.addComponent(transform)
