@@ -16,14 +16,14 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 
 //////// LOG PLAYER POSITION
 
-class CameraTrackSystem implements ISystem {
-  update() {
-    log(Camera.instance.position)
-    log(Camera.instance.rotation.eulerAngles)
-  }
-}
+// class CameraTrackSystem implements ISystem {
+//   update() {
+//     log(Camera.instance.position)
+//     log(Camera.instance.rotation.eulerAngles)
+//   }
+// }
 
-engine.addSystem(new CameraTrackSystem())
+// engine.addSystem(new CameraTrackSystem())
 
 //// ADD BUILDINGS
 
