@@ -61,7 +61,7 @@ addRobots(dummyTarget)
 addNFTs()
 
 //// Mural
-addMural()
+// addMural() // Removed due to performance issues
 
 //// Piano
 addPiano()
