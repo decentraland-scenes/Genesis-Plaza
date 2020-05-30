@@ -64,10 +64,10 @@ addNFTs()
 // addMural() // Removed due to performance issues
 
 //// Piano
-addPiano()
+// BUG: need to hot reload for the red out of bound indicators to disappear - works fine when deployed
+addPiano() 
 
 //// Sequencer Fountain
-
 addZenquencer()
 
 /// FETCH DATA FOR TRADE CENTER
