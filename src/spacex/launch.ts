@@ -36,18 +36,18 @@ hatch
   .addClip(new AnimationState('HatchOpen', { looping: false }))
 
 // !! REMOVE THIS COMPONENT FOR BEFORE DEPLOYING !!
-hatch.addComponent(
-  new OnPointerDown(
-    (): void => {
-      launchSequence()
-    },
-    {
-      button: ActionButton.POINTER,
-      hoverText: 'TEST LAUNCH',
-      distance: 40,
-    }
-  )
-)
+// hatch.addComponent(
+//   new OnPointerDown(
+//     (): void => {
+//       launchSequence()
+//     },
+//     {
+//       button: ActionButton.POINTER,
+//       hoverText: 'TEST LAUNCH',
+//       distance: 40,
+//     }
+//   )
+// )
 
 // Systems
 let rocketVerticalSystem = new RocketVerticalSystem()
