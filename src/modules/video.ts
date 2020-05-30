@@ -12,10 +12,13 @@ export function addScreen() {
   )
   e.getComponent(Transform).rotate(new Vector3(1, 0, 0), 10)
   const v = new VideoTexture(
-    new VideoClip('https://theuniverse.club/live/genesisplaza/index.m3u8')
+    new VideoClip(
+      'https://d30idbgta48n0w.cloudfront.net/out/v1/ee8d53ef3dff41169b3ea7a8793b54cc/index.m3u8'
+    )
   )
   const mat = new Material()
   mat.albedoTexture = v
+  mat.specularIntensity = 0
   mat.roughness = 1
 
   e.addComponent(mat)
