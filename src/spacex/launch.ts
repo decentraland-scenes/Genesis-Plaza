@@ -1,4 +1,5 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
+import { RocketVerticalSystem, ParticleSystem, rocket } from './rocket'
 
 // Hatch sound
 const hatchOpenSound = new Entity()
@@ -8,6 +9,15 @@ hatchOpenSound.addComponent(
   new AudioSource(new AudioClip('sounds/hatchOpen.mp3'))
 )
 engine.addEntity(hatchOpenSound)
+
+// Rocket sound
+const rocketSound = new Entity()
+rocketSound.addComponent(new Transform())
+rocketSound.getComponent(Transform).position = Camera.instance.position
+rocketSound.addComponent(
+  new AudioSource(new AudioClip('sounds/rocketThrusters.mp3'))
+)
+engine.addEntity(rocketSound)
 
 // Hatch
 const hatch = new Entity()
@@ -39,12 +49,35 @@ hatch
 //   )
 // )
 
+// Systems
+let rocketVerticalSystem = new RocketVerticalSystem()
+let particleSystem = new ParticleSystem()
+let systemDestroyer = new Entity()
+engine.addEntity(systemDestroyer)
+
 // For the actual launch - run this...
 export function launchSequence(): void {
   hatch.getComponent(Animator).getClip('HatchOpen').play()
+
+  rocketSound.addComponentOrReplace(
+    new utils.Delay(1500, () => {
+      rocketSound.getComponent(AudioSource).playOnce() // Hear rocket firing up as the logo glows
+    })
+  )
+
   hatch.addComponentOrReplace(
     new utils.Delay(2000, () => {
       hatchOpenSound.getComponent(AudioSource).playOnce()
+      engine.addSystem(rocketVerticalSystem)
+      engine.addSystem(particleSystem)
+    })
+  )
+  systemDestroyer.addComponentOrReplace(
+    new utils.Delay(50000, () => {
+      log('removing rocket systems')
+      engine.removeEntity(rocket)
+      engine.removeSystem(rocketVerticalSystem)
+      engine.removeSystem(particleSystem)
     })
   )
 }
