@@ -79,6 +79,12 @@ app.get('/update-coins', (req: any, res: any) => {
   return res.status(200).send('Updated Coins Data!')
 })
 
+app.get('/event', (req: any, res: any) => {
+  let value = Number(req.query.value)
+  updateEventValue(value)
+  return res.status(200).send('Updated event data!')
+})
+
 exports.app = functions.https.onRequest(app)
 
 // // Start writing Firebase Functions
@@ -252,6 +258,32 @@ export async function getMuralJSON(url: string): Promise<number[]> {
     console.log('url used: ', url)
     return []
   }
+}
+
+///// Update event value
+// used to easily trigger different one-time events, like the rocket ship launch
+
+export async function updateEventValue(value: any) {
+  var upload = new AWS.S3.ManagedUpload({
+    params: {
+      Bucket: 'genesis-plaza',
+      Key: 'event/event.json',
+      Body: JSON.stringify({ value: value }),
+      ACL: 'public-read',
+      ContentType: 'application/json; charset=utf-8',
+    },
+  })
+
+  var promise = upload.promise()
+
+  promise.then(
+    function (data: any) {
+      console.log('Successfully uploaded mural JSON')
+    },
+    function (err: any) {
+      console.log('There was an error uploading mural json file: ', err.message)
+    }
+  )
 }
 
 export type WearableData = {
