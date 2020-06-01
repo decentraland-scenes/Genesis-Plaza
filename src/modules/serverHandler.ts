@@ -5,7 +5,6 @@ import {
   serverChecker,
 } from './messageboard'
 import { updateTradeCentrer } from './marketData'
-import { launchSequence } from '../spacex/launch'
 
 export const sceneMessageBus = new MessageBus()
 
@@ -41,34 +40,6 @@ export class CheckServer implements ISystem {
     // }
   }
 }
-
-//////// SPACEX EVENT
-
-//let eventTimer = 1
-let launched: boolean = false
-
-// export async function checkEventServer() {
-//   if (launched) {
-//     return
-//   }
-//   try {
-//     let url = awsServer + 'event/event.json'
-//     let response = await fetch(url).then()
-//     let json = await response.json()
-//     if (json.value == 1) {
-//       launchSequence()
-//       launched = true
-//       sceneMessageBus.emit('rocketLaunch', {})
-//     }
-//   } catch {
-//     log('error fetching from AWS server')
-//   }
-// }
-
-// sceneMessageBus.on('rocketLaunch', () => {
-//   launchSequence()
-//   launched = true
-// })
 
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
