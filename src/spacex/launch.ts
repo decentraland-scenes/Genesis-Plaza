@@ -43,7 +43,7 @@ hatch
 //     },
 //     {
 //       button: ActionButton.POINTER,
-//       hoverText: 'TEST HATCH',
+//       hoverText: 'TEST LAUNCH',
 //       distance: 40,
 //     }
 //   )

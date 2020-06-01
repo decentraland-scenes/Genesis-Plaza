@@ -21,52 +21,54 @@ export class CheckServer implements ISystem {
   totalEventTimer: number
   constructor(messageTimer: number) {
     this.totalMessageTime = messageTimer
-    this.messageTimer = 0.5
-    this.eventTimer = eventTimer
-    this.totalEventTimer = eventTimer
+    this.messageTimer = 5
+    this.eventTimer = 0
+
+    this.totalEventTimer = 2
   }
   update(dt: number) {
     this.messageTimer -= dt
-    this.eventTimer = -dt
+    //this.eventTimer += dt
+
     if (this.messageTimer < 0) {
-      this.messageTimer = this.totalMessageTime
+      this.messageTimer += this.totalMessageTime
       updateMessageBoards()
     }
-    if (this.eventTimer < 0) {
-      this.eventTimer = this.totalEventTimer
+    // if (this.eventTimer > this.totalEventTimer) {
+    //   this.eventTimer = 0
 
-      checkEventServer()
-    }
+    //   checkEventServer()
+    // }
   }
 }
 
 //////// SPACEX EVENT
 
-let eventTimer = 1
+//let eventTimer = 1
 let launched: boolean = false
 
-export async function checkEventServer() {
-  if (launched) {
-    return
-  }
-  try {
-    let url = awsServer + 'event/event.json'
-    let response = await fetch(url).then()
-    let json = await response.json()
-    if (json.value == 1) {
-      launchSequence()
-      launched = true
-      sceneMessageBus.emit('rocketLaunch', {})
-    }
-  } catch {
-    log('error fetching from AWS server')
-  }
-}
+// export async function checkEventServer() {
+//   if (launched) {
+//     return
+//   }
+//   try {
+//     let url = awsServer + 'event/event.json'
+//     let response = await fetch(url).then()
+//     let json = await response.json()
+//     if (json.value == 1) {
+//       launchSequence()
+//       launched = true
+//       sceneMessageBus.emit('rocketLaunch', {})
+//     }
+//   } catch {
+//     log('error fetching from AWS server')
+//   }
+// }
 
-sceneMessageBus.on('rocketLaunch', () => {
-  launchSequence()
-  launched = true
-})
+// sceneMessageBus.on('rocketLaunch', () => {
+//   launchSequence()
+//   launched = true
+// })
 
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
