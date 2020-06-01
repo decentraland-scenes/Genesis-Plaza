@@ -740,9 +740,7 @@ discordLink.addComponent(new GLTFShape('models/garden/discord.glb'))
 discordLink.addComponent(
   new OnPointerDown(
     (e) => {
-      openExternalURL(
-        'https://discord.com/channels/417796904760639509/433376431603580970'
-      )
+      openExternalURL('https://discordapp.com/invite/9EcuFgC')
     },
     { hoverText: 'Join the Discussion', button: ActionButton.PRIMARY }
   )
