@@ -1,5 +1,10 @@
-import { uploadMarketData, OpenSea } from '.'
 import { MarketData, Rarity, Direction, CoinData } from './custonTypes'
+import { uploadMarketData } from './awsUpload'
+
+require('isomorphic-fetch')
+
+// Open Sea Keys
+const OpenSea = require('../keys/opensea-key.json')
 
 //// MAIN FUNCTIONS
 
@@ -469,10 +474,8 @@ export async function updateCoinData(): Promise<CoinData> {
   }
 
   try {
-    // Now grab the data (with fix for CORS issue).
-    //let proxyUrl = 'https://cors-anywhere.herokuapp.com/'
     let targetUrl = 'https://api.binance.com/api/v1/ticker/allPrices'
-    let response = await fetch(targetUrl) //proxyUrl + targetUrl)
+    let response = await fetch(targetUrl)
     let json = await response.json()
 
     for (var i = 0; i < json.length; i++) {
@@ -492,7 +495,6 @@ export async function updateCoinData(): Promise<CoinData> {
     data.MANAUSD = data.MANAETH * data.ETHUSDT
 
     return data
-    //uploadCoinData(dataToSend)
   } catch {
     console.log('Failed to connect to Binance API.')
     return data
