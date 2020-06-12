@@ -72,11 +72,6 @@ for (let i = 0; i < maxCharacters; i++) {
   towerLetters.push(letter)
 }
 
-// sceneMessageBus.on('newText', x => {
-//   sceneState.bannerText = x.text
-//   FloatingTextShape.value = x.text
-// })
-
 let ArtichokeUIOpener = new Entity()
 ArtichokeUIOpener.addComponent(new GLTFShape('models/artichoke_message.glb')) // GLTFShape('models/Message.glb'))
 ArtichokeUIOpener.addComponent(
@@ -143,7 +138,6 @@ class SpinTextSystem implements ISystem {
 engine.addSystem(new SpinTextSystem())
 
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
-//updateMessageBoards()
 // how often to refresh scene, in seconds
 const messageRefreshInterval: number = 30
 // start system

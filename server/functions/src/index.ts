@@ -33,7 +33,7 @@ app.post('/create-board', (req: any, res: any) => {
   let jsonContents: messageBoard = req.body
 
   uploadMessageBoardJSON(location, jsonContents)
-  return res.status(200).send('Creaed message board')
+  return res.status(200).send('Created message board')
 })
 
 app.post('/addmessage', (req: any, res: any) => {

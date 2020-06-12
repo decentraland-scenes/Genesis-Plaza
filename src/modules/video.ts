@@ -17,6 +17,7 @@ export class VideoScreen extends Entity {
     this.addComponent(new Animator())
 
     this.texture = new VideoTexture(new VideoClip(streamURL))
+    this.texture.playing = false
     const mat = new Material()
     mat.albedoTexture = this.texture
     mat.specularIntensity = 0
