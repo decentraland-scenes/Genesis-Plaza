@@ -1,10 +1,8 @@
-import { openTeleportUI } from './ui'
-
 export enum Locations {
   CROWD = 'crowd',
   MAGIC = 'magic',
   KOKO = '-39,58',
-  SALMONOMICON = '-55,1',
+  SALMONOMICON = '-52,1',
   DRAGONRUSH = '-43,53',
   MUSEUM = '16,83',
   TOMBCHASER = '12,46',
@@ -12,9 +10,9 @@ export enum Locations {
   FRUIT = '59,133',
   CASTLE = '-134,-121',
   INFINITY = '-71,-38',
-  MOLES = '-71,-71', /// NEED REAL LOCATION
+  MOLES = '59,135',
   PRESENT = '-40,-49',
-  CASINO = '-55,144',
+  CASINO = '-55,143',
   TOKI = '28,45',
 }
 
@@ -24,15 +22,13 @@ export class Teleport extends Entity {
   model: GLTFShape
   location: Locations
   name: string
-  screenshot: string
   description: string
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
     location: Locations,
     name: string,
-    description: string,
-    screenshot: string
+    description: string
   ) {
     super()
     engine.addEntity(this)
@@ -43,14 +39,13 @@ export class Teleport extends Entity {
     this.name = name
     this.location = location
     this.description = description
-    this.screenshot = screenshot
 
     let thisTeleport = this
 
     this.addComponent(
       new OnPointerDown(
         async function () {
-          openTeleportUI(thisTeleport)
+          teleportTo(thisTeleport.location)
         },
         {
           button: ActionButton.PRIMARY,
@@ -61,11 +56,6 @@ export class Teleport extends Entity {
 
     let Particles = new Entity()
     Particles.addComponent(new GLTFShape('models/particles.glb'))
-    // Particles.addComponent(
-    //   new Transform({
-    //     rotation: Quaternion.Euler(0, 180, 0),
-    //   })
-    // )
     Particles.setParent(this)
 
     let teleportFloor = new Entity()
@@ -182,7 +172,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/dragon_rush.glb'),
       location: Locations.DRAGONRUSH,
       transform: teleportPos1,
-      screenshot: 'images/teleports/Dragon_Race.jpg',
       description:
         'Fly on the back of a dragon, need we\nsay more?\nScene by the amusement park district.',
     },
@@ -191,7 +180,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/toki_land.glb'),
       location: Locations.TOKI,
       transform: teleportPos2,
-      screenshot: 'images/teleports/TokiLand.jpg',
       description:
         'A christmas themed adventure.\nSave the Toki Tokis from\nan evil snowman and his henchmen.',
     },
@@ -200,7 +188,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/star.glb'),
       location: Locations.MAGIC,
       transform: teleportPos3,
-      screenshot: 'images/teleports/Magic.jpg',
       description:
         'Visit a random scene from\na curated list of amazing places!\n',
     },
@@ -209,7 +196,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/block_runner.glb'),
       location: Locations.BLOCK,
       transform: teleportPos4,
-      screenshot: 'images/teleports/BlockRunner.jpg',
       description:
         'A collection of competitive minigames\nthat are a lot of fun to play!\n',
     },
@@ -218,7 +204,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/roulette.glb'),
       location: Locations.CASINO,
       transform: teleportPos5,
-      screenshot: 'images/teleports/Chateau_satoshi.jpg',
       description:
         'Play roulette and slot machines in a\nluxurious casino by the shore!\n',
     },
@@ -227,7 +212,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/koko_jones.glb'),
       location: Locations.KOKO,
       transform: teleportPos6,
-      screenshot: 'images/teleports/Koko_Jones.jpg',
       description:
         'Visit the temple of eternal bananas\nto collect gems and face evil monkeys\nScene by the amusement park district.',
     },
@@ -236,7 +220,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/fruit_catcher.glb'),
       location: Locations.FRUIT,
       transform: teleportPos7,
-      screenshot: 'images/teleports/Fruit_Catcher.jpg',
       description:
         'Catch as many fruits as you can,\navoid bombs! Compete for the\nhighest score!',
     },
@@ -245,7 +228,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/star.glb'),
       location: Locations.MAGIC,
       transform: teleportPos8,
-      screenshot: 'images/teleports/Magic.jpg',
       description:
         'Visit a random scene from\na curated list of amazing places!\n',
     },
@@ -254,7 +236,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/crowd.glb'),
       location: Locations.CROWD,
       transform: teleportPos9,
-      screenshot: 'images/teleports/Crowd.jpg',
       description:
         'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
     },
@@ -263,7 +244,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/salmonomicon.glb'),
       location: Locations.SALMONOMICON,
       transform: teleportPos10,
-      screenshot: 'images/teleports/Salmonomicon.jpg',
       description:
         'In this bizarre horror-themed game\nhelp Mika out and defeat a\nterrible creature.',
     },
@@ -272,7 +252,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/museum_district.glb'),
       location: Locations.MUSEUM,
       transform: teleportPos11,
-      screenshot: 'images/teleports/Museum_District.jpg',
       description:
         'The Museum district houses works\nfrom digital and traditional artists.\nSuperb moving sculptures & paintings.',
     },
@@ -281,7 +260,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/click_a_mole.glb'),
       location: Locations.MOLES,
       transform: teleportPos12,
-      screenshot: 'images/teleports/ClickAMole.jpg',
       description: 'Whack the moles before they hide!\n\n',
     },
     {
@@ -289,7 +267,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/tomb_chaser.glb'),
       location: Locations.TOMBCHASER,
       transform: teleportPos13,
-      screenshot: 'images/teleports/Tomb_Chaser.jpg',
       description:
         'Speed run through an ancient pyramid\navoiding obstacles as you try to keep\nup, in this exciting game.',
     },
@@ -298,7 +275,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/infinity_engine.glb'),
       location: Locations.INFINITY,
       transform: teleportPos14,
-      screenshot: 'images/teleports/Infinity_Engine.jpg',
       description:
         'Mine for loot underground, then\ndefend a train from\nbandits.',
     },
@@ -307,7 +283,6 @@ export function placeTeleports() {
       model: new GLTFShape('models/teleports/crowd.glb'),
       location: Locations.CROWD,
       transform: teleportPos15,
-      screenshot: 'images/teleports/Crowd.jpg',
       description:
         'Teleport to the most crowded location\nin all of Decentraland to meet up\nwith other players!',
     },
@@ -319,8 +294,7 @@ export function placeTeleports() {
       i.transform,
       i.location,
       i.name,
-      i.description,
-      i.screenshot
+      i.description
     )
   }
 }
