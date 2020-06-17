@@ -1484,7 +1484,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel4Value1 = new StockData(
     StockDataTypes.VALUE,
-    data.totalMANAWearablesYesterday.toString(),
+    Math.floor(data.totalMANAWearablesYesterday).toString(),
     {
       position: new Vector3(0.7, 0, 0),
     },
@@ -1493,7 +1493,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel4Value2 = new StockData(
     StockDataTypes.VALUE,
-    data.totalMANAWearablesWeek.toString(),
+    Math.floor(data.totalMANAWearablesWeek).toString(),
     {
       position: new Vector3(0.7, -0.5, 0),
     },
@@ -1502,7 +1502,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel4Value3 = new StockData(
     StockDataTypes.VALUE,
-    data.totalMANAWearablesMonth.toString(),
+    Math.floor(data.totalMANAWearablesMonth).toString(),
     {
       position: new Vector3(0.7, -1, 0),
     },

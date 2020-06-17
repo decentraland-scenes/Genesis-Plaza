@@ -462,6 +462,14 @@ export async function updateMarketData() {
 
   console.log('DATA TO SEND: ', dataToSend)
 
+  if (
+    dataToSend.wearableSalesMonth < dataToSend.wearableSalesYesterday ||
+    dataToSend.totalMANALandAndEstateMonth <
+      dataToSend.totalMANALandAndEstateYesterday
+  ) {
+    console.log('data incomplete, will not upload')
+    return
+  }
   uploadMarketData(dataToSend)
 }
 
