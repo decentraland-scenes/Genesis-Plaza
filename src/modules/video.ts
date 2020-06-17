@@ -22,6 +22,7 @@ export class VideoScreen extends Entity {
     mat.albedoTexture = this.texture
     mat.specularIntensity = 0
     mat.roughness = 1
+    mat.metallic = 0
 
     this.addComponent(mat)
 

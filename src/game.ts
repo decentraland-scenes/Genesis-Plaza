@@ -13,17 +13,14 @@ import { addPiano } from './piano/pianoBuilder'
 import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
+import { createEventsBoard } from './modules/eventBoard'
 
 //////// LOG PLAYER POSITION
 
-// class CameraTrackSystem implements ISystem {
-//   update() {
-//     log(Camera.instance.position)
-//     log(Camera.instance.rotation.eulerAngles)
-//   }
-// }
-
-// engine.addSystem(new CameraTrackSystem())
+Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
+  log(`pos: `, Camera.instance.position)
+  log(`rot: `, Camera.instance.rotation)
+})
 
 //// ADD BUILDINGS
 
@@ -45,11 +42,18 @@ placeMuseumPieces()
 
 addScreen()
 
-//// WEARABLES
+/// EVENTS BOARD
+
+createEventsBoard({
+  position: new Vector3(171, 3.5, 161),
+  rotation: Quaternion.Euler(0, 225, 0),
+})
+
+/// WEARABLES
 
 addWearables()
 
-//// ROBOTS
+/// ROBOTS
 const dummyTarget = new Entity()
 dummyTarget.addComponent(new PlaneShape())
 dummyTarget.addComponent(new Transform())
@@ -57,23 +61,20 @@ dummyTarget.addComponent(new Transform())
 addFaceUserSystem(dummyTarget)
 addRobots(dummyTarget)
 
-//// NFTS
+/// NFTS
 addNFTs()
 
-//// Mural
-// addMural() // Removed due to performance issues
-
-//// Piano
+/// Piano
 // BUG: need to hot reload for the red out of bound indicators to disappear - works fine when deployed
-addPiano() 
+addPiano()
 
-//// Sequencer Fountain
+/// Sequencer Fountain
 addZenquencer()
 
 /// FETCH DATA FOR TRADE CENTER
 updateMarketData()
 
-//// AMBIENT SOUNDS
+/// AMBIENT SOUNDS
 
 let forest1 = new AmbientSound(
   { position: new Vector3(215, 2, 183) },
