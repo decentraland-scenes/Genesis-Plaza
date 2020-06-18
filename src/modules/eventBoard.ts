@@ -173,7 +173,7 @@ class SwitchEventSystem implements ISystem {
   events: any[]
   constructor(events: any[], interval: number) {
     this.events = events
-    this.timer = interval
+    this.timer = interval * 3
     this.interval = interval
     this.currentEvent = 0
   }
