@@ -13,8 +13,25 @@ export async function createEventsBoard(position: TranformConstructorArgs) {
   board.addComponent(new GLTFShape('models/events-UI.glb'))
   board.setParent(boardBase)
 
-  boardBase.addComponent(new Transform(position))
-  engine.addEntity(boardBase)
+  //   clickPanel.addComponent(invisibleMaterial)
+  //   clickPanel.addComponent(new PlaneShape())
+  //   clickPanel.addComponent(
+  //     new Transform({
+  //       scale: new Vector3(5, 4.5, 1),
+  //       position: new Vector3(0, 0, -0.2),
+  //     })
+  //   )
+  //   clickPanel.setParent(boardBase)
+
+  //   clickPanelBackSide.addComponent(invisibleMaterial)
+  //   clickPanelBackSide.addComponent(new PlaneShape())
+  //   clickPanelBackSide.addComponent(
+  //     new Transform({
+  //       scale: new Vector3(5, 4.5, 1),
+  //       position: new Vector3(0, 0, 0.2),
+  //     })
+  //   )
+  //   clickPanelBackSide.setParent(boardBase)
 
   image.addComponent(new PlaneShape())
   image.addComponent(
@@ -48,7 +65,7 @@ export async function createEventsBoard(position: TranformConstructorArgs) {
   title.getComponent(TextShape).width = 8
   title.addComponent(
     new Transform({
-      position: new Vector3(-2, -1.1, -0.04),
+      position: new Vector3(-1.94, -1.05, -0.04),
     })
   )
   title.setParent(boardBase)
@@ -63,7 +80,7 @@ export async function createEventsBoard(position: TranformConstructorArgs) {
   titleBackSide.getComponent(TextShape).width = 8
   titleBackSide.addComponent(
     new Transform({
-      position: new Vector3(2, -1.1, 0.04),
+      position: new Vector3(1.94, -1.05, 0.04),
       rotation: Quaternion.Euler(0, 180, 0),
     })
   )
@@ -94,27 +111,10 @@ export async function createEventsBoard(position: TranformConstructorArgs) {
   coordsBackSide.getComponent(TextShape).hTextAlign = 'left'
   coordsBackSide.setParent(boardBase)
 
-  clickPanel.addComponent(invisibleMaterial)
-  clickPanel.addComponent(new PlaneShape())
-  clickPanel.addComponent(
-    new Transform({
-      scale: new Vector3(5, 4.5, 1),
-      position: new Vector3(0, 0, -0.2),
-    })
-  )
-  clickPanel.setParent(boardBase)
+  boardBase.addComponent(new Transform(position))
+  engine.addEntity(boardBase)
 
-  clickPanelBackSide.addComponent(invisibleMaterial)
-  clickPanelBackSide.addComponent(new PlaneShape())
-  clickPanelBackSide.addComponent(
-    new Transform({
-      scale: new Vector3(5, 4.5, 1),
-      position: new Vector3(0, 0, 0.2),
-    })
-  )
-  clickPanelBackSide.setParent(boardBase)
-
-  displayEvent(events, 0)
+  await displayEvent(events, 0)
 
   if (events.length > 1) {
     engine.addSystem(new SwitchEventSystem(events, 4))
@@ -173,7 +173,7 @@ class SwitchEventSystem implements ISystem {
   events: any[]
   constructor(events: any[], interval: number) {
     this.events = events
-    this.timer = interval * 3
+    this.timer = interval * 3 // a little extra time on the first one while everything loads
     this.interval = interval
     this.currentEvent = 0
   }
@@ -219,7 +219,7 @@ export function createDots(dotAmount: number) {
   }
 }
 
-export function displayEvent(events: any[], currentEvent: number) {
+export async function displayEvent(events: any[], currentEvent: number) {
   if (events.length <= 0) return
   let event = events[currentEvent]
   imageMaterial.albedoTexture = new Texture(event.image)

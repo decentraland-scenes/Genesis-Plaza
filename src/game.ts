@@ -45,7 +45,7 @@ addScreen()
 /// EVENTS BOARD
 
 createEventsBoard({
-  position: new Vector3(171, 3.5, 161),
+  position: new Vector3(175.8, 3.5, 168),
   rotation: Quaternion.Euler(0, 225, 0),
 })
 
