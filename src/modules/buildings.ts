@@ -341,3 +341,12 @@ zepellin.addComponent(new Transform({
 }
 ))
 engine.addEntity(zepellin)
+
+//add art_banners
+let art_banners = new Entity()
+art_banners.addComponent(new GLTFShape("models/art_banners.glb"))
+art_banners.addComponent(new Transform({
+	rotation: Quaternion.Euler(0, 180, 0)
+}
+))
+engine.addEntity(art_banners)
