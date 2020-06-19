@@ -14,6 +14,8 @@ import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
+import { Dispenser } from './dispenser'
+import { GuestBook } from './guestbook'
 
 //////// LOG PLAYER POSITION
 
@@ -73,6 +75,55 @@ addZenquencer()
 
 /// FETCH DATA FOR TRADE CENTER
 updateMarketData()
+
+/// POAP
+
+let POAPBooth = new Dispenser(
+  {
+    position: new Vector3(229, 0, 217.8),
+    rotation: new Quaternion(
+      0.00494604604318738,
+      0.9368222951889038,
+      0.013256964273750782,
+      -0.34951943159103394
+    ),
+  },
+  'genesis'
+)
+
+let POAPBanner = new Entity()
+POAPBanner.addComponent(
+  new Transform({
+    position: new Vector3(228, 0, 219),
+    rotation: new Quaternion(
+      0.00494604604318738,
+      0.9368222951889038,
+      0.013256964273750782,
+      -0.34951943159103394
+    ),
+  })
+)
+POAPBanner.addComponent(new GLTFShape('models/poap/POAP_Banner.glb'))
+engine.addEntity(POAPBanner)
+
+POAPBanner.addComponent(
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://www.poap.xyz/')
+    },
+    { hoverText: 'Learn More' }
+  )
+)
+
+/// GUESTBOOK
+
+let guestBook = new GuestBook(
+  {
+    position: new Vector3(225.67, 0, 220.13),
+    rotation: Quaternion.Euler(0, 315, 0),
+  },
+  'genesis'
+)
 
 /// AMBIENT SOUNDS
 

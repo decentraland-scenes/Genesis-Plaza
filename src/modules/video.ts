@@ -67,7 +67,7 @@ export function addScreen() {
     },
     { position: new Vector3(270, 5, 255) },
     new Vector3(90, 14, 90),
-    'https://theuniverse.club/live/genesisplaza/index.m3u8'
+    'https://video.dcl.guru/live/dclcoretv/index.m3u8'
   )
 
   screen1.getComponent(Transform).rotate(new Vector3(1, 0, 0), 10)

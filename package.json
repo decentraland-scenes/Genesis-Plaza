@@ -16,6 +16,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "decentraland-ecs-utils": "^1.1.4",
+    "eth-connect": "^4.0.2",
     "express": "^4.17.1"
   }
 }
