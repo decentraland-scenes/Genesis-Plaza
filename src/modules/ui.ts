@@ -36,7 +36,6 @@ engine.addEntity(closeDialogSound)
 
 export function closeUI(npc?: boolean) {
   messagebg.visible = false
-  tBackground.visible = false
   wBackground.visible = false
   nftWindow.closeNFTWindow(false)
 
@@ -49,7 +48,6 @@ export function closeUI(npc?: boolean) {
 export function checkUIOpen(): boolean {
   if (
     messagebg.visible ||
-    tBackground.visible ||
     wBackground.visible ||
     dialogWindow.isDialogOpen ||
     nftWindow.container.visible
@@ -450,137 +448,6 @@ function roundNumber(num, dec) {
   return Math.round(largeNum) / Math.pow(10, dec)
 }
 
-//////// TELEPORTS UI
-
-const teleportUITexture = new Texture('images/teleportModal.png')
-
-let tBackground = new UIImage(screenSpaceUI, teleportUITexture)
-tBackground.visible = false
-
-export function openTeleportUI(teleport: Teleport) {
-  if (tBackground.visible) {
-    return
-  }
-  updateOpenUITime()
-  UIOpener = teleport
-  tBackground.visible = false
-  openDialogSound.getComponent(AudioSource).playOnce()
-
-  const screenshotTexture = new Texture(teleport.screenshot)
-
-  tBackground = new UIImage(screenSpaceUI, teleportUITexture)
-  tBackground.name = 'tBackground'
-  tBackground.hAlign = 'center'
-  tBackground.vAlign = 'center'
-  tBackground.width = 268
-  tBackground.height = 182
-  tBackground.positionY = -91
-  tBackground.sourceLeft = 0
-  tBackground.sourceTop = 52
-  tBackground.sourceWidth = 268
-  tBackground.sourceHeight = 182
-  tBackground.visible = true
-  tBackground.isPointerBlocker = true
-
-  const screenshot = new UIImage(tBackground, screenshotTexture)
-  screenshot.name = 'tScreenshot'
-  screenshot.hAlign = 'center'
-  screenshot.vAlign = 'center'
-  screenshot.width = 268
-  screenshot.height = 172
-  screenshot.positionY = 172 / 2 + 91
-  screenshot.sourceLeft = 0
-  screenshot.sourceTop = 0
-  screenshot.sourceWidth = 536
-  screenshot.sourceHeight = 344
-  screenshot.isPointerBlocker = true
-
-  let closeIcon = new UIImage(tBackground, teleportUITexture)
-  closeIcon.name = 'closeIcon'
-  closeIcon.visible = true
-  closeIcon.positionY = 172 / 2 + 91 + 72
-  closeIcon.positionX = 121
-  closeIcon.sourceTop = 0
-  closeIcon.sourceLeft = 244
-  closeIcon.sourceHeight = 24
-  closeIcon.sourceWidth = 24
-  closeIcon.height = 24
-  closeIcon.width = 24
-  closeIcon.hAlign = 'center'
-  closeIcon.vAlign = 'center'
-  closeIcon.onClick = new OnClick(() => {
-    closeDialogSound.getComponent(AudioSource).playOnce()
-    closeUI()
-  })
-
-  const icon = new UIImage(tBackground, teleportUITexture)
-  icon.name = 'tIcon'
-  icon.width = 9.67
-  icon.height = 12.9
-  icon.hAlign = 'center'
-  icon.vAlign = 'center'
-  icon.positionY = -37.57 + 91
-  icon.positionX = -114.49
-  icon.sourceLeft = 0
-  icon.sourceTop = 0
-  icon.sourceWidth = 9.67
-  icon.sourceHeight = 12.9
-
-  const name = new UIText(tBackground)
-  name.name = 'tName'
-  name.value = teleport.name
-  name.vAlign = 'center'
-  name.hAlign = 'center'
-  name.vTextAlign = 'left'
-  name.positionY = -12.83 + 91
-  name.positionX = 14.51 - 268 / 2
-  name.fontSize = 16
-  name.color = Color4.Black()
-  name.width = '10px'
-  name.font = SFHeavyFont
-
-  const desc = new UIText(tBackground)
-  desc.name = 'tDesc'
-  desc.value = teleport.description
-  desc.vAlign = 'center'
-  desc.hAlign = 'center'
-  desc.vTextAlign = 'left'
-  desc.fontSize = 14
-  desc.positionY = -75 + 91
-  desc.positionX = 14.51 - 268 / 2
-  desc.color = Color4.Black()
-  desc.width = '10px'
-  desc.font = SFFont
-
-  const coordinates = new UIText(tBackground)
-  coordinates.name = 'tCoords'
-  coordinates.value = teleport.location
-  coordinates.vAlign = 'center'
-  coordinates.hAlign = 'center'
-  coordinates.vTextAlign = 'left'
-  coordinates.positionY = -37.57 + 91
-  coordinates.positionX = 34 - 268 / 2
-  coordinates.fontSize = 14
-  coordinates.color = Color4.Black()
-  coordinates.width = '10px'
-  coordinates.font = SFFont
-
-  const button = new UIImage(tBackground, teleportUITexture)
-  button.name = 'tButton'
-  button.hAlign = 'center'
-  button.vAlign = 'center'
-  button.width = 215.15
-  button.height = 40
-  button.positionY = -138 + 91
-  button.sourceLeft = 27
-  button.sourceTop = 0
-  button.sourceWidth = 215.15
-  button.sourceHeight = 40
-  button.onClick = new OnClick(() => {
-    teleport.travel()
-  })
-}
-
 /////// CLOSE UI
 
 const allUIImages = engine.getComponentGroup(UIImage)
@@ -592,11 +459,7 @@ const input = Input.instance
 input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
   const currentTime = +Date.now()
   // travel to teleport location
-  if (
-    tBackground.visible &&
-    UIOpener instanceof Teleport &&
-    currentTime - UIOpenTime > 200
-  ) {
+  if (UIOpener instanceof Teleport && currentTime - UIOpenTime > 200) {
     UIOpener.travel()
   }
 })
