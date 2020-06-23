@@ -66,7 +66,7 @@ export function addScreen() {
       scale: new Vector3(10 * 2.8, 5.6 * 2.8, 10 * 2.8),
     },
     { position: new Vector3(270, 5, 255) },
-    new Vector3(90, 14, 90),
+    new Vector3(90, 90, 90),
     'https://theuniverse.club/live/genesisplaza/index.m3u8'
   )
 
