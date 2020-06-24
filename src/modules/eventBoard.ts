@@ -13,25 +13,25 @@ export async function createEventsBoard(position: TranformConstructorArgs) {
   board.addComponent(new GLTFShape('models/events-UI.glb'))
   board.setParent(boardBase)
 
-  //   clickPanel.addComponent(invisibleMaterial)
-  //   clickPanel.addComponent(new PlaneShape())
-  //   clickPanel.addComponent(
-  //     new Transform({
-  //       scale: new Vector3(5, 4.5, 1),
-  //       position: new Vector3(0, 0, -0.2),
-  //     })
-  //   )
-  //   clickPanel.setParent(boardBase)
+  clickPanel.addComponent(invisibleMaterial)
+  clickPanel.addComponent(new PlaneShape())
+  clickPanel.addComponent(
+    new Transform({
+      scale: new Vector3(5, 4.5, 1),
+      position: new Vector3(0, 0, -0.2),
+    })
+  )
+  clickPanel.setParent(boardBase)
 
-  //   clickPanelBackSide.addComponent(invisibleMaterial)
-  //   clickPanelBackSide.addComponent(new PlaneShape())
-  //   clickPanelBackSide.addComponent(
-  //     new Transform({
-  //       scale: new Vector3(5, 4.5, 1),
-  //       position: new Vector3(0, 0, 0.2),
-  //     })
-  //   )
-  //   clickPanelBackSide.setParent(boardBase)
+  clickPanelBackSide.addComponent(invisibleMaterial)
+  clickPanelBackSide.addComponent(new PlaneShape())
+  clickPanelBackSide.addComponent(
+    new Transform({
+      scale: new Vector3(5, 4.5, 1),
+      position: new Vector3(0, 0, 0.2),
+    })
+  )
+  clickPanelBackSide.setParent(boardBase)
 
   image.addComponent(new PlaneShape())
   image.addComponent(

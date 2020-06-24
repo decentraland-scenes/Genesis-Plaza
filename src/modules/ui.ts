@@ -1,6 +1,5 @@
 import { setNewMessage } from './serverHandler'
-import { WearableData, getWearableURL, Wearable } from './wearables'
-import { Teleport } from './teleports'
+import { WearableData, getWearableURL } from './wearables'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
@@ -450,19 +449,8 @@ function roundNumber(num, dec) {
 
 /////// CLOSE UI
 
-const allUIImages = engine.getComponentGroup(UIImage)
-
 // Instance the input object
 const input = Input.instance
-
-//E button event
-input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
-  const currentTime = +Date.now()
-  // travel to teleport location
-  if (UIOpener instanceof Teleport && currentTime - UIOpenTime > 200) {
-    UIOpener.travel()
-  }
-})
 
 //button down event
 input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {

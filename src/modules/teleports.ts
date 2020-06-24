@@ -16,13 +16,11 @@ export enum Locations {
   TOKI = '28,45',
 }
 
-declare const dcl: any
-
 export class Teleport extends Entity {
   model: GLTFShape
   location: Locations
   name: string
-  description: string
+  description?: string
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
@@ -38,7 +36,6 @@ export class Teleport extends Entity {
 
     this.name = name
     this.location = location
-    this.description = description
 
     let thisTeleport = this
 
@@ -62,16 +59,6 @@ export class Teleport extends Entity {
     teleportFloor.addComponent(new GLTFShape('models/teleports/teleport.glb'))
     teleportFloor.addComponent(new Transform({}))
     teleportFloor.setParent(this)
-  }
-
-  public travel(): void {
-    let message = '/goto '.concat(this.location).concat('\n').toString()
-    //let message = '/goto crowd\n'
-    log(message)
-
-    dcl.loadModule('@decentraland/ChatController').then(($: any) => {
-      dcl.callRpc($.rpcHandle, 'send', [message])
-    })
   }
 }
 
