@@ -1,3 +1,5 @@
+import {} from './ui' // prevents package not found bug
+
 export enum Locations {
   CROWD = 'crowd',
   MAGIC = 'magic',
