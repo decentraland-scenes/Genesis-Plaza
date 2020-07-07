@@ -6,6 +6,7 @@ export enum Radios {
   INTERVIEW = 'https://dclcoreradio.com/dclradio.ogg',
   DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
   SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
+  MKLAB = 'https://freeuk13.listen2myradio.com/live.mp3?typeportmount=s2_20223_stream_944192845',
 }
 
 let isInRadioRange: boolean = false
@@ -71,7 +72,7 @@ blueButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'Rave'
+      hoverText: 'Rave',
     }
   )
 )
@@ -92,7 +93,7 @@ greenButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'DCL Interviews'
+      hoverText: 'DCL Interviews',
     }
   )
 )
@@ -113,7 +114,7 @@ lightBlueButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'Delta'
+      hoverText: 'Delta',
     }
   )
 )
@@ -134,7 +135,7 @@ redButton.addComponent(
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'Signs'
+      hoverText: 'Signs',
     }
   )
 )
@@ -149,13 +150,13 @@ yellowButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: Radios.SIGNS,
+        station: Radios.MKLAB,
       })
       yellowButton.press()
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'Signs'
+      hoverText: 'Signs',
     }
   )
 )
