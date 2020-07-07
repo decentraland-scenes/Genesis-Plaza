@@ -2,7 +2,12 @@
 import { placeTeleports } from './modules/teleports'
 import { placePlatforms } from './modules/platforms'
 import { addWearables } from './modules/wearables'
-import { placeMuseumPieces } from './modules/museumItems'
+import {
+  placeMuseumPieces,
+  placeTradecenterPieces,
+  placeGardenPieces,
+  placeWearablePieces,
+} from './modules/museumItems'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/npcFaceUserSystem'
@@ -14,6 +19,7 @@ import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
+import { addOneTimeTrigger } from './modules/Utils'
 
 //////// LOG PLAYER POSITION
 
@@ -34,10 +40,6 @@ placePlatforms()
 
 placeTeleports()
 
-/// MUSEUM
-
-placeMuseumPieces()
-
 /// VIDEO SCEREEN
 
 addScreen()
@@ -51,7 +53,29 @@ createEventsBoard({
 
 /// WEARABLES
 
-addWearables()
+addOneTimeTrigger(new Vector3(180, 2, 244), new Vector3(60, 60, 60), () => {
+  placeMuseumPieces()
+})
+
+/// MUSEUM
+
+addOneTimeTrigger(new Vector3(273, 2, 127), new Vector3(50, 50, 50), () => {
+  addWearables()
+  placeWearablePieces()
+})
+
+/// TRADE CENTER
+
+addOneTimeTrigger(new Vector3(269, 5, 37), new Vector3(80, 80, 80), () => {
+  updateMarketData()
+  placeTradecenterPieces()
+})
+
+/// GARDEN
+
+addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(50, 50, 50), () => {
+  placeGardenPieces()
+})
 
 /// ROBOTS
 const dummyTarget = new Entity()
@@ -70,9 +94,6 @@ addPiano()
 
 /// Sequencer Fountain
 addZenquencer()
-
-/// FETCH DATA FOR TRADE CENTER
-updateMarketData()
 
 /// AMBIENT SOUNDS
 
