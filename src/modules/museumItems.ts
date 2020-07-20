@@ -95,7 +95,7 @@ export function placeMuseumPieces() {
     },
     'The Vision',
     RobotID.Whale,
-    13
+    11
   )
 
   let firstPixels = new MuseumPiece(
@@ -106,7 +106,7 @@ export function placeMuseumPieces() {
     },
     'First Experiments',
     RobotID.Whale,
-    15
+    13
   )
 
   let first3D = new MuseumPiece(
@@ -117,7 +117,7 @@ export function placeMuseumPieces() {
     },
     'First 3D Version',
     RobotID.Whale,
-    18
+    16
   )
 
   let declaration = new MuseumPiece(
@@ -128,7 +128,7 @@ export function placeMuseumPieces() {
     },
     'Declaration of independance',
     RobotID.Whale,
-    19
+    17
   )
 
   let old_logo = new MuseumPiece(
@@ -139,7 +139,7 @@ export function placeMuseumPieces() {
     },
     'Original Logo',
     RobotID.Whale,
-    20
+    18
   )
 
   let first_avatars = new MuseumPiece(
@@ -150,7 +150,7 @@ export function placeMuseumPieces() {
     },
     'First Avatars',
     RobotID.Whale,
-    21
+    19
   )
 
   let first_auction = new MuseumPiece(
@@ -161,7 +161,7 @@ export function placeMuseumPieces() {
     },
     'First Land Auction',
     RobotID.Whale,
-    30
+    28
   )
 
   let avatar1 = new MuseumPiece(
@@ -172,7 +172,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    22
+    20
   )
 
   let avatar2 = new MuseumPiece(
@@ -183,7 +183,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    23
+    21
   )
   let avatar3 = new MuseumPiece(
     new GLTFShape('models/museum/avatars/square-robot-avatar.glb'),
@@ -193,7 +193,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    25
+    23
   )
 
   let avatar5 = new MuseumPiece(
@@ -204,7 +204,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    26
+    24
   )
 
   let avatar6 = new MuseumPiece(
@@ -215,7 +215,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    27
+    25
   )
 
   let avatar7 = new MuseumPiece(
@@ -226,7 +226,7 @@ export function placeMuseumPieces() {
     },
     'Avatar',
     RobotID.Whale,
-    28
+    26
   )
 
   let second_auction = new MuseumPiece(
@@ -237,7 +237,7 @@ export function placeMuseumPieces() {
     },
     'Second Land Auction',
     RobotID.Whale,
-    32
+    30
   )
 
   let new_logo = new MuseumPiece(
@@ -248,7 +248,7 @@ export function placeMuseumPieces() {
     },
     'New Logo',
     RobotID.Whale,
-    34
+    32
   )
 
   let landing = new MuseumPiece(
@@ -259,7 +259,7 @@ export function placeMuseumPieces() {
     },
     'Landing',
     RobotID.Whale,
-    36
+    34
   )
 
   let builder = new MuseumPiece(
@@ -270,7 +270,7 @@ export function placeMuseumPieces() {
     },
     'Builder',
     RobotID.Whale,
-    39
+    37
   )
 
   let names = new MuseumPiece(
@@ -281,7 +281,7 @@ export function placeMuseumPieces() {
     },
     'Virtual identity',
     RobotID.Whale,
-    42
+    40
   )
 
   let wearables = new MuseumPiece(
@@ -292,7 +292,7 @@ export function placeMuseumPieces() {
     },
     'Token Wearables',
     RobotID.Whale,
-    43
+    41
   )
 
   ///// UPSTAIRS
@@ -326,7 +326,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.DISTRICTS)
-        openPieceInfoWindow(districts, RobotID.Whale, 53)
+        openPieceInfoWindow(districts, RobotID.Whale, 51)
       },
       {
         button: ActionButton.PRIMARY,
@@ -353,7 +353,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.PLAZAS)
-        openPieceInfoWindow(plazas, RobotID.Whale, 51)
+        openPieceInfoWindow(plazas, RobotID.Whale, 49)
       },
       {
         button: ActionButton.PRIMARY,
@@ -380,7 +380,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.ROADS)
-        openPieceInfoWindow(roads, RobotID.Whale, 50)
+        openPieceInfoWindow(roads, RobotID.Whale, 48)
       },
       {
         button: ActionButton.PRIMARY,
@@ -397,7 +397,7 @@ export function placeMuseumPieces() {
     },
     'LAND Parcel',
     RobotID.Whale,
-    46
+    44
   )
 
   let parcelPua = new MuseumPiece(
@@ -417,7 +417,7 @@ export function placeMuseumPieces() {
     },
     'Estate',
     RobotID.Whale,
-    49
+    47
   )
 
   let estatePua = new MuseumPiece(
@@ -435,9 +435,9 @@ export function placeMuseumPieces() {
       position: new Vector3(181.2, 17.9, 228.6),
       rotation: Quaternion.Euler(0, 50, 0),
     },
-    'Builder Contest 2019',
+    'Museum District',
     RobotID.Whale,
-    56
+    54
   )
 
   let builderContest = new MuseumPiece(
@@ -448,7 +448,7 @@ export function placeMuseumPieces() {
     },
     'First Builder Contest',
     RobotID.Whale,
-    59
+    57
   )
 
   let builderContest2 = new MuseumPiece(
@@ -459,7 +459,7 @@ export function placeMuseumPieces() {
     },
     'Creator contest',
     RobotID.Whale,
-    61
+    59
   )
 
   let mana = new MuseumPiece(
@@ -470,7 +470,7 @@ export function placeMuseumPieces() {
     },
     'MANA',
     RobotID.Whale,
-    64
+    62
   )
 
   let hackathon = new MuseumPiece(
@@ -481,7 +481,7 @@ export function placeMuseumPieces() {
     },
     'September 2019 Hackathon',
     RobotID.Whale,
-    66
+    67
   )
 
   let hackathon2 = new MuseumPiece(
@@ -492,7 +492,7 @@ export function placeMuseumPieces() {
     },
     'Hackathons',
     RobotID.Whale,
-    67
+    66
   )
 
   let community_contest = new MuseumPiece(
@@ -555,7 +555,7 @@ let parcelTC = new MuseumPiece(
   },
   'LAND Parcel',
   RobotID.Trade,
-  13
+  12
 )
 
 let parcelPuaTC = new MuseumPiece(
@@ -575,7 +575,7 @@ let estateTC = new MuseumPiece(
   },
   'Estate',
   RobotID.Trade,
-  17
+  16
 )
 
 let estatePuaTC = new MuseumPiece(
@@ -596,7 +596,7 @@ let mythicInfo = new MuseumPiece(
   },
   'Wearables',
   RobotID.Trade,
-  18
+  17
 )
 
 mythicInfo.addComponent(invisibleMaterial)
@@ -610,7 +610,7 @@ let epicInfo = new MuseumPiece(
   },
   'Wearables',
   RobotID.Trade,
-  18
+  17
 )
 
 epicInfo.addComponent(invisibleMaterial)
@@ -624,7 +624,7 @@ let legendaryInfo = new MuseumPiece(
   },
   'Wearables',
   RobotID.Trade,
-  18
+  17
 )
 
 legendaryInfo.addComponent(invisibleMaterial)
@@ -638,7 +638,7 @@ let rareInfo = new MuseumPiece(
   },
   'Wearables',
   RobotID.Trade,
-  18
+  17
 )
 
 rareInfo.addComponent(invisibleMaterial)
