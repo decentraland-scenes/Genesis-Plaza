@@ -517,7 +517,9 @@ export function placeMuseumPieces() {
   Artichoke = 5 (Marsha)
   Whale = 6 (Bob)
 */
+}
 
+export function placeWearablePieces() {
   let xmax_wearables = new MuseumPiece(
     new GLTFShape('models/wearables/xmas_stand.glb'),
     {
@@ -547,225 +549,231 @@ export let invisibleMaterial = new BasicMaterial()
 invisibleMaterial.texture = new Texture('images/transparent-texture.png')
 invisibleMaterial.alphaTest = 1
 
-let parcelTC = new MuseumPiece(
-  new GLTFShape('models/museum/land.glb'),
-  {
-    position: new Vector3(282.9, 11, 39),
-    rotation: Quaternion.Euler(0, 195, 0),
-  },
-  'LAND Parcel',
-  RobotID.Trade,
-  12
-)
+export function placeTradecenterPieces() {
+  let parcelTC = new MuseumPiece(
+    new GLTFShape('models/museum/land.glb'),
+    {
+      position: new Vector3(282.9, 11, 39),
+      rotation: Quaternion.Euler(0, 195, 0),
+    },
+    'LAND Parcel',
+    RobotID.Trade,
+    13
+  )
 
-let parcelPuaTC = new MuseumPiece(
-  new GLTFShape('models/museum/pua.glb'),
-  {
-    position: new Vector3(282.9, 11, 39),
-    rotation: Quaternion.Euler(0, 195, 0),
-  },
-  'LAND Parcel'
-)
+  let parcelPuaTC = new MuseumPiece(
+    new GLTFShape('models/museum/pua.glb'),
+    {
+      position: new Vector3(282.9, 11, 39),
+      rotation: Quaternion.Euler(0, 195, 0),
+    },
+    'LAND Parcel'
+  )
 
-let estateTC = new MuseumPiece(
-  new GLTFShape('models/museum/estate.glb'),
-  {
-    position: new Vector3(262.9, 11, 35.7),
-    rotation: Quaternion.Euler(0, 30, 0),
-  },
-  'Estate',
-  RobotID.Trade,
-  16
-)
+  let estateTC = new MuseumPiece(
+    new GLTFShape('models/museum/estate.glb'),
+    {
+      position: new Vector3(262.9, 11, 35.7),
+      rotation: Quaternion.Euler(0, 30, 0),
+    },
+    'Estate',
+    RobotID.Trade,
+    17
+  )
 
-let estatePuaTC = new MuseumPiece(
-  new GLTFShape('models/museum/pua.glb'),
-  {
-    position: new Vector3(262.9, 11, 35.7),
-    rotation: Quaternion.Euler(0, 30, 0),
-  },
-  'Estate'
-)
+  let estatePuaTC = new MuseumPiece(
+    new GLTFShape('models/museum/pua.glb'),
+    {
+      position: new Vector3(262.9, 11, 35.7),
+      rotation: Quaternion.Euler(0, 30, 0),
+    },
+    'Estate'
+  )
 
-let mythicInfo = new MuseumPiece(
-  new BoxShape(),
-  {
-    position: new Vector3(264.5, 22.7, 16.25),
-    rotation: Quaternion.Euler(0, 204, 0),
-    scale: new Vector3(5.8, 1.2, 1.2),
-  },
-  'Wearables',
-  RobotID.Trade,
-  17
-)
+  let mythicInfo = new MuseumPiece(
+    new BoxShape(),
+    {
+      position: new Vector3(264.5, 22.7, 16.25),
+      rotation: Quaternion.Euler(0, 204, 0),
+      scale: new Vector3(5.8, 1.2, 1.2),
+    },
+    'Wearables',
+    RobotID.Trade,
+    18
+  )
 
-mythicInfo.addComponent(invisibleMaterial)
+  mythicInfo.addComponent(invisibleMaterial)
 
-let epicInfo = new MuseumPiece(
-  new BoxShape(),
-  {
-    position: new Vector3(251.4, 22.7, 46.13),
-    rotation: Quaternion.Euler(0, 293, 0),
-    scale: new Vector3(5.8, 1.2, 1.2),
-  },
-  'Wearables',
-  RobotID.Trade,
-  17
-)
+  let epicInfo = new MuseumPiece(
+    new BoxShape(),
+    {
+      position: new Vector3(251.4, 22.7, 46.13),
+      rotation: Quaternion.Euler(0, 293, 0),
+      scale: new Vector3(5.8, 1.2, 1.2),
+    },
+    'Wearables',
+    RobotID.Trade,
+    18
+  )
 
-epicInfo.addComponent(invisibleMaterial)
+  epicInfo.addComponent(invisibleMaterial)
 
-let legendaryInfo = new MuseumPiece(
-  new BoxShape(),
-  {
-    position: new Vector3(294.7, 22.7, 28.83),
-    rotation: Quaternion.Euler(0, 114, 0),
-    scale: new Vector3(5.8, 1.2, 1.2),
-  },
-  'Wearables',
-  RobotID.Trade,
-  17
-)
+  let legendaryInfo = new MuseumPiece(
+    new BoxShape(),
+    {
+      position: new Vector3(294.7, 22.7, 28.83),
+      rotation: Quaternion.Euler(0, 114, 0),
+      scale: new Vector3(5.8, 1.2, 1.2),
+    },
+    'Wearables',
+    RobotID.Trade,
+    18
+  )
 
-legendaryInfo.addComponent(invisibleMaterial)
+  legendaryInfo.addComponent(invisibleMaterial)
 
-let rareInfo = new MuseumPiece(
-  new BoxShape(),
-  {
-    position: new Vector3(281.4, 22.7, 59.17),
-    rotation: Quaternion.Euler(0, 24, 0),
-    scale: new Vector3(5.8, 1.2, 1.2),
-  },
-  'Wearables',
-  RobotID.Trade,
-  17
-)
+  let rareInfo = new MuseumPiece(
+    new BoxShape(),
+    {
+      position: new Vector3(281.4, 22.7, 59.17),
+      rotation: Quaternion.Euler(0, 24, 0),
+      scale: new Vector3(5.8, 1.2, 1.2),
+    },
+    'Wearables',
+    RobotID.Trade,
+    18
+  )
 
-rareInfo.addComponent(invisibleMaterial)
+  rareInfo.addComponent(invisibleMaterial)
+}
 
 /////// GARDEN
 
-let builderScene = new MuseumPiece(
-  new GLTFShape('models/garden/booth_builder_scene.glb'),
-  {
-    position: new Vector3(132.59, 2, 39.8),
+export function placeGardenPieces() {
+  let builderScene = new MuseumPiece(
+    new GLTFShape('models/garden/booth_builder_scene.glb'),
+    {
+      position: new Vector3(132.59, 2, 39.8),
 
-    rotation: Quaternion.Euler(0, 90, 0),
-  },
-  'Builder scene',
-  RobotID.Garden,
-  34
-)
-
-let smartItemScene = new MuseumPiece(
-  new GLTFShape('models/garden/booth_smart_items.glb'),
-  {
-    position: new Vector3(106, 2, 27.7),
-    rotation: Quaternion.Euler(0, 180, 0),
-  },
-  'Smart Item scene',
-  RobotID.Garden,
-  35
-)
-
-let creatorProgram = new Entity()
-creatorProgram.addComponent(
-  new Transform({
-    position: new Vector3(126.24, 2, 30.6),
-    rotation: Quaternion.Euler(0, 45 + 270, 0),
-  })
-)
-creatorProgram.addComponent(new GLTFShape('models/garden/creator-contest.glb'))
-engine.addEntity(creatorProgram)
-creatorProgram.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openExternalURL(
-        'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
-      )
+      rotation: Quaternion.Euler(0, 90, 0),
     },
-    { hoverText: 'Learn more', button: ActionButton.PRIMARY }
+    'Builder scene',
+    RobotID.Garden,
+    34
   )
-)
 
-let builderLink = new Entity()
-builderLink.addComponent(
-  new Transform({
-    position: new Vector3(121.6, 1.2, 20.5),
-    rotation: Quaternion.Euler(0, 0, 0),
-    scale: new Vector3(1.5, 1.5, 1.5),
-  })
-)
-builderLink.addComponent(new GLTFShape('models/garden/builder.glb'))
-engine.addEntity(builderLink)
-builderLink.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openExternalURL('https://builder.decentraland.org')
+  let smartItemScene = new MuseumPiece(
+    new GLTFShape('models/garden/booth_smart_items.glb'),
+    {
+      position: new Vector3(106, 2, 27.7),
+      rotation: Quaternion.Euler(0, 180, 0),
     },
-    { hoverText: 'Try the Builder', button: ActionButton.PRIMARY }
+    'Smart Item scene',
+    RobotID.Garden,
+    35
   )
-)
 
-let docsLink = new Entity()
-docsLink.addComponent(
-  new Transform({
-    position: new Vector3(121.6, 1.2, 17.5),
-    rotation: Quaternion.Euler(0, 0, 0),
-    scale: new Vector3(1.5, 1.5, 1.5),
-  })
-)
-docsLink.addComponent(new GLTFShape('models/garden/docs.glb'))
-
-docsLink.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openExternalURL('https://docs.decentraland.org')
-    },
-    { hoverText: 'Read the Docs', button: ActionButton.PRIMARY }
+  let creatorProgram = new Entity()
+  creatorProgram.addComponent(
+    new Transform({
+      position: new Vector3(126.24, 2, 30.6),
+      rotation: Quaternion.Euler(0, 45 + 270, 0),
+    })
   )
-)
-engine.addEntity(docsLink)
-
-let discordLink = new Entity()
-discordLink.addComponent(
-  new Transform({
-    position: new Vector3(113.6, 1.5, 20.5),
-    rotation: Quaternion.Euler(0, 0, 0),
-    scale: new Vector3(1, 1, 1),
-  })
-)
-discordLink.addComponent(new GLTFShape('models/garden/discord.glb'))
-
-discordLink.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openExternalURL('https://discordapp.com/invite/9EcuFgC')
-    },
-    { hoverText: 'Join the Discussion', button: ActionButton.PRIMARY }
+  creatorProgram.addComponent(
+    new GLTFShape('models/garden/creator-contest.glb')
   )
-)
-engine.addEntity(discordLink)
-
-let twitterLink = new Entity()
-twitterLink.addComponent(
-  new Transform({
-    position: new Vector3(113.6, 1.5, 17.5),
-    rotation: Quaternion.Euler(0, 0, 0),
-    scale: new Vector3(1, 1, 1),
-  })
-)
-twitterLink.addComponent(new GLTFShape('models/garden/twitter.glb'))
-
-twitterLink.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openExternalURL('https://twitter.com/decentraland')
-    },
-    { hoverText: 'Follow Us!', button: ActionButton.PRIMARY }
+  engine.addEntity(creatorProgram)
+  creatorProgram.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openExternalURL(
+          'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
+        )
+      },
+      { hoverText: 'Learn more', button: ActionButton.PRIMARY }
+    )
   )
-)
-engine.addEntity(twitterLink)
+
+  let builderLink = new Entity()
+  builderLink.addComponent(
+    new Transform({
+      position: new Vector3(121.6, 1.2, 20.5),
+      rotation: Quaternion.Euler(0, 0, 0),
+      scale: new Vector3(1.5, 1.5, 1.5),
+    })
+  )
+  builderLink.addComponent(new GLTFShape('models/garden/builder.glb'))
+  engine.addEntity(builderLink)
+  builderLink.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openExternalURL('https://builder.decentraland.org')
+      },
+      { hoverText: 'Try the Builder', button: ActionButton.PRIMARY }
+    )
+  )
+
+  let docsLink = new Entity()
+  docsLink.addComponent(
+    new Transform({
+      position: new Vector3(121.6, 1.2, 17.5),
+      rotation: Quaternion.Euler(0, 0, 0),
+      scale: new Vector3(1.5, 1.5, 1.5),
+    })
+  )
+  docsLink.addComponent(new GLTFShape('models/garden/docs.glb'))
+
+  docsLink.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openExternalURL('https://docs.decentraland.org')
+      },
+      { hoverText: 'Read the Docs', button: ActionButton.PRIMARY }
+    )
+  )
+  engine.addEntity(docsLink)
+
+  let discordLink = new Entity()
+  discordLink.addComponent(
+    new Transform({
+      position: new Vector3(113.6, 1.5, 20.5),
+      rotation: Quaternion.Euler(0, 0, 0),
+      scale: new Vector3(1, 1, 1),
+    })
+  )
+  discordLink.addComponent(new GLTFShape('models/garden/discord.glb'))
+
+  discordLink.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openExternalURL('https://discordapp.com/invite/9EcuFgC')
+      },
+      { hoverText: 'Join the Discussion', button: ActionButton.PRIMARY }
+    )
+  )
+  engine.addEntity(discordLink)
+
+  let twitterLink = new Entity()
+  twitterLink.addComponent(
+    new Transform({
+      position: new Vector3(113.6, 1.5, 17.5),
+      rotation: Quaternion.Euler(0, 0, 0),
+      scale: new Vector3(1, 1, 1),
+    })
+  )
+  twitterLink.addComponent(new GLTFShape('models/garden/twitter.glb'))
+
+  twitterLink.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openExternalURL('https://twitter.com/decentraland')
+      },
+      { hoverText: 'Follow Us!', button: ActionButton.PRIMARY }
+    )
+  )
+  engine.addEntity(twitterLink)
+}
 
 ///// MAP HELPERS
 
