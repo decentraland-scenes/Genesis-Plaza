@@ -1,7 +1,8 @@
 {
   "display": {
     "title": "Genesis Plaza",
-    "favicon": "favicon_asset"
+    "favicon": "favicon_asset",
+    "navmapThumbnail": "https://decentraland.org/images/thumbnail/genesis-plaza.png"
   },
   "contact": {
     "name": "Decentraland Foundation",
@@ -411,9 +412,15 @@
       "name": "center",
       "default": true,
       "position": {
-        "x": [154, 162.7],
+        "x": [
+          154,
+          162.7
+        ],
         "y": 2,
-        "z": [148, 156]
+        "z": [
+          148,
+          156
+        ]
       },
       "cameraTarget": {
         "x": 158,
@@ -425,9 +432,15 @@
       "name": "tradeCenter",
       "default": false,
       "position": {
-        "x": [226.1, 230],
+        "x": [
+          226.1,
+          230
+        ],
         "y": 2,
-        "z": [87, 90.7]
+        "z": [
+          87,
+          90.7
+        ]
       },
       "cameraTarget": {
         "x": 240,
@@ -439,9 +452,15 @@
       "name": "shell",
       "default": false,
       "position": {
-        "x": [296, 301],
+        "x": [
+          296,
+          301
+        ],
         "y": 2,
-        "z": [189, 194.6]
+        "z": [
+          189,
+          194.6
+        ]
       },
       "cameraTarget": {
         "x": 288,
@@ -453,9 +472,15 @@
       "name": "whale",
       "default": false,
       "position": {
-        "x": [201, 207],
+        "x": [
+          201,
+          207
+        ],
         "y": 2,
-        "z": [278.6, 281.6]
+        "z": [
+          278.6,
+          281.6
+        ]
       },
       "cameraTarget": {
         "x": 178,
@@ -467,9 +492,15 @@
       "name": "agora",
       "default": false,
       "position": {
-        "x": [87.7, 93],
+        "x": [
+          87.7,
+          93
+        ],
         "y": 2,
-        "z": [236, 239]
+        "z": [
+          236,
+          239
+        ]
       },
       "cameraTarget": {
         "x": 53,
@@ -481,9 +512,15 @@
       "name": "tower",
       "default": false,
       "position": {
-        "x": [25.3, 29.8],
+        "x": [
+          25.3,
+          29.8
+        ],
         "y": 2,
-        "z": [162, 166]
+        "z": [
+          162,
+          166
+        ]
       },
       "cameraTarget": {
         "x": 45,
@@ -495,9 +532,15 @@
       "name": "tower2",
       "default": false,
       "position": {
-        "x": [86.9, 93.9],
+        "x": [
+          86.9,
+          93.9
+        ],
         "y": 2,
-        "z": [90.4, 90.7]
+        "z": [
+          90.4,
+          90.7
+        ]
       },
       "cameraTarget": {
         "x": 45,
