@@ -558,7 +558,7 @@ export function placeTradecenterPieces() {
     },
     'LAND Parcel',
     RobotID.Trade,
-    13
+    12
   )
 
   let parcelPuaTC = new MuseumPiece(
@@ -578,7 +578,7 @@ export function placeTradecenterPieces() {
     },
     'Estate',
     RobotID.Trade,
-    17
+    16
   )
 
   let estatePuaTC = new MuseumPiece(
@@ -599,7 +599,7 @@ export function placeTradecenterPieces() {
     },
     'Wearables',
     RobotID.Trade,
-    18
+    17
   )
 
   mythicInfo.addComponent(invisibleMaterial)
@@ -613,7 +613,7 @@ export function placeTradecenterPieces() {
     },
     'Wearables',
     RobotID.Trade,
-    18
+    17
   )
 
   epicInfo.addComponent(invisibleMaterial)
@@ -627,7 +627,7 @@ export function placeTradecenterPieces() {
     },
     'Wearables',
     RobotID.Trade,
-    18
+    17
   )
 
   legendaryInfo.addComponent(invisibleMaterial)
@@ -641,7 +641,7 @@ export function placeTradecenterPieces() {
     },
     'Wearables',
     RobotID.Trade,
-    18
+    17
   )
 
   rareInfo.addComponent(invisibleMaterial)

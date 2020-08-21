@@ -73,7 +73,7 @@ addOneTimeTrigger(new Vector3(269, 5, 37), new Vector3(80, 80, 80), () => {
 
 /// GARDEN
 
-addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(50, 50, 50), () => {
+addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(60, 60, 60), () => {
   placeGardenPieces()
 })
 
@@ -113,10 +113,10 @@ let forest2 = new AmbientSound(
   0.6
 )
 
-let thunder = new AmbientSound(
-  { position: new Vector3(43, 45, 113) },
-  'sounds/thunder.mp3',
-  0,
-  true,
-  0.2
-)
+// let thunder = new AmbientSound(
+//   { position: new Vector3(43, 45, 113) },
+//   'sounds/thunder.mp3',
+//   0,
+//   true,
+//   0.2
+// )
