@@ -1,7 +1,8 @@
 {
   "display": {
     "title": "Genesis Plaza",
-    "favicon": "favicon_asset"
+    "favicon": "favicon_asset",
+    "navmapThumbnail": "https://decentraland.org/images/thumbnail/genesis-plaza.png"
   },
   "contact": {
     "name": "Decentraland Foundation",
