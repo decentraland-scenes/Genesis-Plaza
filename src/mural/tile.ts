@@ -1,5 +1,5 @@
 import { changeMural } from './serverHandler'
-import resources from "../resources"
+import resources from '../resources'
 
 // Setup for multiplayer
 export const sceneMessageBus = new MessageBus()
@@ -52,10 +52,8 @@ export class Tile extends Entity {
     // Flip sound when changing tile color
     const sound = new Entity()
     sound.addComponent(new Transform())
-    sound.getComponent(Transform).position = Camera.instance.position
-    sound.addComponent(
-      new AudioSource(resources.sounds.ui.navigationForward)
-    )
+    sound.setParent(Attachable.PLAYER)
+    sound.addComponent(new AudioSource(resources.sounds.ui.navigationForward))
     engine.addEntity(sound)
 
     // Tile ID

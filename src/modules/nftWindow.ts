@@ -144,7 +144,7 @@ export class NFTWindow {
 
     // Sound
     this.sound.addComponent(new Transform())
-    this.sound.getComponent(Transform).position = Camera.instance.position
+    this.sound.setParent(Attachable.PLAYER)
     this.sound.addComponent(
       new AudioSource(resources.sounds.ui.navigationBackward)
     )
@@ -152,7 +152,6 @@ export class NFTWindow {
   }
 
   public openNFTWindow(id: number): void {
-
     for (let i = 0; i < nftData.length; i++) {
       if (id == nftData[i].id) {
         this.nftImage.source = new Texture(nftData[i].images)

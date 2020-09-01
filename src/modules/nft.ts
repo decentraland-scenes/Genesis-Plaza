@@ -1,6 +1,6 @@
-import { NFTWindow } from "./nftWindow"
-import resources from "../resources"
-import { updateOpenUITime, setUiOpener } from "./ui"
+import { NFTWindow } from './nftWindow'
+import resources from '../resources'
+import { updateOpenUITime, setUiOpener } from './ui'
 
 export class NFT extends Entity {
   public id: number
@@ -22,8 +22,10 @@ export class NFT extends Entity {
 
     // Sound
     this.sound.addComponent(new Transform())
-    this.sound.getComponent(Transform).position = Camera.instance.position
-    this.sound.addComponent(new AudioSource(resources.sounds.ui.navigationForward))
+    this.sound.setParent(Attachable.PLAYER)
+    this.sound.addComponent(
+      new AudioSource(resources.sounds.ui.navigationForward)
+    )
     engine.addEntity(this.sound)
 
     this.addComponent(
@@ -37,7 +39,7 @@ export class NFT extends Entity {
         },
         {
           button: ActionButton.PRIMARY,
-          hoverText: "More Info",
+          hoverText: 'More Info',
           distance: 8,
         }
       )
