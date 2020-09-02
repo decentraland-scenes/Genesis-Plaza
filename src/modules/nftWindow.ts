@@ -144,11 +144,11 @@ export class NFTWindow {
 
     // Sound
     this.sound.addComponent(new Transform())
-    this.sound.setParent(Attachable.PLAYER)
     this.sound.addComponent(
       new AudioSource(resources.sounds.ui.navigationBackward)
     )
     engine.addEntity(this.sound)
+    this.sound.setParent(Attachable.PLAYER)
   }
 
   public openNFTWindow(id: number): void {

@@ -22,11 +22,11 @@ export class NFT extends Entity {
 
     // Sound
     this.sound.addComponent(new Transform())
-    this.sound.setParent(Attachable.PLAYER)
     this.sound.addComponent(
       new AudioSource(resources.sounds.ui.navigationForward)
     )
     engine.addEntity(this.sound)
+    this.sound.setParent(Attachable.PLAYER)
 
     this.addComponent(
       new OnPointerDown(

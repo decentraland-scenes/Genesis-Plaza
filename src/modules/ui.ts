@@ -18,20 +18,20 @@ export const openDialogSound = new Entity()
 openDialogSound.addComponent(new Transform())
 // This seems to work even when the player moves as oppose to getting the transform from the item
 // as the items transform might not be matching their position visuallly
-openDialogSound.setParent(Attachable.PLAYER)
 openDialogSound.addComponent(
   new AudioSource(resources.sounds.ui.navigationForward)
 )
 engine.addEntity(openDialogSound)
+openDialogSound.setParent(Attachable.PLAYER)
 
 // Close dialog sound
 export const closeDialogSound = new Entity()
 closeDialogSound.addComponent(new Transform())
-closeDialogSound.setParent(Attachable.PLAYER)
 closeDialogSound.addComponent(
   new AudioSource(resources.sounds.ui.navigationBackward)
 )
 engine.addEntity(closeDialogSound)
+closeDialogSound.setParent(Attachable.PLAYER)
 
 export function closeUI(npc?: boolean) {
   messagebg.visible = false

@@ -52,9 +52,9 @@ export class Tile extends Entity {
     // Flip sound when changing tile color
     const sound = new Entity()
     sound.addComponent(new Transform())
-    sound.setParent(Attachable.PLAYER)
     sound.addComponent(new AudioSource(resources.sounds.ui.navigationForward))
     engine.addEntity(sound)
+    sound.setParent(Attachable.PLAYER)
 
     // Tile ID
     this.tileIndex = tileIndex
