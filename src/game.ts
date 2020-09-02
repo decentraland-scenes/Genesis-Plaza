@@ -20,6 +20,8 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
+import { getUserData } from '@decentraland/Identity'
+import Meta from '../metas/sammich/sammich'
 
 //////// LOG PLAYER POSITION
 
@@ -120,3 +122,42 @@ let forest2 = new AmbientSound(
 //   true,
 //   0.2
 // )
+
+/// METAS
+
+/***
+ * SAMMICH-GAME CODE BELLOW
+ */
+const landOwnerData = {
+  host_data: `{
+	  "sammich":{
+		"position":{"x":${9 * 16 - 11.1},"y":1.4,"z":${9 * 16 + 8}},
+		"rotation":{"x":0,"y":270,"z":0},
+		"scale":{"x":1.2, "y":1.05, "z":1},     
+		"hideBoard": false,
+		"hideAd": true,
+		"gameID": "0,0",
+		"soundDistance": 16,
+		"showScenario": false,
+		"hideFrame": true,
+		"showJoinVoice": false,
+		"voiceChannel": "dcl-sammich-game",
+		"serverWs": "wss://foo.mana-fever.fun",
+		"serverHttp": "https://foo.mana-fever.fun"
+	  }
+   }`,
+}
+const sammichFrame = new Entity()
+const sammichFrameShape = new GLTFShape('models/sammich-screen.glb')
+sammichFrameShape.isPointerBlocker = false
+sammichFrame.addComponent(sammichFrameShape)
+sammichFrame.addComponent(
+  new Transform({
+    position: new Vector3(9 * 16 - 11, 0.5, 9 * 16 + 8),
+    scale: new Vector3(1.2, 1.2, 1.2),
+    rotation: Quaternion.Euler(0, 90, 0),
+  })
+)
+engine.addEntity(sammichFrame)
+
+engine.addSystem(new Meta({ getUserData }, landOwnerData))
