@@ -20,7 +20,7 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
-import { getUserData } from '@decentraland/Identity'
+import { getUserData, getUserPublicKey } from '@decentraland/Identity'
 import Meta from '../metas/sammich/sammich'
 
 //////// LOG PLAYER POSITION
@@ -161,3 +161,89 @@ sammichFrame.addComponent(
 engine.addEntity(sammichFrame)
 
 engine.addSystem(new Meta({ getUserData }, landOwnerData))
+
+// Chess game
+
+import { PawnsSquare } from '../metas/pawnssquare/pawnssquare'
+import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
+
+import { userDat } from '../metas/pawnssquare/modules/dat/gameData'
+
+const FetchuserInformation = async () => {
+  const userInfo = await getUserData()
+  if (userInfo !== undefined) userDat.setUID(userInfo.displayName)
+  else userDat.setUID('Guest' + Math.floor(Math.random() * 1000000))
+
+  const publicKeyInfo = await getUserPublicKey()
+  userDat.setETHAdd(publicKeyInfo)
+
+  const realm = await getCurrentRealm()
+  userDat.setRealm(realm.displayName)
+}
+
+FetchuserInformation()
+  .then(() => {
+    const chessBoardLandOwnerData = {
+      host_data: `{
+              "time_control": 600,
+              "system_pivot": {
+				"position": {"x":180, "y":1.2, "z":152},
+				"scale": {"x":1, "y":1, "z":1}
+              },
+              "chessboard": {
+                  "visible": true,
+				  "position": {"x":180, "y":1.2, "z":152},
+                  "scale": {"x":1.1, "y":1.1, "z":1.1}
+              },
+              "decoration_bottom": {
+                  "visible": true,
+                  "position": {"x":180, "y":0.7, "z":152},
+                  "rotation": {"x":0, "y":0, "z":0},
+                  "scale": {"x":0.8, "y":0.8, "z":0.8}
+              }
+          }`,
+    }
+
+    new PawnsSquare(chessBoardLandOwnerData)
+  })
+  .catch((err) => {
+    log("Can't load Pawn's Square, fetch user data failed", err)
+  })
+
+// const mzAPI = new MetaZoneAPI(
+//   getProvider,
+//   getUserData,
+//   getCurrentRealm,
+//   EthereumController,
+//   EthConnect,
+//   dcl,
+//   () => {
+//     const chessBoardLandOwnerData = {
+//       host_data: `{
+//               "time_control": 600,
+//               "system_pivot": {
+//                   "position": {"x":180, "y":1.2, "z":152},
+//                   "scale": {"x":1, "y":1, "z":1}
+//               },
+//               "chessboard": {
+//                   "visible": true,
+// 				  "position": {"x":180, "y":1.2, "z":152},
+//                   "scale": {"x":1, "y":1, "z":1}
+//               },
+//               "decoration_bottom": {
+//                   "visible": true,
+// 				  "position": {"x":180, "y":0.7, "z":152},
+//                   "rotation": {"x":0, "y":0, "z":0},
+//                   "scale": {"x":1, "y":1, "z":1}
+//               },
+//               "decoration_top":{
+//                   "visible": true,
+// 				  "position": {"x":180, "y":0.7, "z":152},
+//                   "rotation": {"x":0, "y":0, "z":0},
+//                   "scale": {"x":1, "y":1, "z":1}
+//               }
+//           }`,
+//     }
+//     engine.addSystem(new PawnsSquare(mzAPI, chessBoardLandOwnerData))
+//   }
+// )

@@ -5,7 +5,6 @@ import {
   serverChecker,
 } from './messageboard'
 import { updateTradeCentrer } from './marketData'
-import { displayEvent } from './eventBoard'
 
 export const sceneMessageBus = new MessageBus()
 

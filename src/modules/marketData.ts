@@ -2492,39 +2492,39 @@ export function updateTradeCentrer(data: MarketData) {
 
   ////// ROOFTOP MUSIC
 
-  const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
+//   const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
 
-  const marketMusicStreamEnt = new Entity()
-  engine.addEntity(marketMusicStreamEnt)
+//   const marketMusicStreamEnt = new Entity()
+//   engine.addEntity(marketMusicStreamEnt)
 
-  let marketMusicStream = new AudioStream(rooftopStation)
-  marketMusicStream.playing = false
-  marketMusicStreamEnt.addComponent(marketMusicStream)
+//   let marketMusicStream = new AudioStream(rooftopStation)
+//   marketMusicStream.playing = false
+//   marketMusicStreamEnt.addComponent(marketMusicStream)
 
-  const marketRoofTrigger = new Entity()
-  marketRoofTrigger.addComponent(
-    new Transform({ position: new Vector3(272, 29.7, 36) })
-  )
+//   const marketRoofTrigger = new Entity()
+//   marketRoofTrigger.addComponent(
+//     new Transform({ position: new Vector3(272, 29.7, 36) })
+//   )
 
-  let marketRoofTriggerBox = new utils.TriggerBoxShape(
-    new Vector3(60, 6, 69),
-    Vector3.Zero()
-  )
-  marketRoofTrigger.addComponent(
-    new utils.TriggerComponent(
-      marketRoofTriggerBox, //shape
-      0, //layer
-      0, //triggeredByLayer
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      () => {
-        marketMusicStream.playing = true
-      },
-      () => {
-        marketMusicStream.playing = false
-      }, //onCameraExit
-      false
-    )
-  )
-  engine.addEntity(marketRoofTrigger)
-}
+//   let marketRoofTriggerBox = new utils.TriggerBoxShape(
+//     new Vector3(60, 6, 69),
+//     Vector3.Zero()
+//   )
+//   marketRoofTrigger.addComponent(
+//     new utils.TriggerComponent(
+//       marketRoofTriggerBox, //shape
+//       0, //layer
+//       0, //triggeredByLayer
+//       null, //onTriggerEnter
+//       null, //onTriggerExit
+//       () => {
+//         marketMusicStream.playing = true
+//       },
+//       () => {
+//         marketMusicStream.playing = false
+//       }, //onCameraExit
+//       false
+//     )
+//   )
+//   engine.addEntity(marketRoofTrigger)
+// }
