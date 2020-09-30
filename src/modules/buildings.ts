@@ -342,3 +342,12 @@ zepellin.addComponent(new Transform({
 ))
 engine.addEntity(zepellin)
 
+//add halloween assets
+let halloween_assets = new Entity()
+halloween_assets.addComponent(new GLTFShape("models/halloween_assets.glb"))
+halloween_assets.addComponent(new Transform({
+  rotation: Quaternion.Euler(0, 180, 0),
+  
+}
+))
+engine.addEntity(halloween_assets)
