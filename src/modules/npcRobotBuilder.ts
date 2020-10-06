@@ -4,6 +4,7 @@ import resources from "../resources"
 import utils from "../../node_modules/decentraland-ecs-utils/index"
 import { TrackUserSlerp } from "./npcFaceUserSystem"
 import { updateOpenUITime, setUiOpener } from "./ui"
+import { tutorialEnableObservable } from "./tutorialHandler"
 
 /*
   Main = 0 (Alice)
@@ -35,6 +36,12 @@ export function addRobots(dummyTarget: Entity) {
     resources.sounds.robots.alice
   )
   robots.push(alice)
+
+  tutorialEnableObservable.add(tutorialEnabled => {
+    let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
+    alice.getComponent(Transform).scale = scale
+  })
+
   const aliceRings = new Entity()
   aliceRings.addComponent(ringShape)
   aliceRings.addComponent(
