@@ -30,4 +30,5 @@ jobs:
         if: ${{ always() }}
         with:
           name: scene-${{ github.sha }}
-          path: *.zip
+          path: |
+            *.zip
