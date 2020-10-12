@@ -3,6 +3,7 @@ import { nextDay, updateProgression } from '../halloweenQuests/progression'
 import { quest } from '../halloweenQuests/quest'
 import * as ui from '../../node_modules/@dcl/ui-utils/index'
 import { lady } from '../game'
+import { startGemUI } from '../halloweenQuests/pumpkin'
 
 /// DAY 1
 
@@ -37,12 +38,35 @@ export let day1Intro: Dialog[] = [
   {
     text: `Oh good, I knew you were a good person!`,
     triggeredByNext: () => {
-      // pumpin timer, etc
+      startGemUI()
+      quest.showCheckBox(3)
+      updateProgression('NPCIntroDay1', true)
     },
     isEndOfDialog: true,
   },
   {
     text: `Too bad. I guess I can't really trust you with confidential information, I have no idea who you are.`,
+    isEndOfDialog: true,
+  },
+]
+
+export let firstPumpkin: Dialog[] = [
+  {
+    text: `Nice! That felt good, right? There are plenty more of those around the plaza, go find them!`,
+    isEndOfDialog: true,
+  },
+]
+
+export let resetPumpkins: Dialog[] = [
+  {
+    text: `Too slow, we need to start over!`,
+    isEndOfDialog: true,
+  },
+]
+
+export let allPumpkins: Dialog[] = [
+  {
+    text: `Great job, that's the last one! Come on over here now and I'll tell you.`,
     isEndOfDialog: true,
   },
 ]
@@ -78,6 +102,8 @@ export let day1Success: Dialog[] = [
   {
     text: `Might be worth checking around that building.`,
     triggeredByNext: () => {
+      quest.showCheckBox(4)
+      quest.showCheckBox(5)
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
     isEndOfDialog: true,
@@ -89,6 +115,7 @@ export let day1Outro: Dialog[] = [
     text: `This is a really interesting finding, well done!`,
     triggeredByNext: () => {
       quest.checkBox(5)
+      updateProgression('NPCOutroDay1')
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
@@ -152,6 +179,13 @@ export let dismiss: Dialog[] = [
   },
   {
     text: `There's clearly more to this mystery than we've found so far! But let me rest my bones a little and we'll continue tomorrow.`,
+    isEndOfDialog: true,
+  },
+]
+
+export let stay: Dialog[] = [
+  {
+    text: `Don't walk away from the plaza! What we're looking for has to be somewhere here.`,
     isEndOfDialog: true,
   },
 ]

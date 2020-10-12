@@ -25,12 +25,21 @@ import { checkProgression, progression } from './halloweenQuests/progression'
 import { HalloweenState, initialQuestUI } from './halloweenQuests/quest'
 import { NPC } from './NPC/npc'
 import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
+import utils from '../node_modules/decentraland-ecs-utils/index'
 
 //////// LOG PLAYER POSITION
 
 Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
-  log(`pos: `, Camera.instance.position)
-  log(`rot: `, Camera.instance.rotation)
+  log(
+    `{ pos: new Vector3(`,
+    Camera.instance.position.x,
+    ',',
+    Camera.instance.position.y,
+    ',',
+    Camera.instance.position.z,
+    `) },`
+  )
+  //log(`rot: `, Camera.instance.rotation)
 })
 
 //// ADD BUILDINGS
@@ -177,7 +186,11 @@ import {
   day3Intro,
   day4Intro,
   dismiss,
+  stay,
 } from './NPC/dialog'
+import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
+import { PointerArrow } from './halloweenQuests/pointerArrow'
+import { TrashBin } from './halloweenQuests/trashBin'
 
 const FetchuserInformation = async () => {
   const userInfo = await getUserData()
@@ -223,6 +236,7 @@ FetchuserInformation()
 setUpScene()
 
 export let lady: NPC
+export let arrow: PointerArrow
 
 export async function setUpScene() {
   await checkProgression()
@@ -232,20 +246,41 @@ export async function setUpScene() {
   if (progression.data.phone && !progression.data.NPCOutroDay4) {
     lady = new NPC(
       {
-        position: new Vector3(160, 2, 180),
+        position: new Vector3(160, 1, 180),
         rotation: Quaternion.Euler(0, 180, 0),
       },
-      new GLTFShape('models/robots/alice.glb'),
+      new GLTFShape('models/halloween/npc.glb'),
       () => {
         oldLadyTalk()
-      }
+      },
+      'images/halloween/npc.png'
     )
+
+    arrow = new PointerArrow(
+      {
+        position: new Vector3(0, 2.5, 0),
+        scale: new Vector3(1.5, 1.5, 1.5),
+      },
+      lady
+    )
+  }
+
+  if (progression.data.phone && !progression.data.NPCOutroDay1) {
+    let trashBin = new TrashBin({
+      position: new Vector3(
+        307.7609558105469,
+        2.1607322692871094,
+        156.81400775909424
+      ),
+    })
+    addLimits()
   }
 }
 
 export function oldLadyTalk() {
   let data = progression.data
   let day = progression.day
+
   // different days
   log(data)
   if (data.NPCOutroDay3 && !data.w4Found && day >= 4) {
@@ -275,4 +310,32 @@ export function oldLadyTalk() {
     let randomIndex = Math.floor(Math.random() * 3)
     lady.talk(dismiss, randomIndex)
   }
+}
+
+// when bursting pumpkins
+
+export function addLimits() {
+  let sceneLimitsTrigger = new Entity()
+  sceneLimitsTrigger.addComponent(
+    new Transform({
+      position: new Vector3(160, 8, 160),
+    })
+  )
+  engine.addEntity(sceneLimitsTrigger)
+  sceneLimitsTrigger.addComponent(
+    new utils.TriggerComponent(
+      new TriggerBoxShape(new Vector3(16 * 18.8, 50, 16 * 15), Vector3.Zero()),
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => {
+        log('walking out')
+        if (progression.data.NPCIntroDay1 && !progression.data.w1Found) {
+          lady.talk(stay, 0)
+        }
+      }
+    )
+  )
 }

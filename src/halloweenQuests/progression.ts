@@ -57,9 +57,9 @@ export async function checkProgression() {
   }
 }
 
-export async function updateProgression(stage: string) {
-  if (TESTDATA_ENABLED && IN_PREVIEW) {
-    progression[stage] = true
+export async function updateProgression(stage: string, onlyLocal?: boolean) {
+  if (onlyLocal || (TESTDATA_ENABLED && IN_PREVIEW)) {
+    progression.data[stage] = true
     return true
   }
 
@@ -90,7 +90,7 @@ export async function updateProgression(stage: string) {
     let data = await response.json()
     log('Player progression: ', data)
     if (data.success) {
-      progression[stage] = true
+      progression.data[stage] = true
     }
     return data.success
   } catch {
