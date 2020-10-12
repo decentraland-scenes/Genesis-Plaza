@@ -26,7 +26,7 @@ export class NFT extends Entity {
       new AudioSource(resources.sounds.ui.navigationForward)
     )
     engine.addEntity(this.sound)
-    this.sound.setParent(Attachable.PLAYER)
+    this.sound.setParent(Attachable.AVATAR)
 
     this.addComponent(
       new OnPointerDown(

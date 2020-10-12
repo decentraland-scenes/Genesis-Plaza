@@ -13,7 +13,6 @@ import { addBuildings } from './modules/buildings'
 import { addFaceUserSystem } from './modules/npcFaceUserSystem'
 import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
-import { addMural } from './mural/muralBuilder'
 import { addPiano } from './piano/pianoBuilder'
 import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
@@ -22,6 +21,7 @@ import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
 import { getUserData, getUserPublicKey } from '@decentraland/Identity'
 import Meta from '../metas/sammich/sammich'
+import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 
 //////// LOG PLAYER POSITION
 
@@ -142,8 +142,8 @@ const landOwnerData = {
 		"hideFrame": true,
 		"showJoinVoice": false,
 		"voiceChannel": "dcl-sammich-game",
-		"serverWs": "wss://foo.mana-fever.fun",
-		"serverHttp": "https://foo.mana-fever.fun"
+		"serverWs": "wss://mana-fever.com",
+		"serverHttp":  "https://mana-fever.com"
 	  }
    }`,
 }
@@ -160,13 +160,11 @@ sammichFrame.addComponent(
 )
 engine.addEntity(sammichFrame)
 
-engine.addSystem(new Meta({ getUserData }, landOwnerData))
+engine.addSystem(new Meta({ getUserData, getCurrentRealm }, landOwnerData))
 
 // Chess game
 
 import { PawnsSquare } from '../metas/pawnssquare/pawnssquare'
-import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
-
 import { userDat } from '../metas/pawnssquare/modules/dat/gameData'
 
 const FetchuserInformation = async () => {
