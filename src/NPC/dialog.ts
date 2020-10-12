@@ -151,7 +151,7 @@ export let dismiss: Dialog[] = [
     isEndOfDialog: true,
   },
   {
-    text: `Check in with me tomorrow, same time same place!`,
+    text: `There's clearly more to this mystery than we've found so far! But let me rest my bones a little and we'll continue tomorrow.`,
     isEndOfDialog: true,
   },
 ]

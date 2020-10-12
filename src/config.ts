@@ -19,8 +19,8 @@ export let TESTQUESTSTATE: HalloweenState = {
     phone: true,
     NPCIntroDay1: true,
     pumpkinDone: true,
-    w1Found: false,
-    w1Claimed: false,
+    w1Found: true,
+    w1Claimed: true,
     NPCOutroDay1: false,
 
     // day 2

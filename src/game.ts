@@ -272,8 +272,7 @@ export function oldLadyTalk() {
     (data.NPCOutroDay2 && day == 2) ||
     (data.NPCOutroDay1 && day == 1)
   ) {
-    lady.talk(dismiss, 0)
+    let randomIndex = Math.floor(Math.random() * 3)
+    lady.talk(dismiss, randomIndex)
   }
-
-  lady.talk(day1Intro, 0)
 }
