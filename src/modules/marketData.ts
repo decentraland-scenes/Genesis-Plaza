@@ -2489,6 +2489,7 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard2
   )
+}
 
   ////// ROOFTOP MUSIC
 

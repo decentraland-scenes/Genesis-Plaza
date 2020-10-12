@@ -54,7 +54,7 @@ export class Tile extends Entity {
     sound.addComponent(new Transform())
     sound.addComponent(new AudioSource(resources.sounds.ui.navigationForward))
     engine.addEntity(sound)
-    sound.setParent(Attachable.PLAYER)
+    sound.setParent(Attachable.AVATAR)
 
     // Tile ID
     this.tileIndex = tileIndex

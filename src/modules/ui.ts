@@ -22,7 +22,7 @@ openDialogSound.addComponent(
   new AudioSource(resources.sounds.ui.navigationForward)
 )
 engine.addEntity(openDialogSound)
-openDialogSound.setParent(Attachable.PLAYER)
+openDialogSound.setParent(Attachable.AVATAR)
 
 // Close dialog sound
 export const closeDialogSound = new Entity()
@@ -31,7 +31,7 @@ closeDialogSound.addComponent(
   new AudioSource(resources.sounds.ui.navigationBackward)
 )
 engine.addEntity(closeDialogSound)
-closeDialogSound.setParent(Attachable.PLAYER)
+closeDialogSound.setParent(Attachable.AVATAR)
 
 export function closeUI(npc?: boolean) {
   messagebg.visible = false

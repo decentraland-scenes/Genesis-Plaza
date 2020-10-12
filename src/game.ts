@@ -22,6 +22,9 @@ import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
 import { getUserData, getUserPublicKey } from '@decentraland/Identity'
 import Meta from '../metas/sammich/sammich'
+import { checkProgression, progression } from './halloweenQuests/progression'
+import { HalloweenState, initialQuestUI } from './halloweenQuests/quest'
+import { NPC } from './NPC/npc'
 
 //////// LOG PLAYER POSITION
 
@@ -168,6 +171,15 @@ import { PawnsSquare } from '../metas/pawnssquare/pawnssquare'
 import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 
 import { userDat } from '../metas/pawnssquare/modules/dat/gameData'
+import {
+  day1Intro,
+  day1Outro,
+  day1Success,
+  day2Intro,
+  day3Intro,
+  day4Intro,
+  dismiss,
+} from './NPC/dialog'
 
 const FetchuserInformation = async () => {
   const userInfo = await getUserData()
@@ -210,40 +222,60 @@ FetchuserInformation()
     log("Can't load Pawn's Square, fetch user data failed", err)
   })
 
-// const mzAPI = new MetaZoneAPI(
-//   getProvider,
-//   getUserData,
-//   getCurrentRealm,
-//   EthereumController,
-//   EthConnect,
-//   dcl,
-//   () => {
-//     const chessBoardLandOwnerData = {
-//       host_data: `{
-//               "time_control": 600,
-//               "system_pivot": {
-//                   "position": {"x":180, "y":1.2, "z":152},
-//                   "scale": {"x":1, "y":1, "z":1}
-//               },
-//               "chessboard": {
-//                   "visible": true,
-// 				  "position": {"x":180, "y":1.2, "z":152},
-//                   "scale": {"x":1, "y":1, "z":1}
-//               },
-//               "decoration_bottom": {
-//                   "visible": true,
-// 				  "position": {"x":180, "y":0.7, "z":152},
-//                   "rotation": {"x":0, "y":0, "z":0},
-//                   "scale": {"x":1, "y":1, "z":1}
-//               },
-//               "decoration_top":{
-//                   "visible": true,
-// 				  "position": {"x":180, "y":0.7, "z":152},
-//                   "rotation": {"x":0, "y":0, "z":0},
-//                   "scale": {"x":1, "y":1, "z":1}
-//               }
-//           }`,
-//     }
-//     engine.addSystem(new PawnsSquare(mzAPI, chessBoardLandOwnerData))
-//   }
-// )
+setUpScene()
+
+export let lady: NPC
+
+export async function setUpScene() {
+  await checkProgression()
+
+  initialQuestUI(progression.data, progression.day)
+
+  if (progression.data.phone && !progression.data.NPCOutroDay4) {
+    lady = new NPC(
+      {
+        position: new Vector3(160, 2, 180),
+        rotation: Quaternion.Euler(0, 180, 0),
+      },
+      new GLTFShape('models/robots/alice.glb'),
+      () => {
+        oldLadyTalk()
+      }
+    )
+  }
+}
+
+export function oldLadyTalk() {
+  let data = progression.data
+  let day = progression.day
+  // different days
+  log(data)
+  if (data.NPCOutroDay3 && !data.w4Found && day >= 4) {
+    //day 4 intro
+    lady.talk(day4Intro, 0)
+  } else if (data.NPCOutroDay2 && !data.w3Found && day >= 3) {
+    // day 3 intro
+    lady.talk(day3Intro, 0)
+  } else if (data.NPCOutroDay1 && !data.w2Found && day >= 2) {
+    // day 2 intro
+    lady.talk(day2Intro, 0)
+  } else if (data.w1Found && !data.NPCOutroDay1) {
+    // day 1 outro
+    lady.talk(day1Outro, 0)
+  } else if (data.pumpkinDone && !data.w1Found) {
+    // look for wearable
+    lady.talk(day1Success, 0)
+  } else if (data.phone && !data.pumpkinDone) {
+    // day 1 intro
+    lady.talk(day1Intro, 0)
+  } else if (
+    (data.NPCOutroDay4 && day == 4) ||
+    (data.NPCOutroDay3 && day == 3) ||
+    (data.NPCOutroDay2 && day == 2) ||
+    (data.NPCOutroDay1 && day == 1)
+  ) {
+    lady.talk(dismiss, 0)
+  }
+
+  lady.talk(day1Intro, 0)
+}
