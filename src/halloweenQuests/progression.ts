@@ -11,7 +11,7 @@ import {
   TESTQUESTSTATE,
 } from '../config'
 
-import { HalloweenState, initialQuestUI } from './quest'
+import { HalloweenState, initialQuestUI, quest } from './quest'
 import * as ui from '../../node_modules/@dcl/ui-utils/index'
 
 export let progression: HalloweenState
@@ -106,6 +106,7 @@ export function nextDay(nextDay: number) {
 
     return false
   }
+  quest.close()
 
   initialQuestUI(progression.data, progression.day)
 }

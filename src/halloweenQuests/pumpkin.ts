@@ -35,6 +35,7 @@ export class Pumpkin extends Entity {
           lady.talk(allPumpkins, 0)
           quest.checkBox(3)
           updateProgression('pumpkinDone', true)
+          arrow.move(lady)
         }
       })
     )
@@ -190,9 +191,9 @@ export let gemsCounter = new ui.UICounter(
   48,
   true
 )
-export let secondsCounter = new ui.UICounter(66, -14, 49, Color4.Black())
+export let secondsCounter = new ui.UICounter(59, -14, 49, Color4.Black())
 export let timerSeparaor = new ui.CornerLabel(':', -39, 49, Color4.Black())
-export let minutesCounter = new ui.UICounter(6, -64, 49, Color4.Black())
+export let minutesCounter = new ui.UICounter(5, -64, 49, Color4.Black())
 gemsCounter.uiText.font = SFHeavyFont
 gemsCounter.uiText.visible = false
 secondsCounter.uiText.visible = false

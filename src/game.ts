@@ -22,7 +22,7 @@ import { addOneTimeTrigger } from './modules/Utils'
 import { getUserData, getUserPublicKey } from '@decentraland/Identity'
 import Meta from '../metas/sammich/sammich'
 import { checkProgression, progression } from './halloweenQuests/progression'
-import { HalloweenState, initialQuestUI } from './halloweenQuests/quest'
+import { initialQuestUI, quest } from './halloweenQuests/quest'
 import { NPC } from './NPC/npc'
 import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 import utils from '../node_modules/decentraland-ecs-utils/index'
@@ -186,6 +186,7 @@ import {
   day3Intro,
   day4Intro,
   dismiss,
+  morePumpkins,
   stay,
 } from './NPC/dialog'
 import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
@@ -253,7 +254,8 @@ export async function setUpScene() {
       () => {
         oldLadyTalk()
       },
-      'images/halloween/npc.png'
+      'images/halloween/npc.png',
+      8
     )
 
     arrow = new PointerArrow(
@@ -263,15 +265,13 @@ export async function setUpScene() {
       },
       lady
     )
+
+    initialArrowState()
   }
 
   if (progression.data.phone && !progression.data.NPCOutroDay1) {
     let trashBin = new TrashBin({
-      position: new Vector3(
-        307.7609558105469,
-        2.1607322692871094,
-        156.81400775909424
-      ),
+      position: new Vector3(284, 1, 12.5),
     })
     addLimits()
   }
@@ -281,26 +281,34 @@ export function oldLadyTalk() {
   let data = progression.data
   let day = progression.day
 
-  // different days
-  log(data)
   if (data.NPCOutroDay3 && !data.w4Found && day >= 4) {
     //day 4 intro
     lady.talk(day4Intro, 0)
+    arrow.hide()
   } else if (data.NPCOutroDay2 && !data.w3Found && day >= 3) {
     // day 3 intro
     lady.talk(day3Intro, 0)
+    arrow.hide()
   } else if (data.NPCOutroDay1 && !data.w2Found && day >= 2) {
     // day 2 intro
     lady.talk(day2Intro, 0)
+    arrow.hide()
   } else if (data.w1Found && !data.NPCOutroDay1) {
     // day 1 outro
     lady.talk(day1Outro, 0)
+    arrow.hide()
   } else if (data.pumpkinDone && !data.w1Found) {
     // look for wearable
     lady.talk(day1Success, 0)
+    arrow.hide()
+  } else if (lady.introduced && !data.pumpkinDone) {
+    // still smashing pumpkins
+    lady.talk(morePumpkins, 0)
   } else if (data.phone && !data.pumpkinDone) {
     // day 1 intro
     lady.talk(day1Intro, 0)
+    lady.introduced = true
+    quest.checkBox(2)
   } else if (
     (data.NPCOutroDay4 && day == 4) ||
     (data.NPCOutroDay3 && day == 3) ||
@@ -324,7 +332,10 @@ export function addLimits() {
   engine.addEntity(sceneLimitsTrigger)
   sceneLimitsTrigger.addComponent(
     new utils.TriggerComponent(
-      new TriggerBoxShape(new Vector3(16 * 18.8, 50, 16 * 15), Vector3.Zero()),
+      new TriggerBoxShape(
+        new Vector3(16 * 18.8, 50, 16 * 17.5),
+        Vector3.Zero()
+      ),
       null,
       null,
       null,
@@ -338,4 +349,20 @@ export function addLimits() {
       }
     )
   )
+}
+
+export function initialArrowState() {
+  let data = progression.data
+  let day = progression.day
+
+  if (
+    (data.NPCOutroDay3 && !data.w4Found && day >= 4) ||
+    (data.NPCOutroDay2 && !data.w3Found && day >= 3) ||
+    (data.NPCOutroDay1 && !data.w2Found && day >= 2) ||
+    (data.phone && !data.NPCOutroDay1)
+  ) {
+    arrow.move(lady)
+  } else {
+    arrow.hide()
+  }
 }

@@ -10,9 +10,7 @@ import { startGemUI } from '../halloweenQuests/pumpkin'
 export let day1Intro: Dialog[] = [
   {
     text: `Hi dear, it was you I was on the phone with earlier, right?`,
-    triggeredByNext: () => {
-      quest.checkBox(2)
-    },
+    triggeredByNext: () => {},
   },
   {
     text: `I have an idea of who might have killed that person... but I'd appreciate a little help first.`,
@@ -53,6 +51,13 @@ export let day1Intro: Dialog[] = [
 export let firstPumpkin: Dialog[] = [
   {
     text: `Nice! That felt good, right? There are plenty more of those around the plaza, go find them!`,
+    isEndOfDialog: true,
+  },
+]
+
+export let morePumpkins: Dialog[] = [
+  {
+    text: `There are still more rotten pumpkins out there, I can smell them from here`,
     isEndOfDialog: true,
   },
 ]

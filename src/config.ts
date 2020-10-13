@@ -17,9 +17,9 @@ export let TESTQUESTSTATE: HalloweenState = {
     house5: true,
     foundBody: true,
     phone: true,
-    NPCIntroDay1: false,
-    pumpkinDone: false,
-    w1Found: false,
+    NPCIntroDay1: true,
+    pumpkinDone: true,
+    w1Found: true,
     w1Claimed: false,
     NPCOutroDay1: false,
 
