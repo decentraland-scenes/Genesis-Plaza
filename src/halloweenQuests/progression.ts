@@ -10,7 +10,6 @@ import {
   TESTDATA_ENABLED,
   TESTQUESTSTATE,
 } from '../config'
-
 import { HalloweenState, initialQuestUI, quest } from './quest'
 import * as ui from '../../node_modules/@dcl/ui-utils/index'
 
@@ -106,7 +105,8 @@ export function nextDay(nextDay: number) {
 
     return false
   }
-  quest.close()
+  let currentCoords = quest.currentCoords
 
-  initialQuestUI(progression.data, progression.day)
+  initialQuestUI(progression.data, progression.day, currentCoords)
+  return true
 }

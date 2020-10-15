@@ -54,7 +54,8 @@ export class NPC extends Entity {
     this.endAnimTimer = new Entity()
     engine.addEntity(this.endAnimTimer)
 
-    if (!onlyExternalTrigger) {
+    if (onlyExternalTrigger) {
+    } else {
       // Reaction when clicked
       this.addComponent(
         new OnPointerDown(

@@ -10,39 +10,27 @@ export function setInPreview(val: boolean) {
 export let TESTQUESTSTATE: HalloweenState = {
   data: {
     // day 1
-    house1: true,
-    house2: true,
-    house3: true,
-    house4: true,
-    house5: true,
-    foundBody: true,
+    allHouses: true,
     phone: true,
-    NPCIntroDay1: true,
-    pumpkinDone: true,
-    w1Found: true,
-    w1Claimed: false,
-    NPCOutroDay1: false,
+    pumpkinDone: false,
+    w1Found: false,
 
     // day 2
     NPCIntroDay2: false,
-    ghostIntro: false,
     ghostsDone: false,
     w2Found: false,
-    w2Claimed: false,
     NPCOutroDay2: false,
 
     // day 3
     NPCIntroDay3: false,
     puzzleDone: false,
     w3Found: false,
-    w3Claimed: false,
     NPCOutroDay3: false,
 
     // day 4
     NPCIntroDay4: false,
     monsterDefeated: false,
     w4Found: false,
-    w4Claimed: false,
     NPCOutroDay4: false,
 
     // day 5
@@ -54,7 +42,6 @@ export let TESTQUESTSTATE: HalloweenState = {
     waypoint5: false,
     ghostDefeated: false,
     NPCOutroDay5: false,
-    w5Claimed: false,
   },
   day: 5,
 }

@@ -22,10 +22,16 @@ import { addOneTimeTrigger } from './modules/Utils'
 import { getUserData, getUserPublicKey } from '@decentraland/Identity'
 import Meta from '../metas/sammich/sammich'
 import { checkProgression, progression } from './halloweenQuests/progression'
-import { initialQuestUI, quest } from './halloweenQuests/quest'
+import {
+  Coords,
+  halloweenTheme,
+  initialQuestUI,
+  quest,
+} from './halloweenQuests/quest'
 import { NPC } from './NPC/npc'
 import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 import utils from '../node_modules/decentraland-ecs-utils/index'
+import * as ui from '../node_modules/@dcl/ui-utils/index'
 
 //////// LOG PLAYER POSITION
 
@@ -192,6 +198,7 @@ import {
 import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
 import { PointerArrow } from './halloweenQuests/pointerArrow'
 import { TrashBin } from './halloweenQuests/trashBin'
+import { gemsCounter } from './halloweenQuests/pumpkin'
 
 const FetchuserInformation = async () => {
   const userInfo = await getUserData()
@@ -242,7 +249,7 @@ export let arrow: PointerArrow
 export async function setUpScene() {
   await checkProgression()
 
-  initialQuestUI(progression.data, progression.day)
+  initialQuestUI(progression.data, progression.day, Coords.GenesisCoords)
 
   if (progression.data.phone && !progression.data.NPCOutroDay4) {
     lady = new NPC(
@@ -252,11 +259,18 @@ export async function setUpScene() {
       },
       new GLTFShape('models/halloween/npc.glb'),
       () => {
+        if (lady.dialog.isDialogOpen) return
         oldLadyTalk()
       },
       'images/halloween/npc.png',
-      8
+      10
     )
+    lady.dialog = new ui.DialogWindow(
+      { path: 'images/halloween/npc.png', height: 128, width: 128 },
+      true,
+      halloweenTheme
+    )
+    lady.dialog.leftClickIcon.positionX = 340 - 60
 
     arrow = new PointerArrow(
       {
@@ -269,7 +283,7 @@ export async function setUpScene() {
     initialArrowState()
   }
 
-  if (progression.data.phone && !progression.data.NPCOutroDay1) {
+  if (progression.data.phone && !progression.data.w1Found) {
     let trashBin = new TrashBin({
       position: new Vector3(284, 1, 12.5),
     })
@@ -289,11 +303,11 @@ export function oldLadyTalk() {
     // day 3 intro
     lady.talk(day3Intro, 0)
     arrow.hide()
-  } else if (data.NPCOutroDay1 && !data.w2Found && day >= 2) {
+  } else if (data.w1Found && !data.w2Found && day >= 2) {
     // day 2 intro
     lady.talk(day2Intro, 0)
     arrow.hide()
-  } else if (data.w1Found && !data.NPCOutroDay1) {
+  } else if (data.w1Found && !quest.isChecked(5)) {
     // day 1 outro
     lady.talk(day1Outro, 0)
     arrow.hide()
@@ -301,19 +315,19 @@ export function oldLadyTalk() {
     // look for wearable
     lady.talk(day1Success, 0)
     arrow.hide()
-  } else if (lady.introduced && !data.pumpkinDone) {
+  } else if (gemsCounter.uiText.visible && !data.pumpkinDone) {
     // still smashing pumpkins
     lady.talk(morePumpkins, 0)
   } else if (data.phone && !data.pumpkinDone) {
     // day 1 intro
     lady.talk(day1Intro, 0)
-    lady.introduced = true
+
     quest.checkBox(2)
   } else if (
     (data.NPCOutroDay4 && day == 4) ||
     (data.NPCOutroDay3 && day == 3) ||
     (data.NPCOutroDay2 && day == 2) ||
-    (data.NPCOutroDay1 && day == 1)
+    (quest.isChecked(5) && day == 1)
   ) {
     let randomIndex = Math.floor(Math.random() * 3)
     lady.talk(dismiss, randomIndex)
@@ -343,7 +357,7 @@ export function addLimits() {
       null,
       () => {
         log('walking out')
-        if (progression.data.NPCIntroDay1 && !progression.data.w1Found) {
+        if (lady.introduced && !progression.data.w1Found) {
           lady.talk(stay, 0)
         }
       }
@@ -358,8 +372,8 @@ export function initialArrowState() {
   if (
     (data.NPCOutroDay3 && !data.w4Found && day >= 4) ||
     (data.NPCOutroDay2 && !data.w3Found && day >= 3) ||
-    (data.NPCOutroDay1 && !data.w2Found && day >= 2) ||
-    (data.phone && !data.NPCOutroDay1)
+    (data.w1Found && !data.w2Found && day >= 2) ||
+    (data.phone && !data.w1Found)
   ) {
     arrow.move(lady)
   } else {

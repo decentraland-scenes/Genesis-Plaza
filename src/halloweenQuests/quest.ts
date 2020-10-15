@@ -1,49 +1,121 @@
-import {
-  canvas,
-  lightTheme,
-  SFFont,
-} from '../../node_modules/@dcl/ui-utils/utils/default-ui-comopnents'
+import { canvas, SFFont } from '../../node_modules/@dcl/ui-utils/index'
 
-import resources, {
-  setSection,
-} from '../../node_modules/@dcl/ui-utils/utils/resources'
+import resources, { setSection } from './resources'
 
-export type QuestItem = { label: string; checked: boolean; visible?: boolean }
+export type QuestItem = {
+  label: string
+  checked: boolean
+  visible?: boolean
+  coords?: string
+}
 
-const ITEM_SPACING = 40
-const Y_OFFSET = -10
-const X_OFFSET = -100
+const ITEM_SPACING = 50
+const Y_OFFSET = -59
+const X_OFFSET = -10
+
+export enum Coords {
+  GenesisCoords = `0,0`,
+  CemeteryCoords = `60,-60`,
+  TempleCoords = `100,100`,
+  FarmCoords = `50,50`,
+  Secret = `secret`,
+}
+
+export let halloweenTheme = new Texture('images/HalloweentAtlas.png')
 
 export class QuestUI extends Entity {
   visibleElements: QuestCheckBox[] = []
   elements: QuestItem[] = []
   UIOpenTime: number
-  texture: Texture = lightTheme
+  texture: Texture = halloweenTheme
   background: UIImage = questBackground
-
-  constructor(list: QuestItem[], width?: number, height?: number) {
+  day: number
+  title: UIImage
+  currentCoords: Coords
+  constructor(
+    list: QuestItem[],
+    day: number,
+    currentCoords: Coords,
+    width?: number
+  ) {
     super()
 
     this.UIOpenTime = +Date.now()
 
+    this.background.visible = true
+
+    this.currentCoords = currentCoords
+
+    this.title = new UIImage(this.background, halloweenTheme)
+    this.title.vAlign = 'top'
+    this.title.positionX = 0
+    this.title.positionY = -12
+    this.title.width = 58
+    this.title.height = 24
+
+    switch (day) {
+      case 1:
+        setSection(this.title, resources.dayLabels[1])
+        break
+      case 2:
+        setSection(this.title, resources.dayLabels[2])
+        break
+      case 3:
+        setSection(this.title, resources.dayLabels[3])
+        break
+      case 4:
+        setSection(this.title, resources.dayLabels[4])
+        break
+      case 5:
+        setSection(this.title, resources.dayLabels[5])
+        break
+    }
+
     for (let i = 0; i < list.length; i++) {
       this.elements.push(list[i])
       if (list[i].visible) {
-        this.addCheckbox(list[i].label, list[i].checked)
+        this.addCheckbox(list[i].label, list[i].checked, list[i].coords)
       }
     }
 
-    if (width) {
-      this.background.width = width
-    }
-    if (height) {
-      this.background.height = height
+    switch (this.visibleElements.length) {
+      case 1:
+        setSection(this.background, resources.questBackgrounds[1])
+        this.background.height = 141
+        break
+      case 2:
+        setSection(this.background, resources.questBackgrounds[2])
+        this.background.height = 190
+        break
+      case 3:
+        setSection(this.background, resources.questBackgrounds[3])
+        this.background.height = 242
+        break
+      case 4:
+        setSection(this.background, resources.questBackgrounds[4])
+        this.background.height = 293
+        break
+      case 5:
+        setSection(this.background, resources.questBackgrounds[5])
+        this.background.height = 347
+        break
+      case 6:
+        setSection(this.background, resources.questBackgrounds[5])
+        this.background.height = 398
+        break
     }
 
-    this.background.visible = true
+    //this.background.height = 55 + 50 * this.visibleElements.length
+
+    if (width) {
+      this.background.width = width
+    } else {
+      this.background.width = 280
+    }
   }
   public close(): void {
     questBackground.visible = false
+    this.title.visible = false
 
     for (let element of this.visibleElements) {
       element.hide()
@@ -51,13 +123,18 @@ export class QuestUI extends Entity {
   }
   public reopen(): void {
     questBackground.visible = true
+    this.title.visible = true
 
     for (let element of this.visibleElements) {
       element.show()
     }
   }
 
-  public addCheckbox(label: string, checked?: boolean) {
+  public addCheckbox(
+    label: string,
+    checked?: boolean,
+    teleportLocation?: string
+  ) {
     let posX = X_OFFSET
     let posY = Y_OFFSET - this.visibleElements.length * ITEM_SPACING
 
@@ -70,13 +147,45 @@ export class QuestUI extends Entity {
       null,
       null,
       false,
-      checked ? checked : null
+      checked ? checked : null,
+      teleportLocation && teleportLocation != this.currentCoords
+        ? teleportLocation
+        : null
     )
 
     this.visibleElements.push(checkBox)
     //this.items.push({ label: label, checked: checked })
 
-    this.background.height = 10 + ITEM_SPACING * this.visibleElements.length
+    //this.background.height = 10 + ITEM_SPACING * this.visibleElements.length
+
+    switch (this.visibleElements.length) {
+      case 1:
+        setSection(this.background, resources.questBackgrounds[1])
+        this.background.height = 141
+        break
+      case 2:
+        setSection(this.background, resources.questBackgrounds[2])
+        this.background.height = 190
+        break
+      case 3:
+        setSection(this.background, resources.questBackgrounds[3])
+        this.background.height = 242
+        break
+      case 4:
+        setSection(this.background, resources.questBackgrounds[4])
+        this.background.height = 293
+        break
+      case 5:
+        setSection(this.background, resources.questBackgrounds[5])
+        this.background.height = 347
+        break
+      case 6:
+        setSection(this.background, resources.questBackgrounds[5])
+        this.background.height = 398
+        break
+    }
+
+    //this.background.height = 55 + 50 * this.visibleElements.length
 
     return checkBox
   }
@@ -92,7 +201,11 @@ export class QuestUI extends Entity {
   public showCheckBox(index) {
     if (this.elements[index].visible) return
     this.elements[index].visible = true
-    this.addCheckbox(this.elements[index].label, this.elements[index].checked)
+    this.addCheckbox(
+      this.elements[index].label,
+      this.elements[index].checked,
+      this.elements[index].coords
+    )
   }
 
   public resetBoxes(list: QuestItem[], width?: number, height?: number) {
@@ -117,15 +230,20 @@ export class QuestUI extends Entity {
     }
   }
 
+  public isChecked(index) {
+    return this.visibleElements[index].checked
+  }
+
   public removeCheckbox(index) {}
 }
 
 export class QuestCheckBox extends Entity {
   label: UIText
+  background: UIImage
   image: UIImage
   checked: boolean
+  teleportLocation: string
   private darkTheme: boolean
-  private large: boolean
   constructor(
     texture: Texture,
     darkTheme: boolean,
@@ -135,20 +253,44 @@ export class QuestCheckBox extends Entity {
     onCheck?: () => void,
     onUncheck?: () => void,
     large?: boolean,
-    startChecked?: boolean
+    startChecked?: boolean,
+    teleportLocation?: string
   ) {
     super()
 
     this.checked = startChecked == true ? true : false
     this.darkTheme = darkTheme
-    this.large = large
 
-    this.image = new UIImage(questBackground, texture)
-    this.image.vAlign = 'top'
-    this.image.positionX = posX
-    this.image.positionY = posY
-    this.image.width = large ? 32 : 24
-    this.image.height = large ? 32 : 24
+    this.background = new UIImage(questBackground, texture)
+    this.background.positionX = posX
+    this.background.positionY = posY
+    this.background.width = 262
+    this.background.height = 45
+    this.background.vAlign = 'top'
+    if (teleportLocation && !startChecked) {
+      // red
+      setSection(this.background, resources.questItems.red)
+    } else {
+      // default
+      setSection(this.background, resources.questItems.default)
+    }
+
+    if (teleportLocation) {
+      this.teleportLocation = teleportLocation
+      this.background.onClick = new OnClick(() => {
+        log('teleporting!')
+        teleportTo(teleportLocation)
+      })
+    }
+
+    this.image = new UIImage(this.background, texture)
+    this.image.vAlign = 'bottom'
+    this.image.hAlign = 'left'
+
+    this.image.width = 16
+    this.image.height = 16
+    this.image.positionX = 15
+    this.image.positionY = 14
 
     this.label = new UIText(this.image)
 
@@ -159,20 +301,20 @@ export class QuestCheckBox extends Entity {
     this.label.value = label
     this.label.hTextAlign = 'left'
     this.label.vTextAlign = 'center'
-    this.label.fontSize = 14
+    this.label.fontSize = 13
     this.label.font = SFFont
     this.label.isPointerBlocker = false
 
-    this.image.onClick = new OnClick(() => {
-      this.checked = !this.checked
-      if (this.checked == false) {
-        this.check()
-      } else {
-        this.uncheck()
-      }
+    // this.image.onClick = new OnClick(() => {
+    //   this.checked = !this.checked
+    //   if (this.checked == false) {
+    //     this.check()
+    //   } else {
+    //     this.uncheck()
+    //   }
 
-      this.checked ? onCheck() : onUncheck()
-    })
+    //   this.checked ? onCheck() : onUncheck()
+    // })
 
     if (this.checked == false) {
       this.uncheck()
@@ -192,90 +334,79 @@ export class QuestCheckBox extends Entity {
   }
 
   public uncheck(): void {
+    this.checked = false
     if (this.darkTheme) {
-      if (this.large) {
-        setSection(this.image, resources.checkboxes.wLargeOff)
-      } else {
-        setSection(this.image, resources.checkboxes.wOff)
-      }
+      setSection(this.image, resources.checkboxes.off)
+      this.image.width = 16
+      this.image.height = 16
       this.label.color = Color4.White()
     } else {
-      if (this.large) {
-        setSection(this.image, resources.checkboxes.dLargeOff)
-      } else {
-        setSection(this.image, resources.checkboxes.dOff)
-      }
+      setSection(this.image, resources.checkboxes.off)
+
       this.label.color = Color4.Black()
+    }
+
+    if (this.teleportLocation) {
+      setSection(this.background, resources.questItems.red)
     }
 
     //  Change text color?
   }
 
   public check(): void {
+    this.checked = true
     if (this.darkTheme) {
-      if (this.large) {
-        setSection(this.image, resources.checkboxes.wLargeOn)
-      } else {
-        setSection(this.image, resources.checkboxes.wOn)
-      }
+      setSection(this.image, resources.checkboxes.on)
+
       this.label.color = Color4.Gray()
     } else {
-      if (this.large) {
-        setSection(this.image, resources.checkboxes.dLargeOn)
-      } else {
-        setSection(this.image, resources.checkboxes.dOn)
-      }
+      setSection(this.image, resources.checkboxes.on)
+      this.image.width = 22
+      this.image.height = 19
+
       this.label.color = Color4.Gray()
+    }
+
+    if (this.teleportLocation) {
+      setSection(this.background, resources.questItems.default)
     }
   }
 
   //  Change text color?
 }
 
-export const questBackground = new UIImage(canvas, lightTheme)
+export const questBackground = new UIImage(canvas, halloweenTheme)
 setSection(questBackground, resources.backgrounds.promptBackground)
 questBackground.hAlign = 'left'
 questBackground.vAlign = 'top'
-questBackground.width = 300
+questBackground.width = 280
 questBackground.height = 50
-questBackground.positionY = -200
+questBackground.positionY = -140
 questBackground.visible = false
 
 export type HalloweenData = {
   // day 1
-  house1: boolean
-  house2: boolean
-  house3: boolean
-  house4: boolean
-  house5: boolean
-  foundBody: boolean
+  allHouses: boolean
   phone: boolean
-  NPCIntroDay1: boolean
   pumpkinDone: boolean
   w1Found: boolean
-  w1Claimed: boolean
-  NPCOutroDay1: boolean
 
   // day 2
   NPCIntroDay2: boolean
-  ghostIntro: boolean
   ghostsDone: boolean
   w2Found: boolean
-  w2Claimed: boolean
   NPCOutroDay2: boolean
 
   // day 3
   NPCIntroDay3: boolean
   puzzleDone: boolean
   w3Found: boolean
-  w3Claimed: boolean
   NPCOutroDay3: boolean
 
   // day 4
   NPCIntroDay4: boolean
   monsterDefeated: boolean
   w4Found: boolean
-  w4Claimed: boolean
   NPCOutroDay4: boolean
 
   // day 5
@@ -287,130 +418,179 @@ export type HalloweenData = {
   waypoint5: boolean
   ghostDefeated: boolean
   NPCOutroDay5: boolean // ghost buster
-  w5Claimed: boolean
 }
 
 export type HalloweenState = { data: HalloweenData; day: number }
 
 export let quest
 
-export function initialQuestUI(data: HalloweenData, day: number) {
+export function initialQuestUI(
+  data: HalloweenData,
+  day: number,
+  currentCoords: Coords
+) {
   /// limit max day w call to api
 
   if (data.NPCOutroDay4 && day >= 5) {
     // day 5
-    quest = new QuestUI([
-      { label: 'Find the Old lady', checked: data.waypoint5, visible: true },
-      {
-        label: 'Follow the clues to the mansion',
-        checked: data.waypoint5,
-        visible: data.NPCIntroDay5,
-      },
-      {
-        label: 'Defeat the evil ghost',
-        checked: data.ghostDefeated,
-        visible: data.waypoint5,
-      },
-      {
-        label: 'Speak to the GhostControl crew',
-        checked: data.NPCOutroDay5,
-        visible: data.ghostDefeated,
-      },
-    ])
+    quest = new QuestUI(
+      [
+        {
+          label: 'Find the Old lady',
+          checked: data.waypoint5,
+          visible: true,
+          coords: Coords.Secret,
+        },
+        {
+          label: 'Follow the clues to the mansion',
+          checked: data.waypoint5,
+          visible: data.NPCIntroDay5,
+          coords: Coords.Secret,
+        },
+        {
+          label: 'Defeat the evil ghost',
+          checked: data.ghostDefeated,
+          visible: data.waypoint5,
+          coords: Coords.Secret,
+        },
+        {
+          label: 'Speak to the GhostControl crew',
+          checked: data.NPCOutroDay5,
+          visible: data.ghostDefeated,
+          coords: Coords.GenesisCoords,
+        },
+      ],
+      5,
+      currentCoords
+    )
   } else if (data.NPCOutroDay3 && day >= 4) {
     // day 4
-    quest = new QuestUI([
-      { label: 'Talk to Old lady', checked: data.NPCIntroDay4, visible: true },
-      {
-        label: 'Defeat the interdimensional monster',
-        checked: data.monsterDefeated,
-        visible: data.NPCIntroDay4,
-      },
-      {
-        label: 'Talk to the farmer',
-        checked: data.NPCOutroDay4,
-        visible: data.monsterDefeated,
-      },
-    ])
+    quest = new QuestUI(
+      [
+        {
+          label: 'Talk to Old lady',
+          checked: data.NPCIntroDay4,
+          visible: true,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: 'Defeat the interdimensional monster',
+          checked: data.monsterDefeated,
+          visible: data.NPCIntroDay4,
+          coords: Coords.FarmCoords,
+        },
+        {
+          label: 'Talk to the farmer',
+          checked: data.NPCOutroDay4,
+          visible: data.monsterDefeated,
+          coords: Coords.FarmCoords,
+        },
+      ],
+      4,
+      currentCoords
+    )
   } else if (data.NPCOutroDay2 && day >= 3) {
     // day 3
-    quest = new QuestUI([
-      { label: 'Talk to Old lady', checked: data.NPCIntroDay3, visible: true },
-      {
-        label: 'Solve the castle puzzle',
-        checked: data.puzzleDone,
-        visible: data.NPCIntroDay3,
-      },
-      {
-        label: 'Talk to the casle guy',
-        checked: data.NPCOutroDay3,
-        visible: data.puzzleDone,
-      },
-    ])
-  } else if (data.NPCOutroDay1 && day >= 2) {
+    quest = new QuestUI(
+      [
+        {
+          label: 'Talk to Old lady',
+          checked: data.NPCIntroDay3,
+          visible: true,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: 'Solve the castle puzzle',
+          checked: data.puzzleDone,
+          visible: data.NPCIntroDay3,
+          coords: Coords.TempleCoords,
+        },
+        {
+          label: 'Talk to the casle guy',
+          checked: data.NPCOutroDay3,
+          visible: data.puzzleDone,
+          coords: Coords.TempleCoords,
+        },
+      ],
+      3,
+      currentCoords
+    )
+  } else if (data.w1Found && day >= 2) {
     // day2
 
-    quest = new QuestUI([
-      { label: 'Talk to Old lady', checked: data.NPCIntroDay2, visible: true },
-      {
-        label: "Talk to mayor's ghost",
-        checked: data.ghostIntro,
-        visible: data.NPCIntroDay2,
-      },
-      {
-        label: 'Return ghotst to their graves',
-        checked: data.ghostsDone,
-        visible: data.ghostIntro,
-      },
-      {
-        label: 'Break into graveyard shack',
-        checked: data.w2Found,
-        visible: data.ghostIntro,
-      },
-      {
-        label: 'Bring your findings back to the Old lady',
-        checked: data.NPCOutroDay2,
-        visible: data.ghostsDone,
-      },
-    ])
+    quest = new QuestUI(
+      [
+        {
+          label: 'Talk to Old lady',
+          checked: data.NPCIntroDay2,
+          visible: true,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: "Talk to mayor's ghost",
+          checked: data.ghostsDone,
+          visible: data.NPCIntroDay2,
+          coords: Coords.CemeteryCoords,
+        },
+        {
+          label: 'Return ghotst to their graves',
+          checked: data.ghostsDone,
+          visible: data.ghostsDone,
+          coords: Coords.CemeteryCoords,
+        },
+        {
+          label: 'Break into graveyard shack',
+          checked: data.w2Found,
+          visible: data.ghostsDone,
+          coords: Coords.CemeteryCoords,
+        },
+      ],
+      2,
+      currentCoords
+    )
   } else {
     // day 1
-    quest = new QuestUI([
-      {
-        label: 'Visit all the houses',
-        checked:
-          data.house1 &&
-          data.house2 &&
-          data.house3 &&
-          data.house4 &&
-          data.house5,
-        visible: true,
-      },
-      {
-        label: 'Pick up the phone',
-        checked: data.phone,
-        visible: data.foundBody,
-      },
-      {
-        label: 'Meet mysterious caller in Genesis Plaza',
-        checked: data.NPCIntroDay1,
-        visible: data.phone,
-      },
-      {
-        label: 'Destroy all the pumpkins',
-        checked: data.pumpkinDone,
-        visible: data.NPCIntroDay1,
-      },
-      {
-        label: 'Look for clues behind the trade center building',
-        checked: data.w1Found,
-        visible: data.pumpkinDone,
-      },
-      {
-        label: 'Bring your findings back to the Old lady',
-        checked: data.NPCOutroDay1,
-        visible: data.pumpkinDone,
-      },
-    ])
+    quest = new QuestUI(
+      [
+        {
+          label: 'Visit all the houses',
+          checked: data.allHouses,
+          visible: true,
+          coords: Coords.CemeteryCoords,
+        },
+        {
+          label: 'Pick up the phone',
+          checked: data.phone,
+          visible: data.phone,
+          coords: Coords.CemeteryCoords,
+        },
+        {
+          label: 'Meet caller near 0,0',
+          checked: data.pumpkinDone,
+          visible: data.phone,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: 'Destroy all the pumpkins',
+          checked: data.pumpkinDone,
+          visible: data.pumpkinDone,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: 'Look for clues behind the trade center building',
+          checked: data.w1Found,
+          visible: data.pumpkinDone,
+          coords: Coords.GenesisCoords,
+        },
+        {
+          label: 'Bring your findings back to the Old lady',
+          checked: data.w1Found,
+          visible: data.pumpkinDone,
+          coords: Coords.GenesisCoords,
+        },
+      ],
+      1,
+      currentCoords
+    )
   }
 }

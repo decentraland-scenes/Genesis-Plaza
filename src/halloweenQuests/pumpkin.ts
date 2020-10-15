@@ -1,5 +1,4 @@
 import * as ui from '../../node_modules/@dcl/ui-utils/index'
-import { SFHeavyFont } from '../../node_modules/@dcl/ui-utils/utils/default-ui-comopnents'
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { arrow, lady } from '../game'
 import { allPumpkins, firstPumpkin, resetPumpkins } from '../NPC/dialog'
@@ -31,11 +30,7 @@ export class Pumpkin extends Entity {
         this.explode()
         gemsCounter.increase()
         if (gemsCounter.read() >= totalPumpkins) {
-          timer.running = false
-          lady.talk(allPumpkins, 0)
-          quest.checkBox(3)
-          updateProgression('pumpkinDone', true)
-          arrow.move(lady)
+          winGame()
         }
       })
     )
@@ -191,10 +186,18 @@ export let gemsCounter = new ui.UICounter(
   48,
   true
 )
-export let secondsCounter = new ui.UICounter(59, -14, 49, Color4.Black())
+export let secondsCounter = new ui.UICounter(
+  59,
+  -14,
+  49,
+  Color4.Black(),
+  25,
+  true,
+  2
+)
 export let timerSeparaor = new ui.CornerLabel(':', -39, 49, Color4.Black())
 export let minutesCounter = new ui.UICounter(5, -64, 49, Color4.Black())
-gemsCounter.uiText.font = SFHeavyFont
+gemsCounter.uiText.font = ui.SFHeavyFont
 gemsCounter.uiText.visible = false
 secondsCounter.uiText.visible = false
 timerSeparaor.uiText.visible = false
@@ -219,6 +222,20 @@ export function startGemUI() {
     minutesCounter.set(6)
     timer.running = true
   }
+}
+
+export function winGame() {
+  timer.running = false
+  lady.talk(allPumpkins, 0)
+  quest.checkBox(3)
+  updateProgression('pumpkinDone', true)
+  arrow.move(lady)
+
+  gemUIBck.image.visible = false
+  gemsCounter.uiText.visible = false
+  secondsCounter.uiText.visible = false
+  timerSeparaor.uiText.visible = false
+  minutesCounter.uiText.visible = false
 }
 
 class CountdownSystem implements ISystem {
@@ -257,7 +274,7 @@ export function resetGame() {
   let dummyEnt = new Entity()
   engine.addEntity(dummyEnt)
   dummyEnt.addComponent(
-    new utils.Delay(6000, () => {
+    new utils.Delay(5000, () => {
       gemUIBck.image.visible = false
       gemsCounter.uiText.visible = false
       secondsCounter.uiText.visible = false

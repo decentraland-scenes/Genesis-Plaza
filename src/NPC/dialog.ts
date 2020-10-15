@@ -21,6 +21,7 @@ export let day1Intro: Dialog[] = [
   {
     text: `There's these rotting pumpkins scattered all over the plaza... people throw them about weeks before halloween, and then they rot out and never bother to pick them up.`,
     triggeredByNext: () => {
+      quest.showCheckBox(3)
       //lady.playAnimation(`Annoyed_HeadShake`, true, 2.6)
     },
   },
@@ -37,8 +38,6 @@ export let day1Intro: Dialog[] = [
     text: `Oh good, I knew you were a good person!`,
     triggeredByNext: () => {
       startGemUI()
-      quest.showCheckBox(3)
-      updateProgression('NPCIntroDay1', true)
     },
     isEndOfDialog: true,
   },
@@ -138,6 +137,9 @@ export let day1Outro: Dialog[] = [
       quest.showCheckBox(5)
       updateProgression('NPCOutroDay1')
       nextDay(2)
+      //   if (progression.data.day > 1) {
+      //     lady.talk(day2Intro, 0)
+      //   }
     },
     isEndOfDialog: true,
 
@@ -149,6 +151,11 @@ export let day2Intro: Dialog[] = [
   {
     text: `Hi dear, go check out the graveyard.`,
     isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCOutroDay2')
+    },
   },
 ]
 
@@ -156,6 +163,11 @@ export let day3Intro: Dialog[] = [
   {
     text: `Hi dear, go do the ray puzzle thing.`,
     isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCOutroDay3')
+    },
   },
 ]
 
@@ -163,6 +175,11 @@ export let day4Intro: Dialog[] = [
   {
     text: `Hi dear, go check out the monster thing in the farm.`,
     isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCOutroDay4')
+    },
   },
 ]
 
@@ -170,6 +187,11 @@ export let day5Intro: Dialog[] = [
   {
     text: `Hey. I'm not the old lady. The old lady was a lie.`,
     isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCOutroDay5')
+    },
   },
 ]
 
