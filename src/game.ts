@@ -271,6 +271,7 @@ export async function setUpScene() {
       halloweenTheme
     )
     lady.dialog.leftClickIcon.positionX = 340 - 60
+    lady.dialog.text.color = Color4.FromHexString('#8DFF34FF')
 
     arrow = new PointerArrow(
       {
