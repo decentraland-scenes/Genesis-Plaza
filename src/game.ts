@@ -318,7 +318,7 @@ export function oldLadyTalk() {
     arrow.hide()
   } else if (gemsCounter.uiText.visible && !data.pumpkinDone) {
     // still smashing pumpkins
-    lady.talk(morePumpkins, 0)
+    lady.talk(morePumpkins, 0, 2)
   } else if (data.phone && !data.pumpkinDone) {
     // day 1 intro
     lady.talk(day1Intro, 0)
@@ -331,7 +331,7 @@ export function oldLadyTalk() {
     (quest.isChecked(5) && day == 1)
   ) {
     let randomIndex = Math.floor(Math.random() * 3)
-    lady.talk(dismiss, randomIndex)
+    lady.talk(dismiss, randomIndex, 2)
   }
 }
 
@@ -359,7 +359,7 @@ export function addLimits() {
       () => {
         log('walking out')
         if (lady.introduced && !progression.data.w1Found) {
-          lady.talk(stay, 0)
+          lady.talk(stay, 0, 2)
         }
       }
     )

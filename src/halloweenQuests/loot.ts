@@ -11,13 +11,10 @@ import { IN_PREVIEW } from '../config'
 
 /////// PICK UP
 
-// function called when picking up item
-
-// show cool item
+let particleGLTF = new GLTFShape('models/Particles.glb')
 
 export function showCoolItem(
   parent: Entity,
-  token: string,
   progressionStep: string,
   offset?: TranformConstructorArgs
 ) {
@@ -25,7 +22,7 @@ export function showCoolItem(
 
   let particleThing = new Entity()
   particleThing.setParent(parent)
-  particleThing.addComponent(new GLTFShape('models/Particles.glb'))
+  particleThing.addComponent(particleGLTF)
 
   particleThing.addComponent(
     new Transform(
@@ -51,7 +48,7 @@ export function showCoolItem(
 
   let token3D = new Entity()
   token3D.setParent(parent)
-  let path = 'models/' + token + '.glb'
+  let path = 'models/star.glb'
   token3D.addComponent(new GLTFShape(path))
   token3D.addComponent(
     new Transform(
@@ -77,37 +74,68 @@ export function showCoolItem(
         new utils.Delay(500, () => {
           engine.removeEntity(token3D)
           engine.removeEntity(particleThing)
-          let p = new ui.OptionPrompt(
-            'Get a Wearable',
-            'You will need to approve a blockchain transaction and pay the Ethereum gas fee.',
-            () => {
-              claimToken(progressionStep)
-            }
-          )
+          claimToken(progressionStep)
         })
       )
     })
   )
 
-  if (token == 'Star') {
-    token3D.getComponent(Transform).scale.setAll(0.3)
-  }
+  token3D.getComponent(Transform).scale.setAll(0.3)
 
   engine.addEntity(token3D)
+}
+
+export enum ClaimState {
+  AVAILABLE = 'available',
+  SUCCESS = 'success',
+  PENDING = 'pending',
+  CLAIMED = 'claimed',
+  FAILED = 'failed',
+  REJECTED = 'rejected',
 }
 
 export async function claimToken(progressionStep: string) {
   let claimData = await claimFromServer(progressionStep)
 
   // claimstate enum w all options, do a switch case
+  let q
+  let p
+  switch (claimData.ClaimState) {
+    case ClaimState.AVAILABLE:
+      let q = new ui.OptionPrompt(
+        'Claim Your Token',
+        'You will need to approve a blockchain transaction and pay the Ethereum gas fee.',
+        () => {
+          // use transaction with claimData.data
+          // claimData.data.from claimData.data.to claimData.data.data
+        }
+      )
 
-  if (!claimData.canClaim) {
-    let p = new ui.OkPrompt('You already claimed this item')
-    return
+      break
+    case ClaimState.FAILED:
+      q = new ui.OptionPrompt(
+        'Previous transaction failed',
+        'Try again? Make sure you set an amount of gas that matches the current market demands.',
+        () => {
+          // use transaction with claimData.data
+          // claimData.data.from claimData.data.to claimData.data.data
+        }
+      )
+
+      return true
+      break
+    case ClaimState.SUCCESS:
+      p = new ui.OkPrompt('You already claimed this item')
+
+      break
+    case ClaimState.PENDING:
+      p = new ui.OkPrompt('Your transaction for this item is already pending')
+      break
+    case ClaimState.REJECTED:
+      p = new ui.OkPrompt('We can`t validate the authenticity of your request')
+      break
   }
-  // call contract with claimData.signature & progressionStep
-
-  // when successful > updateProgression(progressionStep)  ... or maybe not needed
+  return false
 }
 
 export async function claimFromServer(stage: string) {

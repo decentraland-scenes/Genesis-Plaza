@@ -11,11 +11,13 @@ export class NPC extends Entity {
   public dialog: ui.DialogWindow
   public onActivate: () => void
   public onWalkAway: () => void
-  inCooldown: boolean
-  faceUser: boolean
-  private idleAnim: AnimationState
-  private lastPlayedAnim: AnimationState
-  private endAnimTimer: Entity
+  public inCooldown: boolean
+  public coolDownDuration: number = 5000
+  public faceUser: boolean
+  public idleAnim: AnimationState
+  public lastPlayedAnim: AnimationState
+  public endAnimTimer: Entity
+  public closeDialogTimer: Entity
   constructor(
     position: TranformConstructorArgs,
     model: GLTFShape,
@@ -54,6 +56,9 @@ export class NPC extends Entity {
     this.endAnimTimer = new Entity()
     engine.addEntity(this.endAnimTimer)
 
+    this.closeDialogTimer = new Entity()
+    engine.addEntity(this.closeDialogTimer)
+
     if (onlyExternalTrigger) {
     } else {
       // Reaction when clicked
@@ -62,7 +67,7 @@ export class NPC extends Entity {
           (e) => {
             if (this.inCooldown || this.dialog.isDialogOpen) return
 
-            onActivate()
+            this.activate()
             if (this.faceUser) {
               moveDummyTarget(this)
             }
@@ -93,15 +98,12 @@ export class NPC extends Entity {
             onlyExternalTrigger
           )
             return
-          onActivate()
+          this.activate()
           if (this.faceUser) {
             moveDummyTarget(this)
           }
         },
         () => {
-          if (this.dialog.isDialogOpen) {
-            this.dialog.closeDialogWindow()
-          }
           if (this.onWalkAway) {
             this.onWalkAway()
           }
@@ -114,15 +116,30 @@ export class NPC extends Entity {
       this.faceUser = true
     }
   }
-  talk(script: Dialog[], startIndex: number) {
+  activate() {
+    this.onActivate()
+  }
+  talk(script: Dialog[], startIndex?: number, duration?: number) {
     this.introduced = true
     this.inCooldown = true
-    this.dialog.openDialogWindow(script, startIndex)
+    if (this.closeDialogTimer.hasComponent(utils.Delay)) {
+      this.closeDialogTimer.removeComponent(utils.Delay)
+    }
+
+    this.dialog.openDialogWindow(script, startIndex ? startIndex : 0)
     this.addComponentOrReplace(
-      new utils.Delay(5000, () => {
+      new utils.Delay(this.coolDownDuration, () => {
         this.inCooldown = false
       })
     )
+
+    if (duration) {
+      this.closeDialogTimer.addComponentOrReplace(
+        new utils.Delay(duration * 1000, () => {
+          this.dialog.closeDialogWindow()
+        })
+      )
+    }
   }
   playAnimation(animationName: string, noLoop?: boolean, duration?: number) {
     this.lastPlayedAnim.stop()
