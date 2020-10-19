@@ -107,6 +107,7 @@ export function nextDay(nextDay: number) {
   }
   let currentCoords = quest.currentCoords
 
+  quest.close()
   initialQuestUI(progression.data, progression.day, currentCoords)
   return true
 }

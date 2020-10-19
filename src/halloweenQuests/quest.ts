@@ -326,6 +326,7 @@ export class QuestCheckBox extends Entity {
   public hide(): void {
     this.image.visible = false
     this.label.visible = false
+    this.background.visible = false
   }
 
   public show(): void {
@@ -581,7 +582,7 @@ export function initialQuestUI(
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Look for clues in the wearables building',
+          label: 'Search the wearables building',
           checked: data.w1Found,
           visible: data.pumpkinDone,
           coords: Coords.GenesisCoords,

@@ -259,7 +259,7 @@ export async function setUpScene() {
   if (progression.data.phone && !progression.data.NPCOutroDay4) {
     lady = new NPC(
       {
-        position: new Vector3(160, 1, 180),
+        position: new Vector3(160, 0.9, 180),
         rotation: Quaternion.Euler(0, 180, 0),
       },
       new GLTFShape('models/halloween/npc.glb'),
@@ -291,11 +291,13 @@ export async function setUpScene() {
 
   if (progression.data.phone && !progression.data.w1Found) {
     let trashBin = new TrashBin({
-      position: new Vector3(294.95306396484375, 18, 105.41779327392578),
+      position: new Vector3(294.95306396484375, 17.5, 105.41779327392578),
     })
     addLimits()
   }
 }
+
+let day1LookingForWearable = false
 
 export function oldLadyTalk() {
   let data = progression.data
@@ -309,17 +311,24 @@ export function oldLadyTalk() {
     // day 3 intro
     lady.talk(day3Intro, 0)
     arrow.hide()
-  } else if (data.w1Found && !data.w2Found && day >= 2) {
+  } else if (
+    data.w1Found &&
+    !data.w2Found &&
+    day >= 2 &&
+    !day1LookingForWearable
+  ) {
     // day 2 intro
     lady.talk(day2Intro, 0)
     arrow.hide()
-  } else if (data.w1Found && !quest.isChecked(5)) {
+  } else if (day1LookingForWearable) {
+    day1LookingForWearable = false
     // day 1 outro
     lady.talk(day1Outro, 0)
     arrow.hide()
   } else if (data.pumpkinDone && !data.w1Found) {
     // look for wearable
     lady.talk(day1Success, 0)
+    day1LookingForWearable = true
     arrow.hide()
   } else if (gemsCounter.uiText.visible && !data.pumpkinDone) {
     // still smashing pumpkins
