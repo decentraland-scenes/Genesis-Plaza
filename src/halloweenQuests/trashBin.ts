@@ -1,3 +1,4 @@
+import { showCoolItem } from './loot'
 import { updateProgression } from './progression'
 import { quest } from './quest'
 
@@ -37,6 +38,9 @@ export class TrashBin extends Entity {
         // loot appears
         quest.checkBox(4)
         updateProgression('w1Found')
+        showCoolItem(this, 'w1Found', {
+          position: new Vector3(0, 2, 0),
+        })
       })
     )
 

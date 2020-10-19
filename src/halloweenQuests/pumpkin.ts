@@ -5,80 +5,56 @@ import { allPumpkins, firstPumpkin, resetPumpkins } from '../NPC/dialog'
 import { updateProgression } from './progression'
 import { quest } from './quest'
 
-let totalPumpkins = 10
+let totalPumpkins = 3
 let firstTime: boolean = true
 
+let pumpkinModel = new GLTFShape('models/halloween/pumpkinSmash.glb')
+
 export class Pumpkin extends Entity {
+  explodeAnim: AnimationState = new AnimationState('Smashing', {
+    looping: false,
+    speed: 0.7,
+  })
   constructor(position: Vector3, hasGem?: boolean) {
     super()
 
-    this.addComponent(new GLTFShape('models/halloween/v_0.glb'))
+    this.addComponent(pumpkinModel)
 
     let randomRotation = Math.random() * 365
 
     this.addComponent(
       new Transform({
-        position: new Vector3(position.x, position.y - 1.671, position.z),
+        position: new Vector3(position.x, position.y - 1.5, position.z),
         rotation: Quaternion.Euler(0, randomRotation, 0),
       })
     )
+
     //this.getComponent(Transform).translate(new Vector3(0, -1.671, 0))
+
+    this.addComponent(new Animator()).addClip(this.explodeAnim)
 
     engine.addEntity(this)
     this.addComponent(
-      new OnPointerDown(() => {
-        this.explode()
-        gemsCounter.increase()
-        if (gemsCounter.read() >= totalPumpkins) {
-          winGame()
+      new OnPointerDown(
+        () => {
+          this.explode()
+          gemsCounter.increase()
+          if (gemsCounter.read() >= totalPumpkins) {
+            winGame()
+          }
+        },
+        {
+          hoverText: 'Smash',
+          distance: 6,
         }
-      })
+      )
     )
   }
 
   explode() {
-    this.removeComponent(GLTFShape)
-
-    v1.stop()
-    v2.stop()
-    v3.stop()
-    v4.stop()
-    v5.stop()
-    v6.stop()
-    v7.stop()
-    v8.stop()
-    v9.stop()
-    v10.stop()
-    v11.stop()
-    v12.stop()
-    v13.stop()
-    v_01.setParent(this)
-    v_02.setParent(this)
-    v_03.setParent(this)
-    v_04.setParent(this)
-    v_05.setParent(this)
-    v_06.setParent(this)
-    v_07.setParent(this)
-    v_08.setParent(this)
-    v_09.setParent(this)
-    v_10.setParent(this)
-    v_11.setParent(this)
-    v_12.setParent(this)
-    v_13.setParent(this)
-
-    v1.play()
-    v2.play()
-    v3.play()
-    v4.play()
-    v5.play()
-    v6.play()
-    v7.play()
-    v8.play()
-    v9.play()
-    v10.play()
-    v11.play()
-    v12.play()
-    v13.play()
+    log('exploding')
+    this.explodeAnim.stop()
+    this.explodeAnim.play()
   }
 }
 
@@ -143,12 +119,15 @@ export function addPumpkins() {
   )
   arrow.move(demoPump, new Vector3(0, 45, 0))
   demoPump.addComponentOrReplace(
-    new OnPointerDown(() => {
-      demoPump.explode()
-      gemsCounter.increase()
-      arrow.hide()
-      lady.talk(firstPumpkin, 0)
-    })
+    new OnPointerDown(
+      () => {
+        demoPump.explode()
+        gemsCounter.increase()
+        arrow.hide()
+        lady.talk(firstPumpkin, 0, 4)
+      },
+      { hoverText: 'Smash' }
+    )
   )
 
   pumpkins = []
@@ -165,6 +144,13 @@ export function removePumpkins() {
   pumpkins = []
   engine.removeEntity(demoPump)
 }
+
+let dummyUndergroundPumpkin = new Entity()
+dummyUndergroundPumpkin.addComponent(pumpkinModel)
+dummyUndergroundPumpkin.addComponent(
+  new Transform({ position: new Vector3(4, -3, 5) })
+)
+engine.addEntity(dummyUndergroundPumpkin)
 
 export let gemUIBck = new ui.LargeIcon(
   'images/halloween/ui-gem.png',
@@ -226,7 +212,7 @@ export function startGemUI() {
 
 export function winGame() {
   timer.running = false
-  lady.talk(allPumpkins, 0)
+  lady.talk(allPumpkins, 0, 3)
   quest.checkBox(3)
   updateProgression('pumpkinDone', true)
   arrow.move(lady)
@@ -283,195 +269,3 @@ export function resetGame() {
     })
   )
 }
-
-/// REUSABLE EXPLODING SECTIONS
-
-let undergronundDummy = new Entity()
-undergronundDummy.addComponent(
-  new Transform({
-    position: new Vector3(5, -2, 5),
-  })
-)
-engine.addEntity(undergronundDummy)
-
-//add v_01
-let v_01 = new Entity()
-v_01.addComponent(new GLTFShape('models/halloween/v_01.glb'))
-v_01.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_01)
-let v1 = new AnimationState('Action.052', { looping: false })
-v_01.addComponent(new Animator()).addClip(v1)
-v_01.setParent(undergronundDummy)
-
-//add v_02
-let v_02 = new Entity()
-v_02.addComponent(new GLTFShape('models/halloween/v_02.glb'))
-v_02.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_02)
-let v2 = new AnimationState('Action.053', { looping: false })
-v_02.addComponent(new Animator()).addClip(v2)
-v_02.setParent(undergronundDummy)
-
-//add v_03
-let v_03 = new Entity()
-v_03.addComponent(new GLTFShape('models/halloween/v_03.glb'))
-v_03.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_03)
-let v3 = new AnimationState('Action.054', { looping: false })
-v_03.addComponent(new Animator()).addClip(v3)
-v_03.setParent(undergronundDummy)
-
-//add v_04
-let v_04 = new Entity()
-v_04.addComponent(new GLTFShape('models/halloween/v_04.glb'))
-v_04.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_04)
-let v4 = new AnimationState('Action.055', { looping: false })
-v_04.addComponent(new Animator()).addClip(v4)
-v_04.setParent(undergronundDummy)
-
-//add v_05
-let v_05 = new Entity()
-v_05.addComponent(new GLTFShape('models/halloween/v_05.glb'))
-v_05.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_05)
-let v5 = new AnimationState('Action.056', { looping: false })
-v_05.addComponent(new Animator()).addClip(v5)
-v_05.setParent(undergronundDummy)
-
-//add v_06
-let v_06 = new Entity()
-v_06.addComponent(new GLTFShape('models/halloween/v_06.glb'))
-v_06.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_06)
-let v6 = new AnimationState('Action.057', { looping: false })
-v_06.addComponent(new Animator()).addClip(v6)
-v_06.setParent(undergronundDummy)
-
-//add v_07
-let v_07 = new Entity()
-v_07.addComponent(new GLTFShape('models/halloween/v_07.glb'))
-v_07.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_07)
-let v7 = new AnimationState('Action.058', { looping: false })
-v_07.addComponent(new Animator()).addClip(v7)
-v_07.setParent(undergronundDummy)
-
-//add v_08
-let v_08 = new Entity()
-v_08.addComponent(new GLTFShape('models/halloween/v_08.glb'))
-v_08.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_08)
-let v8 = new AnimationState('Action.059', { looping: false })
-v_08.addComponent(new Animator()).addClip(v8)
-v_08.setParent(undergronundDummy)
-
-//add v_09
-let v_09 = new Entity()
-v_09.addComponent(new GLTFShape('models/halloween/v_09.glb'))
-v_09.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_09)
-let v9 = new AnimationState('Action.060', { looping: false })
-v_09.addComponent(new Animator()).addClip(v9)
-v_09.setParent(undergronundDummy)
-
-//add v_10
-let v_10 = new Entity()
-v_10.addComponent(new GLTFShape('models/halloween/v_10.glb'))
-v_10.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_10)
-let v10 = new AnimationState('Action.061', { looping: false })
-v_10.addComponent(new Animator()).addClip(v10)
-v_10.setParent(undergronundDummy)
-
-//add v_11
-let v_11 = new Entity()
-v_11.addComponent(new GLTFShape('models/halloween/v_11.glb'))
-v_11.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_11)
-let v11 = new AnimationState('Action.062', { looping: false })
-v_11.addComponent(new Animator()).addClip(v11)
-v_11.setParent(undergronundDummy)
-
-//add v_12
-let v_12 = new Entity()
-v_12.addComponent(new GLTFShape('models/halloween/v_12.glb'))
-v_12.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_12)
-let v12 = new AnimationState('Action.063', { looping: false })
-v_12.addComponent(new Animator()).addClip(v12)
-v_12.setParent(undergronundDummy)
-
-//add v_13
-let v_13 = new Entity()
-v_13.addComponent(new GLTFShape('models/halloween/v_13.glb'))
-v_13.addComponent(
-  new Transform({
-    position: new Vector3(0, 0, 0),
-    rotation: Quaternion.Euler(0, 270, 0),
-  })
-)
-engine.addEntity(v_13)
-let v13 = new AnimationState('Action.064', { looping: false })
-v_13.addComponent(new Animator()).addClip(v13)
-v_13.setParent(undergronundDummy)

@@ -32,6 +32,7 @@ import { NPC } from './NPC/npc'
 import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 import utils from '../node_modules/decentraland-ecs-utils/index'
 import * as ui from '../node_modules/@dcl/ui-utils/index'
+import { tutorialEnableObservable } from './modules/tutorialHandler'
 
 //////// LOG PLAYER POSITION
 
@@ -290,7 +291,7 @@ export async function setUpScene() {
 
   if (progression.data.phone && !progression.data.w1Found) {
     let trashBin = new TrashBin({
-      position: new Vector3(284, 1, 12.5),
+      position: new Vector3(294.95306396484375, 18, 105.41779327392578),
     })
     addLimits()
   }
@@ -385,3 +386,8 @@ export function initialArrowState() {
     arrow.hide()
   }
 }
+
+tutorialEnableObservable.add((tutorialEnabled) => {
+  let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
+  lady.getComponent(Transform).scale = scale
+})

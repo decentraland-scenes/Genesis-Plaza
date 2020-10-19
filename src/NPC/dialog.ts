@@ -13,29 +13,37 @@ export let day1Intro: Dialog[] = [
     triggeredByNext: () => {},
   },
   {
-    text: `I have an idea of who might have killed that person... but I'd appreciate a little help first.`,
+    text: `So terrible what happened to that poor girl. Something really strange happened to me that I think could be connected.`,
     triggeredByNext: () => {
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
+
   {
-    text: `There's these rotting pumpkins scattered all over the plaza... people throw them about weeks before halloween, and then they rot out and never bother to pick them up.`,
+    text: `I'll tell you all about it, but first I could use a little help around here.`,
+    triggeredByNext: () => {
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+    },
+  },
+
+  {
+    text: `There's these rotting pumpkins scattered all over the plaza... people throw them about to decorate things weeks before halloween. The thing is, these things then rot, and no one bothers to pick them up.`,
     triggeredByNext: () => {
       quest.showCheckBox(3)
       //lady.playAnimation(`Annoyed_HeadShake`, true, 2.6)
     },
   },
   {
-    text: `Would you mind taking a round and getting rid of them?`,
+    text: `Would you mind taking a look around and getting rid of the rotting ones?`,
     isQuestion: true,
-    ifPressE: 4,
-    ifPressF: 5,
+    ifPressE: 5,
+    ifPressF: 6,
     triggeredByNext: () => {
       //lady.playAnimation(`Dismissing`, true, 3.3)
     },
   },
   {
-    text: `Oh good, I knew you were a good person!`,
+    text: `Oh good, I could see the kindness in your eyes, I knew you were good hearted!`,
     triggeredByNext: () => {
       startGemUI()
     },
@@ -49,7 +57,7 @@ export let day1Intro: Dialog[] = [
 
 export let firstPumpkin: Dialog[] = [
   {
-    text: `Nice! That felt good, right? There are plenty more of those around the plaza, go find them!`,
+    text: `That felt good, right? There are plenty more around the plaza, go find them!`,
     isEndOfDialog: true,
   },
 ]
@@ -63,14 +71,14 @@ export let morePumpkins: Dialog[] = [
 
 export let resetPumpkins: Dialog[] = [
   {
-    text: `Too slow, we need to start over!`,
+    text: `Too slow, we should start over!`,
     isEndOfDialog: true,
   },
 ]
 
 export let allPumpkins: Dialog[] = [
   {
-    text: `Great job, that's the last one! Come on over here now and I'll tell you.`,
+    text: `Great job, that's the last one! Come on over here and we'll have a chat.`,
     isEndOfDialog: true,
   },
 ]
@@ -86,25 +94,31 @@ export let day1Success: Dialog[] = [
     },
   },
   {
-    text: `Not just that, these clothes were all stained in blood. Super weird.`,
+    text: `Why bring your clothes to me? Not just that, these clothes were all stained in blood. Super weird.`,
     triggeredByNext: () => {
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
   {
-    text: `Then I heard about the dead body, town gossip travels fast, and then it was easy to tie those two together.`,
+    text: `When I heard about the dead body it was easy to tie those two together. Town gossip... you know?`,
     triggeredByNext: () => {
       // lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
   {
-    text: `After a very awkward exchange, he ran off towards the West, went behind the wearables building, and I couldn't see him anymore.`,
+    text: `After a very awkward exchange, he ran off towards the East, into the wearables building.`,
     triggeredByNext: () => {
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
   {
-    text: `Might be worth checking around that building.`,
+    text: `I did't see him leave since he went in, I kept a close watch. So he could still be inside.`,
+    triggeredByNext: () => {
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+    },
+  },
+  {
+    text: ` But maybe he changed clothes and left looking like someone else ...that could also be the case.`,
     triggeredByNext: () => {
       quest.showCheckBox(4)
       quest.showCheckBox(5)
@@ -116,69 +130,126 @@ export let day1Success: Dialog[] = [
 
 export let day1Outro: Dialog[] = [
   {
-    text: `This is a really interesting finding, well done!`,
-    triggeredByNext: () => {
-      quest.checkBox(5)
-      updateProgression('NPCOutroDay1')
-      //lady.playAnimation(`HeadShake_No`, true, 1.83)
-    },
-  },
-  {
-    text: `These shoes look just like the ones that the undertaker at the cemetery had on`,
+    text: `These shoes look just like the ones that he had on, they're very peculiar!`,
     triggeredByNext: () => {
       // lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
   },
   {
-    text: `I tell you what, come by tomorrow, same place, and wee can plan our next moves then!`,
+    text: `Looks like he got away. The fact that he discarded his clothes and changed makes him super suspicious.`,
+    triggeredByNext: () => {
+      quest.checkBox(5)
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+    },
+  },
+
+  {
+    text: `I tell you what, I'll ask around. I know people, people who like me have a lot of spare time to peep into other's lives, if you catch my drift.`,
+    triggeredByNext: () => {
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+      //   if (progression.data.day > 1) {
+      //     lady.talk(day2Intro, 0)
+      //   }
+    },
+  },
+  {
+    text: `Meet me tomorrow same time, same place, and we'll pull on this string. If there's one thing I'm good at it's knitting up strings into a nice crochet.`,
     triggeredByNext: () => {
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
 
       quest.showCheckBox(5)
-      updateProgression('NPCOutroDay1')
       nextDay(2)
       //   if (progression.data.day > 1) {
       //     lady.talk(day2Intro, 0)
       //   }
     },
     isEndOfDialog: true,
-
-    // if can go to day 2, pass over to day 2
   },
 ]
 
 export let day2Intro: Dialog[] = [
   {
-    text: `Hi dear, go check out the graveyard.`,
+    text: `Hi dear, good to see you again!`,
+  },
+  {
+    text: `I've been asking the girls about this strange garment, no one has any clues yet.`,
+    triggeredByNext: () => {
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+      //   if (progression.data.day > 1) {
+      //     lady.talk(day2Intro, 0)
+      //   }
+    },
+  },
+  {
+    text: `But something strange happened last night at the cemetery, and I got the feeling that this is all connected as well`,
+    triggeredByNext: () => {
+      //lady.playAnimation(`HeadShake_No`, true, 1.83)
+      //   if (progression.data.day > 1) {
+      //     lady.talk(day2Intro, 0)
+      //   }
+    },
+  },
+  {
+    text: `Head out there to 60,50 and check it out!`,
     isEndOfDialog: true,
     triggeredByNext: () => {
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCOutroDay2')
+      updateProgression('NPCIntroDay2')
     },
   },
 ]
 
 export let day3Intro: Dialog[] = [
   {
-    text: `Hi dear, go do the ray puzzle thing.`,
+    text: `The garments you have been finding seem ceremonial, of some sort.`,
     isEndOfDialog: true,
     triggeredByNext: () => {
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCOutroDay3')
+      updateProgression('NPCIntroDay3')
+    },
+  },
+  {
+    text: `So my best guess is that this has to be connected with the temple that Tak is making`,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCIntroDay3')
+    },
+  },
+  {
+    text: `Head over to 100,100. There's someone in charge who's usually there... shady odd guy. He could know something... or who knows, it could even be him.`,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression('NPCIntroDay3')
     },
   },
 ]
 
 export let day4Intro: Dialog[] = [
   {
-    text: `Hi dear, go check out the monster thing in the farm.`,
+    text: `The strangest thing happened! Looks like some kind of portal into another dimension opened up.`,
+  },
+  {
+    text: `You haven't been playing around with casting rays of light onto magical runes by any chance, have you?`,
+  },
+  {
+    text: `You have? Oh lord... I should have warned you about that when I sent you.`,
+  },
+  {
+    text: `Looks like something terrifying crept out of that portal, and it's stuck on old farmer Joe's farm`,
+  },
+  {
+    text: `Could you please go help him out? He's at 150,150`,
     isEndOfDialog: true,
     triggeredByNext: () => {
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCOutroDay4')
+      updateProgression('NPCIntroDay4')
     },
   },
 ]
@@ -190,7 +261,7 @@ export let day5Intro: Dialog[] = [
     triggeredByNext: () => {
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCOutroDay5')
+      updateProgression('NPCIntroDay5')
     },
   },
 ]

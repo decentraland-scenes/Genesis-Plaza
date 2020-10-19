@@ -231,7 +231,7 @@ export class QuestUI extends Entity {
   }
 
   public isChecked(index) {
-    return this.visibleElements[index].checked
+    return this.visibleElements[index].read()
   }
 
   public removeCheckbox(index) {}
@@ -370,6 +370,10 @@ export class QuestCheckBox extends Entity {
     if (this.teleportLocation) {
       setSection(this.background, resources.questItems.default)
     }
+  }
+
+  public read(): boolean {
+    return this.checked
   }
 
   //  Change text color?
@@ -577,13 +581,13 @@ export function initialQuestUI(
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Look for clues behind the trade center building',
+          label: 'Look for clues in the wearables building',
           checked: data.w1Found,
           visible: data.pumpkinDone,
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Bring your findings back to the Old lady',
+          label: 'Return to the Old lady',
           checked: data.w1Found,
           visible: data.pumpkinDone,
           coords: Coords.GenesisCoords,
