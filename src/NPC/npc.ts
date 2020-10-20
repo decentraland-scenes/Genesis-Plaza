@@ -43,9 +43,10 @@ export class NPC extends Entity {
     }
     this.addComponent(new Animator())
     if (idleAnim) {
-      this.idleAnim = this.getComponent(Animator).getClip(
-        idleAnim ? idleAnim : 'Idle'
-      )
+      this.idleAnim = new AnimationState(idleAnim ? idleAnim : 'Idle', {
+        looping: true,
+      })
+      this.getComponent(Animator).addClip(this.idleAnim)
       this.lastPlayedAnim = this.idleAnim
       this.idleAnim.play()
     }

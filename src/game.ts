@@ -153,6 +153,7 @@ import {
   day2Intro,
   day3Intro,
   day4Intro,
+  day5Intro,
   dismiss,
   morePumpkins,
   stay,
@@ -250,6 +251,7 @@ try {
 setUpScene()
 
 export let lady: NPC
+export let ghostBuster: NPC
 export let arrow: PointerArrow
 
 export async function setUpScene() {
@@ -257,22 +259,25 @@ export async function setUpScene() {
 
   initialQuestUI(progression.data, progression.day, Coords.GenesisCoords)
 
-  if (progression.data.phone && !progression.data.NPCOutroDay4) {
+  if (progression.data.phone && !progression.data.w4Found) {
+    // days 1,2,3,4
     lady = new NPC(
       {
-        position: new Vector3(160, 0.9, 180),
+        position: new Vector3(160, 0.8, 180),
         rotation: Quaternion.Euler(0, 180, 0),
       },
-      new GLTFShape('models/halloween/npc.glb'),
+      new GLTFShape('models/halloween/oldlady.glb'),
       () => {
         if (lady.dialog.isDialogOpen) return
         oldLadyTalk()
       },
-      'images/halloween/npc.png',
-      10
+      'images/halloween/oldlady.png',
+      10,
+      'Weight_Shift',
+      false
     )
     lady.dialog = new ui.DialogWindow(
-      { path: 'images/halloween/npc.png', height: 128, width: 128 },
+      { path: 'images/halloween/oldlady.png' },
       true,
       halloweenTheme
     )
@@ -288,6 +293,39 @@ export async function setUpScene() {
     )
 
     initialArrowState()
+  } else if (progression.data.w4Found && progression.day >= 5) {
+    // day 5
+    ghostBuster = new NPC(
+      {
+        position: new Vector3(160, 0.8, 180),
+        rotation: Quaternion.Euler(0, 180, 0),
+      },
+      new GLTFShape('models/halloween/ghostblaster.glb'),
+      () => {
+        if (ghostBuster.dialog.isDialogOpen) return
+
+        ghostBuster.talk(day5Intro)
+      },
+      'images/halloween/ghostblaster.png',
+      10,
+      'Weight_Shift',
+      false
+    )
+    ghostBuster.dialog = new ui.DialogWindow(
+      { path: 'images/halloween/ghostblaster.png' },
+      true,
+      halloweenTheme
+    )
+    ghostBuster.dialog.leftClickIcon.positionX = 340 - 60
+    ghostBuster.dialog.text.color = Color4.FromHexString('#8DFF34FF')
+
+    arrow = new PointerArrow(
+      {
+        position: new Vector3(0, 2.5, 0),
+        scale: new Vector3(1.5, 1.5, 1.5),
+      },
+      ghostBuster
+    )
   }
 
   if (progression.data.phone && !progression.data.w1Found) {
@@ -306,6 +344,8 @@ let day1LookingForWearable = false
 export function oldLadyTalk() {
   let data = progression.data
   let day = progression.day
+
+  //lady.playAnimation(`Acknowledging`, true, 1.97)
 
   if (data.NPCOutroDay3 && !data.w4Found && day >= 4) {
     //day 4 intro
