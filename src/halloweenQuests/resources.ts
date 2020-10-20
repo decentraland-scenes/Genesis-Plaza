@@ -285,6 +285,12 @@ export default {
       sourceTop: 8,
     },
   },
+  teleportArrow: {
+    sourceWidth: 24,
+    sourceHeight: 20,
+    sourceLeft: 906,
+    sourceTop: 675,
+  },
 }
 
 export function setSection(UIImage: UIImage, section: ImageSection) {

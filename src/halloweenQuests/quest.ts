@@ -231,7 +231,7 @@ export class QuestUI extends Entity {
   }
 
   public isChecked(index) {
-    return this.visibleElements[index].read()
+    return this.visibleElements[index].checked
   }
 
   public removeCheckbox(index) {}
@@ -241,6 +241,7 @@ export class QuestCheckBox extends Entity {
   label: UIText
   background: UIImage
   image: UIImage
+  teleportArrow: UIImage
   checked: boolean
   teleportLocation: string
   private darkTheme: boolean
@@ -270,6 +271,16 @@ export class QuestCheckBox extends Entity {
     if (teleportLocation && !startChecked) {
       // red
       setSection(this.background, resources.questItems.red)
+      this.teleportArrow = new UIImage(this.background, texture)
+      this.teleportArrow.positionX = -10
+      this.teleportArrow.positionY = -10
+      this.teleportArrow.width = 24
+      this.teleportArrow.height = 20
+      this.teleportArrow.hAlign = 'right'
+      this.teleportArrow.vAlign = 'top'
+      this.teleportArrow.isPointerBlocker = false
+
+      setSection(this.teleportArrow, resources.teleportArrow)
     } else {
       // default
       setSection(this.background, resources.questItems.default)
@@ -371,10 +382,6 @@ export class QuestCheckBox extends Entity {
     if (this.teleportLocation) {
       setSection(this.background, resources.questItems.default)
     }
-  }
-
-  public read(): boolean {
-    return this.checked
   }
 
   //  Change text color?
