@@ -161,6 +161,7 @@ import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers
 import { PointerArrow } from './halloweenQuests/pointerArrow'
 import { TrashBin } from './halloweenQuests/trashBin'
 import { gemsCounter } from './halloweenQuests/pumpkin'
+import { showCoolItem } from './halloweenQuests/loot'
 
 try {
   /***
@@ -294,6 +295,9 @@ export async function setUpScene() {
       position: new Vector3(294.95306396484375, 17.5, 105.41779327392578),
     })
     addLimits()
+
+    // dummy underground loot for faster loading
+    showCoolItem(trashBin, 'dummy', { position: new Vector3(0, -20, 0) })
   }
 }
 
