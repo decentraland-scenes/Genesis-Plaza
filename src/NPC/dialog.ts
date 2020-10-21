@@ -162,13 +162,14 @@ export let day1Outro: Dialog[] = [
     text: `I tell you what, I'll ask around. I know people, people who like me have a lot of spare time to peep into other's lives, if you catch my drift.`,
     triggeredByNext: () => {
       lady.playAnimation(`Head_Yes`, true, 2.63)
+      if (nextDay(2)) {
+        lady.talk(day2Intro, 0)
+      }
     },
   },
   {
-    text: `Meet me tomorrow same time, same place, and we'll pull on this string. If there's one thing I'm good at it's knitting up strings into a nice crochet.`,
+    text: `Meet me tomorrow same time, same place, ok?`,
     triggeredByNext: () => {
-      quest.showCheckBox(5)
-      nextDay(2)
       //   if (progression.data.day > 1) {
       //     lady.talk(day2Intro, 0)
       //   }
@@ -192,6 +193,12 @@ export let day2Intro: Dialog[] = [
   },
   {
     text: `But something strange happened last night at the cemetery, and I got the feeling that this is all connected as well`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Head_Yes`, true, 2.63)
+    },
+  },
+  {
+    text: `Let's pull on this string and see where it leads us. Oh I know all there is to know about strings and knitting, so we'll make a great team!`,
     triggeredByNext: () => {
       lady.playAnimation(`Head_Yes`, true, 2.63)
     },
