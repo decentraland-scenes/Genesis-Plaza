@@ -183,23 +183,23 @@ FetchuserInformation()
   .then(() => {
     const chessBoardLandOwnerData = {
       host_data: `{
-              "time_control": 600,
-              "system_pivot": {
-				"position": {"x":180, "y":1.2, "z":152},
-				"scale": {"x":1, "y":1, "z":1}
-              },
-              "chessboard": {
-                  "visible": true,
-				  "position": {"x":180, "y":1.2, "z":152},
-                  "scale": {"x":1.1, "y":1.1, "z":1.1}
-              },
-              "decoration_bottom": {
-                  "visible": true,
-                  "position": {"x":180, "y":0.7, "z":152},
-                  "rotation": {"x":0, "y":0, "z":0},
-                  "scale": {"x":0.8, "y":0.8, "z":0.8}
-              }
-          }`,
+			"time_control": 600,
+			"system_pivot": {
+			  "position": {"x":184, "y":1.2, "z":93.7},
+			  "scale": {"x":1, "y":1, "z":1}
+			},
+			"chessboard": {
+				"visible": true,
+				 "position": {"x":184, "y":1.2, "z":93.7},
+				"scale": {"x":1.1, "y":1.1, "z":1.1}
+			},
+			"decoration_bottom": {
+				"visible": true,
+				"position": {"x":184, "y":0.7, "z":93.7},
+				"rotation": {"x":0, "y":0, "z":0},
+				"scale": {"x":0.8, "y":0.8, "z":0.8}
+			}
+		}`,
     }
 
     new PawnsSquare(chessBoardLandOwnerData)

@@ -102,45 +102,45 @@ export function addBuildings() {
   )
   engine.addEntity(MoonTower_Action_Ringu)
 
-    //add Text_A
-let Text_A = new Entity()
-Text_A.addComponent(new GLTFShape("models/Text_A.glb"))
-Text_A.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
+  //add Text_A
+  let Text_A = new Entity()
+  Text_A.addComponent(new GLTFShape('models/Text_A.glb'))
+  Text_A.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(Text_A)
 
-}
-))
-engine.addEntity(Text_A)
+  //add Text_B
+  let Text_B = new Entity()
+  Text_B.addComponent(new GLTFShape('models/Text_B.glb'))
+  Text_B.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(Text_B)
 
-//add Text_B
-let Text_B = new Entity()
-Text_B.addComponent(new GLTFShape("models/Text_B.glb"))
-Text_B.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
+  //add Text_C
+  let Text_C = new Entity()
+  Text_C.addComponent(new GLTFShape('models/Text_C.glb'))
+  Text_C.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(Text_C)
 
-}
-))
-engine.addEntity(Text_B)
-
-//add Text_C
-let Text_C = new Entity()
-Text_C.addComponent(new GLTFShape("models/Text_C.glb"))
-Text_C.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(Text_C)
-
-//add flare
-let flare = new Entity()
-flare.addComponent(new GLTFShape("models/flare.glb"))
-flare.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(flare)
+  //add flare
+  let flare = new Entity()
+  flare.addComponent(new GLTFShape('models/flare.glb'))
+  flare.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(flare)
 
   //add TheWhale_Action_Sculpture
   let TheWhale_Action_Sculpture = new Entity()
@@ -153,28 +153,6 @@ engine.addEntity(flare)
     })
   )
   engine.addEntity(TheWhale_Action_Sculpture)
-
-  //add Gallery_action_Moebius
-  let Gallery_action_Moebius = new Entity()
-  Gallery_action_Moebius.addComponent(
-    new GLTFShape('models/Gallery_action_Moebius.glb')
-  )
-  Gallery_action_Moebius.addComponent(
-    new Transform({
-      rotation: Quaternion.Euler(0, 180, 0),
-    })
-  )
-  engine.addEntity(Gallery_action_Moebius)
-
-  //add Gallery_action_Moebius2
-let Gallery_action_Moebius2 = new Entity()
-Gallery_action_Moebius2.addComponent(new GLTFShape("models/Gallery_action_Moebius2.glb"))
-Gallery_action_Moebius2.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(Gallery_action_Moebius2)
 
   //CORE BUILDING
 
@@ -189,24 +167,24 @@ engine.addEntity(Gallery_action_Moebius2)
   engine.addEntity(core_building)
 
   //add msg_welcome
-let msg_welcome = new Entity()
-msg_welcome.addComponent(new GLTFShape("models/msg_welcome.glb"))
-msg_welcome.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
+  let msg_welcome = new Entity()
+  msg_welcome.addComponent(new GLTFShape('models/msg_welcome.glb'))
+  msg_welcome.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(msg_welcome)
 
-}
-))
-engine.addEntity(msg_welcome)
-
-//add core_art
-let core_art = new Entity()
-core_art.addComponent(new GLTFShape("models/core_art.glb"))
-core_art.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(core_art)
+  //add core_art
+  let core_art = new Entity()
+  core_art.addComponent(new GLTFShape('models/core_art.glb'))
+  core_art.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(core_art)
 
   // THE GARDEN (CREATORS BUILDING)
 
@@ -289,35 +267,34 @@ engine.addEntity(core_art)
   engine.addEntity(trading_center)
 
   //add trading_land
-let trading_land = new Entity()
-trading_land.addComponent(new GLTFShape("models/trading_land.glb"))
-trading_land.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
+  let trading_land = new Entity()
+  trading_land.addComponent(new GLTFShape('models/trading_land.glb'))
+  trading_land.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(trading_land)
 
-}
-))
-engine.addEntity(trading_land)
+  //add trading_crypto
+  let trading_crypto = new Entity()
+  trading_crypto.addComponent(new GLTFShape('models/trading_crypto.glb'))
+  trading_crypto.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(trading_crypto)
 
-//add trading_crypto
-let trading_crypto = new Entity()
-trading_crypto.addComponent(new GLTFShape("models/trading_crypto.glb"))
-trading_crypto.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(trading_crypto)
-
-//add trading_wearables
-let trading_wearables = new Entity()
-trading_wearables.addComponent(new GLTFShape("models/trading_wearables.glb"))
-trading_wearables.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
-engine.addEntity(trading_wearables)
-
+  //add trading_wearables
+  let trading_wearables = new Entity()
+  trading_wearables.addComponent(new GLTFShape('models/trading_wearables.glb'))
+  trading_wearables.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(trading_wearables)
 
   //STREET MESH
 
@@ -334,11 +311,10 @@ engine.addEntity(trading_wearables)
 
 //add zepellin
 let zepellin = new Entity()
-zepellin.addComponent(new GLTFShape("models/zepellin.glb"))
-zepellin.addComponent(new Transform({
-	rotation: Quaternion.Euler(0, 180, 0)
-
-}
-))
+zepellin.addComponent(new GLTFShape('models/zepellin.glb'))
+zepellin.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
 engine.addEntity(zepellin)
-
