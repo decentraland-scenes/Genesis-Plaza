@@ -166,7 +166,7 @@ export async function claimFromServer(stage: string) {
   log('sending req to: ', url)
   try {
     let response = await fetch(url, {
-      method: 'POST',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
     let data = await response.json()

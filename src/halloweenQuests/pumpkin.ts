@@ -9,7 +9,6 @@ let totalPumpkins = 10
 let firstTime: boolean = true
 
 let pumpkinModel = new GLTFShape('models/halloween/pumpkin/pumpkin_01.glb')
-let fumesModel = new GLTFShape('models/halloween/pumpkin/smoke.glb')
 
 export class Pumpkin extends Entity {
   //   explodeAnim: AnimationState = new AnimationState('Smashing', {
@@ -33,8 +32,12 @@ export class Pumpkin extends Entity {
     )
 
     this.smoke = new Entity()
-    this.smoke.addComponent(fumesModel)
+    this.smoke.addComponent(new GLTFShape('models/halloween/pumpkin/smoke.glb'))
     this.smoke.addComponent(new Billboard())
+    this.smoke.addComponent(new Animator())
+    this.smoke
+      .getComponent(Animator)
+      .addClip(new AnimationState('Smoke_Action'))
     this.smoke.setParent(this)
 
     //this.getComponent(Transform).translate(new Vector3(0, -1.671, 0))
@@ -119,9 +122,8 @@ let pumpkinPositions: { pos: Vector3 }[] = [
   {
     pos: new Vector3(116.53714752197266, 2.177417039871216, 284.1548156738281),
   },
-
   {
-    pos: new Vector3(252.99388885498047, 2.0844812393188477, 55.43287658691406),
+    pos: new Vector3(54.66194152832031, 2.1519174575805664, 130.10051345825195),
   },
   {
     pos: new Vector3(226.9413604736328, 2.1233460903167725, 16.67791748046875),
@@ -148,7 +150,7 @@ let demoPump: Pumpkin
 
 export function addPumpkins() {
   demoPump = new Pumpkin(
-    new Vector3(157.3, 2.1656084060668945, 178.8503761291504)
+    new Vector3(157.6, 2.1656084060668945, 178.8503761291504)
   )
   arrow.move(demoPump, new Vector3(0, 45, 0))
   demoPump.addComponentOrReplace(
@@ -163,6 +165,7 @@ export function addPumpkins() {
       { hoverText: 'Smash' }
     )
   )
+  demoPump.getComponent(Transform).rotation.eulerAngles = new Vector3(0, 180, 0)
 
   pumpkins = []
   for (let vase of pumpkinPositions) {
@@ -187,36 +190,36 @@ dummyUndergroundPumpkin.addComponent(
 engine.addEntity(dummyUndergroundPumpkin)
 
 export let gemUIBck = new ui.LargeIcon(
-  'images/halloween/ui-gem.png',
-  -20,
-  50,
+  'images/halloween/pumpkin-ui.png',
+  0,
+  0,
   256,
-  128,
+  256,
   {
     sourceWidth: 512,
-    sourceHeight: 256,
+    sourceHeight: 512,
   }
 )
 gemUIBck.image.visible = false
 export let gemsCounter = new ui.UICounter(
   0,
-  -135,
-  105,
-  Color4.Purple(),
+  -70,
+  182,
+  Color4.FromHexString('#8DFF34FF'),
   48,
   true
 )
 export let secondsCounter = new ui.UICounter(
   59,
-  -14,
-  49,
-  Color4.Black(),
+  16,
+  130,
+  Color4.White(),
   25,
   true,
   2
 )
-export let timerSeparaor = new ui.CornerLabel(':', -39, 49, Color4.Black())
-export let minutesCounter = new ui.UICounter(5, -64, 49, Color4.Black())
+export let timerSeparaor = new ui.CornerLabel(':', -9, 130, Color4.White())
+export let minutesCounter = new ui.UICounter(5, -34, 130, Color4.White())
 gemsCounter.uiText.font = ui.SFHeavyFont
 gemsCounter.uiText.visible = false
 secondsCounter.uiText.visible = false

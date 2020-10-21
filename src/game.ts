@@ -144,7 +144,22 @@ let forest2 = new AmbientSound(
 
 setUpScene()
 
-export let lady: NPC
+export let lady = new NPC(
+  {
+    position: new Vector3(160, -10, 180),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  new GLTFShape('models/halloween/oldlady.glb'),
+  () => {
+    if (lady.dialog.isDialogOpen) return
+    oldLadyTalk()
+  },
+  'images/halloween/oldlady.png',
+  10,
+  'Weight_Shift',
+  false,
+  false
+)
 export let ghostBuster: NPC
 export let arrow: PointerArrow
 
@@ -155,22 +170,7 @@ export async function setUpScene() {
 
   if (progression.data.phone && !progression.data.w4Found) {
     // days 1,2,3,4
-    lady = new NPC(
-      {
-        position: new Vector3(160, 0.55, 180),
-        rotation: Quaternion.Euler(0, 180, 0),
-      },
-      new GLTFShape('models/halloween/oldlady.glb'),
-      () => {
-        if (lady.dialog.isDialogOpen) return
-        oldLadyTalk()
-      },
-      'images/halloween/oldlady.png',
-      10,
-      'Weight_Shift',
-      false,
-      false
-    )
+    lady.getComponent(Transform).position.y = 0.55
     lady.dialog = new ui.DialogWindow(
       { path: 'images/halloween/oldlady.png' },
       true,
