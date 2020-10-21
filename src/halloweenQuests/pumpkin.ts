@@ -5,16 +5,19 @@ import { allPumpkins, firstPumpkin, resetPumpkins } from '../NPC/dialog'
 import { updateProgression } from './progression'
 import { quest } from './quest'
 
-let totalPumpkins = 3
+let totalPumpkins = 10
 let firstTime: boolean = true
 
-let pumpkinModel = new GLTFShape('models/halloween/pumpkinSmash.glb')
+let pumpkinModel = new GLTFShape('models/halloween/pumpkin/pumpkin_01.glb')
+let fumesModel = new GLTFShape('models/halloween/pumpkin/smoke.glb')
 
 export class Pumpkin extends Entity {
-  explodeAnim: AnimationState = new AnimationState('Smashing', {
-    looping: false,
-    speed: 0.7,
-  })
+  //   explodeAnim: AnimationState = new AnimationState('Smashing', {
+  //     looping: false,
+  //     speed: 0.7,
+  //   })
+  smoke: Entity
+  smashed: boolean = false
   constructor(position: Vector3, hasGem?: boolean) {
     super()
 
@@ -24,19 +27,26 @@ export class Pumpkin extends Entity {
 
     this.addComponent(
       new Transform({
-        position: new Vector3(position.x, position.y - 1.5, position.z),
+        position: new Vector3(position.x, position.y - 1.7, position.z),
         rotation: Quaternion.Euler(0, randomRotation, 0),
       })
     )
 
+    this.smoke = new Entity()
+    this.smoke.addComponent(fumesModel)
+    this.smoke.addComponent(new Billboard())
+    this.smoke.setParent(this)
+
     //this.getComponent(Transform).translate(new Vector3(0, -1.671, 0))
 
-    this.addComponent(new Animator()).addClip(this.explodeAnim)
+    //this.addComponent(new Animator()).addClip(this.explodeAnim)
 
     engine.addEntity(this)
     this.addComponent(
       new OnPointerDown(
         () => {
+          if (this.smashed) return
+          this.smashed = true
           this.explode()
           gemsCounter.increase()
           if (gemsCounter.read() >= totalPumpkins) {
@@ -52,9 +62,49 @@ export class Pumpkin extends Entity {
   }
 
   explode() {
-    log('exploding')
-    this.explodeAnim.stop()
-    this.explodeAnim.play()
+    this.removeComponent(GLTFShape)
+    engine.removeEntity(this.smoke)
+
+    v1.stop()
+    v2.stop()
+    v3.stop()
+    v4.stop()
+    v5.stop()
+    v6.stop()
+    v7.stop()
+    v8.stop()
+    v9.stop()
+    v10.stop()
+    v11.stop()
+    s1.stop()
+    s2.stop()
+    RP_01.setParent(this)
+    RP_02.setParent(this)
+    RP_03.setParent(this)
+    RP_04.setParent(this)
+    RP_05.setParent(this)
+    RP_06.setParent(this)
+    RP_07.setParent(this)
+    RP_08.setParent(this)
+    RP_09.setParent(this)
+    RP_10.setParent(this)
+    RP_11.setParent(this)
+    s_1.setParent(this)
+    s_2.setParent(this)
+
+    v1.play()
+    v2.play()
+    v3.play()
+    v4.play()
+    v5.play()
+    v6.play()
+    v7.play()
+    v8.play()
+    v9.play()
+    v10.play()
+    v11.play()
+    s1.play()
+    s2.play()
   }
 }
 
@@ -66,22 +116,10 @@ let pumpkinPositions: { pos: Vector3 }[] = [
   {
     pos: new Vector3(95.85749435424805, 2.0184473991394043, 237.16542053222656),
   },
-  { pos: new Vector3(68.2055892944336, 2.353646755218506, 250.82066345214844) },
-  {
-    pos: new Vector3(71.82850646972656, 2.5935463905334473, 281.26698303222656),
-  },
   {
     pos: new Vector3(116.53714752197266, 2.177417039871216, 284.1548156738281),
   },
-  {
-    pos: new Vector3(180.77804946899414, 2.278470277786255, 287.99981689453125),
-  },
-  {
-    pos: new Vector3(301.9658966064453, 2.325359344482422, 171.50619506835938),
-  },
-  {
-    pos: new Vector3(295.6520233154297, 11.246173858642578, 108.19016647338867),
-  },
+
   {
     pos: new Vector3(252.99388885498047, 2.0844812393188477, 55.43287658691406),
   },
@@ -91,6 +129,7 @@ let pumpkinPositions: { pos: Vector3 }[] = [
   {
     pos: new Vector3(179.97401428222656, 2.2571136951446533, 19.20209503173828),
   },
+
   {
     pos: new Vector3(
       109.15375137329102,
@@ -98,15 +137,9 @@ let pumpkinPositions: { pos: Vector3 }[] = [
       27.163925170898438
     ),
   },
-  { pos: new Vector3(94.8697624206543, 3.1651079654693604, 39.84266662597656) },
+
   {
     pos: new Vector3(8.964691162109375, 2.1554431915283203, 66.20610809326172),
-  },
-  {
-    pos: new Vector3(86.91092300415039, 1.9802448749542236, 194.33695220947266),
-  },
-  {
-    pos: new Vector3(110.9427719116211, 2.001781702041626, 133.85600185394287),
   },
 ]
 
@@ -115,7 +148,7 @@ let demoPump: Pumpkin
 
 export function addPumpkins() {
   demoPump = new Pumpkin(
-    new Vector3(156.99755954742432, 2.1656084060668945, 178.8503761291504)
+    new Vector3(157.3, 2.1656084060668945, 178.8503761291504)
   )
   arrow.move(demoPump, new Vector3(0, 45, 0))
   demoPump.addComponentOrReplace(
@@ -270,3 +303,183 @@ export function resetGame() {
     })
   )
 }
+
+/// REUSABLE EXPLODING SECTIONS
+
+let undergronundDummy = new Entity()
+undergronundDummy.addComponent(
+  new Transform({
+    position: new Vector3(5, -2, 5),
+  })
+)
+engine.addEntity(undergronundDummy)
+
+//add RP_01
+let RP_01 = new Entity()
+RP_01.addComponent(new GLTFShape('models/halloween/pumpkin/RP_01.glb'))
+RP_01.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_01)
+let v1 = new AnimationState('Action', { looping: false })
+RP_01.addComponent(new Animator()).addClip(v1)
+RP_01.setParent(undergronundDummy)
+
+//add RP_02
+let RP_02 = new Entity()
+RP_02.addComponent(new GLTFShape('models/halloween/pumpkin/RP_02.glb'))
+RP_02.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_02)
+let v2 = new AnimationState('Action.001', { looping: false })
+RP_02.addComponent(new Animator()).addClip(v2)
+RP_02.setParent(undergronundDummy)
+
+//add RP_03
+let RP_03 = new Entity()
+RP_03.addComponent(new GLTFShape('models/halloween/pumpkin/RP_03.glb'))
+RP_03.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_03)
+let v3 = new AnimationState('Action.002', { looping: false })
+RP_03.addComponent(new Animator()).addClip(v3)
+RP_03.setParent(undergronundDummy)
+
+//add RP_04
+let RP_04 = new Entity()
+RP_04.addComponent(new GLTFShape('models/halloween/pumpkin/RP_04.glb'))
+RP_04.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_04)
+
+let v4 = new AnimationState('Action.003', { looping: false })
+RP_04.addComponent(new Animator()).addClip(v4)
+RP_04.setParent(undergronundDummy)
+
+//add RP_05
+let RP_05 = new Entity()
+RP_05.addComponent(new GLTFShape('models/halloween/pumpkin/RP_05.glb'))
+RP_05.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_05)
+let v5 = new AnimationState('Action.004', { looping: false })
+RP_05.addComponent(new Animator()).addClip(v5)
+RP_05.setParent(undergronundDummy)
+
+//add RP_06
+let RP_06 = new Entity()
+RP_06.addComponent(new GLTFShape('models/halloween/pumpkin/RP_06.glb'))
+RP_06.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_06)
+let v6 = new AnimationState('Action.005', { looping: false })
+RP_06.addComponent(new Animator()).addClip(v6)
+RP_06.setParent(undergronundDummy)
+
+//add RP_07
+let RP_07 = new Entity()
+RP_07.addComponent(new GLTFShape('models/halloween/pumpkin/RP_07.glb'))
+RP_07.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_07)
+let v7 = new AnimationState('Action.006', { looping: false })
+RP_07.addComponent(new Animator()).addClip(v7)
+RP_07.setParent(undergronundDummy)
+
+//add RP_08
+let RP_08 = new Entity()
+RP_08.addComponent(new GLTFShape('models/halloween/pumpkin/RP_08.glb'))
+RP_08.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_08)
+let v8 = new AnimationState('Action.007', { looping: false })
+RP_08.addComponent(new Animator()).addClip(v8)
+RP_08.setParent(undergronundDummy)
+
+//add RP_09
+let RP_09 = new Entity()
+RP_09.addComponent(new GLTFShape('models/halloween/pumpkin/RP_09.glb'))
+RP_09.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_09)
+let v9 = new AnimationState('Action.008', { looping: false })
+RP_09.addComponent(new Animator()).addClip(v9)
+RP_09.setParent(undergronundDummy)
+
+//add RP_10
+let RP_10 = new Entity()
+RP_10.addComponent(new GLTFShape('models/halloween/pumpkin/RP_10.glb'))
+RP_10.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_10)
+let v10 = new AnimationState('Action.009', { looping: false })
+RP_10.addComponent(new Animator()).addClip(v10)
+RP_10.setParent(undergronundDummy)
+
+//add RP_11
+let RP_11 = new Entity()
+RP_11.addComponent(new GLTFShape('models/halloween/pumpkin/RP_11.glb'))
+RP_11.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(RP_11)
+let v11 = new AnimationState('Action.010', { looping: false })
+RP_11.addComponent(new Animator()).addClip(v11)
+RP_11.setParent(undergronundDummy)
+
+//add splash_01
+let s_1 = new Entity()
+s_1.addComponent(new GLTFShape('models/halloween/pumpkin/splash_01.glb'))
+s_1.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(s_1)
+let s1 = new AnimationState('Plane.001Action', { looping: false })
+s_1.addComponent(new Animator()).addClip(s1)
+s_1.setParent(undergronundDummy)
+
+//add splash_02
+let s_2 = new Entity()
+s_2.addComponent(new GLTFShape('models/halloween/pumpkin/splash_02.glb'))
+s_2.addComponent(
+  new Transform({
+    position: new Vector3(0, 0, 0),
+  })
+)
+engine.addEntity(s_1)
+let s2 = new AnimationState('Plane.001Action', { looping: false })
+s_2.addComponent(new Animator()).addClip(s2)
+s_2.setParent(undergronundDummy)

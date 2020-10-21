@@ -168,6 +168,7 @@ export async function setUpScene() {
       'images/halloween/oldlady.png',
       10,
       'Weight_Shift',
+      false,
       false
     )
     lady.dialog = new ui.DialogWindow(
@@ -258,7 +259,7 @@ export function oldLadyTalk() {
     // day 2 intro
     lady.talk(day2Intro, 0)
     arrow.hide()
-  } else if (day1LookingForWearable && !quest.isChecked(5)) {
+  } else if (day1LookingForWearable && quest.isChecked(4)) {
     day1LookingForWearable = false
     // day 1 outro
     lady.talk(day1Outro, 0)

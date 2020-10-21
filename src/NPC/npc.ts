@@ -60,25 +60,26 @@ export class NPC extends Entity {
     this.closeDialogTimer = new Entity()
     engine.addEntity(this.closeDialogTimer)
 
-    if (onlyExternalTrigger) {
-    } else {
-      // Reaction when clicked
-      this.addComponent(
-        new OnPointerDown(
-          (e) => {
-            if (this.inCooldown || this.dialog.isDialogOpen) return
+    // Reaction when clicked
+    this.addComponent(
+      new OnPointerDown(
+        (e) => {
+          if (this.inCooldown || this.dialog.isDialogOpen) return
 
-            this.activate()
-            if (this.faceUser) {
-              moveDummyTarget(this)
-            }
-          },
-          {
-            button: ActionButton.POINTER,
-            hoverText: 'Talk',
+          this.activate()
+          if (this.faceUser) {
+            moveDummyTarget(this)
           }
-        )
+        },
+        {
+          button: ActionButton.POINTER,
+          hoverText: 'Talk',
+        }
       )
+    )
+
+    if (onlyExternalTrigger) {
+      this.removeComponent(OnPointerDown)
     }
 
     // trigger when player walks near
