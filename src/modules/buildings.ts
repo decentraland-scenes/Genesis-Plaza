@@ -328,3 +328,12 @@ halloween_assets.addComponent(
   })
 )
 engine.addEntity(halloween_assets)
+
+let trash = new Entity()
+trash.addComponent(new GLTFShape('models/trash.glb'))
+trash.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+engine.addEntity(trash)
