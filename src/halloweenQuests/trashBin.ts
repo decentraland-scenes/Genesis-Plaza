@@ -5,6 +5,7 @@ import { quest } from './quest'
 export class TrashBin extends Entity {
   openClip = new AudioClip('sounds/halloween/open.mp3')
   closeClip = new AudioClip('sounds/halloween/close.mp3')
+  enabled: boolean = false
 
   toggle(value: boolean) {
     const source = new AudioSource(value ? this.openClip : this.closeClip)
@@ -35,12 +36,15 @@ export class TrashBin extends Entity {
     this.addComponent(
       new OnPointerDown(() => {
         this.toggle(true)
-        // loot appears
-        quest.checkBox(4)
-        updateProgression('w1Found')
-        showCoolItem(this, 'w1Found', {
-          position: new Vector3(0, 2, 0),
-        })
+
+        if (this.enabled) {
+          this.enabled = false
+          quest.checkBox(4)
+          updateProgression('w1Found')
+          showCoolItem(this, 'w1Found', {
+            position: new Vector3(0, 2, 0),
+          })
+        }
       })
     )
 
