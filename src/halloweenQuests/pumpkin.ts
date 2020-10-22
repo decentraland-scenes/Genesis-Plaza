@@ -11,6 +11,9 @@ let firstTime: boolean = true
 let pumpkinModel = new GLTFShape('models/halloween/pumpkin/pumpkin_01.glb')
 let smokeModel = new GLTFShape('models/halloween/pumpkin/smoke.glb')
 
+/// Smash audio
+const clip = new AudioClip("sounds/halloween/smash.mp3")
+const source = new AudioSource(clip)
 export class Pumpkin extends Entity {
   //   explodeAnim: AnimationState = new AnimationState('Smashing', {
   //     looping: false,
@@ -22,7 +25,8 @@ export class Pumpkin extends Entity {
     super()
 
     this.addComponent(pumpkinModel)
-
+    this.addComponent(source)
+    source.playing = false
     let randomRotation = Math.random() * 365
 
     this.addComponent(
@@ -50,6 +54,7 @@ export class Pumpkin extends Entity {
           if (this.smashed) return
           this.smashed = true
           this.explode()
+          source.playOnce()
           gemsCounter.increase()
           if (gemsCounter.read() >= totalPumpkins) {
             winGame()

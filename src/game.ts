@@ -120,7 +120,7 @@ addZenquencer()
 
 let forest1 = new AmbientSound(
   { position: new Vector3(215, 2, 183) },
-  'sounds/Forest.mp3',
+  'sounds/halloween/Halloween_Ambience.mp3',
   0,
   true,
   0.6
@@ -128,7 +128,7 @@ let forest1 = new AmbientSound(
 
 let forest2 = new AmbientSound(
   { position: new Vector3(117, 2, 42) },
-  'sounds/Forest2.mp3',
+  'sounds/halloween/Halloween_Ambience.mp3',
   0,
   true,
   0.6
