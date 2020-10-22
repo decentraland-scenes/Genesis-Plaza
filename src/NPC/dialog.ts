@@ -83,7 +83,7 @@ export let morePumpkins: Dialog[] = [
 
 export let resetPumpkins: Dialog[] = [
   {
-    text: `Too slow, we should start over!`,
+    text: `Well, have another 10 minutes ...what's the rush anyway?`,
     isEndOfDialog: true,
   },
 ]

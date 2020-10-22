@@ -565,7 +565,7 @@ export function initialQuestUI(
     quest = new QuestUI(
       [
         {
-          label: 'Visit all the houses',
+          label: 'Visit all 10 houses',
           checked: data.allHouses,
           visible: true,
           coords: Coords.CemeteryCoords,
