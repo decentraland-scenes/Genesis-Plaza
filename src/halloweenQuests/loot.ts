@@ -16,7 +16,9 @@ let particleGLTF = new GLTFShape('models/Particles.glb')
 export function showCoolItem(
   parent: Entity,
   progressionStep: string,
-  offset?: TranformConstructorArgs
+  offset?: TranformConstructorArgs,
+  onlyClicking?: boolean,
+  harcodedId?: string
 ) {
   //playSound(true)
 

@@ -120,7 +120,7 @@ addZenquencer()
 
 let forest1 = new AmbientSound(
   { position: new Vector3(215, 2, 183) },
-  'sounds/Forest.mp3',
+  'sounds/halloween/Halloween_Ambience.mp3',
   0,
   true,
   0.6
@@ -128,7 +128,7 @@ let forest1 = new AmbientSound(
 
 let forest2 = new AmbientSound(
   { position: new Vector3(117, 2, 42) },
-  'sounds/Forest2.mp3',
+  'sounds/halloween/Halloween_Ambience.mp3',
   0,
   true,
   0.6
@@ -162,6 +162,10 @@ export let lady = new NPC(
 )
 export let ghostBuster: NPC
 export let arrow: PointerArrow
+
+let trashBin = new TrashBin({
+  position: new Vector3(294.95306396484375, 17.5, 105.41779327392578),
+})
 
 export async function setUpScene() {
   await checkProgression()
@@ -224,9 +228,6 @@ export async function setUpScene() {
   }
 
   if (progression.data.phone && !progression.data.w1Found) {
-    let trashBin = new TrashBin({
-      position: new Vector3(294.95306396484375, 17.5, 105.41779327392578),
-    })
     addLimits()
 
     // dummy underground loot for faster loading
@@ -267,6 +268,7 @@ export function oldLadyTalk() {
   } else if (data.pumpkinDone && !data.w1Found) {
     // look for wearable
     lady.talk(day1Success, 0)
+    trashBin.enabled = true
     day1LookingForWearable = true
     arrow.hide()
   } else if (gemsCounter.uiText.visible && !data.pumpkinDone) {
@@ -334,6 +336,15 @@ export function initialArrowState() {
     arrow.hide()
   }
 }
+
+let easterEggStar = new Entity()
+easterEggStar.addComponent(
+  new Transform({
+    position: new Vector3(116.7, 3.5, 35),
+  })
+)
+engine.addEntity(easterEggStar)
+showCoolItem(easterEggStar, 'easteregg1', true)
 
 tutorialEnableObservable.add((tutorialEnabled) => {
   let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()

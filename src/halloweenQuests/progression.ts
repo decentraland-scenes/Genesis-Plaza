@@ -19,7 +19,8 @@ export let userData: UserData
 export let playerRealm: Realm
 
 export let fireBaseServer =
-  'https://us-central1-decentraland-halloween.cloudfunctions.net/app'
+  'https://us-central1-decentraland-events.cloudfunctions.net/app/'
+//'https://us-central1-decentraland-halloween.cloudfunctions.net/app'
 
 export async function setUserData() {
   const data = await getUserData()

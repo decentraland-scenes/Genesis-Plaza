@@ -9,7 +9,11 @@ let totalPumpkins = 10
 let firstTime: boolean = true
 
 let pumpkinModel = new GLTFShape('models/halloween/pumpkin/pumpkin_01.glb')
+let smokeModel = new GLTFShape('models/halloween/pumpkin/smoke.glb')
 
+/// Smash audio
+const clip = new AudioClip("sounds/halloween/smash.mp3")
+const source = new AudioSource(clip)
 export class Pumpkin extends Entity {
   //   explodeAnim: AnimationState = new AnimationState('Smashing', {
   //     looping: false,
@@ -21,7 +25,8 @@ export class Pumpkin extends Entity {
     super()
 
     this.addComponent(pumpkinModel)
-
+    this.addComponent(source)
+    source.playing = false
     let randomRotation = Math.random() * 365
 
     this.addComponent(
@@ -32,17 +37,15 @@ export class Pumpkin extends Entity {
     )
 
     this.smoke = new Entity()
-    this.smoke.addComponent(new GLTFShape('models/halloween/pumpkin/smoke.glb'))
-    this.smoke.addComponent(new Billboard())
-    this.smoke.addComponent(new Animator())
-    this.smoke
-      .getComponent(Animator)
-      .addClip(new AnimationState('Smoke_Action'))
+    this.smoke.addComponent(smokeModel)
+    this.smoke.addComponent(new Transform({ position: new Vector3(0, 0.5, 0) }))
+    //this.smoke.addComponent(new Billboard())
+    // this.smoke.addComponent(new Animator())
+    // this.smoke
+    //   .getComponent(Animator)
+    //   .addClip(new AnimationState('Smoke_Action'))
     this.smoke.setParent(this)
-
-    //this.getComponent(Transform).translate(new Vector3(0, -1.671, 0))
-
-    //this.addComponent(new Animator()).addClip(this.explodeAnim)
+    engine.addEntity(this.smoke)
 
     engine.addEntity(this)
     this.addComponent(
@@ -51,6 +54,7 @@ export class Pumpkin extends Entity {
           if (this.smashed) return
           this.smashed = true
           this.explode()
+          source.playOnce()
           gemsCounter.increase()
           if (gemsCounter.read() >= totalPumpkins) {
             winGame()
@@ -189,6 +193,13 @@ dummyUndergroundPumpkin.addComponent(
 )
 engine.addEntity(dummyUndergroundPumpkin)
 
+let dummyUndergroundSmoke = new Entity()
+dummyUndergroundSmoke.addComponent(smokeModel)
+dummyUndergroundSmoke.addComponent(
+  new Transform({ position: new Vector3(0, -4, 0) })
+)
+engine.addEntity(dummyUndergroundSmoke)
+
 export let gemUIBck = new ui.LargeIcon(
   'images/halloween/pumpkin-ui.png',
   0,
@@ -274,7 +285,7 @@ class CountdownSystem implements ISystem {
         if (minutesCounter.read() <= 0) {
           // TIME UP
 
-          this.running = false
+          //this.running = false
           resetGame()
         } else {
           secondsCounter.set(59)
@@ -286,25 +297,27 @@ class CountdownSystem implements ISystem {
 }
 
 export function resetGame() {
-  removePumpkins()
+  //removePumpkins()
 
-  gemsCounter.set(0)
-  secondsCounter.set(0)
+  //gemsCounter.set(0)
+  minutesCounter.set(9)
+  secondsCounter.set(59)
+
   lady.talk(resetPumpkins, 0)
-  lady.introduced = false
-  arrow.move(lady)
+  //lady.introduced = false
+  //arrow.move(lady)
 
-  let dummyEnt = new Entity()
-  engine.addEntity(dummyEnt)
-  dummyEnt.addComponent(
-    new utils.Delay(5000, () => {
-      gemUIBck.image.visible = false
-      gemsCounter.uiText.visible = false
-      secondsCounter.uiText.visible = false
-      timerSeparaor.uiText.visible = false
-      minutesCounter.uiText.visible = false
-    })
-  )
+  //   let dummyEnt = new Entity()
+  //   engine.addEntity(dummyEnt)
+  //   dummyEnt.addComponent(
+  //     new utils.Delay(5000, () => {
+  //       gemUIBck.image.visible = false
+  //       gemsCounter.uiText.visible = false
+  //       secondsCounter.uiText.visible = false
+  //       timerSeparaor.uiText.visible = false
+  //       minutesCounter.uiText.visible = false
+  //     })
+  //   )
 }
 
 /// REUSABLE EXPLODING SECTIONS
