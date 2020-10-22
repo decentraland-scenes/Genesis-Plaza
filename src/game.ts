@@ -337,6 +337,15 @@ export function initialArrowState() {
   }
 }
 
+let easterEggStar = new Entity()
+easterEggStar.addComponent(
+  new Transform({
+    position: new Vector3(116.7, 3.5, 35),
+  })
+)
+engine.addEntity(easterEggStar)
+showCoolItem(easterEggStar, 'easteregg1', true)
+
 tutorialEnableObservable.add((tutorialEnabled) => {
   let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
   lady.getComponent(Transform).scale = scale
