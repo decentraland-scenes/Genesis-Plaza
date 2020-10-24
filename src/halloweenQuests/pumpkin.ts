@@ -12,7 +12,7 @@ let pumpkinModel = new GLTFShape('models/halloween/pumpkin/pumpkin_01.glb')
 let smokeModel = new GLTFShape('models/halloween/pumpkin/smoke.glb')
 
 /// Smash audio
-const clip = new AudioClip("sounds/halloween/smash.mp3")
+const clip = new AudioClip('sounds/halloween/smash.mp3')
 const source = new AudioSource(clip)
 export class Pumpkin extends Entity {
   //   explodeAnim: AnimationState = new AnimationState('Smashing', {
@@ -38,13 +38,19 @@ export class Pumpkin extends Entity {
 
     this.smoke = new Entity()
     this.smoke.addComponent(smokeModel)
-    this.smoke.addComponent(new Transform({ position: new Vector3(0, 0.5, 0) }))
-    //this.smoke.addComponent(new Billboard())
+    this.smoke.addComponent(
+      new Transform({
+        position: new Vector3(position.x, position.y - 1.7, position.z),
+        //position: new Vector3(0, 0.5, 0),
+        //scale: new Vector3(10, 10, 10),
+      })
+    )
+    this.smoke.addComponent(new Billboard())
     // this.smoke.addComponent(new Animator())
     // this.smoke
     //   .getComponent(Animator)
     //   .addClip(new AnimationState('Smoke_Action'))
-    this.smoke.setParent(this)
+    //this.smoke.setParent(this)
     engine.addEntity(this.smoke)
 
     engine.addEntity(this)
@@ -262,7 +268,7 @@ export function winGame() {
   timer.running = false
   lady.talk(allPumpkins, 0, 3)
   quest.checkBox(3)
-  updateProgression('pumpkinDone', true)
+  updateProgression('pumpkinDone')
   arrow.move(lady)
 
   gemUIBck.image.visible = false

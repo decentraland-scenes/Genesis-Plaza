@@ -19,19 +19,16 @@ export let TESTQUESTSTATE: HalloweenState = {
     NPCIntroDay2: false,
     ghostsDone: false,
     w2Found: false,
-    NPCOutroDay2: false,
 
     // day 3
     NPCIntroDay3: false,
     puzzleDone: false,
     w3Found: false,
-    NPCOutroDay3: false,
 
     // day 4
     NPCIntroDay4: false,
     monsterDefeated: false,
     w4Found: false,
-    NPCOutroDay4: false,
 
     // day 5
     NPCIntroDay5: false,
@@ -41,7 +38,7 @@ export let TESTQUESTSTATE: HalloweenState = {
     waypoint4: false,
     waypoint5: false,
     ghostDefeated: false,
-    NPCOutroDay5: false,
+    w5Found: false,
   },
   day: 5,
 }

@@ -407,19 +407,16 @@ export type HalloweenData = {
   NPCIntroDay2: boolean
   ghostsDone: boolean
   w2Found: boolean
-  NPCOutroDay2: boolean
 
   // day 3
   NPCIntroDay3: boolean
   puzzleDone: boolean
   w3Found: boolean
-  NPCOutroDay3: boolean
 
   // day 4
   NPCIntroDay4: boolean
   monsterDefeated: boolean
   w4Found: boolean
-  NPCOutroDay4: boolean
 
   // day 5
   NPCIntroDay5: boolean // ghost buster
@@ -429,7 +426,7 @@ export type HalloweenData = {
   waypoint4: boolean
   waypoint5: boolean
   ghostDefeated: boolean
-  NPCOutroDay5: boolean // ghost buster
+  w5Found: false
 }
 
 export type HalloweenState = { data: HalloweenData; day: number }
@@ -443,7 +440,7 @@ export function initialQuestUI(
 ) {
   /// limit max day w call to api
 
-  if (data.NPCOutroDay4 && day >= 5) {
+  if (data.w4Found && day >= 5) {
     // day 5
     quest = new QuestUI(
       [
@@ -467,7 +464,7 @@ export function initialQuestUI(
         },
         {
           label: 'Speak to the GhostControl crew',
-          checked: data.NPCOutroDay5,
+          checked: data.waypoint5,
           visible: data.ghostDefeated,
           coords: Coords.GenesisCoords,
         },
@@ -475,7 +472,7 @@ export function initialQuestUI(
       5,
       currentCoords
     )
-  } else if (data.NPCOutroDay3 && day >= 4) {
+  } else if (data.w3Found && day >= 4) {
     // day 4
     quest = new QuestUI(
       [
@@ -493,7 +490,7 @@ export function initialQuestUI(
         },
         {
           label: 'Talk to the farmer',
-          checked: data.NPCOutroDay4,
+          checked: data.monsterDefeated,
           visible: data.monsterDefeated,
           coords: Coords.FarmCoords,
         },
@@ -501,7 +498,7 @@ export function initialQuestUI(
       4,
       currentCoords
     )
-  } else if (data.NPCOutroDay2 && day >= 3) {
+  } else if (data.w2Found && day >= 3) {
     // day 3
     quest = new QuestUI(
       [
@@ -519,7 +516,7 @@ export function initialQuestUI(
         },
         {
           label: 'Talk to the casle guy',
-          checked: data.NPCOutroDay3,
+          checked: data.puzzleDone,
           visible: data.puzzleDone,
           coords: Coords.TempleCoords,
         },

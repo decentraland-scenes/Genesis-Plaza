@@ -41,7 +41,7 @@ export class TrashBin extends Entity {
           this.enabled = false
           quest.checkBox(4)
           updateProgression('w1Found')
-          showCoolItem(this, 'w1Found', {
+          showCoolItem(this, 'w1', {
             position: new Vector3(0, 2, 0),
           })
         }

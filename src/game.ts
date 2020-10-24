@@ -164,7 +164,7 @@ export let ghostBuster: NPC
 export let arrow: PointerArrow
 
 let trashBin = new TrashBin({
-  position: new Vector3(294.95306396484375, 17.5, 105.41779327392578),
+  position: new Vector3(284.21820068359375, 17.5, 105.90065002441406),
 })
 
 export async function setUpScene() {
@@ -243,11 +243,11 @@ export function oldLadyTalk() {
 
   //lady.playAnimation(`Acknowledging`, true, 1.97)
 
-  if (data.NPCOutroDay3 && !data.w4Found && day >= 4) {
+  if (data.w3Found && !data.w4Found && day >= 4) {
     //day 4 intro
     lady.talk(day4Intro, 0)
     arrow.hide()
-  } else if (data.NPCOutroDay2 && !data.w3Found && day >= 3) {
+  } else if (data.w2Found && !data.w3Found && day >= 3) {
     // day 3 intro
     lady.talk(day3Intro, 0)
     arrow.hide()
@@ -280,9 +280,9 @@ export function oldLadyTalk() {
 
     quest.checkBox(2)
   } else if (
-    (data.NPCOutroDay4 && day == 4) ||
-    (data.NPCOutroDay3 && day == 3) ||
-    (data.NPCOutroDay2 && day == 2) ||
+    (data.w4Found && day == 4) ||
+    (data.w3Found && day == 3) ||
+    (data.w2Found && day == 2) ||
     (quest.isChecked(5) && day == 1)
   ) {
     let randomIndex = Math.floor(Math.random() * 3)
@@ -326,8 +326,8 @@ export function initialArrowState() {
   let day = progression.day
 
   if (
-    (data.NPCOutroDay3 && !data.w4Found && day >= 4) ||
-    (data.NPCOutroDay2 && !data.w3Found && day >= 3) ||
+    (data.w3Found && !data.w4Found && day >= 4) ||
+    (data.w2Found && !data.w3Found && day >= 3) ||
     (data.w1Found && !data.w2Found && day >= 2) ||
     (data.phone && !data.w1Found)
   ) {
@@ -344,7 +344,7 @@ easterEggStar.addComponent(
   })
 )
 engine.addEntity(easterEggStar)
-showCoolItem(easterEggStar, 'easteregg1', true)
+showCoolItem(easterEggStar, 'easteregg1', {}, true)
 
 tutorialEnableObservable.add((tutorialEnabled) => {
   let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()

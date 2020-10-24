@@ -150,7 +150,7 @@ export class NPC extends Entity {
     }
     let newAnim = this.getComponent(Animator).getClip(animationName)
 
-    log('playing anim : ', animationName)
+    //log('playing anim : ', animationName)
 
     if (noLoop) {
       newAnim.looping = false

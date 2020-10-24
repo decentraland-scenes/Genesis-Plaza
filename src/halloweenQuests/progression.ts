@@ -19,8 +19,7 @@ export let userData: UserData
 export let playerRealm: Realm
 
 export let fireBaseServer =
-  'https://us-central1-decentraland-events.cloudfunctions.net/app/'
-//'https://us-central1-decentraland-halloween.cloudfunctions.net/app'
+  'https://us-central1-decentraland-halloween.cloudfunctions.net/app/'
 
 export async function setUserData() {
   const data = await getUserData()
@@ -70,22 +69,21 @@ export async function updateProgression(stage: string, onlyLocal?: boolean) {
     await setRealm()
   }
 
-  const url =
-    fireBaseServer +
-    'halloweenupdate/?id=' +
-    userData.userId +
-    '&server=' +
-    playerRealm.serverName +
-    '&realm=' +
-    playerRealm.layer +
-    '&stage=' +
-    stage
+  const url = fireBaseServer + 'halloweenupdate'
+
+  let body = {
+    id: userData.userId,
+    stage: stage,
+    server: playerRealm.serverName,
+    realm: playerRealm.layer,
+  }
+
   log('sending req to: ', url)
   try {
     let response = await fetch(url, {
-      method: 'GET',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: '',
+      body: JSON.stringify(body),
     })
     let data = await response.json()
     log('Player progression: ', data)
