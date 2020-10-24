@@ -12,7 +12,7 @@ export let TESTQUESTSTATE: HalloweenState = {
     // day 1
     allHouses: true,
     phone: true,
-    pumpkinDone: false,
+    pumpkinDone: true,
     w1Found: false,
 
     // day 2

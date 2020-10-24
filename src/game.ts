@@ -183,6 +183,10 @@ export async function setUpScene() {
     lady.dialog.leftClickIcon.positionX = 340 - 60
     lady.dialog.text.color = Color4.FromHexString('#8DFF34FF')
 
+    if (progression.data.pumpkinDone) {
+      trashBin.enabled = true
+    }
+
     arrow = new PointerArrow(
       {
         position: new Vector3(0, 2.5, 0),
@@ -231,7 +235,12 @@ export async function setUpScene() {
     addLimits()
 
     // dummy underground loot for faster loading
-    showCoolItem(trashBin, 'dummy', { position: new Vector3(0, -20, 0) })
+    let dummyR = new Reward(
+      lady,
+      'dummy',
+      { position: new Vector3(0, -20, 0) },
+      true
+    )
   }
 }
 
@@ -344,7 +353,8 @@ easterEggStar.addComponent(
   })
 )
 engine.addEntity(easterEggStar)
-showCoolItem(easterEggStar, 'easteregg1', {}, true)
+
+let easterEgg = new Reward(easterEggStar, 'egg1', {}, true)
 
 tutorialEnableObservable.add((tutorialEnabled) => {
   let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
@@ -371,7 +381,7 @@ import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers
 import { PointerArrow } from './halloweenQuests/pointerArrow'
 import { TrashBin } from './halloweenQuests/trashBin'
 import { gemsCounter } from './halloweenQuests/pumpkin'
-import { showCoolItem } from './halloweenQuests/loot'
+import { Reward } from './halloweenQuests/loot'
 
 try {
   /***

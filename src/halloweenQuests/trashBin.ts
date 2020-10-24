@@ -1,4 +1,4 @@
-import { showCoolItem } from './loot'
+import { Reward } from './loot'
 import { updateProgression } from './progression'
 import { quest } from './quest'
 
@@ -38,12 +38,18 @@ export class TrashBin extends Entity {
         this.toggle(true)
 
         if (this.enabled) {
+          log('found wearable!')
           this.enabled = false
           quest.checkBox(4)
           updateProgression('w1Found')
-          showCoolItem(this, 'w1', {
-            position: new Vector3(0, 2, 0),
-          })
+          let r = new Reward(
+            this,
+            'w1',
+            {
+              position: new Vector3(0, 2, 0),
+            },
+            false
+          )
         }
       })
     )
