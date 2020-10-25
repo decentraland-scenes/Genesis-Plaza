@@ -107,6 +107,12 @@ export function nextDay(nextDay: number) {
   let currentCoords = quest.currentCoords
 
   quest.close()
+
+  let congrats = new ui.CenterImage(
+    'images/finishedDay' + (nextDay - 1) + '.png',
+    8
+  )
+
   initialQuestUI(progression.data, progression.day, currentCoords)
   return true
 }

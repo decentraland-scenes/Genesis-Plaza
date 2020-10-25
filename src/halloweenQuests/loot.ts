@@ -30,11 +30,13 @@ export class Reward extends Entity {
   data: RewardData[]
   particles: Entity
   testUser: string
+  onFinished: () => void
   constructor(
     parent: Entity,
     progressionStep: string,
     offset?: TranformConstructorArgs,
     onlyActivateWhenClicked?: boolean,
+    onFinished?: () => void,
     testUser?: string
   ) {
     if (parent.hasComponent(AlreadyFoundLoot)) return
@@ -66,6 +68,10 @@ export class Reward extends Entity {
       this.testUser = testUser
     }
 
+    if (onFinished) {
+      this.onFinished = onFinished
+    }
+
     this.addComponent(
       new utils.KeepRotatingComponent(Quaternion.Euler(0, 40, 0))
     )
@@ -77,12 +83,6 @@ export class Reward extends Entity {
       new OnPointerDown(() => {
         coinSound.playOnce()
         this.activate()
-        // this.addComponent(
-        //   new utils.Delay(500, () => {
-        //     //parent.removeComponent(AlreadyFoundLoot)
-        //     this.vanish()
-        //   })
-        // )
       })
     )
 
@@ -126,9 +126,6 @@ export class Reward extends Entity {
     if (data) {
       this.storeData(data)
     }
-    // else {
-    //   this.vanish()
-    // }
   }
 
   storeData(claimData) {
@@ -140,6 +137,14 @@ export class Reward extends Entity {
   vanish() {
     engine.removeEntity(this.particles)
     engine.removeEntity(this)
+    if (this.onFinished) {
+      this.onFinished()
+    }
+  }
+  runOnFinished() {
+    if (this.onFinished) {
+      this.onFinished()
+    }
   }
 }
 
@@ -158,7 +163,11 @@ export async function claimToken(
   representation: Reward,
   testUser?: string
 ) {
-  let claimData = await checkServer(progressionStep, testUser ? testUser : null)
+  let claimData = await checkServer(
+    progressionStep,
+    representation,
+    testUser ? testUser : null
+  )
 
   // claimstate enum w all options, do a switch case
   let p
@@ -219,6 +228,7 @@ export async function claimToken(
         'Ok',
         true
       )
+      return false
       break
 
     case ClaimState.REJECTED:
@@ -297,6 +307,17 @@ export async function claimToken(
             true
           )
           break
+        case 'unkown':
+          log('unkown error')
+          p = new ui.OkPrompt(
+            'An unexpected error occurred, please try again.',
+            () => {
+              p.close()
+            },
+            'Ok',
+            true
+          )
+          break
       }
 
       break
@@ -304,7 +325,11 @@ export async function claimToken(
   return false
 }
 
-export async function checkServer(stage: string, testUser?: string) {
+export async function checkServer(
+  stage: string,
+  representation: Reward,
+  testUser?: string
+) {
   if (!userData) {
     await setUserData()
   }
@@ -321,6 +346,7 @@ export async function checkServer(stage: string, testUser?: string) {
       'You need an in-browser Ethereum wallet (eg: Metamask) to claim this item.',
       () => {
         p.close()
+        representation.runOnFinished()
       },
       'Ok',
       true
@@ -347,6 +373,7 @@ export async function checkServer(stage: string, testUser?: string) {
     })
     let json = await response.json()
     log('Claim state: ', json)
+
     return json
   } catch {
     log('error fetching from token server ', url)
