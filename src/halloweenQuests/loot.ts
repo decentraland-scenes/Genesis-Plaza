@@ -318,7 +318,7 @@ export async function checkServer(stage: string, testUser?: string) {
 
   if (!userData.hasConnectedWeb3 && !IN_PREVIEW) {
     let p = new ui.OkPrompt(
-      'You need to have a browser-connected Ethereum wallet to claim this item.',
+      'You need an in-browser Ethereum wallet (eg: Metamask) to claim this item.',
       () => {
         p.close()
       },
