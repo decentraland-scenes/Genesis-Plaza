@@ -31,6 +31,7 @@ export class Reward extends Entity {
   particles: Entity
   testUser: string
   onFinished: () => void
+
   constructor(
     parent: Entity,
     progressionStep: string,
@@ -76,15 +77,21 @@ export class Reward extends Entity {
       new utils.KeepRotatingComponent(Quaternion.Euler(0, 40, 0))
     )
 
-    let coinSound = new AudioSource(new AudioClip('sounds/coin.mp3'))
-    this.addComponent(coinSound)
-
     this.addComponent(
-      new OnPointerDown(() => {
-        coinSound.playOnce()
-        this.activate()
-      })
+      new OnPointerDown(
+        () => {
+          this.activate()
+        },
+        {
+          hoverText: 'Claim',
+        }
+      )
     )
+
+    const idleSource = new AudioSource(new AudioClip('sounds/star-idle.mp3'))
+    this.addComponentOrReplace(idleSource)
+    idleSource.loop = true
+    idleSource.playing = true
 
     this.particles = new Entity()
     this.particles.setParent(parent)
@@ -114,6 +121,12 @@ export class Reward extends Entity {
 
     if (!onlyActivateWhenClicked) {
       this.activate()
+      const spawnSource = new AudioSource(
+        new AudioClip('sounds/star-spawn.mp3')
+      )
+      this.particles.addComponentOrReplace(spawnSource)
+      spawnSource.loop = false
+      spawnSource.playing = true
     }
   }
   async activate() {
@@ -140,6 +153,7 @@ export class Reward extends Entity {
     if (this.onFinished) {
       this.onFinished()
     }
+    PlayCoinSound()
   }
   runOnFinished() {
     if (this.onFinished) {
@@ -193,11 +207,13 @@ export async function claimToken(
       return claimData
       break
     case ClaimState.SUCCESS:
+      PlayOpenSound()
       p = new ui.OkPrompt(
         'You already claimed this item',
         () => {
           p.close()
           representation.vanish()
+          PlayCloseSound()
         },
         'Ok',
         true
@@ -205,11 +221,13 @@ export async function claimToken(
       return false
       break
     case ClaimState.PENDING:
+      PlayOpenSound()
       p = new ui.OkPrompt(
         'You already attempted to claim this item.\nTry again in about an hour.',
         () => {
           p.close()
           representation.vanish()
+          PlayCloseSound()
         },
         'Ok',
         true
@@ -218,12 +236,14 @@ export async function claimToken(
       break
 
     case ClaimState.NOSTOCK:
+      PlayOpenSound()
       log('no stock')
       p = new ui.OkPrompt(
         'Item out of stock.',
         () => {
           p.close()
           representation.vanish()
+          PlayCloseSound()
         },
         'Ok',
         true
@@ -236,11 +256,13 @@ export async function claimToken(
       switch (claimData.reason) {
         case 'map':
           log('player not on map')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             'We can`t validate the authenticity of your request',
             () => {
               p.close()
               representation.vanish()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -248,11 +270,13 @@ export async function claimToken(
           break
         case 'progression':
           log('missing progression')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             'We can`t validate the authenticity of your request',
             () => {
               p.close()
               representation.vanish()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -260,11 +284,13 @@ export async function claimToken(
           break
         case 'disabled':
           log('inexistent campaign')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             "This item you're trying to claim doesn't exist, please contact support in Discord.",
             () => {
               p.close()
               representation.vanish()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -272,11 +298,13 @@ export async function claimToken(
           break
         case 'uninitiated':
           log('uninitiated campaign')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             "You're too early! Please come back later.",
             () => {
               p.close()
               representation.vanish()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -285,11 +313,13 @@ export async function claimToken(
 
         case 'finished':
           log('finished campaign')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             'The event is over. No more items are being given away here.',
             () => {
               p.close()
               representation.vanish()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -298,10 +328,12 @@ export async function claimToken(
 
         case 'invalid':
           log('invalid token claim')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             'Invalid request, please try again.',
             () => {
               p.close()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -309,10 +341,12 @@ export async function claimToken(
           break
         case 'unkown':
           log('unkown error')
+          PlayOpenSound()
           p = new ui.OkPrompt(
             'An unexpected error occurred, please try again.',
             () => {
               p.close()
+              PlayCloseSound()
             },
             'Ok',
             true
@@ -342,11 +376,13 @@ export async function checkServer(
   }
 
   if (!userData.hasConnectedWeb3 && !IN_PREVIEW) {
+    PlayOpenSound()
     let p = new ui.OkPrompt(
       'You need an in-browser Ethereum wallet (eg: Metamask) to claim this item.',
       () => {
         p.close()
         representation.runOnFinished()
+        PlayCloseSound()
       },
       'Ok',
       true
@@ -432,6 +468,7 @@ export function openClaimUI(
   testUser?: string,
   failedTransaction?: boolean
 ) {
+  PlayOpenSound()
   let c = new ui.CustomPrompt(PromptStyles.DARKLARGE)
   c.addText(
     failedTransaction
@@ -486,6 +523,7 @@ export function openClaimUI(
     -130,
     () => {
       c.close()
+      PlayCloseSound()
     },
     ButtonStyles.F
   )
@@ -532,9 +570,11 @@ export async function makeTransaction(claimData: ClaimData) {
       }
     )
   } else if (claimData.status == 'failed') {
+    PlayOpenSound()
     let p = new ui.OkPrompt('You are reattempting a failed transaction')
   }
 
+  //PlayOpenSound()
   const provider = await getProvider()
   const rm = new eth.RequestManager(provider)
 
@@ -600,4 +640,46 @@ export async function makeTestTransaction(claimData: any) {
     from: userData.publicKey,
     to: claimData.contract,
   })
+}
+
+// Open dialog sound
+export const openDialogSound = new Entity()
+openDialogSound.addComponent(new Transform())
+openDialogSound.addComponent(
+  new AudioSource(new AudioClip('sounds/navigationForward.mp3'))
+)
+openDialogSound.getComponent(AudioSource).volume = 0.5
+engine.addEntity(openDialogSound)
+openDialogSound.setParent(Attachable.AVATAR)
+
+// Close dialog sound
+export const closeDialogSound = new Entity()
+closeDialogSound.addComponent(new Transform())
+closeDialogSound.addComponent(
+  new AudioSource(new AudioClip('sounds/navigationBackward.mp3'))
+)
+closeDialogSound.getComponent(AudioSource).volume = 0.5
+engine.addEntity(closeDialogSound)
+closeDialogSound.setParent(Attachable.AVATAR)
+
+export const coinSound = new Entity()
+coinSound.addComponent(new Transform())
+coinSound.addComponent(
+  new AudioSource(new AudioClip('sounds/star-collect.mp3'))
+)
+coinSound.getComponent(AudioSource).volume = 0.5
+coinSound.getComponent(AudioSource).loop = false
+engine.addEntity(coinSound)
+coinSound.setParent(Attachable.AVATAR)
+
+export function PlayOpenSound() {
+  openDialogSound.getComponent(AudioSource).playOnce()
+}
+
+export function PlayCloseSound() {
+  closeDialogSound.getComponent(AudioSource).playOnce()
+}
+
+export function PlayCoinSound() {
+  coinSound.getComponent(AudioSource).playOnce()
 }

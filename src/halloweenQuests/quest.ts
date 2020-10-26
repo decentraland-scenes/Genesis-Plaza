@@ -427,6 +427,16 @@ export type HalloweenData = {
   waypoint5: boolean
   ghostDefeated: boolean
   w5Found: false
+
+  // extra
+  house1?: boolean
+  house2?: boolean
+  house3?: boolean
+  egg1?: boolean
+  egg2?: boolean
+  egg3?: boolean
+  egg4?: boolean
+  egg5?: boolean
 }
 
 export type HalloweenState = { data: HalloweenData; day: number }
