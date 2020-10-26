@@ -162,17 +162,13 @@ export let day1Outro: Dialog[] = [
     text: `Anyway, I think I remember you now, wasn’t it you who picked up the telephone? I’m sure it was your voice. I have a bad feeling about this. We need to stop it from happening again.`,
     triggeredByNext: () => {
       lady.playAnimation(`Head_Yes`, true, 2.63)
-      if (nextDay(2)) {
-        lady.talk(day2Intro, 0)
-      }
     },
   },
   {
     text: `Meet me tomorrow same time, same place, ok?`,
     triggeredByNext: () => {
-      //   if (progression.data.day > 1) {
-      //     lady.talk(day2Intro, 0)
-      //   }
+      lady.playAnimation(`Head_Yes`, true, 2.63)
+      nextDay(2)
     },
     isEndOfDialog: true,
   },

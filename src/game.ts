@@ -19,8 +19,7 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
-import { getUserData, getUserPublicKey } from '@decentraland/Identity'
-import Meta from '../metas/sammich/sammich'
+
 import { checkProgression, progression } from './halloweenQuests/progression'
 import {
   Coords,
@@ -29,10 +28,27 @@ import {
   quest,
 } from './halloweenQuests/quest'
 import { NPC } from './NPC/npc'
-import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 import utils from '../node_modules/decentraland-ecs-utils/index'
 import * as ui from '../node_modules/@dcl/ui-utils/index'
 import { tutorialEnableObservable } from './modules/tutorialHandler'
+
+import {
+  day1Intro,
+  day1Outro,
+  day1Success,
+  day2Intro,
+  day3Intro,
+  day4Intro,
+  day5Intro,
+  dismiss,
+  morePumpkins,
+  stay,
+} from './NPC/dialog'
+import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
+import { PointerArrow } from './halloweenQuests/pointerArrow'
+import { TrashBin } from './halloweenQuests/trashBin'
+import { gemsCounter } from './halloweenQuests/pumpkin'
+import { Reward } from './halloweenQuests/loot'
 
 //////// LOG PLAYER POSITION
 
@@ -360,109 +376,3 @@ tutorialEnableObservable.add((tutorialEnabled) => {
   let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
   lady.getComponent(Transform).scale = scale
 })
-
-/// METAS
-
-import { PawnsSquare } from '../metas/pawnssquare/pawnssquare'
-import { userDat } from '../metas/pawnssquare/modules/dat/gameData'
-import {
-  day1Intro,
-  day1Outro,
-  day1Success,
-  day2Intro,
-  day3Intro,
-  day4Intro,
-  day5Intro,
-  dismiss,
-  morePumpkins,
-  stay,
-} from './NPC/dialog'
-import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
-import { PointerArrow } from './halloweenQuests/pointerArrow'
-import { TrashBin } from './halloweenQuests/trashBin'
-import { gemsCounter } from './halloweenQuests/pumpkin'
-import { Reward } from './halloweenQuests/loot'
-
-try {
-  /***
-   * SAMMICH-GAME CODE BELLOW
-   */
-  const landOwnerData = {
-    host_data: `{
-		"sammichgame":{
-		  "position":{"x":${9 * 16 - 11.1},"y":1.4,"z":${9 * 16 + 8}},
-		  "rotation":{"x":0,"y":270,"z":0},
-		  "scale":{"x":1.2, "y":1.05, "z":1},     
-		  "hideBoard": false,
-		  "hideAd": true,
-		  "gameID": "0,0",
-		  "soundDistance": 16,
-		  "showScenario": false,
-		  "hideFrame": true,
-		  "showJoinVoice": false,
-		  "voiceChannel": "dcl-sammich-game",
-		  "serverWs": "wss://mana-fever.com",
-		  "serverHttp":  "https://mana-fever.com"
-		}
-	 }`,
-  }
-  const sammichFrame = new Entity()
-  const sammichFrameShape = new GLTFShape('models/sammich-screen.glb')
-  sammichFrameShape.isPointerBlocker = false
-  sammichFrame.addComponent(sammichFrameShape)
-  sammichFrame.addComponent(
-    new Transform({
-      position: new Vector3(9 * 16 - 11, 0.5, 9 * 16 + 8),
-      scale: new Vector3(1.2, 1.2, 1.2),
-      rotation: Quaternion.Euler(0, 90, 0),
-    })
-  )
-  engine.addEntity(sammichFrame)
-
-  engine.addSystem(new Meta({ getUserData, getCurrentRealm }, landOwnerData))
-
-  // Chess game
-
-  const FetchuserInformation = async () => {
-    const userInfo = await getUserData()
-    if (userInfo !== undefined) userDat.setUID(userInfo.displayName)
-    else userDat.setUID('Guest' + Math.floor(Math.random() * 1000000))
-
-    const publicKeyInfo = await getUserPublicKey()
-    userDat.setETHAdd(publicKeyInfo)
-
-    const realm = await getCurrentRealm()
-    userDat.setRealm(realm.displayName)
-  }
-
-  FetchuserInformation()
-    .then(() => {
-      const chessBoardLandOwnerData = {
-        host_data: `{
-				"time_control": 600,
-				"system_pivot": {
-				  "position": {"x":184, "y":1.2, "z":93.7},
-				  "scale": {"x":1, "y":1, "z":1}
-				},
-				"chessboard": {
-					"visible": true,
-					 "position": {"x":184, "y":1.2, "z":93.7},
-					"scale": {"x":1.1, "y":1.1, "z":1.1}
-				},
-				"decoration_bottom": {
-					"visible": true,
-					"position": {"x":184, "y":0.7, "z":93.7},
-					"rotation": {"x":0, "y":0, "z":0},
-					"scale": {"x":0.8, "y":0.8, "z":0.8}
-				}
-			}`,
-      }
-
-      new PawnsSquare(chessBoardLandOwnerData)
-    })
-    .catch((err) => {
-      log("Can't load Pawn's Square, fetch user data failed", err)
-    })
-} catch {
-  log('Metas missing')
-}
