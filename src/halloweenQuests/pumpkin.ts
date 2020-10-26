@@ -169,8 +169,12 @@ export function addPumpkins() {
         demoPump.explode()
         gemsCounter.increase()
         arrow.hide()
-        lady.talk(firstPumpkin, 0, 4)
-        lady.playAnimation(`Cocky`, true, 2.93)
+        demoPump.addComponentOrReplace(
+          new utils.Delay(500, () => {
+            lady.talk(firstPumpkin, 0, 4)
+            lady.playAnimation(`Cocky`, true, 2.93)
+          })
+        )
       },
       { hoverText: 'Smash' }
     )

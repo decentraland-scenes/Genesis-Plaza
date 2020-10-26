@@ -97,10 +97,22 @@ export async function updateProgression(stage: string, onlyLocal?: boolean) {
 }
 
 export function nextDay(nextDay: number) {
+  PlayEndJingle()
+
+  let congrats = new ui.CenterImage(
+    'images/finishedDay' + (nextDay - 1) + '.png',
+    8,
+    false,
+    0,
+    0,
+    512,
+    512
+  )
+
   if (nextDay > progression.day) {
-    let p = new ui.OkPrompt(
-      'Great job! Come back tomorrow to find out how this story continues.'
-    )
+    // let p = new ui.OkPrompt(
+    //   'Great job! Come back tomorrow to find out how this story continues.'
+    // )
 
     return false
   }
@@ -108,11 +120,21 @@ export function nextDay(nextDay: number) {
 
   quest.close()
 
-  let congrats = new ui.CenterImage(
-    'images/finishedDay' + (nextDay - 1) + '.png',
-    8
-  )
-
   initialQuestUI(progression.data, progression.day, currentCoords)
+
   return true
+}
+
+export const nextDayJingle = new Entity()
+nextDayJingle.addComponent(new Transform())
+nextDayJingle.addComponent(
+  new AudioSource(new AudioClip('sounds/JingleQuestCompleted.mp3'))
+)
+nextDayJingle.getComponent(AudioSource).volume = 0.5
+nextDayJingle.getComponent(AudioSource).loop = false
+engine.addEntity(nextDayJingle)
+nextDayJingle.setParent(Attachable.AVATAR)
+
+export function PlayEndJingle() {
+  nextDayJingle.getComponent(AudioSource).playOnce()
 }

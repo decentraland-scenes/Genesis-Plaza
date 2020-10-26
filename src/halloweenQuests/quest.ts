@@ -15,7 +15,7 @@ const X_OFFSET = -10
 
 export enum Coords {
   GenesisCoords = `0,0`,
-  CemeteryCoords = `60,-60`,
+  CemeteryCoords = `-13,-3`,
   TempleCoords = `100,100`,
   FarmCoords = `50,50`,
   Secret = `secret`,
