@@ -15,9 +15,9 @@ const X_OFFSET = -10
 
 export enum Coords {
   GenesisCoords = `0,0`,
-  CemeteryCoords = `-13,-3`,
-  TempleCoords = `47,67`,
-  FarmCoords = `89,14`,
+  CemeteryCoords = `-3,-13`,
+  TempleCoords = `100,100`,
+  FarmCoords = `50,50`,
   Secret = `secret`,
 }
 
@@ -427,16 +427,6 @@ export type HalloweenData = {
   waypoint5: boolean
   ghostDefeated: boolean
   w5Found: false
-
-  // extra
-  house1?: boolean
-  house2?: boolean
-  house3?: boolean
-  egg1?: boolean
-  egg2?: boolean
-  egg3?: boolean
-  egg4?: boolean
-  egg5?: boolean
 }
 
 export type HalloweenState = { data: HalloweenData; day: number }
@@ -487,20 +477,26 @@ export function initialQuestUI(
     quest = new QuestUI(
       [
         {
-          label: 'Talk to Old lady',
+          label: 'Talk to the old lady',
           checked: data.NPCIntroDay4,
           visible: true,
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Defeat the interdimensional monster',
+          label: 'Talk to the farmer',
           checked: data.monsterDefeated,
           visible: data.NPCIntroDay4,
           coords: Coords.FarmCoords,
         },
         {
-          label: 'Talk to the farmer',
+          label: 'Defeat the monster',
           checked: data.monsterDefeated,
+          visible: data.monsterDefeated,
+          coords: Coords.FarmCoords,
+        },
+        {
+          label: 'Say farewell to the farmer',
+          checked: data.w4Found,
           visible: data.monsterDefeated,
           coords: Coords.FarmCoords,
         },
@@ -513,20 +509,20 @@ export function initialQuestUI(
     quest = new QuestUI(
       [
         {
-          label: 'Talk to Old lady',
+          label: 'Talk to the old lady',
           checked: data.NPCIntroDay3,
           visible: true,
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Solve the castle puzzle',
+          label: 'Talk to the archeologist',
           checked: data.puzzleDone,
           visible: data.NPCIntroDay3,
           coords: Coords.TempleCoords,
         },
         {
-          label: 'Talk to the casle guy',
-          checked: data.puzzleDone,
+          label: 'Solve the Temple puzzles',
+          checked: data.w3Found,
           visible: data.puzzleDone,
           coords: Coords.TempleCoords,
         },
@@ -568,9 +564,6 @@ export function initialQuestUI(
       currentCoords
     )
   } else {
-    // not started
-    if (day >= 0) return
-
     // day 1
     quest = new QuestUI(
       [
