@@ -201,7 +201,7 @@ export let day2Intro: Dialog[] = [
     },
   },
   {
-    text: `Head out to the cemetery at -13,-3 and see what happened!`,
+    text: `Head out to the cemetery at -3,-13 and see what happened!`,
     isEndOfDialog: true,
     triggeredByNext: () => {
       quest.checkBox(0)

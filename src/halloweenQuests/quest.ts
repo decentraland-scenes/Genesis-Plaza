@@ -16,8 +16,8 @@ const X_OFFSET = -10
 export enum Coords {
   GenesisCoords = `0,0`,
   CemeteryCoords = `-13,-3`,
-  TempleCoords = `100,100`,
-  FarmCoords = `50,50`,
+  TempleCoords = `47,67`,
+  FarmCoords = `89,14`,
   Secret = `secret`,
 }
 
@@ -546,7 +546,7 @@ export function initialQuestUI(
           coords: Coords.GenesisCoords,
         },
         {
-          label: "Talk to mayor's ghost",
+          label: 'Talk to the blue ghost',
           checked: data.ghostsDone,
           visible: data.NPCIntroDay2,
           coords: Coords.CemeteryCoords,
@@ -568,13 +568,16 @@ export function initialQuestUI(
       currentCoords
     )
   } else {
+    // not started
+    if (day >= 0) return
+
     // day 1
     quest = new QuestUI(
       [
         {
           label: 'Visit all 10 houses',
           checked: data.allHouses,
-          visible: true,
+          visible: day >= 0 ? true : false,
           coords: Coords.CemeteryCoords,
         },
         {
