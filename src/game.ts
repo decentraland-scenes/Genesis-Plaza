@@ -173,7 +173,7 @@ export let lady = new NPC(
   'images/halloween/oldlady.png',
   10,
   'Weight_Shift',
-  false,
+  true,
   false
 )
 export let ghostBuster: NPC
@@ -228,6 +228,7 @@ export async function setUpScene() {
       'images/halloween/ghostblaster.png',
       10,
       'Weight_Shift',
+      true,
       false
     )
     ghostBuster.dialog = new ui.DialogWindow(

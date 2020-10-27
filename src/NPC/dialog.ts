@@ -137,6 +137,7 @@ export let day1Success: Dialog[] = [
     triggeredByNext: () => {
       quest.showCheckBox(4)
       quest.showCheckBox(5)
+
       //lady.playAnimation(`HeadShake_No`, true, 1.83)
     },
     isEndOfDialog: true,
