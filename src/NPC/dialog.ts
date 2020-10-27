@@ -213,31 +213,56 @@ export let day2Intro: Dialog[] = [
 
 export let day3Intro: Dialog[] = [
   {
-    text: `The garments you have been finding seem ceremonial, of some sort.`,
+    text: `Hey! good to see you’re back.`,
     triggeredByNext: () => {
-      quest.checkBox(0)
-      quest.showCheckBox(1)
-      updateProgression('NPCIntroDay3')
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
+      lady.playAnimation(`Acknowledging`, false)
     },
   },
   {
-    text: `Ceremonial clothing like that is usually only worn by the temple goers, maybe you should look there for clues.`,
+    text: `That item of clothing you showed me the other day...think I've seen it somewhere before.`,
     triggeredByNext: () => {
-      quest.checkBox(0)
-      quest.showCheckBox(1)
-      updateProgression('NPCIntroDay3')
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
+      lady.playAnimation(`Head_Yes`, true, 2.63)
     },
   },
   {
-    text: `Head over to 100,100. There's usually someone there who’s in charge of temple operations, odd chap. Maybe he knows something... or who knows, it could even have been him who killed that poor girl.`,
+    text: `Oh yes! There’s this Temple that I visited once at 47,67 and I’m pretty sure I’ve seen people walking around that site wearing \nsomething similar.`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Tought Head Shake`, true, 3.1)
+    },
+  },
+  {
+    text: `The trouble is that the gates are always locked so I don’t know if it’s any use going there but maybe you’ll discover something.`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Acknowledging`, false)
+    },
+  },
+  {
+    text: `Actually, it’s probably worth going there just to see those beautifully sculpted statues alone...`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Acknowledging`, false)
+    },
+  },
+  {
+    text: `believe they’re called ‘Guardians of the Metaverse’ - You can’t miss them, they have these intricate symbols carved into them.`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Acknowledging`, false)
+    },
+  },
+  {
+    text: `They say if the moonlight and guardians are aligned, the gates to another world will open before you. Anyway, there are so many tales surrounding them that I don’t know what to believe anymore.`,
+    triggeredByNext: () => {
+      lady.playAnimation(`Happy Hand Gesture`, true, 2.97)
+    },
+  },
+  {
+    text: `Well tonight the moon is out in full force so who knows what might happen.`,
+    triggeredByNext: () => {
+      quest.checkBox(0)
+      quest.showCheckBox(1)
+      updateProgression("NPCIntroDay3")
+      lady.playAnimation("Weight_Shift", false)
+    },
     isEndOfDialog: true,
-    triggeredByNext: () => {
-      quest.checkBox(0)
-      quest.showCheckBox(1)
-      updateProgression('NPCIntroDay3')
-    },
   },
 ]
 
