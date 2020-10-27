@@ -439,6 +439,8 @@ export function initialQuestUI(
   currentCoords: Coords
 ) {
   /// limit max day w call to api
+  // not started
+  if (day <= 0) return
 
   if (data.w4Found && day >= 5) {
     // day 5
