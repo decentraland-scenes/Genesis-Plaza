@@ -30,6 +30,7 @@ export class Reward extends Entity {
   data: RewardData[]
   particles: Entity
   testUser: string
+  openUi: boolean
   onFinished: () => void
 
   constructor(
@@ -80,6 +81,7 @@ export class Reward extends Entity {
     this.addComponent(
       new OnPointerDown(
         () => {
+          if (this.openUi) return
           this.activate()
         },
         {
@@ -127,9 +129,12 @@ export class Reward extends Entity {
       this.particles.addComponentOrReplace(spawnSource)
       spawnSource.loop = false
       spawnSource.playing = true
+
+      this.openUi = false
     }
   }
   async activate() {
+    this.openUi = true
     let data = await claimToken(
       this.progressionStep,
       this,
@@ -334,6 +339,7 @@ export async function claimToken(
             () => {
               p.close()
               PlayCloseSound()
+              representation.openUi = false
             },
             'Ok',
             true
@@ -347,6 +353,7 @@ export async function claimToken(
             () => {
               p.close()
               PlayCloseSound()
+              representation.openUi = false
             },
             'Ok',
             true
@@ -461,6 +468,8 @@ export async function makeClaim(
   }
 }
 
+let claimUI: ui.CustomPrompt
+
 export function openClaimUI(
   data: RewardData[],
   stage: string,
@@ -469,8 +478,13 @@ export function openClaimUI(
   failedTransaction?: boolean
 ) {
   PlayOpenSound()
-  let c = new ui.CustomPrompt(PromptStyles.DARKLARGE)
-  c.addText(
+
+  if (claimUI && claimUI.background.visible) {
+    claimUI.close()
+  }
+
+  claimUI = new ui.CustomPrompt(PromptStyles.DARKLARGE)
+  claimUI.addText(
     failedTransaction
       ? 'Retry failed transaction'
       : 'You have a reward to claim!',
@@ -479,7 +493,7 @@ export function openClaimUI(
     Color4.FromHexString('#8DFF34FF'),
     26
   )
-  c.addText(
+  claimUI.addText(
     'You must approve a blockchain transaction\npaying an Ethereum gas fee to the network.',
     0,
     130,
@@ -497,15 +511,15 @@ export function openClaimUI(
     }
   }
 
-  c.addText(data[currentToken].token, 0, 100, Color4.White(), 20) // wearable name
+  claimUI.addText(data[currentToken].token, 0, 100, Color4.White(), 20) // wearable name
 
-  c.addIcon(data[currentToken].image, 0, 0, 128, 128, {
+  claimUI.addIcon(data[currentToken].image, 0, 0, 128, 128, {
     sourceHeight: 256,
     sourceWidth: 256,
   })
 
   if (data.length > 1) {
-    c.addText(
+    claimUI.addText(
       '+ ' +
         (data.length - 1) +
         ' other wearable' +
@@ -517,24 +531,26 @@ export function openClaimUI(
     )
   }
 
-  let rejectButton = c.addButton(
+  let rejectButton = claimUI.addButton(
     'Later',
     -100,
     -130,
     () => {
-      c.close()
+      claimUI.close()
       PlayCloseSound()
+      representation.openUi = false
     },
     ButtonStyles.F
   )
   rejectButton.label.positionX = 40
 
-  let acceptButton = c.addButton(
+  let acceptButton = claimUI.addButton(
     'Claim',
     100,
     -130,
     async () => {
-      c.close()
+      claimUI.close()
+      representation.openUi = false
 
       let claimData = await makeClaim(stage, testUser ? testUser : null)
 
