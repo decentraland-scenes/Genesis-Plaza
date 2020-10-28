@@ -219,7 +219,7 @@ export let day3Intro: Dialog[] = [
     },
   },
   {
-    text: `That item of clothing you showed me the other day...think I've seen it somewhere before.`,
+    text: `That item of clothing you showed me the other day...just recalled where I may have seen it before.`,
     triggeredByNext: () => {
       lady.playAnimation(`Head_Yes`, true, 2.63)
     },
