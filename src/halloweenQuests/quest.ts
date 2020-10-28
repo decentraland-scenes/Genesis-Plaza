@@ -517,17 +517,23 @@ export function initialQuestUI(
           coords: Coords.GenesisCoords,
         },
         {
-          label: 'Talk to the archeologist',
+          label: 'Open the Temple gates',
           checked: data.puzzleDone,
           visible: data.NPCIntroDay3,
           coords: Coords.TempleCoords,
         },
         {
-          label: 'Solve the Temple puzzles',
-          checked: data.w3Found,
+          label: "Solve 'Fire' guardians puzzle",
+          checked: data.puzzleDone,
           visible: data.puzzleDone,
           coords: Coords.TempleCoords,
         },
+        {
+          label: 'Light 4 elements with 1 shot',
+          checked: data.w3Found,
+          visible: data.puzzleDone,
+          coords: Coords.TempleCoords,
+        }
       ],
       3,
       currentCoords
