@@ -15,12 +15,11 @@ const X_OFFSET = -10
 
 export enum Coords {
   GenesisCoords = `0,0`,
-  CemeteryCoords = `-3,-13`,
-  TempleCoords = `100,100`,
-  FarmCoords = `50,50`,
+  CemeteryCoords = `-13,-3`,
+  TempleCoords = `47,67`,
+  FarmCoords = `89,14`,
   Secret = `secret`,
 }
-
 export let halloweenTheme = new Texture('images/HalloweentAtlas.png')
 
 export class QuestUI extends Entity {
