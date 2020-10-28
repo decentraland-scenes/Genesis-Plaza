@@ -280,7 +280,7 @@ export let day4Intro: Dialog[] = [
     },
   },
   {
-    text: `Looks like it's found a new home down in the Pumpkin Farm \nat 83,-14.`,
+    text: `Looks like it's found a new home down in the Pumpkin Farm \nat 89,14.`,
     triggeredByNext: () => {
       lady.playAnimation(`Acknowledging`, true, 1.97)
     },
