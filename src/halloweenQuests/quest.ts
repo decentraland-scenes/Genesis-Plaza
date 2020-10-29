@@ -15,7 +15,7 @@ const X_OFFSET = -10
 
 export enum Coords {
   GenesisCoords = `0,0`,
-  CemeteryCoords = `-13,-3`,
+  CemeteryCoords = `-3,-13`,
   TempleCoords = `47,67`,
   FarmCoords = `89,14`,
   Secret = `secret`,
@@ -532,7 +532,7 @@ export function initialQuestUI(
           checked: data.w3Found,
           visible: data.puzzleDone,
           coords: Coords.TempleCoords,
-        }
+        },
       ],
       3,
       currentCoords
