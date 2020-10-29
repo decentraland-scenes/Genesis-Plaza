@@ -490,7 +490,7 @@ export function initialQuestUI(
           coords: Coords.FarmCoords,
         },
         {
-          label: 'Defeat the monster',
+          label: 'Feed the monster',
           checked: data.monsterDefeated,
           visible: data.monsterDefeated,
           coords: Coords.FarmCoords,

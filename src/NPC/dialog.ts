@@ -219,7 +219,7 @@ export let day3Intro: Dialog[] = [
     },
   },
   {
-    text: `That item of clothing you showed me the other day...think I've seen it somewhere before.`,
+    text: `That item of clothing you showed me the other day...just recalled where I may have seen it before.`,
     triggeredByNext: () => {
       lady.playAnimation(`Head_Yes`, true, 2.63)
     },
@@ -268,37 +268,32 @@ export let day3Intro: Dialog[] = [
 
 export let day4Intro: Dialog[] = [
   {
-    text: `The strangest thing happened! Looks like some kind of portal into another dimension opened up.`,
+    text: `Oh gosh! It’s a good job that \nyou’ve arrived!`,
     triggeredByNext: () => {
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
+      lady.playAnimation(`Annoyed_HeadShake`, true, 2.6)
     },
   },
   {
-    text: `You haven't been playing around, casting rays of light onto magical runes by any chance, have you?`,
+    text: `Something terrible has happened - there's a monster on the loose and it's terrorizing Decentraland.`,
     triggeredByNext: () => {
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
+      lady.playAnimation(`Acknowledging`, true, 1.97)
     },
   },
   {
-    text: `You have? Oh lord... I should have warned you about that when I sent you.`,
+    text: `Looks like it's found a new home down in the Pumpkin Farm \nat 89,14.`,
     triggeredByNext: () => {
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
+      lady.playAnimation(`Acknowledging`, true, 1.97)
     },
   },
   {
-    text: `Looks like something terrifying crept out of that portal, and it's stuck on old farmer Joe's farm`,
-    triggeredByNext: () => {
-      //lady.playAnimation(`Head_Yes`, true, 2.63)
-    },
-  },
-  {
-    text: `Could you please go help him out? He's at 150,150`,
-    isEndOfDialog: true,
+    text: `So it might be worth speaking to the farmer there to see what's going on and perhaps lend him a hand.`,
     triggeredByNext: () => {
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCIntroDay4')
+      updateProgression("NPCIntroDay4")
+      lady.playAnimation(`Happy Hand Gesture`, true, 2.97)
     },
+    isEndOfDialog: true,
   },
 ]
 
