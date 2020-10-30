@@ -18,7 +18,7 @@ export enum Coords {
   CemeteryCoords = `-3,-13`,
   TempleCoords = `47,67`,
   FarmCoords = `89,14`,
-  Secret = `secret`,
+  Secret = `-24,75`,
 }
 export let halloweenTheme = new Texture('images/HalloweentAtlas.png')
 
