@@ -18,6 +18,7 @@ export enum Coords {
   CemeteryCoords = `-3,-13`,
   TempleCoords = `47,67`,
   FarmCoords = `89,14`,
+  MansionCoords = `-24,75`,
   Secret = `-24,75`,
 }
 export let halloweenTheme = new Texture('images/HalloweentAtlas.png')
@@ -441,6 +442,8 @@ export function initialQuestUI(
   // not started
   if (day <= 0) return
 
+  if (data.w5Found) return
+
   if (data.w4Found && day >= 5) {
     // day 5
     quest = new QuestUI(
@@ -455,26 +458,26 @@ export function initialQuestUI(
           label: 'Visit the cult mansion',
           checked: data.waypoint5,
           visible: data.NPCIntroDay5,
-          coords: Coords.Secret,
+          coords: Coords.MansionCoords,
         },
         {
           label: 'Find a way inside',
           checked: data.ghostDefeated,
           visible: data.waypoint5,
-          coords: Coords.Secret,
+          coords: Coords.MansionCoords,
         },
         {
           label: 'Defeat the Cult Leader',
           checked: data.ghostDefeated,
           visible: data.ghostDefeated,
-          coords: Coords.Secret,
+          coords: Coords.MansionCoords,
         },
         {
           label: 'Talk to GhostBlaster crew',
           checked: data.w5Found,
           visible: data.ghostDefeated,
-          coords: Coords.Secret,
-        },        
+          coords: Coords.MansionCoords,
+        },
       ],
       5,
       currentCoords

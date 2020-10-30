@@ -244,13 +244,15 @@ export async function setUpScene() {
     ghostBuster.dialog.leftClickIcon.positionX = 340 - 60
     ghostBuster.dialog.text.color = Color4.FromHexString('#8DFF34FF')
 
-    arrow = new PointerArrow(
-      {
-        position: new Vector3(0, 2.5, 0),
-        scale: new Vector3(1.5, 1.5, 1.5),
-      },
-      ghostBuster
-    )
+    if (!progression.data.NPCIntroDay5) {
+      arrow = new PointerArrow(
+        {
+          position: new Vector3(0, 2.5, 0),
+          scale: new Vector3(1.5, 1.5, 1.5),
+        },
+        ghostBuster
+      )
+    }
   }
 
   if (progression.data.phone && !progression.data.w1Found) {

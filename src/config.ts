@@ -1,6 +1,6 @@
 import { HalloweenState } from './halloweenQuests/quest'
 
-export const TESTDATA_ENABLED = false
+export const TESTDATA_ENABLED = true
 export let IN_PREVIEW: boolean = false
 
 export function setInPreview(val: boolean) {
@@ -26,7 +26,7 @@ export let TESTQUESTSTATE: HalloweenState = {
     w3Found: true,
 
     // day 4
-    NPCIntroDay4: true,
+    NPCIntroDay4: false,
     monsterDefeated: false,
     w4Found: false,
 
