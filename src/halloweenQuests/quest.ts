@@ -446,29 +446,35 @@ export function initialQuestUI(
     quest = new QuestUI(
       [
         {
-          label: 'Find the Old lady',
-          checked: data.waypoint5,
+          label: 'Find the old lady',
+          checked: data.NPCIntroDay5,
           visible: true,
-          coords: Coords.Secret,
+          coords: Coords.GenesisCoords,
         },
         {
-          label: 'Follow the clues to the mansion',
+          label: 'Visit the cult mansion',
           checked: data.waypoint5,
           visible: data.NPCIntroDay5,
           coords: Coords.Secret,
         },
         {
-          label: 'Defeat the evil ghost',
+          label: 'Find a way inside',
           checked: data.ghostDefeated,
           visible: data.waypoint5,
           coords: Coords.Secret,
         },
         {
-          label: 'Speak to the GhostControl crew',
-          checked: data.waypoint5,
+          label: 'Defeat the Cult Leader',
+          checked: data.ghostDefeated,
           visible: data.ghostDefeated,
-          coords: Coords.GenesisCoords,
+          coords: Coords.Secret,
         },
+        {
+          label: 'Talk to GhostBlaster crew',
+          checked: data.w5Found,
+          visible: data.ghostDefeated,
+          coords: Coords.Secret,
+        },        
       ],
       5,
       currentCoords

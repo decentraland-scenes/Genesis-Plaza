@@ -2,7 +2,7 @@ import { Dialog } from '../../node_modules/@dcl/ui-utils/utils/types'
 import { nextDay, updateProgression } from '../halloweenQuests/progression'
 import { quest } from '../halloweenQuests/quest'
 import * as ui from '../../node_modules/@dcl/ui-utils/index'
-import { lady } from '../game'
+import { ghostBuster, lady } from '../game'
 import { startGemUI } from '../halloweenQuests/pumpkin'
 
 /// DAY 1
@@ -297,17 +297,64 @@ export let day4Intro: Dialog[] = [
   },
 ]
 
+// DAY 5 Ghost Blaster Guy
+
 export let day5Intro: Dialog[] = [
   {
-    text: `Ha! I had you fooled! Chasing after an innocent neighbour like that, muahahaha you should be ashamed of yourself!`,
-    isEndOfDialog: true,
+    text: 'Looking for the old lady, huh?',
     triggeredByNext: () => {
+      ghostBuster.playAnimation(`Weight_Shift`, false)
+    },
+  },  
+  {
+    text: 'Well guess what? She turns out to be this long time suspect of our GhostBlaster team!',
+    
+  },  
+  {
+    text: 'She leads an evil cult that\'s trying to channel demons and tax agents into Decentraland',
+  }, 
+  {
+    text: 'Thanks to your investigation we\'ve been able to track her down.',
+  },     
+  {
+    text: 'Now that she\'s been busted, she locked herself in her mansion and has probaly started to open the portal already!',
+  },  
+  {
+    text: 'I\'m heading there now to stop her. If you want to help us save Decentraland...',
+  },  
+  {
+    text: ` ...meet me at the Cult Mansion! `,
+    triggeredByNext: () => {      
       quest.checkBox(0)
       quest.showCheckBox(1)
-      updateProgression('NPCIntroDay5')
+      updateProgression('NPCIntroDay5')     
+      
     },
-  },
+    isEndOfDialog: true,
+  }
 ]
+
+export let day5Outro: Dialog[] = [
+  {
+    text: 'Thanks to you the cult leader is gone and she won\'t bother us anytime soon! ',
+    triggeredByNext: () => {
+      ghostBuster.playAnimation(`Head_Yes`, false)
+    },   
+  },  
+  {
+    text: 'Amazing work! You proved yourself to be a true GhostBlaster this week!',
+    triggeredByNext: () => {
+      ghostBuster.playAnimation(`Happy Hand Gesture`, false)
+    },   
+  },  
+  {
+    text: 'Make sure to join the grand celebration party at Vegas Plaza today! We\'re really looking forward to seeing you there!',
+    isEndOfDialog: true,
+  },    
+    
+  
+]
+
 
 export let dismiss: Dialog[] = [
   {

@@ -40,6 +40,7 @@ import {
   day3Intro,
   day4Intro,
   day5Intro,
+  day5Outro,
   dismiss,
   morePumpkins,
   stay,
@@ -223,7 +224,12 @@ export async function setUpScene() {
       () => {
         if (ghostBuster.dialog.isDialogOpen) return
 
-        ghostBuster.talk(day5Intro)
+        if(progression.data.w5Found){
+          ghostBuster.talk(day5Outro)
+        }else{
+          ghostBuster.talk(day5Intro)
+        }
+        
       },
       'images/halloween/ghostblaster.png',
       10,
