@@ -167,11 +167,14 @@ export async function uploadCoinData(jsonContents: CoinData) {
 // Generic value used for one-time events, like the SpaceX rocket launch
 
 export async function updateEventValue(value: any) {
+  var dateObject = new Date()
+  dateObject.getTime()
+
   var upload = new AWS.S3.ManagedUpload({
     params: {
       Bucket: 'genesis-plaza',
       Key: 'event/event.json',
-      Body: JSON.stringify({ value: value }),
+      Body: JSON.stringify({ value: value, time: dateObject.getTime() }),
       ACL: 'public-read',
       ContentType: 'application/json; charset=utf-8',
     },

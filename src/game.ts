@@ -177,7 +177,27 @@ export let lady = new NPC(
   true,
   false
 )
-export let ghostBuster: NPC
+export let ghostBuster = new NPC(
+  {
+    position: new Vector3(160, -10, 180),
+    rotation: Quaternion.Euler(0, 180, 0),
+  },
+  new GLTFShape('models/halloween/ghostblaster.glb'),
+  () => {
+    if (ghostBuster.dialog.isDialogOpen) return
+
+    if (progression.data.w5Found) {
+      ghostBuster.talk(day5Outro)
+    } else {
+      ghostBuster.talk(day5Intro)
+    }
+  },
+  'images/halloween/ghostblaster.png',
+  10,
+  'Weight_Shift',
+  true,
+  false
+)
 export let arrow: PointerArrow
 
 let trashBin = new TrashBin({
@@ -215,28 +235,7 @@ export async function setUpScene() {
     initialArrowState()
   } else if (progression.data.w4Found && progression.day >= 5) {
     // day 5
-    ghostBuster = new NPC(
-      {
-        position: new Vector3(160, 0.8, 180),
-        rotation: Quaternion.Euler(0, 180, 0),
-      },
-      new GLTFShape('models/halloween/ghostblaster.glb'),
-      () => {
-        if (ghostBuster.dialog.isDialogOpen) return
-
-        if(progression.data.w5Found){
-          ghostBuster.talk(day5Outro)
-        }else{
-          ghostBuster.talk(day5Intro)
-        }
-        
-      },
-      'images/halloween/ghostblaster.png',
-      10,
-      'Weight_Shift',
-      true,
-      false
-    )
+    ghostBuster.getComponent(Transform).position.y = 0.55
     ghostBuster.dialog = new ui.DialogWindow(
       { path: 'images/halloween/ghostblaster.png' },
       true,
