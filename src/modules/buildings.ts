@@ -222,17 +222,6 @@ export function addBuildings() {
   )
   engine.addEntity(shell)
 
-  //add trash to shell building for Halloween 2020 event
-  let trash = new Entity()
-  trash.addComponent(new GLTFShape('models/trash.glb'))
-  trash.addComponent(
-    new Transform({
-      rotation: Quaternion.Euler(0,180,0),
-    })
-  )
-  engine.addEntity(trash)
-
-
   //add shoe_prop
   let shoe_prop = new Entity()
   shoe_prop.addComponent(new GLTFShape('models/shoe_prop.glb'))
