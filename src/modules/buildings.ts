@@ -309,31 +309,12 @@ export function addBuildings() {
   engine.addEntity(street)
 }
 
-//add zepellin
-let zepellin = new Entity()
-zepellin.addComponent(new GLTFShape('models/zepellin.glb'))
-zepellin.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(zepellin)
-
-//add halloween assets
-let halloween_assets = new Entity()
-halloween_assets.addComponent(new GLTFShape('models/halloween_assets.glb'))
-halloween_assets.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(halloween_assets)
-
-let trash = new Entity()
-trash.addComponent(new GLTFShape('models/trash.glb'))
-trash.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(trash)
+ // add xmas_assets
+ let xmas_assets = new Entity()
+ xmas_assets.addComponent(new GLTFShape('models/xmas_assets.glb'))
+ xmas_assets.addComponent(
+   new Transform({
+     rotation: Quaternion.Euler(0, 180, 0),
+   })
+ )
+ engine.addEntity(xmas_assets)
