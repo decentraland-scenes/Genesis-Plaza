@@ -1,6 +1,7 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
+import { shortenText } from './helperFunctions'
 
 /////// GET DATA FROM SERVER
 
@@ -1331,7 +1332,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel2Value1 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableYesterday.toString(),
+    shortenText(data.expensiveWearableYesterday.toString(), 24),
     {
       position: new Vector3(0.7, 0, 0),
     },
@@ -1340,7 +1341,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel2Value2 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableWeek.toString(),
+    shortenText(data.expensiveWearableWeek.toString(), 24),
     {
       position: new Vector3(0.7, -0.5, 0),
     },
@@ -1349,7 +1350,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel2Value3 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableMonth.toString(),
+    shortenText(data.expensiveWearableMonth.toString(), 24),
     {
       position: new Vector3(0.7, -1, 0),
     },
@@ -1421,7 +1422,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value1 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableNameYesterday,
+    shortenText(data.expensiveWearableNameYesterday, 24),
     {
       position: new Vector3(1.2, 0, 0),
     },
@@ -1430,7 +1431,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value2 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableNameWeek,
+    shortenText(data.expensiveWearableNameWeek, 24),
     {
       position: new Vector3(1.2, -0.5, 0),
     },
@@ -1439,7 +1440,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value3 = new StockData(
     StockDataTypes.VALUE,
-    data.expensiveWearableNameMonth,
+    shortenText(data.expensiveWearableNameMonth, 24),
     {
       position: new Vector3(1.2, -1, 0),
     },
@@ -1845,7 +1846,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.cheapRareNow.name,
+    shortenText(data.cheapRareNow.name, 24),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -1949,7 +1950,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.rareWearableMonthExpensive.name,
+    shortenText(data.rareWearableMonthExpensive.name, 24),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -2010,7 +2011,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapEpicTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.cheapEpicNow.name,
+    shortenText(data.cheapEpicNow.name, 24),
     {
       position: new Vector3(0, 2.9, -0.05),
     },
@@ -2114,7 +2115,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveEpicTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.epicWearableMonthExpensive.name,
+    shortenText(data.epicWearableMonthExpensive.name, 24),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -2175,7 +2176,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapLegendaryTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.cheapLegendaryNow.name,
+    shortenText(data.cheapLegendaryNow.name, 24),
     {
       position: new Vector3(-0.2, 2.9, 0),
     },
@@ -2281,7 +2282,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveLegendaryTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.legendaryWearableMonthExpensive.name,
+    shortenText(data.legendaryWearableMonthExpensive.name, 24),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -2342,7 +2343,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapMythicTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.cheapMythicNow.name,
+    shortenText(data.cheapMythicNow.name, 24),
     {
       position: new Vector3(0, 2.9, -0.1),
     },
@@ -2451,7 +2452,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveMythicTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    data.mythicWearableMonthExpensive.name,
+    shortenText(data.mythicWearableMonthExpensive.name, 24),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -2490,7 +2491,7 @@ export function updateTradeCentrer(data: MarketData) {
     mythicBoard2
   )
 }
-  ////// ROOFTOP MUSIC
+////// ROOFTOP MUSIC
 
 //   const rooftopStation = 'https://edge.singsingmusic.net/MC2.mp3'
 
