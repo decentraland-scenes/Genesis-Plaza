@@ -20,9 +20,11 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
 
+import { tutorialEnableObservable } from './modules/tutorialHandler'
+
 import utils from '../node_modules/decentraland-ecs-utils/index'
 import * as ui from '../node_modules/@dcl/ui-utils/index'
-import { tutorialEnableObservable } from './modules/tutorialHandler'
+
 import { TriggerBoxShape } from '../node_modules/decentraland-ecs-utils/triggers/triggerSystem'
 
 //////// LOG PLAYER POSITION
