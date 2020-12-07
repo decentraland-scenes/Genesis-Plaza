@@ -16,6 +16,7 @@ export enum Locations {
   PRESENT = '-40,-49',
   CASINO = '-55,143',
   TOKI = '28,45',
+  GAMERDISTRICT = '-15,82',
 }
 
 export class Teleport extends Entity {
@@ -65,6 +66,11 @@ export class Teleport extends Entity {
 }
 
 export function placeTeleports() {
+  let gamerTeleport = new Transform({
+    position: new Vector3(166.4, 0.6, 170.4),
+    rotation: Quaternion.Euler(0, 0, 0),
+  })
+
   // artichoke & garden
   let teleportPos1 = new Transform({
     position: new Vector3(81.7, 0.3, 18.45),
@@ -156,6 +162,15 @@ export function placeTeleports() {
   })
 
   let teleports = [
+    {
+      name: 'Gamer District',
+      model: new GLTFShape('models/teleports/Joystick.glb'),
+      location: Locations.GAMERDISTRICT,
+      transform: gamerTeleport,
+      description:
+        'A selection of some of the best minigames in Decentraland,\nall next to each other in an exciting place to hang out.',
+    },
+
     {
       name: 'Dragon Rush',
       model: new GLTFShape('models/teleports/dragon_rush.glb'),
