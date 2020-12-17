@@ -127,6 +127,17 @@ let forest2 = new AmbientSound(
   0.6
 )
 
+let xmasMusic = new Entity()
+xmasMusic.addComponent(new Transform())
+let xmasMusicClip = new AudioClip('sounds/Xmas-music.mp3')
+xmasMusicClip.loop = true
+//xmasMusicClip.volume = 0.08
+xmasMusic.addComponent(new AudioSource(xmasMusicClip))
+engine.addEntity(xmasMusic)
+xmasMusic.setParent(Attachable.FIRST_PERSON_CAMERA)
+xmasMusic.getComponent(AudioSource).volume = 0.1
+xmasMusic.getComponent(AudioSource).playing = true
+
 // let thunder = new AmbientSound(
 //   { position: new Vector3(43, 45, 113) },
 //   'sounds/thunder.mp3',
