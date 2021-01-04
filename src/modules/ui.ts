@@ -4,7 +4,6 @@ import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
 import { dialogWindow } from './npcRobotBuilder'
-import { nftWindow } from './nftBuilder'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -36,7 +35,6 @@ closeDialogSound.setParent(Attachable.AVATAR)
 export function closeUI(npc?: boolean) {
   messagebg.visible = false
   wBackground.visible = false
-  nftWindow.closeNFTWindow(false)
 
   // if the NPC UI is explicitly closed
   if (npc) {
@@ -45,12 +43,7 @@ export function closeUI(npc?: boolean) {
 }
 
 export function checkUIOpen(): boolean {
-  if (
-    messagebg.visible ||
-    wBackground.visible ||
-    dialogWindow.isDialogOpen ||
-    nftWindow.container.visible
-  ) {
+  if (messagebg.visible || wBackground.visible || dialogWindow.isDialogOpen) {
     return true
   } else {
     return false

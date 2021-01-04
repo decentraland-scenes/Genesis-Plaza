@@ -1,11 +1,9 @@
 import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { NFT } from './nft'
 import { nftData } from './nftData'
-import { NFTWindow } from './nftWindow'
 
 // UI Elements
 const canvas = new UICanvas()
-export const nftWindow = new NFTWindow(canvas)
 
 export function addNFTs(): void {
   // NFTs
@@ -17,8 +15,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.75, 0.75, 1.5),
-    nftData[0].id,
-    nftWindow
+    nftData[0].id
   )
 
   const makersPlaceNFT1 = new NFT(
@@ -29,8 +26,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.0, 1.0, 1.5),
-    nftData[1].id,
-    nftWindow
+    nftData[1].id
   )
 
   const knownOriginNFT1 = new NFT(
@@ -41,8 +37,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.5, 0.0),
-    nftData[2].id,
-    nftWindow
+    nftData[2].id
   )
 
   const axieInfinityNFT = new NFT(
@@ -53,8 +48,7 @@ export function addNFTs(): void {
       scale: new Vector3(5, 5, 2),
     }),
     new Color3(1.25, 1.25, 1.25),
-    nftData[3].id,
-    nftWindow
+    nftData[3].id
   )
 
   const myCryptoHeroesNFT = new NFT(
@@ -65,8 +59,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.25, 0.5, 1.5),
-    nftData[4].id,
-    nftWindow
+    nftData[4].id
   )
 
   const mlbChampionsNFT = new NFT(
@@ -77,8 +70,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.25, 0.25, 0.25),
-    nftData[5].id,
-    nftWindow
+    nftData[5].id
   )
 
   const blockchainCutiesNFT = new NFT(
@@ -89,8 +81,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.0, 1.1, 0.85),
-    nftData[6].id,
-    nftWindow
+    nftData[6].id
   )
 
   const hyperDragonsNFT = new NFT(
@@ -101,8 +92,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 1.0, 1.0),
-    nftData[7].id,
-    nftWindow
+    nftData[7].id
   )
 
   const chainGuardiansNFT = new NFT(
@@ -114,8 +104,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.0, 1.0, 1.5),
-    nftData[8].id,
-    nftWindow
+    nftData[8].id
   )
 
   const cryptoMorphNFT = new NFT(
@@ -126,8 +115,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.9, 0.25, 1.25),
-    nftData[9].id,
-    nftWindow
+    nftData[9].id
   )
 
   const josieNFT = new NFT(
@@ -138,8 +126,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.5, 0.0),
-    nftData[10].id,
-    nftWindow
+    nftData[10].id
   )
 
   const superRareNFT = new NFT(
@@ -150,8 +137,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.25, 0.5, 1.5),
-    nftData[11].id,
-    nftWindow
+    nftData[11].id
   )
 
   const makersPlaceNFT2 = new NFT(
@@ -162,8 +148,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.0, 1.0, 1.0),
-    nftData[12].id,
-    nftWindow
+    nftData[12].id
   )
 
   const makersPlaceNFT3 = new NFT(
@@ -174,8 +159,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(1.5, 0.0, 0.0),
-    nftData[13].id,
-    nftWindow
+    nftData[13].id
   )
 
   const knownOriginNFT2 = new NFT(
@@ -186,8 +170,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 0.0, 1.5),
-    nftData[14].id,
-    nftWindow
+    nftData[14].id
   )
 
   const knownOriginNFT3 = new NFT(
@@ -198,8 +181,7 @@ export function addNFTs(): void {
       scale: new Vector3(4, 4, 2),
     }),
     new Color3(0.5, 0.0, 1.5),
-    nftData[15].id,
-    nftWindow
+    nftData[15].id
   )
 
   // Trigger
