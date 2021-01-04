@@ -188,3 +188,29 @@ export async function updateEventValue(value: any) {
     }
   )
 }
+
+export async function updatePartyEventValue(value: any) {
+  var dateObject = new Date()
+  dateObject.getTime()
+
+  var upload = new AWS.S3.ManagedUpload({
+    params: {
+      Bucket: 'genesis-plaza',
+      Key: 'event/partyevent.json',
+      Body: JSON.stringify({ value: value, time: dateObject.getTime() }),
+      ACL: 'public-read',
+      ContentType: 'application/json; charset=utf-8',
+    },
+  })
+
+  var promise = upload.promise()
+
+  promise.then(
+    function (data: any) {
+      console.log('Successfully uploaded mural JSON')
+    },
+    function (err: any) {
+      console.log('There was an error uploading mural json file: ', err.message)
+    }
+  )
+}

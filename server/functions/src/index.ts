@@ -6,6 +6,7 @@ import {
   getSeqJSON,
   uploadMessageBoardJSON,
   updateEventValue,
+  updatePartyEventValue,
   updateMessageJSON,
 } from './awsUpload'
 
@@ -70,7 +71,18 @@ app.post('/update-sequencer', async (req: any, res: any) => {
 
 app.get('/event', (req: any, res: any) => {
   let value = Number(req.query.value)
+
   updateEventValue(value)
+  return res.status(200).send('Updated event data!')
+})
+
+app.get('/eventparty', (req: any, res: any) => {
+  let value = Number(req.query.value)
+  let pass = req.query.pass
+
+  if (pass != 'covinchrlz') return
+
+  updatePartyEventValue(value)
   return res.status(200).send('Updated event data!')
 })
 
