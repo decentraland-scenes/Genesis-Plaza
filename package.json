@@ -14,8 +14,8 @@
     "decentraland-ecs": "^6.6.3"
   },
   "dependencies": {
-    "@dcl/npc-utils": "^1.0.10",
-    "@dcl/ui-utils": "^1.5.0",
+    "@dcl/npc-utils": "^1.2.6",
+    "@dcl/ui-utils": "^1.6.8",
     "cors": "^2.8.5",
     "decentraland-ecs-utils": "^1.1.9",
     "eth-connect": "^4.0.2",

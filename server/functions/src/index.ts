@@ -48,6 +48,19 @@ app.post('/addmessage', (req: any, res: any) => {
   return res.status(200).send('updated message board')
 })
 
+app.post('/adddetailedmessage', async (req: any, res: any) => {
+  let location: string = String(req.body.location)
+  let message: string = String(req.body.message)
+  let author: string = String(req.body.author)
+  let portrait: string = String(req.body.portrait)
+
+  let url = awsBaseURL + '/messageboards/' + location + '.json'
+
+  await updateMessageJSON(url, message, location, author, portrait)
+
+  return res.status(200).send('updated message board')
+})
+
 /// SEQUENCER
 
 app.get('/sequencer', async (req: any, res: any) => {

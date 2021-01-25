@@ -10,7 +10,6 @@ import {
 } from './modules/museumItems'
 import { addScreen } from './modules/video'
 import { addBuildings } from './modules/buildings'
-import { addFaceUserSystem } from './modules/npcFaceUserSystem'
 import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
 import { addPiano } from './piano/pianoBuilder'
@@ -19,8 +18,6 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
-import { getUserData, getUserPublicKey } from '@decentraland/Identity'
-import { getCurrentRealm } from '@decentraland/EnvironmentAPI'
 
 //////// LOG PLAYER POSITION
 
@@ -79,12 +76,7 @@ addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(60, 60, 60), () => {
 })
 
 /// ROBOTS
-const dummyTarget = new Entity()
-dummyTarget.addComponent(new PlaneShape())
-dummyTarget.addComponent(new Transform())
-
-addFaceUserSystem(dummyTarget)
-addRobots(dummyTarget)
+addRobots()
 
 /// NFTS
 addNFTs()

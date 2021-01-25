@@ -13,6 +13,13 @@ AWS.config.update({
   region: 'us-east-2',
 })
 
+export type MessageData = {
+  msg: string
+  author?: string
+  portrait?: string
+  date?: string
+}
+
 // Message boards
 
 export async function getMessageJSON(url: string): Promise<string[]> {
@@ -30,17 +37,41 @@ export async function getMessageJSON(url: string): Promise<string[]> {
 export async function updateMessageJSON(
   url: string,
   newMessage: string,
-  location: string
+  location: string,
+  author?: string,
+  portrait?: string
 ) {
   let currentMessages: string[] = await getMessageJSON(url)
   console.log('old messages: ', currentMessages)
 
-  currentMessages.push(newMessage)
+  let msg: string
+  if (author || portrait) {
+    msg = JSON.stringify({
+      msg: newMessage,
+      author: author,
+      portrait: portrait,
+      date: String(Date.now()),
+    })
+  } else {
+    msg = newMessage
+  }
 
-  uploadMessageBoardJSON(location, {
+  if (currentMessages && currentMessages.length > 0) {
+    currentMessages = currentMessages.slice(
+      Math.max(currentMessages.length - 50, 0)
+    )
+  } else {
+    currentMessages = []
+  }
+
+  currentMessages.push(msg)
+
+  await uploadMessageBoardJSON(location, {
     name: location,
     messages: currentMessages,
   })
+
+  return
 }
 
 export async function uploadMessageBoardJSON(
@@ -69,6 +100,8 @@ export async function uploadMessageBoardJSON(
       console.log('There was an error uploading json file: ', err.message)
     }
   )
+
+  return
 }
 
 ///// Sequencer
