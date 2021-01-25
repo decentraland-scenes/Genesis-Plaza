@@ -4,7 +4,7 @@ export class AmbientSound extends Entity {
   source: AudioSource
   clip: AudioClip
   constructor(
-    transform: TranformConstructorArgs,
+    transform: TransformConstructorArgs,
     sound: string,
     interval: number = 0,
     isPlaying: boolean = false,

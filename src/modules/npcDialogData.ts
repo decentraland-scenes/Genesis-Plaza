@@ -27,6 +27,7 @@ export let AliceDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       alice.playAnimation('Goodbye', true, 2)
+      alice.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -91,8 +92,8 @@ export let AliceDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'world-end', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'end', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'world-end' },
+      { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
@@ -125,6 +126,7 @@ export let AliceDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       alice.playAnimation('Goodbye', true, 2)
+      alice.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -158,8 +160,8 @@ export let AliceDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'plaza-end', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'end', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'plaza-end' },
+      { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
@@ -188,6 +190,7 @@ export let AliceDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       alice.playAnimation('Goodbye', true, 2)
+      alice.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -201,8 +204,8 @@ export let RonDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -211,6 +214,7 @@ export let RonDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       ron.playAnimation('Goodbye', true, 2)
+      ron.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -234,8 +238,8 @@ export let RonDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'blockchain', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no-chain', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'blockchain' },
+      { label: 'NO', goToDialog: 'no-chain' },
     ],
   },
   {
@@ -289,6 +293,7 @@ export let RonDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       ron.playAnimation('Goodbye', true, 2)
+      ron.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -300,6 +305,7 @@ export let RonDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       ron.playAnimation('Goodbye', true, 2)
+      ron.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -313,8 +319,8 @@ export let BelaDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -323,6 +329,7 @@ export let BelaDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       bela.playAnimation('Goodbye', true, 2)
+      bela.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -356,6 +363,7 @@ export let BelaDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       bela.playAnimation('Goodbye', true, 2)
+      bela.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -369,8 +377,8 @@ export let BettyDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -379,6 +387,7 @@ export let BettyDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       betty.playAnimation('Goodbye', true, 2)
+      betty.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -417,10 +426,8 @@ export let BettyDialog: Dialog[] = [
         label: 'BUILDER',
         fontSize: 10,
         goToDialog: 'builder',
-
-        offsetY: -17,
       },
-      { label: 'SDK', goToDialog: 'sdk', fontSize: 14, offsetY: -19 },
+      { label: 'SDK', goToDialog: 'sdk' },
     ],
   },
   {
@@ -444,8 +451,8 @@ export let BettyDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'sdk-end', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'end', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'sdk-end' },
+      { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
@@ -494,6 +501,7 @@ export let BettyDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       betty.playAnimation('Goodbye', true, 2)
+      betty.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -538,8 +546,8 @@ export let BettyDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'builder-end', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'end', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'builder-end' },
+      { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
@@ -570,6 +578,7 @@ export let BettyDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       betty.playAnimation('Goodbye', true, 2)
+      betty.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -595,6 +604,7 @@ export let BettyDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       betty.playAnimation('Goodbye', true, 2)
+      betty.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -608,8 +618,8 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -618,6 +628,7 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       charlie.playAnimation('Goodbye', true, 2)
+      charlie.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -651,8 +662,8 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'blockchain', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no-blockchain', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'blockchain' },
+      { label: 'NO', goToDialog: 'no-blockchain' },
     ],
   },
   {
@@ -678,6 +689,7 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       charlie.playAnimation('Goodbye', true, 2)
+      charlie.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -704,6 +716,7 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       charlie.playAnimation('Goodbye', true, 2)
+      charlie.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -715,6 +728,7 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       charlie.playAnimation('Goodbye', true, 2)
+      charlie.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -744,6 +758,7 @@ export let CharlieDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       charlie.playAnimation('Goodbye', true, 2)
+      charlie.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -757,8 +772,8 @@ export let MarshaDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -767,6 +782,7 @@ export let MarshaDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       marsha.playAnimation('Goodbye', true, 2)
+      marsha.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -817,6 +833,7 @@ export let MarshaDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       marsha.playAnimation('Goodbye', true, 2)
+      marsha.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -830,8 +847,8 @@ export let BobDialog: Dialog[] = [
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14, offsetY: -19 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14, offsetY: -19 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
     ],
   },
   {
@@ -840,6 +857,7 @@ export let BobDialog: Dialog[] = [
     offsetY: 18,
     triggeredByNext: () => {
       bob.playAnimation('Goodbye', true, 2)
+      bob.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -875,6 +893,7 @@ export let BobDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       bob.playAnimation('Goodbye', true, 2)
+      bob.endInteraction()
     },
     isEndOfDialog: true,
   },
@@ -928,6 +947,7 @@ export let BobDialog: Dialog[] = [
     offsetY: 6,
     triggeredByNext: () => {
       bob.playAnimation('Goodbye', true, 2)
+      bob.endInteraction()
     },
     isEndOfDialog: true,
   },

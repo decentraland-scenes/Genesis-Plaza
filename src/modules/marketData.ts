@@ -461,7 +461,7 @@ export class StockData extends Entity {
   constructor(
     type: StockDataTypes,
     text: string,
-    transform: TranformConstructorArgs,
+    transform: TransformConstructorArgs,
     parent: Entity
   ) {
     super()
@@ -529,7 +529,7 @@ export class StockData extends Entity {
 export class WearablePreview extends Entity {
   constructor(
     image: string,
-    transform: TranformConstructorArgs,
+    transform: TransformConstructorArgs,
     parent: Entity
   ) {
     super()

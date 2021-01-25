@@ -3,8 +3,8 @@ import utils from '../../node_modules/decentraland-ecs-utils/index'
 export class VideoScreen extends Entity {
   texture: VideoTexture
   constructor(
-    screenPos: TranformConstructorArgs,
-    triggerPos: TranformConstructorArgs,
+    screenPos: TransformConstructorArgs,
+    triggerPos: TransformConstructorArgs,
     triggerScale: Vector3,
     streamURL: string
   ) {

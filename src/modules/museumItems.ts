@@ -44,7 +44,7 @@ export class MuseumPiece extends Entity {
   name: string
   constructor(
     model: GLTFShape | BoxShape,
-    transform: TranformConstructorArgs,
+    transform: TransformConstructorArgs,
     name: string,
     robot?: NPC,
     dialog?: Dialog[],

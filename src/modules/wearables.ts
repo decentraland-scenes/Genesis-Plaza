@@ -14,7 +14,7 @@ export class Wearable extends Entity {
   wearableData: WearableData
   constructor(
     model: GLTFShape,
-    transform: TranformConstructorArgs,
+    transform: TransformConstructorArgs,
     wearableName: string,
     isDefault?: boolean
   ) {

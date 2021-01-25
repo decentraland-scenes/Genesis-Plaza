@@ -8,8 +8,8 @@ export class Platform extends Entity {
 
   constructor(
     model: GLTFShape,
-    platformPos: TranformConstructorArgs,
-    triggerPos: TranformConstructorArgs,
+    platformPos: TransformConstructorArgs,
+    triggerPos: TransformConstructorArgs,
     triggerScale: Vector3,
     animation: string,
     messageBusHandle: string
