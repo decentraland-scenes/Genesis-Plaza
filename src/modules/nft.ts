@@ -1,5 +1,4 @@
 import resources from '../resources'
-import { updateOpenUITime, setUiOpener } from './ui'
 import { nftData } from './nftData'
 
 export class NFT extends Entity {

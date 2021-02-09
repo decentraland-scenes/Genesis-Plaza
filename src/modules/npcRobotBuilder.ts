@@ -1,6 +1,6 @@
 import resources from '../resources'
 import { tutorialEnableObservable } from './tutorialHandler'
-import { NPC, NPCDelay } from '../../node_modules/@dcl/npc-utils/index'
+import { NPC, NPCDelay } from '@dcl/npc-scene-utils'
 import {
   AliceDialog,
   BelaDialog,

@@ -1,5 +1,5 @@
 import { sceneMessageBus } from './serverHandler'
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -245,24 +245,21 @@ let artichokeTriggerBox = new utils.TriggerBoxShape(
 artichokeTrigger.addComponent(
   new utils.TriggerComponent(
     artichokeTriggerBox, //shape
-    0, //layer
-    0, //triggeredByLayer
-    null, //onTriggerEnter
-    null, //onTriggerExit
-    () => {
-      sceneMessageBus.emit('enteredRadioRange', {})
-      isInRadioRange = true
-      if (currentRadio) {
-        radioOn(currentRadio)
-      }
+    {
+      onCameraEnter: () => {
+        sceneMessageBus.emit('enteredRadioRange', {})
+        isInRadioRange = true
+        if (currentRadio) {
+          radioOn(currentRadio)
+        }
 
-      log('triggered!')
-    },
-    () => {
-      isInRadioRange = false
-      radioOff()
-    }, //onCameraExit
-    false
+        log('triggered!')
+      },
+      onCameraExit: () => {
+        isInRadioRange = false
+        radioOff()
+      },
+    }
   )
 )
 engine.addEntity(artichokeTrigger)

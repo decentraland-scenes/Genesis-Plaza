@@ -4,7 +4,6 @@ import {
   wearableNotForSale,
   openLoadingUI,
 } from './ui'
-import decentralandEcsUtils from '../../node_modules/decentraland-ecs-utils/index'
 
 export class Wearable extends Entity {
   wearableName: string
@@ -14,7 +13,7 @@ export class Wearable extends Entity {
   wearableData: WearableData
   constructor(
     model: GLTFShape,
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     wearableName: string,
     isDefault?: boolean
   ) {

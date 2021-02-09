@@ -1,5 +1,4 @@
-import utils from '../node_modules/decentraland-ecs-utils/index'
-
+import { TriggerBoxShape, TriggerSphereShape } from '@dcl/npc-scene-utils'
 export default {
   sounds: {
     robots: {
@@ -85,12 +84,12 @@ export default {
     placeholder: new Texture('images/ui/placeholder.png'),
   },
   trigger: {
-    triggerShape: new utils.TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
-    triggerWhitePianoKey: new utils.TriggerBoxShape(
+    triggerShape: new TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
+    triggerWhitePianoKey: new TriggerBoxShape(
       new Vector3(0.35, 3, 2),
       new Vector3(0, 0, -1)
     ),
-    triggerBlackPianoKey: new utils.TriggerBoxShape(
+    triggerBlackPianoKey: new TriggerBoxShape(
       new Vector3(0.35, 3, 2),
       Vector3.Zero()
     ),

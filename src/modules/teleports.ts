@@ -25,7 +25,7 @@ export class Teleport extends Entity {
   description?: string
   constructor(
     model: GLTFShape,
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     location: Locations,
     name: string,
     description: string

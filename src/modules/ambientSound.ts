@@ -1,10 +1,10 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 
 export class AmbientSound extends Entity {
   source: AudioSource
   clip: AudioClip
   constructor(
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     sound: string,
     interval: number = 0,
     isPlaying: boolean = false,

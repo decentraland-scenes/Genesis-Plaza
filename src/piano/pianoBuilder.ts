@@ -1,4 +1,4 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 import resources from '../resources'
 import { PianoKey, keys } from './pianoKey'
 

@@ -1,10 +1,9 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
-
+import utils from '@dcl/ecs-scene-utils'
 export class VideoScreen extends Entity {
   texture: VideoTexture
   constructor(
-    screenPos: TransformConstructorArgs,
-    triggerPos: TransformConstructorArgs,
+    screenPos: TranformConstructorArgs,
+    triggerPos: TranformConstructorArgs,
     triggerScale: Vector3,
     streamURL: string
   ) {
@@ -34,17 +33,15 @@ export class VideoScreen extends Entity {
     triggerEntity.addComponent(
       new utils.TriggerComponent(
         triggerBox, //shape
-        0, //layer
-        0, //triggeredByLayer
-        null, //onTriggerEnter
-        null, //onTriggerExit
-        () => {
-          this.activate()
-        },
-        () => {
-          this.deactivate()
-        }, //onCameraExit
-        false
+        {
+          onCameraEnter: () => {
+            this.activate()
+          },
+
+          onCameraExit: () => {
+            this.deactivate()
+          },
+        }
       )
     )
     engine.addEntity(triggerEntity)

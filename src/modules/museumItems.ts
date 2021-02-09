@@ -1,4 +1,4 @@
-import { Dialog, NPC } from '../../node_modules/@dcl/npc-utils/index'
+import { Dialog, NPC } from '@dcl/npc-scene-utils'
 import {
   alice,
   ron,
@@ -44,7 +44,7 @@ export class MuseumPiece extends Entity {
   name: string
   constructor(
     model: GLTFShape | BoxShape,
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     name: string,
     robot?: NPC,
     dialog?: Dialog[],

@@ -1,8 +1,8 @@
 import { splitTextIntoLines, shortenText } from './helperFunctions'
 import { getEvents } from './serverHandler'
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 
-export async function createEventsBoard(position: TransformConstructorArgs) {
+export async function createEventsBoard(position: TranformConstructorArgs) {
   let events = await getEvents()
 
   if (events.length <= 0) {

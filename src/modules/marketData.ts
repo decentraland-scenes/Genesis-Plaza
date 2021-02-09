@@ -1,4 +1,4 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
 import { shortenText } from './helperFunctions'
@@ -461,7 +461,7 @@ export class StockData extends Entity {
   constructor(
     type: StockDataTypes,
     text: string,
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     parent: Entity
   ) {
     super()
@@ -529,7 +529,7 @@ export class StockData extends Entity {
 export class WearablePreview extends Entity {
   constructor(
     image: string,
-    transform: TransformConstructorArgs,
+    transform: TranformConstructorArgs,
     parent: Entity
   ) {
     super()

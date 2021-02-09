@@ -1,4 +1,4 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import utils from '@dcl/ecs-scene-utils'
 import { sceneMessageBus } from './serverHandler'
 
 /// Reusable class for all platforms
@@ -8,8 +8,8 @@ export class Platform extends Entity {
 
   constructor(
     model: GLTFShape,
-    platformPos: TransformConstructorArgs,
-    triggerPos: TransformConstructorArgs,
+    platformPos: TranformConstructorArgs,
+    triggerPos: TranformConstructorArgs,
     triggerScale: Vector3,
     animation: string,
     messageBusHandle: string
@@ -33,16 +33,12 @@ export class Platform extends Entity {
     triggerEntity.addComponent(
       new utils.TriggerComponent(
         triggerBox, //shape
-        0, //layer
-        0, //triggeredByLayer
-        null, //onTriggerEnter
-        null, //onTriggerExit
-        () => {
-          log('triggered platform')
-          sceneMessageBus.emit(messageBusHandle, {})
-        },
-        null, //onCameraExit
-        false //true
+        {
+          onCameraEnter: () => {
+            log('triggered platform')
+            sceneMessageBus.emit(messageBusHandle, {})
+          },
+        }
       )
     )
     engine.addEntity(triggerEntity)
