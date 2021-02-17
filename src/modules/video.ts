@@ -1,6 +1,8 @@
 import * as utils from '@dcl/ecs-scene-utils'
+import { setInShowArea } from 'src/event/eventScripts'
 export class VideoScreen extends Entity {
   texture: VideoTexture
+  triggerEntity: Entity
   constructor(
     screenPos: TranformConstructorArgs,
     triggerPos: TranformConstructorArgs,
@@ -25,12 +27,12 @@ export class VideoScreen extends Entity {
 
     this.addComponent(mat)
 
-    const triggerEntity = new Entity()
-    triggerEntity.addComponent(new Transform(triggerPos))
+    this.triggerEntity = new Entity()
+    this.triggerEntity.addComponent(new Transform(triggerPos))
 
     let triggerBox = new utils.TriggerBoxShape(triggerScale, Vector3.Zero())
 
-    triggerEntity.addComponent(
+    this.triggerEntity.addComponent(
       new utils.TriggerComponent(
         triggerBox, //shape
         {
@@ -44,7 +46,7 @@ export class VideoScreen extends Entity {
         }
       )
     )
-    engine.addEntity(triggerEntity)
+    engine.addEntity(this.triggerEntity)
   }
 
   public activate(): void {
@@ -68,4 +70,21 @@ export function addScreen() {
   )
 
   screen1.getComponent(Transform).rotate(new Vector3(1, 0, 0), 10)
+
+  screen1.triggerEntity.getComponent(
+    utils.TriggerComponent
+  ).onCameraEnter = () => {
+    setInShowArea(true)
+    screen1.texture.playing = true
+    log('ENTERED AREA')
+    // TODO: if cake didn't show, & show started, show cake
+  }
+
+  screen1.triggerEntity.getComponent(
+    utils.TriggerComponent
+  ).onCameraExit = () => {
+    setInShowArea(false)
+    screen1.texture.playing = false
+    log('LEFT AREA')
+  }
 }

@@ -17,6 +17,7 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
+import { initiateVJUI } from './event/adminVJ'
 
 //////// LOG PLAYER POSITION
 
@@ -104,3 +105,5 @@ let forest2 = new AmbientSound(
   true,
   0.6
 )
+
+initiateVJUI()
