@@ -479,14 +479,14 @@ export async function initiateVJUI() {
       -240,
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.LASERPULSE,
+          action: Action.RACAPPEAR,
           freeMode: freeMode,
         })
         laser.check()
       },
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.LASERPULSEOFF,
+          action: Action.RACGO,
           freeMode: freeMode,
         })
       }
