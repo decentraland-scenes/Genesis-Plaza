@@ -628,7 +628,7 @@ export async function initiateVJUI() {
     } else if (e.show == 2) {
       StartShow(2, Date.now())
     } else if (e.show == 'server') {
-      checkEventServer()
+      checkEventServer('bdayRac')
     }
   })
 }

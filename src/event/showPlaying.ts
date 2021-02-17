@@ -29,9 +29,11 @@ export function setFreeMode() {
 export class CheckServer implements ISystem {
   eventTimer: number
   totalEventTimer: number
-  constructor(checkInterval: number) {
+  eventName: string
+  constructor(eventName: string, checkInterval: number) {
     this.eventTimer = 0
     this.totalEventTimer = checkInterval
+    this.eventName = eventName
   }
   update(dt: number) {
     if (showPlaying != 0 || freeMode) return
@@ -40,6 +42,8 @@ export class CheckServer implements ISystem {
 
     if (this.eventTimer > this.totalEventTimer) {
       this.eventTimer = 0
+
+      checkEventServer(this.eventName)
     }
   }
 }
@@ -65,13 +69,13 @@ export async function checkTime() {
   }
 }
 
-let checkServerSystem = new CheckServer(5)
+let checkServerSystem = new CheckServer('bdayRac', 5)
 
 engine.addSystem(checkServerSystem)
 
-export async function checkEventServer() {
+export async function checkEventServer(event: string) {
   try {
-    let url = awsServer + 'event/partyevent.json'
+    let url = awsServer + 'event/' + event + '.json'
     let response = await fetch(url).then()
     let json = await response.json()
 

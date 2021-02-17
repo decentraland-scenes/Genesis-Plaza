@@ -199,37 +199,13 @@ export async function uploadCoinData(jsonContents: CoinData) {
 /// Generic value
 // Generic value used for one-time events, like the SpaceX rocket launch
 
-export async function updateEventValue(value: any) {
-  var upload = new AWS.S3.ManagedUpload({
-    params: {
-      Bucket: 'genesis-plaza',
-      Key: 'event/event.json',
-      Body: JSON.stringify({ value: value }),
-      ACL: 'public-read',
-      ContentType: 'application/json; charset=utf-8',
-    },
-  })
-
-  var promise = upload.promise()
-
-  promise.then(
-    function (data: any) {
-      console.log('Successfully uploaded mural JSON')
-    },
-    function (err: any) {
-      console.log('There was an error uploading mural json file: ', err.message)
-    }
-  )
-}
-
-export async function updatePartyEventValue(value: any) {
+export async function updateEventValue(event: string, value: number) {
   var dateObject = new Date()
   dateObject.getTime()
-
   var upload = new AWS.S3.ManagedUpload({
     params: {
       Bucket: 'genesis-plaza',
-      Key: 'event/partyevent.json',
+      Key: 'event/' + event + '.json',
       Body: JSON.stringify({ value: value, time: dateObject.getTime() }),
       ACL: 'public-read',
       ContentType: 'application/json; charset=utf-8',
