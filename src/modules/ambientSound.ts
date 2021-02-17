@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 
 export class AmbientSound extends Entity {
   source: AudioSource

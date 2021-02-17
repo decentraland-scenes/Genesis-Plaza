@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 
 export function shuffleArray<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {

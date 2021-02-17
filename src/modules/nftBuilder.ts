@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 import { NFT } from './nft'
 import { nftData } from './nftData'
 

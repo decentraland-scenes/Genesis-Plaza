@@ -1,4 +1,3 @@
-import utils from '@dcl/ecs-scene-utils'
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
 import { shortenText } from './helperFunctions'

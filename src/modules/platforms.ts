@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 import { sceneMessageBus } from './serverHandler'
 
 /// Reusable class for all platforms

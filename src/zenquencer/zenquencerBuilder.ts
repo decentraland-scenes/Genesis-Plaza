@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 import resources from './resources'
 import { Stone, stones, seqNumbers } from './stones'
 import { getStones } from './serverHandler'

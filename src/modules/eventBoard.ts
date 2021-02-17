@@ -1,6 +1,5 @@
 import { splitTextIntoLines, shortenText } from './helperFunctions'
 import { getEvents } from './serverHandler'
-import utils from '@dcl/ecs-scene-utils'
 
 export async function createEventsBoard(position: TranformConstructorArgs) {
   let events = await getEvents()

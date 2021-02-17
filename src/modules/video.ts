@@ -1,4 +1,4 @@
-import utils from '@dcl/ecs-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 export class VideoScreen extends Entity {
   texture: VideoTexture
   constructor(
