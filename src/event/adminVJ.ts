@@ -596,17 +596,16 @@ export async function initiateVJUI() {
     // player actions
 
     VJUI.addSwitch(
-      'FREE MODE',
+      'DEFAULT SEQ',
       -190,
       -300,
       () => {
-        sceneMessageBus.emit('playshow', { show: 'free' })
+        sceneMessageBus.emit('playshow', { show: 'server' })
       },
       () => {
-        sceneMessageBus.emit('playshow', { show: 'default' })
+        sceneMessageBus.emit('playshow', { show: 'free' })
       },
-      ui.SwitchStyles.SQUARERED,
-      true
+      ui.SwitchStyles.SQUARERED
     )
 
     VJUI.addButton(
