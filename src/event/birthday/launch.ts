@@ -1,6 +1,7 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { CakeRaiseSystem, cake, CakeSparklerController } from './cake'
 import { ConfettiController } from './confetti'
+import { BalloonController } from './balloons'
 
 
 
@@ -47,6 +48,7 @@ let cakeRaiseSystem = new CakeRaiseSystem()
 
 let cakeSparkControl = new CakeSparklerController()
 let confettiControl = new ConfettiController()
+let balloonControl = new BalloonController()
 
 
 
@@ -71,7 +73,10 @@ export function launchSequence(): void {
   cakeSparkControl.startLowSparklers()    
   
   // - confetti  (duration in seconds)
-  confettiControl.startConfetti(15)
+  confettiControl.startConfetti(40)
+
+  // - balloons
+  balloonControl.startBalloons(40)
    
 
  
