@@ -318,3 +318,12 @@ zepellin.addComponent(
   })
 )
 engine.addEntity(zepellin)
+
+let staticDecor = new Entity()
+staticDecor.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+staticDecor.addComponent(new GLTFShape('models/Static_Decor.glb'))
+engine.addEntity(staticDecor)
