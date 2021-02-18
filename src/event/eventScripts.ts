@@ -14,6 +14,15 @@ import {
 // } from './effectDashboard'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
 import { dj } from './syncableItems'
+import {
+  balloonControl,
+  cakeReady,
+  cakeSparkControl,
+  cakeUp,
+  confettiControl,
+  launchSequence,
+  setCakeReady,
+} from './birthday/launch'
 
 export let inShowArea: boolean = false
 
@@ -42,37 +51,29 @@ export enum Action {
 
   // singles ///////////////
 
-  //smoke
-  SMOKE = 'smoke',
-  SMOKESTOP = 'smokestop',
+  // cake
+  CAKE = 'cake',
 
-  // glass
-  GLASSBREAK = 'glassbreak',
-  GLASSBREAKRANDOM = 'glassbreakrandom',
+  // sparlers
+  SPARKLERSTOP = 'sparklerstop',
+  SPARKLERSMID = 'sparklersmid',
+  SPARKLERSLOW = 'sparklerslow',
+  SPARKLERSALL = 'sparklersall',
+  SPARKLERSOFF = 'sparklersoff',
 
-  // dots
-  DOTSSHOW = 'dotsshow',
-  DOTSHIDE = 'dotshide',
-  DOTSPULSE = 'dotspulse',
-  DOTSSTOPPULSE = 'dotsstoppulse',
+  // confetti
+  CONFETTISHORT = 'confettishort',
+  CONFETTIMID = 'confettimid',
+  CONFETTILONG = 'confettilong',
 
-  // laser
-  LASERSHOW = 'lasershow',
-  LASERHIDE = 'laserhide',
-  LASERROT = 'laserrotate',
-  LASERROTOFF = 'laserrotoff',
-  LASERROTFAST = 'laserrotfast',
-  LASERROTSLOW = 'laserrotslow',
-  LASERPULSE = 'laserpulse',
-  LASERPULSEOFF = 'laserpulseoff',
+  // balloons
+  BALLOONSSHORT = 'balloonsshort',
+  BALLOONSMID = 'balloonsmid',
+  BALLOONSLONG = 'balloonslong',
 
-  // spiral
-  SPIRALSHOW = 'spiralshow',
-  SPIRALHIDE = 'spiralhide',
-  SPIRAL1SHOW = 'spiral1show',
-  SPIRAL1HIDE = 'spiral1hide',
-  SPIRAL2SHOW = 'spiral2show',
-  SPIRAL2HIDE = 'spiral2hide',
+  // lights
+
+  // balls?
 
   // video
   VIDEOPLAY = 'videoplay',
@@ -196,6 +197,60 @@ export function runAction(action: Action) {
       break
 
     /// SINGLE ACTIONS
+
+    case Action.CAKE:
+      if (cakeUp) return
+
+      if (inShowArea) {
+        launchSequence()
+      } else {
+        setCakeReady()
+      }
+      break
+
+    case Action.SPARKLERSTOP:
+      cakeSparkControl.startTopSparklers()
+      break
+
+    case Action.SPARKLERSMID:
+      cakeSparkControl.startMidSparklers()
+      break
+
+    case Action.SPARKLERSLOW:
+      cakeSparkControl.startLowSparklers()
+      break
+
+    case Action.SPARKLERSALL:
+      cakeSparkControl.startAllSparklers()
+      break
+
+    case Action.SPARKLERSOFF:
+      cakeSparkControl.stopAllSparklers()
+      break
+
+    case Action.CONFETTISHORT:
+      confettiControl.startConfetti(5)
+      break
+
+    case Action.CONFETTIMID:
+      confettiControl.startConfetti(20)
+      break
+
+    case Action.CONFETTILONG:
+      confettiControl.startConfetti(40)
+      break
+
+    case Action.BALLOONSSHORT:
+      balloonControl.startBalloons(5)
+      break
+
+    case Action.BALLOONSMID:
+      balloonControl.startBalloons(20)
+      break
+
+    case Action.BALLOONSLONG:
+      balloonControl.startBalloons(40)
+      break
 
     // case Action.SMOKE:
     //   smokeControl.startSmoke()
@@ -462,17 +517,17 @@ export function runAction(action: Action) {
 
 export let ShowScripts: any = {
   DEFAULT: [
-    { time: 0, event: Action.SMOKESTOP },
-    { time: 5, event: Action.DOTSSHOW },
-    { time: 10, event: Action.SMOKE },
-    { time: 20, event: Action.SMOKESTOP },
-    { time: 20, event: Action.LASERSHOW },
-    { time: 20, event: Action.GLASSBREAK },
-    { time: 30, event: Action.LASERROT },
-    { time: 30, event: Action.SPIRALSHOW },
-    { time: 50, event: Action.SMOKE },
-    { time: 30, event: Action.LASERPULSE },
-    { time: 60, event: Action.SMOKE },
+    // { time: 0, event: Action.SMOKESTOP },
+    // { time: 5, event: Action.DOTSSHOW },
+    // { time: 10, event: Action.SMOKE },
+    // { time: 20, event: Action.SMOKESTOP },
+    // { time: 20, event: Action.LASERSHOW },
+    // { time: 20, event: Action.GLASSBREAK },
+    // { time: 30, event: Action.LASERROT },
+    // { time: 30, event: Action.SPIRALSHOW },
+    // { time: 50, event: Action.SMOKE },
+    // { time: 30, event: Action.LASERPULSE },
+    // { time: 60, event: Action.SMOKE },
   ],
   RAC: [],
   TEST: [

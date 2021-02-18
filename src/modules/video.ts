@@ -1,4 +1,5 @@
 import * as utils from '@dcl/ecs-scene-utils'
+import { cakeReady, cakeUp, launchSequence } from 'src/event/birthday/launch'
 import { setInShowArea } from 'src/event/eventScripts'
 export class VideoScreen extends Entity {
   texture: VideoTexture
@@ -76,7 +77,12 @@ export function addScreen() {
   ).onCameraEnter = () => {
     setInShowArea(true)
     screen1.texture.playing = true
-    log('ENTERED AREA')
+    //log('ENTERED AREA')
+
+    if (cakeReady && !cakeUp) {
+      launchSequence()
+    }
+
     // TODO: if cake didn't show, & show started, show cake
   }
 
@@ -85,6 +91,6 @@ export function addScreen() {
   ).onCameraExit = () => {
     setInShowArea(false)
     screen1.texture.playing = false
-    log('LEFT AREA')
+    //log('LEFT AREA')
   }
 }

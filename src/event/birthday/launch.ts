@@ -3,7 +3,13 @@ import { CakeRaiseSystem, cake, CakeSparklerController } from './cake'
 import { ConfettiController } from './confetti'
 import { BalloonController } from './balloons'
 
+export let cakeUp: boolean = false
 
+export let cakeReady: boolean = false
+
+export function setCakeReady() {
+  cakeReady = true
+}
 
 // Hatch sound
 const hatchOpenSound = new Entity()
@@ -30,29 +36,25 @@ hatch
   .addClip(new AnimationState('HatchOpen', { looping: false }))
 
 // !! REMOVE THIS COMPONENT FOR BEFORE DEPLOYING !!
-hatch.addComponent(
-  new OnPointerDown(
-    (): void => {
-      launchSequence()
-    },
-    {
-      button: ActionButton.POINTER,
-      hoverText: 'TEST LAUNCH',
-      distance: 40,
-    }
-  )
-)
+// hatch.addComponent(
+//   new OnPointerDown(
+//     (): void => {
+//       launchSequence()
+//     },
+//     {
+//       button: ActionButton.POINTER,
+//       hoverText: 'TEST LAUNCH',
+//       distance: 40,
+//     }
+//   )
+// )
 
 // Systems
-let cakeRaiseSystem = new CakeRaiseSystem()
+export let cakeRaiseSystem = new CakeRaiseSystem()
 
-let cakeSparkControl = new CakeSparklerController()
-let confettiControl = new ConfettiController()
-let balloonControl = new BalloonController()
-
-
-
-
+export let cakeSparkControl = new CakeSparklerController()
+export let confettiControl = new ConfettiController()
+export let balloonControl = new BalloonController()
 
 // For the actual launch - run this...
 export function launchSequence(): void {
@@ -62,34 +64,28 @@ export function launchSequence(): void {
     new utils.Delay(2000, () => {
       hatchOpenSound.getComponent(AudioSource).playOnce()
       engine.addSystem(cakeRaiseSystem)
-      
     })
   )
 
-  // - cake sparklers    
-  //cakeSparkControl.startAllSparklers()      
-  cakeSparkControl.startTopSparklers()      
-  cakeSparkControl.startMidSparklers()      
-  cakeSparkControl.startLowSparklers()    
-  
-  // - confetti  (duration in seconds)
-  confettiControl.startConfetti(40)
+  // - cake sparklers
+  //cakeSparkControl.startAllSparklers()
+  //   cakeSparkControl.startTopSparklers()
+  //   cakeSparkControl.startMidSparklers()
+  //   cakeSparkControl.startLowSparklers()
 
-  // - balloons
-  balloonControl.startBalloons(40)
-   
+  //   // - confetti  (duration in seconds)
+  //   confettiControl.startConfetti(40)
 
- 
+  //   // - balloons
+  //   balloonControl.startBalloons(40)
 
+  cakeUp = true
 }
 
 engine.addEntity(hatch)
 
+// const input = Input.instance
 
-const input = Input.instance
-
-input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
-  
-  launchSequence()
-  })
-
+// input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
+//   launchSequence()
+// })

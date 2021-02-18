@@ -81,203 +81,275 @@ export async function initiateVJUI() {
     })
 
     // switches
-    VJUI.addSwitch(
-      'SMOKE',
-      -190,
-      100,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SMOKE,
-          freeMode: freeMode,
-        })
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SMOKESTOP,
-          freeMode: freeMode,
-        })
-      },
-      ui.SwitchStyles.SQUAREGREEN
-    )
+    // VJUI.addSwitch(
+    //   'SMOKE',
+    //   -190,
+    //   100,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SMOKE,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SMOKESTOP,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   ui.SwitchStyles.SQUAREGREEN
+    // )
 
-    let dots = VJUI.addSwitch(
-      'DOTS',
-      -190,
-      65,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.DOTSSHOW,
-          freeMode: freeMode,
-        })
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.DOTSHIDE,
-          freeMode: freeMode,
-        })
-      },
-      ui.SwitchStyles.SQUAREGREEN
-    )
+    // let dots = VJUI.addSwitch(
+    //   'DOTS',
+    //   -190,
+    //   65,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.DOTSSHOW,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.DOTSHIDE,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   ui.SwitchStyles.SQUAREGREEN
+    // )
 
-    VJUI.addSwitch(
-      'PULSE',
-      -30,
-      65,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.DOTSPULSE,
-          freeMode: freeMode,
-        })
-        dots.check()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.DOTSSTOPPULSE,
-          freeMode: freeMode,
-        })
-      }
-    )
+    // VJUI.addSwitch(
+    //   'PULSE',
+    //   -30,
+    //   65,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.DOTSPULSE,
+    //       freeMode: freeMode,
+    //     })
+    //     dots.check()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.DOTSSTOPPULSE,
+    //       freeMode: freeMode,
+    //     })
+    //   }
+    // )
 
-    let laser = VJUI.addSwitch(
-      'LASER',
-      -190,
-      30,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERSHOW,
-          freeMode: freeMode,
-        })
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERHIDE,
-          freeMode: freeMode,
-        })
-      },
-      ui.SwitchStyles.SQUAREGREEN
-    )
+    // let laser = VJUI.addSwitch(
+    //   'LASER',
+    //   -190,
+    //   30,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERSHOW,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERHIDE,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   ui.SwitchStyles.SQUAREGREEN
+    // )
 
-    VJUI.addSwitch(
-      'ROT',
-      -30,
-      30,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERROT,
-          freeMode: freeMode,
-        })
-        laser.check()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERROTOFF,
-          freeMode: freeMode,
-        })
-      }
-    )
+    // VJUI.addSwitch(
+    //   'ROT',
+    //   -30,
+    //   30,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERROT,
+    //       freeMode: freeMode,
+    //     })
+    //     laser.check()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERROTOFF,
+    //       freeMode: freeMode,
+    //     })
+    //   }
+    // )
 
-    VJUI.addSwitch(
-      'PULSE',
-      60,
-      30,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERPULSE,
-          freeMode: freeMode,
-        })
-        laser.check()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.LASERPULSEOFF,
-          freeMode: freeMode,
-        })
-      }
-    )
+    // VJUI.addSwitch(
+    //   'PULSE',
+    //   60,
+    //   30,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERPULSE,
+    //       freeMode: freeMode,
+    //     })
+    //     laser.check()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.LASERPULSEOFF,
+    //       freeMode: freeMode,
+    //     })
+    //   }
+    // )
 
-    let fastL = VJUI.addButton('Faster', -190, -15, () => {
+    let balloonsShort = VJUI.addButton('Balloons 5', -180, 30, () => {
       sceneMessageBus.emit('action', {
-        action: Action.LASERROTFAST,
+        action: Action.BALLOONSSHORT,
         freeMode: freeMode,
       })
-      laser.check()
     })
-    fastL.image.width = 75
-    fastL.image.height = 40
-    fastL.label.fontSize = 12
+    balloonsShort.image.width = 100
+    balloonsShort.image.height = 40
+    balloonsShort.label.fontSize = 12
 
-    let slowL = VJUI.addButton('Slower', -60, -15, () => {
+    let balloonsMid = VJUI.addButton('Balloons 20', -50, 30, () => {
       sceneMessageBus.emit('action', {
-        action: Action.LASERROTSLOW,
+        action: Action.BALLOONSMID,
         freeMode: freeMode,
       })
-      laser.check()
     })
 
-    slowL.image.width = 75
-    slowL.image.height = 40
-    slowL.label.fontSize = 12
+    balloonsMid.image.width = 100
+    balloonsMid.image.height = 40
+    balloonsMid.label.fontSize = 12
 
-    let spiral = VJUI.addSwitch(
-      'SPIRAL',
-      -190,
+    let balloonsLong = VJUI.addButton('Balloons 40', 80, 30, () => {
+      sceneMessageBus.emit('action', {
+        action: Action.BALLOONSLONG,
+        freeMode: freeMode,
+      })
+    })
+
+    balloonsLong.image.width = 100
+    balloonsLong.image.height = 40
+    balloonsLong.label.fontSize = 12
+
+    let confettiShort = VJUI.addButton('Confetti 5', -180, -15, () => {
+      sceneMessageBus.emit('action', {
+        action: Action.CONFETTISHORT,
+        freeMode: freeMode,
+      })
+    })
+    confettiShort.image.width = 100
+    confettiShort.image.height = 40
+    confettiShort.label.fontSize = 12
+
+    let confettiMid = VJUI.addButton('Confetti 20', -50, -15, () => {
+      sceneMessageBus.emit('action', {
+        action: Action.CONFETTIMID,
+        freeMode: freeMode,
+      })
+    })
+
+    confettiMid.image.width = 100
+    confettiMid.image.height = 40
+    confettiMid.label.fontSize = 12
+
+    let confettiLong = VJUI.addButton('Confetti 40', 80, -15, () => {
+      sceneMessageBus.emit('action', {
+        action: Action.CONFETTILONG,
+        freeMode: freeMode,
+      })
+    })
+
+    confettiLong.image.width = 100
+    confettiLong.image.height = 40
+    confettiLong.label.fontSize = 12
+
+    let sparkles = VJUI.addSwitch(
+      'SPARKLES',
+      -200,
       -70,
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRALSHOW,
+          action: Action.SPARKLERSALL,
           freeMode: freeMode,
         })
       },
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRALHIDE,
+          action: Action.SPARKLERSTOP,
           freeMode: freeMode,
         })
         s1.uncheck()
         s2.uncheck()
+        s3.uncheck()
       },
-      ui.SwitchStyles.SQUAREGREEN
+      ui.SwitchStyles.SQUAREGREEN,
+      true
     )
 
     let s1 = VJUI.addSwitch(
-      '1',
+      'T',
       -40,
       -70,
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRAL1SHOW,
+          action: Action.SPARKLERSTOP,
           freeMode: freeMode,
         })
 
         s2.uncheck()
-        spiral.uncheck()
+        s3.uncheck()
+        sparkles.uncheck()
       },
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRAL1HIDE,
+          action: Action.SPARKLERSOFF,
           freeMode: freeMode,
         })
-      }
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
     )
 
     let s2 = VJUI.addSwitch(
-      '2',
-      50,
+      'M',
+      60,
       -70,
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRAL2SHOW,
+          action: Action.SPARKLERSMID,
           freeMode: freeMode,
         })
         s1.uncheck()
-        spiral.uncheck()
+        s3.uncheck()
+        sparkles.uncheck()
       },
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.SPIRAL2HIDE,
+          action: Action.SPARKLERSOFF,
           freeMode: freeMode,
         })
-      }
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
+
+    let s3 = VJUI.addSwitch(
+      'L',
+      180,
+      -70,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.SPARKLERSLOW,
+          freeMode: freeMode,
+        })
+        s1.uncheck()
+        s2.uncheck()
+        sparkles.uncheck()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.SPARKLERSOFF,
+          freeMode: freeMode,
+        })
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
     )
 
     let jump = VJUI.addButton(
@@ -482,14 +554,15 @@ export async function initiateVJUI() {
           action: Action.RACAPPEAR,
           freeMode: freeMode,
         })
-        laser.check()
       },
       () => {
         sceneMessageBus.emit('action', {
           action: Action.RACGO,
           freeMode: freeMode,
         })
-      }
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
     )
 
     racBounce.image.width = 75
@@ -537,12 +610,12 @@ export async function initiateVJUI() {
     )
 
     VJUI.addButton(
-      'Break Glass',
+      'Cake time!',
       100,
-      -300,
+      -290,
       () => {
         sceneMessageBus.emit('action', {
-          action: Action.GLASSBREAK,
+          action: Action.CAKE,
           freeMode: freeMode,
         })
       },
