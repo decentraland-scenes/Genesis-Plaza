@@ -239,6 +239,10 @@ export class CakeSparklerController {
           entity.getComponent(RaiseFromCake).activate()
         }
       }
+      removeCake(){
+        engine.removeEntity(cake)
+        engine.removeEntity(soucePoolRoot)
+      }
 
 }
 
