@@ -327,3 +327,4 @@ staticDecor.addComponent(
 )
 staticDecor.addComponent(new GLTFShape('models/Static_Decor.glb'))
 engine.addEntity(staticDecor)
+
