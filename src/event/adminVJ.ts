@@ -70,15 +70,28 @@ export async function initiateVJUI() {
 
     VJUI.addText('VJTron 2000', 0, 320, Color4.Gray(), 25)
 
-    VJUI.addText('Make Announcement', -80, 280)
+    VJUI.addText('Make Announcement', -140, 280)
 
     let submittedText: string = ''
-    let textBox = VJUI.addTextBox(-50, 220, 'Announcement', (e: string) => {
+    let textBox = VJUI.addTextBox(-80, 230, 'Announcement', (e: string) => {
       submittedText = e
     })
-    VJUI.addButton('Send MSG', -100, 160, () => {
+    VJUI.addButton('Send MSG', -150, 180, () => {
       sceneMessageBus.emit('announcement', { text: submittedText })
     })
+
+    VJUI.addButton(
+      'TELEPORT',
+      -150,
+      130,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.TELEPORT,
+          freeMode: freeMode,
+        })
+      },
+      ui.ButtonStyles.RED
+    )
 
     // switches
     // VJUI.addSwitch(
@@ -282,6 +295,11 @@ export async function initiateVJUI() {
       true
     )
 
+    sparkles.image.height = 25
+    sparkles.image.width = 50
+    sparkles.label.fontSize = 14
+    sparkles.label.positionX = 55
+
     let s1 = VJUI.addSwitch(
       'T',
       -40,
@@ -348,10 +366,25 @@ export async function initiateVJUI() {
       true
     )
 
+    s1.image.height = 25
+    s1.image.width = 50
+    s1.label.fontSize = 14
+    s1.label.positionX = 55
+
+    s2.image.height = 25
+    s2.image.width = 50
+    s2.label.fontSize = 14
+    s2.label.positionX = 55
+
+    s3.image.height = 25
+    s3.image.width = 50
+    s3.label.fontSize = 14
+    s3.label.positionX = 55
+
     let jump = VJUI.addButton(
       'Jump',
-      -190,
-      -130,
+      -20,
+      180,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERJUMP,
@@ -363,8 +396,8 @@ export async function initiateVJUI() {
 
     let money = VJUI.addButton(
       'Money',
-      -100,
-      -130,
+      -20,
+      130,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERMONEY,
@@ -376,8 +409,8 @@ export async function initiateVJUI() {
 
     let clap = VJUI.addButton(
       'Clap',
-      -10,
-      -130,
+      45,
+      180,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERCLAP,
@@ -389,8 +422,8 @@ export async function initiateVJUI() {
 
     let dance = VJUI.addButton(
       'Dance',
-      80,
-      -130,
+      45,
+      130,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERDANCE,
@@ -400,23 +433,10 @@ export async function initiateVJUI() {
       ui.ButtonStyles.RED
     )
 
-    // let wave = VJUI.addButton(
-    //   'Wave',
-    //   0,
-    //   -200,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.PLAYERWAVE,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   ui.ButtonStyles.RED
-    // )
-
     let hand = VJUI.addButton(
       'Hand',
-      170,
-      -130,
+      105,
+      180,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERHAND,
@@ -426,29 +446,84 @@ export async function initiateVJUI() {
       ui.ButtonStyles.RED
     )
 
-    jump.image.width = 75
+    let tik = VJUI.addButton(
+      'Tik',
+      105,
+      130,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.PLAYERTIK,
+          freeMode: freeMode,
+        })
+      },
+      ui.ButtonStyles.RED
+    )
+
+    let tektonik = VJUI.addButton(
+      'Tekto',
+      165,
+      180,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.PLAYERTEKTO,
+          freeMode: freeMode,
+        })
+      },
+      ui.ButtonStyles.RED
+    )
+
+    let hammer = VJUI.addButton(
+      'Hammer',
+      165,
+      130,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.PLAYERHAMMER,
+          freeMode: freeMode,
+        })
+      },
+      ui.ButtonStyles.RED
+    )
+
+    jump.image.width = 50
     jump.image.height = 40
     jump.label.fontSize = 12
+    jump.label.positionX = -25
 
-    money.image.width = 75
+    money.image.width = 50
     money.image.height = 40
     money.label.fontSize = 12
+    money.label.positionX = -25
 
-    clap.image.width = 75
+    clap.image.width = 50
     clap.image.height = 40
     clap.label.fontSize = 12
+    clap.label.positionX = -30
 
-    dance.image.width = 75
+    dance.image.width = 50
     dance.image.height = 40
     dance.label.fontSize = 12
+    dance.label.positionX = -25
 
-    // wave.image.width = 75
-    // wave.image.height = 40
-    // wave.label.fontSize = 12
-
-    hand.image.width = 75
+    hand.image.width = 50
     hand.image.height = 40
     hand.label.fontSize = 12
+    hand.label.positionX = -25
+
+    tik.image.width = 50
+    tik.image.height = 40
+    tik.label.fontSize = 12
+    tik.label.positionX = -25
+
+    tektonik.image.width = 50
+    tektonik.image.height = 40
+    tektonik.label.fontSize = 12
+    tektonik.label.positionX = -25
+
+    hammer.image.width = 50
+    hammer.image.height = 40
+    hammer.label.fontSize = 12
+    hammer.label.positionX = -25
 
     let racBounce = VJUI.addButton(
       'Bounce',
