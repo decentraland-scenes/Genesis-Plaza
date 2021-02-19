@@ -319,6 +319,8 @@ zepellin.addComponent(
 )
 engine.addEntity(zepellin)
 
+
+// add birthday decor
 let staticDecor = new Entity()
 staticDecor.addComponent(
   new Transform({
