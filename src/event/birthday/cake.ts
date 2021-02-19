@@ -1,6 +1,6 @@
 const launchPadCenter = new Vector3(276.414, 3, 263.844)
 
-export const djStartPos = new Vector3(0,-4,0)
+export const djStartPos = new Vector3(0,-2,0)
 export const djEndPos = new Vector3(0,0,0)
 
 
@@ -102,7 +102,7 @@ export class CakeSparklerController {
         this.candle1 = new Entity()
         this.candle1.addComponent(new GLTFShape("models/bday/cake_candle.glb"))
         this.candle1.addComponent(new Transform({
-          position: new Vector3(0,4,0),
+          position: new Vector3(0,8,0),
           rotation: Quaternion.Euler(0, 0, 0),
           scale: new Vector3(1.0, 1.0, 1.0)
         }))
@@ -248,7 +248,7 @@ export class CakeRaiseSystem {
 
   fraction:number = 0
   speed:number = 0.06
-  djSpeed:number = 0.06
+  djSpeed:number = 0.15
   endHeight:number = 1.0
   startHeight:number = -15
   platformFraction:number = 0

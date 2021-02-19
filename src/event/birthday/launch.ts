@@ -69,7 +69,8 @@ export function launchSequence(): void {
     })
   )
 
-  //cakeSparkControl.raiseDJPlatform()
+  
+  //cakeControl.raiseDJPlatform()
 
   // - cake sparklers
   //cakeSparkControl.startAllSparklers()
