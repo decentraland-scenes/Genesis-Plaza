@@ -17,7 +17,7 @@ import { dj } from './syncableItems'
 import {
   balloonControl,
   cakeReady,
-  cakeSparkControl,
+  cakeControl,
   cakeUp,
   confettiControl,
   launchSequence,
@@ -209,23 +209,23 @@ export function runAction(action: Action) {
       break
 
     case Action.SPARKLERSTOP:
-      cakeSparkControl.startTopSparklers()
+      cakeControl.startTopSparklers()
       break
 
     case Action.SPARKLERSMID:
-      cakeSparkControl.startMidSparklers()
+      cakeControl.startMidSparklers()
       break
 
     case Action.SPARKLERSLOW:
-      cakeSparkControl.startLowSparklers()
+      cakeControl.startLowSparklers()
       break
 
     case Action.SPARKLERSALL:
-      cakeSparkControl.startAllSparklers()
+      cakeControl.startAllSparklers()
       break
 
     case Action.SPARKLERSOFF:
-      cakeSparkControl.stopAllSparklers()
+      cakeControl.stopAllSparklers()
       break
 
     case Action.CONFETTISHORT:

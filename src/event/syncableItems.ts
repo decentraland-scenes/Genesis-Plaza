@@ -1,4 +1,5 @@
 import { Synced } from './syncable'
+import { auditoriumCenter } from './globals'
 
 // DJ
 export let dj = new Synced(
@@ -6,8 +7,8 @@ export let dj = new Synced(
   false,
   'Idle',
   {
-    position: new Vector3(277, 6, 264),
-    rotation: Quaternion.Euler(0, 270, 0),
+    position: new Vector3(auditoriumCenter.x, 9, auditoriumCenter.z),
+    rotation: Quaternion.Euler(0, 210, 0),
     scale: new Vector3(1.5, 1.5, 1.5),
   }
 )

@@ -1,14 +1,43 @@
 const launchPadCenter = new Vector3(276.414, 3, 263.844)
 
+export const djStartPos = new Vector3(0,-4,0)
+export const djEndPos = new Vector3(0,0,0)
+
+
 // Cake
 export const cake = new Entity()
 cake.addComponent(new GLTFShape("models/bday/cake.glb"))
 cake.addComponent(new Transform({
   position: new Vector3(launchPadCenter.x, -15, launchPadCenter.z),
   rotation: Quaternion.Euler(0, 210, 0),
-  scale: new Vector3(2.0, 2.0, 2.0)
+  scale: new Vector3(1.0, 1.0, 1.0)
 }))
 engine.addEntity(cake)
+
+
+
+
+
+
+@Component("RaiseFromCake")
+export class RaiseFromCake {  
+    activated:boolean = false
+
+    activate(){
+      this.activated = true
+    }
+}
+
+
+
+export const djPlatform = new Entity()
+djPlatform.addComponent(new GLTFShape("models/bday/dj_platform.glb"))
+djPlatform.addComponent(new Transform({
+  position: new Vector3(djStartPos.x, djStartPos.y, djStartPos.z),  
+}))
+djPlatform.addComponent(new RaiseFromCake())
+
+djPlatform.setParent(cake)
 
 export const sauce1 = new Entity()
 sauce1.addComponent(new GLTFShape("models/bday/cake_sauce_1.glb"))
@@ -17,8 +46,6 @@ sauce1.addComponent(new Transform({
   
 }))
 sauce1.setParent(cake)
-
-
 
 export const sauce2 = new Entity()
 sauce2.addComponent(new GLTFShape("models/bday/cake_sauce_2.glb"))
@@ -59,6 +86,9 @@ export class CakeSparklerController {
     midScale:Vector3
     lowScale:Vector3
 
+    candle1:Entity
+    
+
     constructor(){
         this.sparklersTop = []
         this.sparklersMid = []
@@ -68,7 +98,19 @@ export class CakeSparklerController {
         this.midScale = new Vector3(0.8, 0.8 + Math.random()* 0.2, 0.8)
         this.lowScale = new Vector3(0.8, 0.5 + Math.random()* 0.2, 0.8)
 
+        // Candle large 1
+        this.candle1 = new Entity()
+        this.candle1.addComponent(new GLTFShape("models/bday/cake_candle.glb"))
+        this.candle1.addComponent(new Transform({
+          position: new Vector3(0,4,0),
+          rotation: Quaternion.Euler(0, 0, 0),
+          scale: new Vector3(1.0, 1.0, 1.0)
+        }))
+        this.candle1.setParent(cake)
+
         this.addSparklers()
+
+        
     }
 
     addSparklers(){
@@ -175,10 +217,26 @@ export class CakeSparklerController {
             entity.getComponent(Transform).scale = new Vector3(0.8, 0.8 + Math.random()* 0.2, 0.8)
         }
       }
-      
+
       startLowSparklers(){          
         for (let entity of this.sparklersLow){
             entity.getComponent(Transform).scale = new Vector3(0.8, 0.5 + Math.random()* 0.2, 0.8)
+        }
+      }
+
+      removeCandle(){
+        engine.removeEntity(this.candle1)
+      }
+      addCandle(){
+        engine.addEntity(this.candle1)
+      }
+
+      raiseDJPlatform(){
+        this.removeCandle()
+        const group = engine.getComponentGroup(RaiseFromCake, Transform)
+
+        for(let entity of group.entities){
+          entity.getComponent(RaiseFromCake).activate()
         }
       }
 
@@ -186,15 +244,19 @@ export class CakeSparklerController {
 
 
 export class CakeRaiseSystem {
+  group = engine.getComponentGroup(RaiseFromCake, Transform)
 
   fraction:number = 0
-  speed:number = 0.04
+  speed:number = 0.06
+  djSpeed:number = 0.06
   endHeight:number = 1.0
-  startHeight:number = -12
+  startHeight:number = -15
+  platformFraction:number = 0
 
   update(dt: number) {
     const cakeTransform = cake.getComponent(Transform)
     const souceTransform = soucePoolRoot.getComponent(Transform)
+
     if (this.fraction < 1) {
       this.fraction += dt * this.speed
       cakeTransform.position = Vector3.Lerp(
@@ -208,5 +270,22 @@ export class CakeRaiseSystem {
     else{
       cakeTransform.position.y = this.endHeight
     }
+
+    for(let entity of this.group.entities){
+      const raiseTransform = entity.getComponent(Transform)
+      const raiseInfo = entity.getComponent(RaiseFromCake)
+
+      if(this.platformFraction < 1 && raiseInfo.activated ){
+        this.platformFraction += dt * this.djSpeed
+        raiseTransform.position = Vector3.Lerp(
+          djStartPos,
+          djEndPos,
+          this.platformFraction
+        )
+      }
+    }
+    
   }
+
+
 }

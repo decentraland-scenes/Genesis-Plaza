@@ -1,4 +1,4 @@
-import { auditorimCenter } from "./globals"
+import { auditoriumCenter } from "../globals"
 
 const balloonShape1 = new GLTFShape('models/bday/balloon_group01.glb')
 const ballonTravelHeight = 120
@@ -31,7 +31,7 @@ export class BalloonController {
         for (let i=0; i< 5; i++){
             let balloon = new Entity()            
             balloon.addComponent(balloonShape1)
-            balloon.addComponent(new Transform({position: new Vector3(auditorimCenter.x + Math.random(),  -20, auditorimCenter.z  + Math.random()),
+            balloon.addComponent(new Transform({position: new Vector3(auditoriumCenter.x + Math.random(),  -20, auditoriumCenter.z  + Math.random()),
                 scale: new Vector3(0,0,0),
             rotation: Quaternion.Euler(0,0,0)}))        
             engine.addEntity(balloon)
@@ -47,7 +47,7 @@ export class BalloonController {
         for (let i=0; i< this.balloonGroup1.length; i++){
                    
             this.balloonGroup1[i].addComponentOrReplace(new BalloonUpwards(_duration, (i%2)?true:false))
-            this.balloonGroup1[i].getComponent(Transform).position = new Vector3(auditorimCenter.x + Math.random(),  1+Math.random()*2 + i*ballonTravelHeight/5, auditorimCenter.z  + Math.random())
+            this.balloonGroup1[i].getComponent(Transform).position = new Vector3(auditoriumCenter.x + Math.random(),  1+Math.random()*2 + i*ballonTravelHeight/5, auditoriumCenter.z  + Math.random())
             this.balloonGroup1[i].getComponent(Transform).scale = new Vector3(1,1,1)
             this.balloonGroup1[i].getComponent(Transform).rotation = Quaternion.Euler(0,Math.random()*360,0)       
                  

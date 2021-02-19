@@ -1,7 +1,7 @@
-import { auditorimCenter } from "./globals"
+import { auditoriumCenter } from "../globals"
 
 const confettiShape = new GLTFShape('models/bday/confetti.glb')
-const confettiRegionHeight = 100
+const confettiRegionHeight = 110
 
 @Component("confettiBig")
 export class confettiBig {  
@@ -29,7 +29,7 @@ export class ConfettiController {
         for (let i=0; i< 5; i++){
             let confetti1 = new Entity()  
             confetti1.addComponent(confettiShape)          
-            confetti1.addComponent(new Transform({position: new Vector3(auditorimCenter.x + Math.random(),  -20, auditorimCenter.z  + Math.random()),
+            confetti1.addComponent(new Transform({position: new Vector3(auditoriumCenter.x + Math.random(),  -20, auditoriumCenter.z  + Math.random()),
                 scale: new Vector3(0,0,0),
             rotation: Quaternion.Euler(0,0,0)}))        
             engine.addEntity(confetti1)
@@ -47,7 +47,7 @@ export class ConfettiController {
             
             
             this.confettiGroup[i].addComponentOrReplace(new confettiBig(_duration))
-            this.confettiGroup[i].getComponent(Transform).position = new Vector3(auditorimCenter.x + Math.random(),  1+Math.random()*2 + i*confettiRegionHeight/5, auditorimCenter.z  + Math.random())
+            this.confettiGroup[i].getComponent(Transform).position = new Vector3(auditoriumCenter.x + Math.random(),  1+Math.random()*2 + i*confettiRegionHeight/5, auditoriumCenter.z  + Math.random())
             this.confettiGroup[i].getComponent(Transform).scale = new Vector3(1,1,1)
             this.confettiGroup[i].getComponent(Transform).rotation = Quaternion.Euler(0,Math.random()*360,Math.random()*360)       
                  

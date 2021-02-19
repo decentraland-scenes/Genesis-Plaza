@@ -18,7 +18,9 @@ hatchOpenSound.getComponent(Transform).position = Camera.instance.position
 hatchOpenSound.addComponent(
   new AudioSource(new AudioClip('sounds/hatchOpen.mp3'))
 )
+hatchOpenSound.getComponent(AudioSource).volume=0.2
 engine.addEntity(hatchOpenSound)
+
 
 // Hatch
 const hatch = new Entity()
@@ -52,7 +54,7 @@ hatch
 // Systems
 export let cakeRaiseSystem = new CakeRaiseSystem()
 
-export let cakeSparkControl = new CakeSparklerController()
+export let cakeControl = new CakeSparklerController()
 export let confettiControl = new ConfettiController()
 export let balloonControl = new BalloonController()
 
@@ -66,6 +68,8 @@ export function launchSequence(): void {
       engine.addSystem(cakeRaiseSystem)
     })
   )
+
+  //cakeSparkControl.raiseDJPlatform()
 
   // - cake sparklers
   //cakeSparkControl.startAllSparklers()

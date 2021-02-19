@@ -13,7 +13,7 @@ const player = Camera.instance
 
 const poapShape = new GLTFShape('models/bday/pinata_poap.glb')
 
-const pinataLocation = new Vector3(236,0,208)
+const pinataLocation = new Vector3(243,0,212)
 
 let poapDummy = new Entity()
 poapDummy.addComponent(new Transform({position: new Vector3(105,-10,80)}))
@@ -31,7 +31,7 @@ engine.addEntity(confettiDummy)
 const pinataFrame = new Entity()
 const pinataTransform = new Transform({
   position: new Vector3(pinataLocation.x, pinataLocation.y, pinataLocation.z),
-  rotation: Quaternion.Euler(0, -20, 0),
+  rotation: Quaternion.Euler(0, 20, 0),
   scale: new Vector3(4, 4, 4),
 })
 
@@ -249,7 +249,7 @@ export function StartPinataConfetti(){
         confetti1.addComponent(confettiShape)
         confetti1.addComponent(new confettiSpin())
         confetti1.addComponent(new Transform({position: new Vector3(pinataTransform.position.x + Math.random(),  1+Math.random()*5, pinataTransform.position.z  + Math.random()),
-            scale: new Vector3(0.5,0.5,0.05),
+            scale: new Vector3(0.2,0.2,0.2),
         rotation: Quaternion.Euler(0,Math.random()*360,Math.random()*360)}))        
         engine.addEntity(confetti1)
     }
