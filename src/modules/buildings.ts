@@ -330,6 +330,42 @@ staticDecor.addComponent(
 staticDecor.addComponent(new GLTFShape('models/Static_Decor.glb'))
 engine.addEntity(staticDecor)
 
+let AnimDecor = new Entity()
+AnimDecor.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+AnimDecor.addComponent(new GLTFShape('models/Animated_Decor.glb'))
+engine.addEntity(AnimDecor)
+
+let AnimDecor2 = new Entity()
+AnimDecor2.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+AnimDecor2.addComponent(new GLTFShape('models/Animated_Decor_Part2.glb'))
+engine.addEntity(AnimDecor2)
+
+let AnimDecor3 = new Entity()
+AnimDecor3.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+AnimDecor3.addComponent(new GLTFShape('models/Animated_Decor_Part3.glb'))
+engine.addEntity(AnimDecor3)
+
+let AnimDecor4 = new Entity()
+AnimDecor4.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+AnimDecor4.addComponent(new GLTFShape('models/Animated_Decor_Part4.glb'))
+engine.addEntity(AnimDecor4)
+
 ///add Light_Set
 export let Light_Set= new Entity()
 Light_Set.addComponent(new GLTFShape('models/Light_Set.glb'))
