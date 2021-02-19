@@ -319,6 +319,8 @@ zepellin.addComponent(
 )
 engine.addEntity(zepellin)
 
+
+// add birthday decor
 let staticDecor = new Entity()
 staticDecor.addComponent(
   new Transform({
@@ -328,3 +330,12 @@ staticDecor.addComponent(
 staticDecor.addComponent(new GLTFShape('models/Static_Decor.glb'))
 engine.addEntity(staticDecor)
 
+///add Light_Set
+export let Light_Set= new Entity()
+Light_Set.addComponent(new GLTFShape('models/Light_Set.glb'))
+Light_Set.addComponent(
+  new Transform({
+    rotation: new Vector3(0,180,0)
+  })
+)
+engine.addEntity(Light_Set)
