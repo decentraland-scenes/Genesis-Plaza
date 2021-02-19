@@ -3,7 +3,7 @@ import { Synced } from './syncable'
 // DJ
 export let dj = new Synced(
   new GLTFShape('models/RAC_DJ_Wearables.glb'),
-  false,
+  true,
   'Idle',
   {
     position: new Vector3(277, 6, 264),
