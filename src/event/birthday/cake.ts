@@ -117,8 +117,8 @@ export class CakeSparklerController {
   
         let angle = 0
         let count = 4
-        let radiusBottomLevel = 2.5
-        let radiusMidLevel = 1.5
+        let radiusBottomLevel = 5
+        let radiusMidLevel = 3
       
         // -- LOW SPARKLERS
         for(let i=0; i<count; i++){
@@ -126,7 +126,7 @@ export class CakeSparklerController {
           angle =  (180/count)*i + ((180/count) *0.5) + 90
       
           let pos = Vector3.Forward().rotate(Quaternion.Euler(0, angle ,0)).multiplyByFloats(radiusBottomLevel,radiusBottomLevel,radiusBottomLevel)
-          pos.y = 2
+          pos.y = 4
          
       
           let sparkler = new Entity()
@@ -146,7 +146,7 @@ export class CakeSparklerController {
           angle =  (180/count)*i + ((180/count) *0.5) + 90
       
           let pos = Vector3.Forward().rotate(Quaternion.Euler(0, angle ,0)).multiplyByFloats(radiusMidLevel,radiusMidLevel,radiusMidLevel)
-          pos.y = 3
+          pos.y = 6
          
       
           let sparkler = new Entity()
@@ -164,8 +164,8 @@ export class CakeSparklerController {
         // -- TOP SPARKLERS
         angle = 180
       
-        let pos = Vector3.Forward().rotate(Quaternion.Euler(0, angle ,0)).multiplyByFloats(0.75,0.75,0.75)
-        pos.y = 3.8
+        let pos = Vector3.Forward().rotate(Quaternion.Euler(0, angle ,0)).multiplyByFloats(1.5,1.5,1.5)
+        pos.y = 7.6
       
       
         let sparkler = new Entity()
