@@ -13,11 +13,12 @@ import {
 //   smokeControl,
 // } from './effectDashboard'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
-import { dj } from './syncableItems'
+import { dj, lights1 } from './syncableItems'
 import {
   balloonControl,
-  cakeReady,
   cakeControl,
+  cakeRaiseSystem,
+  cakeReady,
   cakeUp,
   confettiControl,
   launchSequence,
@@ -73,7 +74,10 @@ export enum Action {
 
   // lights
 
-  // balls?
+  LIGHTS1 = 'lights1',
+  LIGHTS2 = 'lights2',
+  LIGHTS3 = 'lights3',
+  LIGHTSGO = 'lightsgo',
 
   // video
   VIDEOPLAY = 'videoplay',
@@ -87,6 +91,10 @@ export enum Action {
   PLAYERCLAP = 'playerclap',
   PLAYERMONEY = 'playermoney',
   PLAYERKISS = 'playerkiss',
+
+  PLAYERTIK = 'playertik',
+  PLAYERTEKTO = 'playertekto',
+  PLAYERHAMMER = 'playerhammer',
 
   //   BUBLES = 'bubles',
   //   VIDEOBUBLES = 'videobubles',
@@ -103,6 +111,8 @@ export enum Action {
   RACHANDUP = 'rachorns',
   RACMIXING = 'racmixing',
   RACPLAY = 'racplay',
+
+  TELEPORT = 'teleport',
   //   RACDECONSTRUCTED = 'racdeconstructed',
   //   RACDECONSTRUCT = 'racdeconstruct',
   //   RACRECONSTRUCT = 'racreconstruct',
@@ -209,14 +219,18 @@ export function runAction(action: Action) {
       break
 
     case Action.SPARKLERSTOP:
+      cakeControl.stopAllSparklers()
       cakeControl.startTopSparklers()
+
       break
 
     case Action.SPARKLERSMID:
+      cakeControl.stopAllSparklers()
       cakeControl.startMidSparklers()
       break
 
     case Action.SPARKLERSLOW:
+      cakeControl.stopAllSparklers()
       cakeControl.startLowSparklers()
       break
 
@@ -250,6 +264,33 @@ export function runAction(action: Action) {
 
     case Action.BALLOONSLONG:
       balloonControl.startBalloons(40)
+      break
+
+    case Action.TELEPORT:
+      if (!cakeUp) return
+
+      // hide cake & add teleport
+
+      break
+
+    case Action.LIGHTSGO:
+      lights1.hide()
+
+      break
+
+    case Action.LIGHTS1:
+      lights1.playAnimation('Action_01', false)
+
+      break
+
+    case Action.LIGHTS2:
+      lights1.playAnimation('Action_02', false)
+
+      break
+
+    case Action.LIGHTS3:
+      lights1.playAnimation('Action_03.001', false)
+
       break
 
     // case Action.SMOKE:
@@ -380,6 +421,27 @@ export function runAction(action: Action) {
 
       break
 
+    case Action.PLAYERTIK:
+      if (inShowArea) {
+        triggerEmote({ predefined: 'tik' })
+      }
+
+      break
+
+    case Action.PLAYERTEKTO:
+      if (inShowArea) {
+        triggerEmote({ predefined: 'tektonik' })
+      }
+
+      break
+
+    case Action.PLAYERHAMMER:
+      if (inShowArea) {
+        triggerEmote({ predefined: 'hammer' })
+      }
+
+      break
+
     //vide
     case Action.VIDEOPLAY:
       break
@@ -479,6 +541,9 @@ export function runAction(action: Action) {
     //   break
 
     case Action.RACAPPEAR:
+      if (!cakeUp) return
+      cakeControl.removeCandle()
+      cakeControl.raiseDJPlatform()
       dj.appear()
 
       dj.setNewIdleAnim('idle')

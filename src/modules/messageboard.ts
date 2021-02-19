@@ -1,5 +1,4 @@
 import { openMessageBoardUI } from './ui'
-import { CheckServer } from './serverHandler'
 
 let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
 
@@ -136,10 +135,3 @@ class SpinTextSystem implements ISystem {
 }
 
 engine.addSystem(new SpinTextSystem())
-
-//// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
-// how often to refresh scene, in seconds
-const messageRefreshInterval: number = 30
-// start system
-export let serverChecker = new CheckServer(messageRefreshInterval)
-engine.addSystem(serverChecker)

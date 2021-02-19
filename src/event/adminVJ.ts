@@ -12,6 +12,7 @@ import {
   StartShow,
 } from './showPlaying'
 import { movePlayerTo } from '@decentraland/RestrictedActions'
+import { lights1 } from './syncableItems'
 
 export let userData: UserData
 
@@ -82,8 +83,8 @@ export async function initiateVJUI() {
 
     VJUI.addButton(
       'TELEPORT',
-      -150,
-      130,
+      150,
+      -140,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.TELEPORT,
@@ -94,119 +95,124 @@ export async function initiateVJUI() {
     )
 
     // switches
-    // VJUI.addSwitch(
-    //   'SMOKE',
-    //   -190,
-    //   100,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.SMOKE,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.SMOKESTOP,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   ui.SwitchStyles.SQUAREGREEN
-    // )
+    let light1 = VJUI.addSwitch(
+      'Light1',
+      -190,
+      90,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTS1,
+          freeMode: freeMode,
+        })
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSGO,
+          freeMode: freeMode,
+        })
+      },
+      ui.SwitchStyles.SQUAREGREEN,
+      true
+    )
 
-    // let dots = VJUI.addSwitch(
-    //   'DOTS',
-    //   -190,
-    //   65,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.DOTSSHOW,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.DOTSHIDE,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   ui.SwitchStyles.SQUAREGREEN
-    // )
+    light1.image.height = 25
+    light1.image.width = 50
+    light1.label.fontSize = 14
+    light1.label.positionX = 55
 
-    // VJUI.addSwitch(
-    //   'PULSE',
-    //   -30,
-    //   65,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.DOTSPULSE,
-    //       freeMode: freeMode,
-    //     })
-    //     dots.check()
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.DOTSSTOPPULSE,
-    //       freeMode: freeMode,
-    //     })
-    //   }
-    // )
+    let l1 = VJUI.addSwitch(
+      '1',
+      -40,
+      90,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTS1,
+          freeMode: freeMode,
+        })
+        l2.uncheck()
+        l3.uncheck()
+        light1.uncheck()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSGO,
+          freeMode: freeMode,
+        })
+        l1.uncheck()
+        l2.uncheck()
+        l3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
 
-    // let laser = VJUI.addSwitch(
-    //   'LASER',
-    //   -190,
-    //   30,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERSHOW,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERHIDE,
-    //       freeMode: freeMode,
-    //     })
-    //   },
-    //   ui.SwitchStyles.SQUAREGREEN
-    // )
+    let l2 = VJUI.addSwitch(
+      '2',
+      60,
+      90,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTS2,
+          freeMode: freeMode,
+        })
+        l1.uncheck()
+        l3.uncheck()
+        light1.uncheck()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSGO,
+          freeMode: freeMode,
+        })
+        l1.uncheck()
+        l2.uncheck()
+        l3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
 
-    // VJUI.addSwitch(
-    //   'ROT',
-    //   -30,
-    //   30,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERROT,
-    //       freeMode: freeMode,
-    //     })
-    //     laser.check()
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERROTOFF,
-    //       freeMode: freeMode,
-    //     })
-    //   }
-    // )
+    let l3 = VJUI.addSwitch(
+      '3',
+      180,
+      90,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTS3,
+          freeMode: freeMode,
+        })
 
-    // VJUI.addSwitch(
-    //   'PULSE',
-    //   60,
-    //   30,
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERPULSE,
-    //       freeMode: freeMode,
-    //     })
-    //     laser.check()
-    //   },
-    //   () => {
-    //     sceneMessageBus.emit('action', {
-    //       action: Action.LASERPULSEOFF,
-    //       freeMode: freeMode,
-    //     })
-    //   }
-    // )
+        l1.uncheck()
+        l2.uncheck()
+        light1.uncheck()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSGO,
+          freeMode: freeMode,
+        })
+        l1.uncheck()
+        l2.uncheck()
+        l3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
+
+    l1.image.height = 25
+    l1.image.width = 50
+    l1.label.fontSize = 14
+    l1.label.positionX = 55
+
+    l2.image.height = 25
+    l2.image.width = 50
+    l2.label.fontSize = 14
+    l2.label.positionX = 55
+
+    l3.image.height = 25
+    l3.image.width = 50
+    l3.label.fontSize = 14
+    l3.label.positionX = 55
 
     let balloonsShort = VJUI.addButton('Balloons 5', -180, 30, () => {
       sceneMessageBus.emit('action', {
@@ -681,8 +687,8 @@ export async function initiateVJUI() {
 
     VJUI.addButton(
       'Cake time!',
-      100,
-      -290,
+      -150,
+      -140,
       () => {
         sceneMessageBus.emit('action', {
           action: Action.CAKE,

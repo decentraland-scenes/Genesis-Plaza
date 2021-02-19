@@ -2,7 +2,6 @@ import {
   ArtichokeFloatingTextShape,
   setTowerText,
   MessageBoards,
-  serverChecker,
 } from './messageboard'
 import { updateTradeCentrer } from './marketData'
 
@@ -13,64 +12,61 @@ export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
 
 // check server for new messageboard messages
-export class CheckServer implements ISystem {
-  messageTimer: number
-  totalMessageTime: number
-  eventTimer: number
-  totalEventTimer: number
-  constructor(messageTimer: number) {
-    this.totalMessageTime = messageTimer
-    this.messageTimer = 5
-    this.eventTimer = 0
+// export class CheckServer implements ISystem {
+//   messageTimer: number
+//   totalMessageTime: number
+//   eventTimer: number
+//   totalEventTimer: number
+//   constructor(messageTimer: number) {
+//     this.totalMessageTime = messageTimer
+//     this.messageTimer = 5
+//     this.eventTimer = 0
 
-    this.totalEventTimer = 2
-  }
-  update(dt: number) {
-    this.messageTimer -= dt
-    //this.eventTimer += dt
+//     this.totalEventTimer = 2
+//   }
+//   update(dt: number) {
+//     this.messageTimer -= dt
+//     //this.eventTimer += dt
 
-    if (this.messageTimer < 0) {
-      this.messageTimer += this.totalMessageTime
-      updateMessageBoards()
-    }
-    // if (this.eventTimer > this.totalEventTimer) {
-    //   this.eventTimer = 0
+//     if (this.messageTimer < 0) {
+//       this.messageTimer += this.totalMessageTime
+//       updateMessageBoards()
+//     }
+//     // if (this.eventTimer > this.totalEventTimer) {
+//     //   this.eventTimer = 0
 
-    //   checkEventServer()
-    // }
-  }
-}
+//     //   checkEventServer()
+//     // }
+//   }
+// }
 
 //////// SEND NEW MESSAGEBOARD MESSSAGE TO SERVER
 
 export async function setNewMessage(location: MessageBoards, message: string) {
-  try {
-    let trimmedMessage: string
-    log('location: ', location, 'message: ', message)
-
-    if (location == MessageBoards.ARTICHOKE) {
-      trimmedMessage = message.substr(0, 20)
-      sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
-    } else if (location === MessageBoards.TOWER) {
-      log('new message from tower')
-      trimmedMessage = message.substr(0, 40 - 3)
-      sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
-      //setTowerText(newText)
-    }
-
-    let url =
-      fireBaseServer +
-      'addmessage/?location=' +
-      location +
-      '&message=' +
-      trimmedMessage
-    log('new message ', url)
-    fetch(url, { method: 'POST' })
-
-    serverChecker.messageTimer = serverChecker.totalMessageTime
-  } catch {
-    log('error sending to firebase server')
-  }
+  //   try {
+  //     let trimmedMessage: string
+  //     log('location: ', location, 'message: ', message)
+  //     if (location == MessageBoards.ARTICHOKE) {
+  //       trimmedMessage = message.substr(0, 20)
+  //       sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
+  //     } else if (location === MessageBoards.TOWER) {
+  //       log('new message from tower')
+  //       trimmedMessage = message.substr(0, 40 - 3)
+  //       sceneMessageBus.emit('towerMessage', { text: trimmedMessage })
+  //       //setTowerText(newText)
+  //     }
+  //     let url =
+  //       fireBaseServer +
+  //       'addmessage/?location=' +
+  //       location +
+  //       '&message=' +
+  //       trimmedMessage
+  //     log('new message ', url)
+  //     fetch(url, { method: 'POST' })
+  //     serverChecker.messageTimer = serverChecker.totalMessageTime
+  //   } catch {
+  //     log('error sending to firebase server')
+  //   }
 }
 
 // ////// UPDATE MESSAGEBOARDS
@@ -89,29 +85,30 @@ export async function getLastMessage(location: string): Promise<string> {
 
 // change text displayed in the plaza
 export async function updateMessageBoards() {
-  log('checking boards')
-  let artMessage = await getLastMessage('artichoke')
-  log('setting Artichoke message : ', artMessage)
-  if (artMessage) {
-    ArtichokeFloatingTextShape.value = artMessage
-  }
+  //   log('checking boards')
+  //   let artMessage = await getLastMessage('artichoke')
+  //   log('setting Artichoke message : ', artMessage)
+  //if (artMessage) {
+  ArtichokeFloatingTextShape.value = 'Happy Birthday!'
+  //}
 
-  let towerMessage = await getLastMessage('tower')
-  log('setting Tower message : ', towerMessage)
-  if (towerMessage) {
-    setTowerText(towerMessage)
-  }
+  //   let towerMessage = await getLastMessage('tower')
+  //   log('setting Tower message : ', towerMessage)
+  //   if (towerMessage) {
+  setTowerText('Happy Birthday!')
+  //}
 }
+updateMessageBoards()
 
 ///// HANDLE MESSAGEBUS UPDATES
 
-sceneMessageBus.on('towerMessage', (e) => {
-  setTowerText(e.text)
-})
+// sceneMessageBus.on('towerMessage', (e) => {
+//   setTowerText(e.text)
+// })
 
-sceneMessageBus.on('artichokeMessage', (e) => {
-  ArtichokeFloatingTextShape.value = e.text
-})
+// sceneMessageBus.on('artichokeMessage', (e) => {
+//   ArtichokeFloatingTextShape.value = e.text
+// })
 
 ///// EVENTS BOARD
 

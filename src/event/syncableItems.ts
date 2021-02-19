@@ -13,8 +13,12 @@ export let dj = new Synced(
   }
 )
 
-// cake
-
-// fireworks
-
-// balloons
+// lights
+export let lights1 = new Synced(
+  new GLTFShape('models/Light_Set.glb'),
+  true,
+  'Action_02',
+  {
+    position: new Vector3(0, 0, 0),
+  }
+)
