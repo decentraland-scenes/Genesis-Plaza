@@ -1,7 +1,7 @@
 import { auditorimCenter } from "./globals"
 
 const confettiShape = new GLTFShape('models/bday/confetti.glb')
-const confettiRegionHeight = 60
+const confettiRegionHeight = 100
 
 @Component("confettiBig")
 export class confettiBig {  
@@ -15,16 +15,20 @@ export class confettiBig {
 export class ConfettiController {
 
     confettiGroup:Entity[]
+    confettiSystem:ConfettiBigSystem
 
     constructor(){
         this.confettiGroup = []
         this.addAuditoriumConfetti()
+        this.confettiSystem = new ConfettiBigSystem()
+        engine.addSystem(this.confettiSystem)
     }
 
     addAuditoriumConfetti(){
         
         for (let i=0; i< 5; i++){
-            let confetti1 = new Entity()            
+            let confetti1 = new Entity()  
+            confetti1.addComponent(confettiShape)          
             confetti1.addComponent(new Transform({position: new Vector3(auditorimCenter.x + Math.random(),  -20, auditorimCenter.z  + Math.random()),
                 scale: new Vector3(0,0,0),
             rotation: Quaternion.Euler(0,0,0)}))        
@@ -37,18 +41,19 @@ export class ConfettiController {
 
     startConfetti(_duration:number){
 
+        this.confettiSystem.setDuration(_duration)
         //CONFETTI
         for (let i=0; i< this.confettiGroup.length; i++){
-            this.confettiGroup[i]
-            this.confettiGroup[i].addComponent(confettiShape)
-            this.confettiGroup[i].addComponent(new confettiBig(_duration))
+            
+            
+            this.confettiGroup[i].addComponentOrReplace(new confettiBig(_duration))
             this.confettiGroup[i].getComponent(Transform).position = new Vector3(auditorimCenter.x + Math.random(),  1+Math.random()*2 + i*confettiRegionHeight/5, auditorimCenter.z  + Math.random())
-            this.confettiGroup[i].getComponent(Transform).scale = new Vector3(3,3,0.5)
+            this.confettiGroup[i].getComponent(Transform).scale = new Vector3(1,1,1)
             this.confettiGroup[i].getComponent(Transform).rotation = Quaternion.Euler(0,Math.random()*360,Math.random()*360)       
                  
             
         }
-        engine.addSystem(new confettiBigSystem(_duration + 20))
+        
     
             
     }
@@ -57,7 +62,7 @@ export class ConfettiController {
 
 
 
-class confettiBigSystem {
+class ConfettiBigSystem {
 
     group = engine.getComponentGroup(confettiBig, Transform)
     duration = 100
@@ -66,8 +71,9 @@ class confettiBigSystem {
     fallSpeed = 20
     cutoffHeight = -10
     
-    constructor(_duration:number){
+    setDuration(_duration:number){
         this.duration = _duration
+        this.elapsed = 0
     }
 
     update(dt:number){

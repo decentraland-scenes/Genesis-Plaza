@@ -270,8 +270,8 @@ export async function initiateVJUI() {
         })
       },
       () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSTOP,
+        sceneMessageBus.emit('action', {         
+          action: Action.SPARKLERSOFF,
           freeMode: freeMode,
         })
         s1.uncheck()

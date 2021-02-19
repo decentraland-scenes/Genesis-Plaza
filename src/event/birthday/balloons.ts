@@ -1,7 +1,7 @@
 import { auditorimCenter } from "./globals"
 
 const balloonShape1 = new GLTFShape('models/bday/balloon_group01.glb')
-const ballonTravelHeight = 60
+const ballonTravelHeight = 120
 
 @Component("BalloonUpwards")
 export class BalloonUpwards {  
@@ -17,9 +17,12 @@ export class BalloonUpwards {
 export class BalloonController {
 
     balloonGroup1:Entity[]
+    balloonSystem:BalloonUpSystem 
 
     constructor(){
         this.balloonGroup1 = []
+        this.balloonSystem = new BalloonUpSystem()
+        engine.addSystem(this.balloonSystem)
         this.addBalloons()
     }
 
@@ -27,6 +30,7 @@ export class BalloonController {
         
         for (let i=0; i< 5; i++){
             let balloon = new Entity()            
+            balloon.addComponent(balloonShape1)
             balloon.addComponent(new Transform({position: new Vector3(auditorimCenter.x + Math.random(),  -20, auditorimCenter.z  + Math.random()),
                 scale: new Vector3(0,0,0),
             rotation: Quaternion.Euler(0,0,0)}))        
@@ -41,16 +45,16 @@ export class BalloonController {
 
         //Balloons
         for (let i=0; i< this.balloonGroup1.length; i++){
-            this.balloonGroup1[i]
-            this.balloonGroup1[i].addComponent(balloonShape1)
-            this.balloonGroup1[i].addComponent(new BalloonUpwards(_duration, (i%2)?true:false))
+                   
+            this.balloonGroup1[i].addComponentOrReplace(new BalloonUpwards(_duration, (i%2)?true:false))
             this.balloonGroup1[i].getComponent(Transform).position = new Vector3(auditorimCenter.x + Math.random(),  1+Math.random()*2 + i*ballonTravelHeight/5, auditorimCenter.z  + Math.random())
             this.balloonGroup1[i].getComponent(Transform).scale = new Vector3(1,1,1)
             this.balloonGroup1[i].getComponent(Transform).rotation = Quaternion.Euler(0,Math.random()*360,0)       
                  
             
         }
-        engine.addSystem(new BalloonUpSystem(_duration + 20))
+        this.balloonSystem.setDuration(_duration)
+        
     
             
     }
@@ -66,11 +70,14 @@ class BalloonUpSystem {
     elapsed = 0
     startHeight = 40
     riseSpeed = 20
-    cutoffHeight = 50
+    cutoffHeight = 110   
     
-    constructor(_duration:number){
-        this.duration = _duration
+
+    setDuration(_duration:number){
+        this.duration = 100
+        this.elapsed = 0      
     }
+
 
     update(dt:number){
        

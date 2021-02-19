@@ -151,27 +151,31 @@ export class CakeSparklerController {
             entity.getComponent(Transform).scale = new Vector3(0.8, 1   + Math.random()* 0.5, 0.8)
         }
       }
+
       stopAllSparklers(){
         for (let entity of this.sparklersLow){
-            entity.getComponent(Transform).scale.setAll(0)
+            entity.getComponent(Transform).scale = new Vector3(0,0,0)
         }
         for (let entity of this.sparklersMid){
-            entity.getComponent(Transform).scale.setAll(0)
+            entity.getComponent(Transform).scale = new Vector3(0,0,0)
         }
         for (let entity of this.sparklersTop){
-            entity.getComponent(Transform).scale.setAll(0)
+            entity.getComponent(Transform).scale = new Vector3(0,0,0)
         }
       }
+
       startTopSparklers(){         
         for (let entity of this.sparklersTop){
         entity.getComponent(Transform).scale = new Vector3(0.8, 1   + Math.random()* 0.5, 0.8)
         }
       }
+
       startMidSparklers(){          
         for (let entity of this.sparklersMid){
             entity.getComponent(Transform).scale = new Vector3(0.8, 0.8 + Math.random()* 0.2, 0.8)
         }
       }
+      
       startLowSparklers(){          
         for (let entity of this.sparklersLow){
             entity.getComponent(Transform).scale = new Vector3(0.8, 0.5 + Math.random()* 0.2, 0.8)
