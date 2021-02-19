@@ -319,6 +319,8 @@ zepellin.addComponent(
 )
 engine.addEntity(zepellin)
 
+
+// add birthday decor
 let staticDecor = new Entity()
 staticDecor.addComponent(
   new Transform({
@@ -328,3 +330,38 @@ staticDecor.addComponent(
 staticDecor.addComponent(new GLTFShape('models/Static_Decor.glb'))
 engine.addEntity(staticDecor)
 
+let animDecor = new Entity()
+animDecor.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+animDecor.addComponent(new GLTFShape('models/Animated_Decor.glb'))
+engine.addEntity(animDecor)
+
+let animDecor2 = new Entity()
+animDecor2.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+animDecor2.addComponent(new GLTFShape('models/Animated_Decor_Part2.glb'))
+engine.addEntity(animDecor2)
+
+let animDecor3 = new Entity()
+animDecor3.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+animDecor3.addComponent(new GLTFShape('models/Animated_Decor_Part3.glb'))
+engine.addEntity(animDecor3)
+
+let animDecor4 = new Entity()
+animDecor4.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+animDecor4.addComponent(new GLTFShape('models/Animated_Decor_Part4.glb'))
+engine.addEntity(animDecor4)
