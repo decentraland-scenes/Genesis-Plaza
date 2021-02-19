@@ -270,7 +270,7 @@ export async function initiateVJUI() {
         })
       },
       () => {
-        sceneMessageBus.emit('action', {         
+        sceneMessageBus.emit('action', {
           action: Action.SPARKLERSOFF,
           freeMode: freeMode,
         })
@@ -292,8 +292,6 @@ export async function initiateVJUI() {
           freeMode: freeMode,
         })
 
-        s2.uncheck()
-        s3.uncheck()
         sparkles.uncheck()
       },
       () => {
@@ -315,8 +313,7 @@ export async function initiateVJUI() {
           action: Action.SPARKLERSMID,
           freeMode: freeMode,
         })
-        s1.uncheck()
-        s3.uncheck()
+
         sparkles.uncheck()
       },
       () => {
@@ -338,8 +335,7 @@ export async function initiateVJUI() {
           action: Action.SPARKLERSLOW,
           freeMode: freeMode,
         })
-        s1.uncheck()
-        s2.uncheck()
+
         sparkles.uncheck()
       },
       () => {

@@ -4,7 +4,7 @@ import { auditoriumCenter } from './globals'
 // DJ
 export let dj = new Synced(
   new GLTFShape('models/RAC_DJ_Wearables.glb'),
-  false,
+  true,
   'Idle',
   {
     position: new Vector3(auditoriumCenter.x, 9, auditoriumCenter.z),

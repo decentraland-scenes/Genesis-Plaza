@@ -13,7 +13,7 @@ const player = Camera.instance
 
 const poapShape = new GLTFShape('models/bday/pinata_poap.glb')
 
-const pinataLocation = new Vector3(243,0,212)
+const pinataLocation = new Vector3(244,0,212)
 
 let poapDummy = new Entity()
 poapDummy.addComponent(new Transform({position: new Vector3(105,-10,80)}))
