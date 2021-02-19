@@ -13,7 +13,7 @@ import {
 //   smokeControl,
 // } from './effectDashboard'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
-import { dj, lights1 } from './syncableItems'
+import { dj, lights1, lights2 } from './syncableItems'
 import {
   balloonControl,
   cakeControl,
@@ -24,6 +24,7 @@ import {
   launchSequence,
   setCakeReady,
 } from './birthday/launch'
+import { portalEntrance } from './birthday/portals'
 
 export let inShowArea: boolean = false
 
@@ -78,6 +79,11 @@ export enum Action {
   LIGHTS2 = 'lights2',
   LIGHTS3 = 'lights3',
   LIGHTSGO = 'lightsgo',
+
+  LIGHTSBOTTOM1 = 'lightsbottom1',
+  LIGHTSBOTTOM2 = 'lightsbottom2',
+  LIGHTSBOTTOM3 = 'lightsbottom3',
+  LIGHTSBOTTOMGO = 'lightsbottomgo',
 
   // video
   VIDEOPLAY = 'videoplay',
@@ -268,6 +274,10 @@ export function runAction(action: Action) {
 
     case Action.TELEPORT:
       if (!cakeUp) return
+      cakeControl.removeCake()
+      dj.hide()
+
+      engine.addEntity(portalEntrance)
 
       // hide cake & add teleport
 
@@ -290,6 +300,26 @@ export function runAction(action: Action) {
 
     case Action.LIGHTS3:
       lights1.playAnimation('Action_03.001', false)
+
+      break
+
+    case Action.LIGHTSBOTTOMGO:
+      lights2.hide()
+
+      break
+
+    case Action.LIGHTSBOTTOM1:
+      lights2.playAnimation('Lights_Bottom_Action_01', false)
+
+      break
+
+    case Action.LIGHTSBOTTOM2:
+      lights2.playAnimation('Lights_Bottom_Action_02', false)
+
+      break
+
+    case Action.LIGHTSBOTTOM3:
+      lights2.playAnimation('Lights_Bottom_Action_03.001', false)
 
       break
 
@@ -594,7 +624,73 @@ export let ShowScripts: any = {
     // { time: 30, event: Action.LASERPULSE },
     // { time: 60, event: Action.SMOKE },
   ],
-  RAC: [],
+  RAC: [
+    { event: Action.STOPALL, time: 0 },
+    { event: Action.CAKE, time: 0 },
+    { event: Action.SPARKLERSTOP, time: 5 },
+    { event: Action.SPARKLERSALL, time: 10 },
+    { event: Action.CONFETTIMID, time: 15 },
+    { event: Action.SPARKLERSOFF, time: 30 },
+    { event: Action.RACAPPEAR, time: 40 },
+    { event: Action.RACEPIC, time: 45 },
+    { event: Action.LIGHTS1, time: 45 },
+    { event: Action.LIGHTSBOTTOM1, time: 45 },
+    { event: Action.PLAYERCLAP, time: 45 },
+    { event: Action.LIGHTSGO, time: 60 },
+    { event: Action.LIGHTS2, time: 116 },
+    { event: Action.RACWAVE, time: 116 },
+    { event: Action.LIGHTSBOTTOM2, time: 132 },
+    { event: Action.LIGHTSGO, time: 132 },
+    { event: Action.RACHANDUP, time: 132 },
+    { event: Action.RACBOUNCE, time: 172 },
+    { event: Action.CONFETTILONG, time: 172 },
+    { event: Action.LIGHTSGO, time: 172 },
+    { event: Action.LIGHTSBOTTOMGO, time: 172 },
+    { event: Action.RACMIXING, time: 205 },
+    { event: Action.RACBOUNCE, time: 224 },
+    { event: Action.LIGHTSBOTTOM3, time: 271 },
+    { event: Action.BALLOONSSHORT, time: 279 },
+    { event: Action.SPARKLERSLOW, time: 295 },
+    { event: Action.SPARKLERSOFF, time: 304 },
+    { event: Action.RACBOUNCE, time: 304 },
+    { event: Action.RACWAVE, time: 324 },
+    { event: Action.RACWAVE, time: 350 },
+    { event: Action.RACWAVE, time: 370 },
+    { event: Action.LIGHTSBOTTOM1, time: 384 },
+    { event: Action.RACCLAP, time: 384 },
+    { event: Action.LIGHTS1, time: 403 },
+    { event: Action.RACMIXING, time: 426 },
+    { event: Action.RACMIXING, time: 446 },
+    { event: Action.RACCLAP, time: 464 },
+    { event: Action.RACEPIC, time: 482 },
+    { event: Action.LIGHTSBOTTOM2, time: 507 },
+    { event: Action.RACEPIC, time: 507 },
+    { event: Action.RACMIXING, time: 543 },
+    { event: Action.RACBOUNCE, time: 591 },
+    { event: Action.BALLOONSLONG, time: 591 },
+    { event: Action.RACMIXING, time: 636 },
+    { event: Action.RACPLAY, time: 657 },
+    { event: Action.RACMIXING, time: 681 },
+    { event: Action.LIGHTSBOTTOM1, time: 723 },
+    { event: Action.RACEPIC, time: 723 },
+    { event: Action.PLAYERTIK, time: 778 },
+    { event: Action.LIGHTS1, time: 778 },
+    { event: Action.RACCLAP, time: 778 },
+    { event: Action.RACMIXING, time: 841 },
+    { event: Action.LIGHTSGO, time: 841 },
+    { event: Action.LIGHTSBOTTOMGO, time: 841 },
+    { event: Action.RACPLAY, time: 884 },
+    { event: Action.BALLOONSLONG, time: 884 },
+    { event: Action.RACMIXING, time: 927 },
+    { event: Action.PLAYERTEKTO, time: 976 },
+    { event: Action.LIGHTS2, time: 976 },
+    { event: Action.CONFETTIMID, time: 976 },
+    { event: Action.RACEPIC, time: 976 },
+    { event: Action.RACMIXING, time: 1006 },
+    { event: Action.RACCLAP, time: 1020 },
+    { event: Action.RACMIXING, time: 1064 },
+    { event: Action.RACEPIC, time: 1072 },
+  ],
   TEST: [
     { time: 0, event: Action.RACBOUNCE },
     { time: 5, event: Action.RACCLAP },

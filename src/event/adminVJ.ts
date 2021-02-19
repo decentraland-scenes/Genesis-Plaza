@@ -83,7 +83,7 @@ export async function initiateVJUI() {
 
     VJUI.addButton(
       'TELEPORT',
-      150,
+      140,
       -140,
       () => {
         sceneMessageBus.emit('action', {
@@ -96,7 +96,7 @@ export async function initiateVJUI() {
 
     // switches
     let light1 = VJUI.addSwitch(
-      'Light1',
+      'Lights Top',
       -190,
       90,
       () => {
@@ -104,12 +104,16 @@ export async function initiateVJUI() {
           action: Action.LIGHTS1,
           freeMode: freeMode,
         })
+        l1.check()
       },
       () => {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSGO,
           freeMode: freeMode,
         })
+        l1.uncheck()
+        l2.uncheck()
+        l3.uncheck()
       },
       ui.SwitchStyles.SQUAREGREEN,
       true
@@ -131,7 +135,7 @@ export async function initiateVJUI() {
         })
         l2.uncheck()
         l3.uncheck()
-        light1.uncheck()
+        light1.check()
       },
       () => {
         sceneMessageBus.emit('action', {
@@ -157,7 +161,7 @@ export async function initiateVJUI() {
         })
         l1.uncheck()
         l3.uncheck()
-        light1.uncheck()
+        light1.check()
       },
       () => {
         sceneMessageBus.emit('action', {
@@ -184,7 +188,7 @@ export async function initiateVJUI() {
 
         l1.uncheck()
         l2.uncheck()
-        light1.uncheck()
+        light1.check()
       },
       () => {
         sceneMessageBus.emit('action', {
@@ -214,7 +218,131 @@ export async function initiateVJUI() {
     l3.label.fontSize = 14
     l3.label.positionX = 55
 
-    let balloonsShort = VJUI.addButton('Balloons 5', -180, 30, () => {
+    // switches
+    let light2 = VJUI.addSwitch(
+      'LightBottom',
+      -190,
+      60,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOM1,
+          freeMode: freeMode,
+        })
+        lb1.check()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOMGO,
+          freeMode: freeMode,
+        })
+        lb1.uncheck()
+        lb2.uncheck()
+        lb3.uncheck()
+      },
+      ui.SwitchStyles.SQUAREGREEN,
+      true
+    )
+
+    light2.image.height = 25
+    light2.image.width = 50
+    light2.label.fontSize = 14
+    light2.label.positionX = 55
+
+    let lb1 = VJUI.addSwitch(
+      '1',
+      -40,
+      60,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOM1,
+          freeMode: freeMode,
+        })
+        lb2.uncheck()
+        lb3.uncheck()
+        light2.check()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOMGO,
+          freeMode: freeMode,
+        })
+        lb1.uncheck()
+        lb2.uncheck()
+        lb3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
+
+    let lb2 = VJUI.addSwitch(
+      '2',
+      60,
+      60,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOM2,
+          freeMode: freeMode,
+        })
+        lb1.uncheck()
+        lb3.uncheck()
+        light2.check()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOMGO,
+          freeMode: freeMode,
+        })
+        lb1.uncheck()
+        lb2.uncheck()
+        lb3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
+
+    let lb3 = VJUI.addSwitch(
+      '3',
+      180,
+      60,
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOM3,
+          freeMode: freeMode,
+        })
+
+        lb1.uncheck()
+        lb2.uncheck()
+        light2.check()
+      },
+      () => {
+        sceneMessageBus.emit('action', {
+          action: Action.LIGHTSBOTTOMGO,
+          freeMode: freeMode,
+        })
+        lb1.uncheck()
+        lb2.uncheck()
+        lb3.uncheck()
+      },
+      ui.SwitchStyles.ROUNDGREEN,
+      true
+    )
+
+    lb1.image.height = 25
+    lb1.image.width = 50
+    lb1.label.fontSize = 14
+    lb1.label.positionX = 55
+
+    lb2.image.height = 25
+    lb2.image.width = 50
+    lb2.label.fontSize = 14
+    lb2.label.positionX = 55
+
+    lb3.image.height = 25
+    lb3.image.width = 50
+    lb3.label.fontSize = 14
+    lb3.label.positionX = 55
+
+    let balloonsShort = VJUI.addButton('Balloons 5', -180, 20, () => {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSSHORT,
         freeMode: freeMode,
@@ -224,7 +352,7 @@ export async function initiateVJUI() {
     balloonsShort.image.height = 40
     balloonsShort.label.fontSize = 12
 
-    let balloonsMid = VJUI.addButton('Balloons 20', -50, 30, () => {
+    let balloonsMid = VJUI.addButton('Balloons 20', -50, 20, () => {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSMID,
         freeMode: freeMode,
@@ -235,7 +363,7 @@ export async function initiateVJUI() {
     balloonsMid.image.height = 40
     balloonsMid.label.fontSize = 12
 
-    let balloonsLong = VJUI.addButton('Balloons 40', 80, 30, () => {
+    let balloonsLong = VJUI.addButton('Balloons 40', 80, 20, () => {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSLONG,
         freeMode: freeMode,
@@ -246,7 +374,7 @@ export async function initiateVJUI() {
     balloonsLong.image.height = 40
     balloonsLong.label.fontSize = 12
 
-    let confettiShort = VJUI.addButton('Confetti 5', -180, -15, () => {
+    let confettiShort = VJUI.addButton('Confetti 5', -180, -25, () => {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTISHORT,
         freeMode: freeMode,
@@ -256,7 +384,7 @@ export async function initiateVJUI() {
     confettiShort.image.height = 40
     confettiShort.label.fontSize = 12
 
-    let confettiMid = VJUI.addButton('Confetti 20', -50, -15, () => {
+    let confettiMid = VJUI.addButton('Confetti 20', -50, -25, () => {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTIMID,
         freeMode: freeMode,
@@ -267,7 +395,7 @@ export async function initiateVJUI() {
     confettiMid.image.height = 40
     confettiMid.label.fontSize = 12
 
-    let confettiLong = VJUI.addButton('Confetti 40', 80, -15, () => {
+    let confettiLong = VJUI.addButton('Confetti 40', 80, -25, () => {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTILONG,
         freeMode: freeMode,
@@ -687,7 +815,7 @@ export async function initiateVJUI() {
 
     VJUI.addButton(
       'Cake time!',
-      -150,
+      -140,
       -140,
       () => {
         sceneMessageBus.emit('action', {

@@ -4,7 +4,7 @@ import { auditoriumCenter } from './globals'
 // DJ
 export let dj = new Synced(
   new GLTFShape('models/RAC_DJ_Wearables.glb'),
-  true,
+  false,
   'Idle',
   {
     position: new Vector3(auditoriumCenter.x, 9, auditoriumCenter.z),
@@ -12,6 +12,7 @@ export let dj = new Synced(
     scale: new Vector3(1.5, 1.5, 1.5),
   }
 )
+dj.hide()
 
 // lights
 export let lights1 = new Synced(
@@ -19,6 +20,15 @@ export let lights1 = new Synced(
   true,
   'Action_02',
   {
-    position: new Vector3(0, 0, 0),
+    rotation: Quaternion.Euler(0, 180, 0),
+  }
+)
+
+export let lights2 = new Synced(
+  new GLTFShape('models/Light_Set_02.glb'),
+  true,
+  'Lights_Bottom_Action_01',
+  {
+    rotation: Quaternion.Euler(0, 180, 0),
   }
 )
