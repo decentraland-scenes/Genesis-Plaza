@@ -28,6 +28,9 @@ import { portalEntrance } from './birthday/portals'
 
 export let inShowArea: boolean = false
 
+export let djUp: boolean = false
+export let portalUp: boolean = false
+
 export function setInShowArea(state: boolean) {
   inShowArea = state
 }
@@ -278,6 +281,9 @@ export function runAction(action: Action) {
       dj.hide()
 
       engine.addEntity(portalEntrance)
+
+      djUp = false
+      portalUp = true
 
       // hide cake & add teleport
 
@@ -571,16 +577,20 @@ export function runAction(action: Action) {
     //   break
 
     case Action.RACAPPEAR:
-      if (!cakeUp) return
+      if (!cakeUp) {
+        runAction(Action.CAKE)
+      }
       cakeControl.removeCandle()
       cakeControl.raiseDJPlatform()
       dj.appear()
 
-      dj.setNewIdleAnim('idle')
+      djUp = true
 
       break
     case Action.RACGO:
       dj.hide()
+
+      djUp = false
 
       break
 

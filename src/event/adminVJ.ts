@@ -1,6 +1,6 @@
 import * as ui from '@dcl/ui-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
-import { Action, runAction } from './eventScripts'
+import { Action, djUp, portalUp, runAction } from './eventScripts'
 import { isPreviewMode } from '@decentraland/EnvironmentAPI'
 
 import {
@@ -13,6 +13,7 @@ import {
 } from './showPlaying'
 import { movePlayerTo } from '@decentraland/RestrictedActions'
 import { lights1 } from './syncableItems'
+import { cakeUp } from './birthday/launch'
 
 export let userData: UserData
 
@@ -89,6 +90,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.TELEPORT,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -103,6 +107,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTS1,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.check()
       },
@@ -110,6 +117,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.uncheck()
         l2.uncheck()
@@ -132,6 +142,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTS1,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l2.uncheck()
         l3.uncheck()
@@ -141,6 +154,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.uncheck()
         l2.uncheck()
@@ -158,6 +174,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTS2,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.uncheck()
         l3.uncheck()
@@ -167,6 +186,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.uncheck()
         l2.uncheck()
@@ -184,6 +206,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTS3,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
 
         l1.uncheck()
@@ -194,6 +219,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         l1.uncheck()
         l2.uncheck()
@@ -227,6 +255,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOM1,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.check()
       },
@@ -234,6 +265,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOMGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.uncheck()
         lb2.uncheck()
@@ -256,6 +290,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOM1,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb2.uncheck()
         lb3.uncheck()
@@ -265,6 +302,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOMGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.uncheck()
         lb2.uncheck()
@@ -282,6 +322,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOM2,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.uncheck()
         lb3.uncheck()
@@ -291,6 +334,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOMGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.uncheck()
         lb2.uncheck()
@@ -308,6 +354,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOM3,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
 
         lb1.uncheck()
@@ -318,6 +367,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.LIGHTSBOTTOMGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         lb1.uncheck()
         lb2.uncheck()
@@ -346,6 +398,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSSHORT,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
     balloonsShort.image.width = 100
@@ -356,6 +411,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSMID,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
 
@@ -367,6 +425,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.BALLOONSLONG,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
 
@@ -378,6 +439,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTISHORT,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
     confettiShort.image.width = 100
@@ -388,6 +452,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTIMID,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
 
@@ -399,6 +466,9 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('action', {
         action: Action.CONFETTILONG,
         freeMode: freeMode,
+        cake: cakeUp,
+        dj: djUp,
+        portal: portalUp,
       })
     })
 
@@ -414,12 +484,18 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSALL,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       () => {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSOFF,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
         s1.uncheck()
         s2.uncheck()
@@ -442,6 +518,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSTOP,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
 
         sparkles.uncheck()
@@ -450,6 +529,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSOFF,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.SwitchStyles.ROUNDGREEN,
@@ -464,6 +546,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSMID,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
 
         sparkles.uncheck()
@@ -472,6 +557,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSOFF,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.SwitchStyles.ROUNDGREEN,
@@ -486,6 +574,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.SPARKLERSLOW,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
 
         sparkles.uncheck()
@@ -523,6 +614,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERJUMP,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -536,6 +630,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERMONEY,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -549,6 +646,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERCLAP,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -562,6 +662,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERDANCE,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -575,6 +678,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERHAND,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -588,6 +694,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERTIK,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -601,6 +710,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERTEKTO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -614,6 +726,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.PLAYERHAMMER,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -667,6 +782,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACBOUNCE,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -680,6 +798,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACWAVE,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -693,6 +814,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACCLAP,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -706,6 +830,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACEPIC,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -719,6 +846,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACHANDUP,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -732,6 +862,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACMIXING,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -745,6 +878,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACPLAY,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.SQUAREGOLD
@@ -758,12 +894,18 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.RACAPPEAR,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       () => {
         sceneMessageBus.emit('action', {
           action: Action.RACGO,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.SwitchStyles.ROUNDGREEN,
@@ -821,6 +963,9 @@ export async function initiateVJUI() {
         sceneMessageBus.emit('action', {
           action: Action.CAKE,
           freeMode: freeMode,
+          cake: cakeUp,
+          dj: djUp,
+          portal: portalUp,
         })
       },
       ui.ButtonStyles.RED
@@ -894,6 +1039,16 @@ export async function initiateVJUI() {
     if (e.freeMode) {
       setFreeMode()
     }
+    if (e.cake && !cakeUp) {
+      runAction(Action.CAKE)
+    }
+    if (e.dj && !djUp) {
+      runAction(Action.RACAPPEAR)
+    }
+    if (e.portal && !portalUp) {
+      runAction(Action.TELEPORT)
+    }
+
     runAction(e.action)
   })
 
