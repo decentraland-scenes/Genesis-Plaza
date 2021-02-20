@@ -1,5 +1,6 @@
 import { Synced } from './syncable'
 import { auditoriumCenter } from './globals'
+import { RaiseFromCake, cake } from './birthday/cake'
 
 // DJ
 export let dj = new Synced(
@@ -7,12 +8,17 @@ export let dj = new Synced(
   false,
   'Idle',
   {
-    position: new Vector3(auditoriumCenter.x, 9, auditoriumCenter.z),
-    rotation: Quaternion.Euler(0, 210, 0),
+    position: new Vector3(0, 5, 0),
+    rotation: Quaternion.Euler(0, 0, 0),
     scale: new Vector3(1.5, 1.5, 1.5),
   }
 )
+dj.setParent(cake)
 dj.hide()
+dj.addComponent( new RaiseFromCake(
+  new Vector3(0, 6, 0),
+  new Vector3(0, 8, 0)
+))
 
 // lights
 export let lights1 = new Synced(

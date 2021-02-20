@@ -1,7 +1,6 @@
 const launchPadCenter = new Vector3(276.414, 3, 263.844)
 
-export const djStartPos = new Vector3(0,-2,0)
-export const djEndPos = new Vector3(0,0,0)
+
 
 
 // Cake
@@ -22,7 +21,13 @@ engine.addEntity(cake)
 @Component("RaiseFromCake")
 export class RaiseFromCake {  
     activated:boolean = false
+    startPos = new Vector3(0,-2,0)
+    endPos = new Vector3(0,0,0)
 
+    constructor(_start:Vector3, _end:Vector3){
+      this.startPos = _start
+      this.endPos = _end
+    }
     activate(){
       this.activated = true
     }
@@ -33,9 +38,12 @@ export class RaiseFromCake {
 export const djPlatform = new Entity()
 djPlatform.addComponent(new GLTFShape("models/bday/dj_platform.glb"))
 djPlatform.addComponent(new Transform({
-  position: new Vector3(djStartPos.x, djStartPos.y, djStartPos.z),  
+  position: new Vector3(0, -2, 0),  
 }))
-djPlatform.addComponent(new RaiseFromCake())
+djPlatform.addComponent(new RaiseFromCake(
+  new Vector3(0,-2,0),
+  new Vector3(0,0,0)
+))
 
 djPlatform.setParent(cake)
 
@@ -282,8 +290,8 @@ export class CakeRaiseSystem {
       if(this.platformFraction < 1 && raiseInfo.activated ){
         this.platformFraction += dt * this.djSpeed
         raiseTransform.position = Vector3.Lerp(
-          djStartPos,
-          djEndPos,
+          raiseInfo.startPos,
+          raiseInfo.endPos,
           this.platformFraction
         )
       }

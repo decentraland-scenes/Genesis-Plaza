@@ -2,6 +2,7 @@ import * as utils from '@dcl/ecs-scene-utils'
 import { CakeRaiseSystem, cake, CakeSparklerController } from './cake'
 import { ConfettiController } from './confetti'
 import { BalloonController } from './balloons'
+import { TeleportController } from './portals'
 
 export let cakeUp: boolean = false
 
@@ -57,6 +58,7 @@ export let cakeRaiseSystem = new CakeRaiseSystem()
 export let cakeControl = new CakeSparklerController()
 export let confettiControl = new ConfettiController()
 export let balloonControl = new BalloonController()
+export let teleportControl = new TeleportController()
 
 // For the actual launch - run this...
 export function launchSequence(): void {

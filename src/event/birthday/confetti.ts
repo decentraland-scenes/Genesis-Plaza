@@ -92,7 +92,7 @@ class ConfettiBigSystem {
                     entity.getComponent(Transform).position.y += confettiRegionHeight
                 }
                 else{
-                    entity.getComponent(Transform).position.y = -20
+                    entity.getComponent(Transform).position.y = -25
                     entity.removeComponent(confettiBig)
                 }
                 

@@ -23,8 +23,9 @@ import {
   confettiControl,
   launchSequence,
   setCakeReady,
+  teleportControl
 } from './birthday/launch'
-import { portalEntrance } from './birthday/portals'
+
 
 export let inShowArea: boolean = false
 
@@ -279,8 +280,8 @@ export function runAction(action: Action) {
       if (!cakeUp) return
       cakeControl.removeCake()
       dj.hide()
-
-      engine.addEntity(portalEntrance)
+      teleportControl.showTeleport()
+      //engine.addEntity(portalEntrance)
 
       djUp = false
       portalUp = true
