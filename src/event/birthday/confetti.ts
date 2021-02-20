@@ -68,7 +68,7 @@ class ConfettiBigSystem {
     duration = 100
     elapsed = 0
     startHeight = 40
-    fallSpeed = 20
+    fallSpeed = 10
     cutoffHeight = -10
     
     setDuration(_duration:number){
@@ -83,7 +83,7 @@ class ConfettiBigSystem {
         for(let entity of this.group.entities){
             const cInfo = entity.getComponent(confettiBig)
 
-            entity.getComponent(Transform).rotate(Vector3.Forward(), dt*75)
+            entity.getComponent(Transform).rotate(Vector3.Forward(), dt*35)
             entity.getComponent(Transform).translate(Vector3.Down().multiplyByFloats(0, this.fallSpeed*dt, 0))
             cInfo.lifeSpan -=dt
 
