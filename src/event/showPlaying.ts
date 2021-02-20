@@ -133,6 +133,6 @@ export function StartShow(index: number, time: number) {
     //engine.addSystem(new RunEvents(show, timeDiff, index))
     RunEvents.createAndAddToEngine(show, timeDiff)
 
-    //sceneMessageBus.emit('startShow', { value: index, time: time })
+    sceneMessageBus.emit('startShow', { value: index, time: time })
   }
 }
