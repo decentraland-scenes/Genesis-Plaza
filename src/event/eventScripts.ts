@@ -2,7 +2,6 @@ import {
   checkTime,
   showPlaying,
   showPlayingFalse,
-  showPlayingTrue,
 } from './showPlaying'
 
 // import {
@@ -17,8 +16,6 @@ import { dj, lights1, lights2 } from './syncableItems'
 import {
   balloonControl,
   cakeControl,
-  cakeRaiseSystem,
-  cakeReady,
   cakeUp,
   confettiControl,
   launchSequence,
