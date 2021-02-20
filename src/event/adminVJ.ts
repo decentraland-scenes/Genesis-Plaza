@@ -1,7 +1,7 @@
 import * as ui from '@dcl/ui-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import { Action, djUp, portalUp, runAction } from './eventScripts'
-import { isPreviewMode } from '@decentraland/EnvironmentAPI'
+//import { isPreviewMode } from '@decentraland/EnvironmentAPI'
 
 import {
   checkEventServer,
@@ -53,16 +53,16 @@ export async function initiateVJUI() {
 
   let authorized = false
 
-  if (await isPreviewMode()) {
-    authorized = true
-  } else {
-    for (let id of whiteListedIds) {
-      if (userData && id == userData.displayName) {
-        authorized = true
-        break
-      }
+  //   if (await isPreviewMode()) {
+  //     authorized = true
+  //   } else {
+  for (let id of whiteListedIds) {
+    if (userData && id == userData.displayName) {
+      authorized = true
+      break
     }
   }
+  //}
 
   if (authorized) {
     VJUI = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, null, null, true)
