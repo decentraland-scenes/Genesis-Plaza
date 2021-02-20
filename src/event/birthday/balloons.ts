@@ -69,7 +69,7 @@ class BalloonUpSystem {
     duration = 100
     elapsed = 0
     startHeight = 40
-    riseSpeed = 20
+    riseSpeed = 10
     cutoffHeight = 110   
     
 
