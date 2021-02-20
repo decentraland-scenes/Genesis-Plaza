@@ -67,7 +67,8 @@ export function launchSequence(): void {
   hatch.addComponentOrReplace(
     new utils.Delay(2000, () => {
       hatchOpenSound.getComponent(AudioSource).playOnce()
-      engine.addSystem(cakeRaiseSystem)
+      //engine.addSystem(cakeRaiseSystem)
+      cakeControl.raiseCake()
     })
   )
 

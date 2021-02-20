@@ -95,6 +95,8 @@ export class CakeSparklerController {
     lowScale:Vector3
 
     candle1:Entity
+
+    cakeRaiseSys:CakeRaiseSystem
     
 
     constructor(){
@@ -117,6 +119,8 @@ export class CakeSparklerController {
         this.candle1.setParent(cake)
 
         this.addSparklers()
+
+        this.cakeRaiseSys = new CakeRaiseSystem()
 
         
     }
@@ -239,6 +243,11 @@ export class CakeSparklerController {
         engine.addEntity(this.candle1)
       }
 
+      raiseCake(){
+        engine.addSystem(this.cakeRaiseSys)
+
+      }
+
       raiseDJPlatform(){
         this.removeCandle()
         const group = engine.getComponentGroup(RaiseFromCake, Transform)
@@ -248,7 +257,8 @@ export class CakeSparklerController {
         }
       }
       removeCake(){
-        engine.removeEntity(cake)
+        this.cakeRaiseSys.goDown()
+        //engine.removeEntity(cake)
         engine.removeEntity(soucePoolRoot)
       }
 
@@ -264,39 +274,64 @@ export class CakeRaiseSystem {
   endHeight:number = 1.0
   startHeight:number = -15
   platformFraction:number = 0
+  directionUp:boolean = true
 
   update(dt: number) {
     const cakeTransform = cake.getComponent(Transform)
     const souceTransform = soucePoolRoot.getComponent(Transform)
 
-    if (this.fraction < 1) {
-      this.fraction += dt * this.speed
-      cakeTransform.position = Vector3.Lerp(
-        new Vector3(cakeTransform.position.x, this.startHeight, cakeTransform.position.z), 
-        new Vector3(cakeTransform.position.x, this.endHeight, cakeTransform.position.z),
-        this.fraction
-        )
-
-        souceTransform.scale.y = this.fraction
-    }
-    else{
-      cakeTransform.position.y = this.endHeight
-    }
-
-    for(let entity of this.group.entities){
-      const raiseTransform = entity.getComponent(Transform)
-      const raiseInfo = entity.getComponent(RaiseFromCake)
-
-      if(this.platformFraction < 1 && raiseInfo.activated ){
-        this.platformFraction += dt * this.djSpeed
-        raiseTransform.position = Vector3.Lerp(
-          raiseInfo.startPos,
-          raiseInfo.endPos,
-          this.platformFraction
-        )
+    if(this.directionUp){
+      if (this.fraction < 1) {
+        this.fraction += dt * this.speed
+        cakeTransform.position = Vector3.Lerp(
+          new Vector3(cakeTransform.position.x, this.startHeight, cakeTransform.position.z), 
+          new Vector3(cakeTransform.position.x, this.endHeight, cakeTransform.position.z),
+          this.fraction
+          )
+  
+          souceTransform.scale.y = this.fraction
+      }
+      else{
+        cakeTransform.position.y = this.endHeight
+      }
+  
+      for(let entity of this.group.entities){
+        const raiseTransform = entity.getComponent(Transform)
+        const raiseInfo = entity.getComponent(RaiseFromCake)
+  
+        if(this.platformFraction < 1 && raiseInfo.activated ){
+          this.platformFraction += dt * this.djSpeed
+          raiseTransform.position = Vector3.Lerp(
+            raiseInfo.startPos,
+            raiseInfo.endPos,
+            this.platformFraction
+          )
+        }
       }
     }
+    else{
+      if (this.fraction > 0) {
+        this.fraction -= dt * this.speed*3
+        cakeTransform.position = Vector3.Lerp(
+          new Vector3(cakeTransform.position.x, this.startHeight , cakeTransform.position.z), 
+          new Vector3(cakeTransform.position.x, this.endHeight, cakeTransform.position.z),
+          this.fraction
+          )
+  
+          souceTransform.scale.y = this.fraction
+      }
+      else{
+        cakeTransform.position.y = this.startHeight
+        //engine.removeEntity(cake)
+      }
+  
+    }
     
+    
+  }
+
+  goDown(){
+    this.directionUp = false
   }
 
 

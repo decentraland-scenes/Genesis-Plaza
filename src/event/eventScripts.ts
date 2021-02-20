@@ -279,6 +279,8 @@ export function runAction(action: Action) {
     case Action.TELEPORT:
       if (!cakeUp) return
       cakeControl.removeCake()
+      balloonControl.startBalloons(5)
+      confettiControl.startConfetti(6)
       dj.hide()
       teleportControl.showTeleport()
       //engine.addEntity(portalEntrance)
