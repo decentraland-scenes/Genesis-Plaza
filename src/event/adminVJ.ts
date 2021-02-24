@@ -1,7 +1,7 @@
 import * as ui from '@dcl/ui-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import { Action, djUp, portalUp, runAction } from './eventScripts'
-//import { isPreviewMode } from '@decentraland/EnvironmentAPI'
+import { isPreviewMode } from '@decentraland/EnvironmentAPI'
 
 import {
   checkEventServer,
@@ -38,7 +38,10 @@ export let whiteListedIds = [
   'Tak',
   'KJWalker',
   'Shibu',
+  'imoasis',
 ]
+
+export let whiteListedAddresses = ['0x47e33894eD60A691a5c795325dAE461363863c8c']
 
 export const sceneMessageBus = new MessageBus()
 
@@ -53,16 +56,23 @@ export async function initiateVJUI() {
 
   let authorized = false
 
-  //   if (await isPreviewMode()) {
-  //     authorized = true
-  //   } else {
-  for (let id of whiteListedIds) {
-    if (userData && id == userData.displayName) {
-      authorized = true
-      break
+  if (await isPreviewMode()) {
+    authorized = true
+  } else {
+    for (let id of whiteListedIds) {
+      if (userData && id == userData.displayName) {
+        authorized = true
+        break
+      }
+    }
+
+    for (let address of whiteListedAddresses) {
+      if (userData && address == userData.publicKey) {
+        authorized = true
+        break
+      }
     }
   }
-  //}
 
   if (authorized) {
     VJUI = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, null, null, true)
