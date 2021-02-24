@@ -1,8 +1,4 @@
-import {
-  checkTime,
-  showPlaying,
-  showPlayingFalse,
-} from './showPlaying'
+import { checkTime, showPlaying, showPlayingFalse } from './showPlaying'
 
 // import {
 //   dotLightsControl,
@@ -20,9 +16,8 @@ import {
   confettiControl,
   launchSequence,
   setCakeReady,
-  teleportControl
+  teleportControl,
 } from './birthday/launch'
-
 
 export let inShowArea: boolean = false
 
@@ -621,7 +616,12 @@ export function runAction(action: Action) {
 }
 
 export let ShowScripts: any = {
-  DEFAULT: [],
+  DEFAULT: [
+    { event: Action.CAKE, time: 0 },
+    { event: Action.CONFETTIMID, time: 0 },
+    { event: Action.TELEPORT, time: 10 },
+    { event: Action.TELEPORT, time: 60000 },
+  ],
   RAC: [
     { event: Action.STOPALL, time: 0 },
     { event: Action.CAKE, time: 0 },
