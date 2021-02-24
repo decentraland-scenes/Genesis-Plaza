@@ -92,21 +92,21 @@ export async function initiateVJUI() {
       sceneMessageBus.emit('announcement', { text: submittedText })
     })
 
-    VJUI.addButton(
-      'TELEPORT',
-      140,
-      -140,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.TELEPORT,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.RED
-    )
+    // VJUI.addButton(
+    //   'TELEPORT',
+    //   140,
+    //   -140,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.TELEPORT,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.RED
+    // )
 
     // switches
     let light1 = VJUI.addSwitch(
@@ -486,135 +486,135 @@ export async function initiateVJUI() {
     confettiLong.image.height = 40
     confettiLong.label.fontSize = 12
 
-    let sparkles = VJUI.addSwitch(
-      'SPARKLES',
-      -200,
-      -70,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSALL,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSOFF,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-        s1.uncheck()
-        s2.uncheck()
-        s3.uncheck()
-      },
-      ui.SwitchStyles.SQUAREGREEN,
-      true
-    )
+    // let sparkles = VJUI.addSwitch(
+    //   'SPARKLES',
+    //   -200,
+    //   -70,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSALL,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSOFF,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //     s1.uncheck()
+    //     s2.uncheck()
+    //     s3.uncheck()
+    //   },
+    //   ui.SwitchStyles.SQUAREGREEN,
+    //   true
+    // )
 
-    sparkles.image.height = 25
-    sparkles.image.width = 50
-    sparkles.label.fontSize = 14
-    sparkles.label.positionX = 55
+    // sparkles.image.height = 25
+    // sparkles.image.width = 50
+    // sparkles.label.fontSize = 14
+    // sparkles.label.positionX = 55
 
-    let s1 = VJUI.addSwitch(
-      'T',
-      -40,
-      -70,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSTOP,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
+    // let s1 = VJUI.addSwitch(
+    //   'T',
+    //   -40,
+    //   -70,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSTOP,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
 
-        sparkles.uncheck()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSOFF,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.SwitchStyles.ROUNDGREEN,
-      true
-    )
+    //     sparkles.uncheck()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSOFF,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.SwitchStyles.ROUNDGREEN,
+    //   true
+    // )
 
-    let s2 = VJUI.addSwitch(
-      'M',
-      60,
-      -70,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSMID,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
+    // let s2 = VJUI.addSwitch(
+    //   'M',
+    //   60,
+    //   -70,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSMID,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
 
-        sparkles.uncheck()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSOFF,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.SwitchStyles.ROUNDGREEN,
-      true
-    )
+    //     sparkles.uncheck()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSOFF,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.SwitchStyles.ROUNDGREEN,
+    //   true
+    // )
 
-    let s3 = VJUI.addSwitch(
-      'L',
-      180,
-      -70,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSLOW,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
+    // let s3 = VJUI.addSwitch(
+    //   'L',
+    //   180,
+    //   -70,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSLOW,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
 
-        sparkles.uncheck()
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.SPARKLERSOFF,
-          freeMode: freeMode,
-        })
-      },
-      ui.SwitchStyles.ROUNDGREEN,
-      true
-    )
+    //     sparkles.uncheck()
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.SPARKLERSOFF,
+    //       freeMode: freeMode,
+    //     })
+    //   },
+    //   ui.SwitchStyles.ROUNDGREEN,
+    //   true
+    // )
 
-    s1.image.height = 25
-    s1.image.width = 50
-    s1.label.fontSize = 14
-    s1.label.positionX = 55
+    // s1.image.height = 25
+    // s1.image.width = 50
+    // s1.label.fontSize = 14
+    // s1.label.positionX = 55
 
-    s2.image.height = 25
-    s2.image.width = 50
-    s2.label.fontSize = 14
-    s2.label.positionX = 55
+    // s2.image.height = 25
+    // s2.image.width = 50
+    // s2.label.fontSize = 14
+    // s2.label.positionX = 55
 
-    s3.image.height = 25
-    s3.image.width = 50
-    s3.label.fontSize = 14
-    s3.label.positionX = 55
+    // s3.image.height = 25
+    // s3.image.width = 50
+    // s3.label.fontSize = 14
+    // s3.label.positionX = 55
 
     let jump = VJUI.addButton(
       'Jump',
@@ -784,202 +784,202 @@ export async function initiateVJUI() {
     hammer.label.fontSize = 12
     hammer.label.positionX = -25
 
-    let racBounce = VJUI.addButton(
-      'Bounce',
-      -190,
-      -190,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACBOUNCE,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racBounce = VJUI.addButton(
+    //   'Bounce',
+    //   -190,
+    //   -190,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACBOUNCE,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racChill = VJUI.addButton(
-      'Wave',
-      -100,
-      -190,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACWAVE,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racChill = VJUI.addButton(
+    //   'Wave',
+    //   -100,
+    //   -190,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACWAVE,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racClap = VJUI.addButton(
-      'Clap',
-      -10,
-      -190,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACCLAP,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racClap = VJUI.addButton(
+    //   'Clap',
+    //   -10,
+    //   -190,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACCLAP,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racEpic = VJUI.addButton(
-      'Epic',
-      80,
-      -190,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACEPIC,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racEpic = VJUI.addButton(
+    //   'Epic',
+    //   80,
+    //   -190,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACEPIC,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racHorns = VJUI.addButton(
-      'HandUp',
-      170,
-      -190,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACHANDUP,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racHorns = VJUI.addButton(
+    //   'HandUp',
+    //   170,
+    //   -190,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACHANDUP,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racMix = VJUI.addButton(
-      'Mix',
-      40,
-      -240,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACMIXING,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racMix = VJUI.addButton(
+    //   'Mix',
+    //   40,
+    //   -240,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACMIXING,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    let racPlay = VJUI.addButton(
-      'Play',
-      -50,
-      -240,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACPLAY,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.SQUAREGOLD
-    )
+    // let racPlay = VJUI.addButton(
+    //   'Play',
+    //   -50,
+    //   -240,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACPLAY,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.SQUAREGOLD
+    // )
 
-    VJUI.addSwitch(
-      'DJ',
-      -190,
-      -240,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACAPPEAR,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.RACGO,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.SwitchStyles.ROUNDGREEN,
-      true
-    )
+    // VJUI.addSwitch(
+    //   'DJ',
+    //   -190,
+    //   -240,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACAPPEAR,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.RACGO,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.SwitchStyles.ROUNDGREEN,
+    //   true
+    // )
 
-    racBounce.image.width = 75
-    racBounce.image.height = 40
-    racBounce.label.fontSize = 12
+    // racBounce.image.width = 75
+    // racBounce.image.height = 40
+    // racBounce.label.fontSize = 12
 
-    racChill.image.width = 75
-    racChill.image.height = 40
-    racChill.label.fontSize = 12
+    // racChill.image.width = 75
+    // racChill.image.height = 40
+    // racChill.label.fontSize = 12
 
-    racEpic.image.width = 75
-    racEpic.image.height = 40
-    racEpic.label.fontSize = 12
+    // racEpic.image.width = 75
+    // racEpic.image.height = 40
+    // racEpic.label.fontSize = 12
 
-    racClap.image.width = 75
-    racClap.image.height = 40
-    racClap.label.fontSize = 12
+    // racClap.image.width = 75
+    // racClap.image.height = 40
+    // racClap.label.fontSize = 12
 
-    racHorns.image.width = 75
-    racHorns.image.height = 40
-    racHorns.label.fontSize = 12
+    // racHorns.image.width = 75
+    // racHorns.image.height = 40
+    // racHorns.label.fontSize = 12
 
-    racPlay.image.width = 75
-    racPlay.image.height = 40
-    racPlay.label.fontSize = 12
+    // racPlay.image.width = 75
+    // racPlay.image.height = 40
+    // racPlay.label.fontSize = 12
 
-    racMix.image.width = 75
-    racMix.image.height = 40
-    racMix.label.fontSize = 12
+    // racMix.image.width = 75
+    // racMix.image.height = 40
+    // racMix.label.fontSize = 12
 
     // player actions
 
-    VJUI.addSwitch(
-      'DEFAULT SEQ',
-      -190,
-      -300,
-      () => {
-        sceneMessageBus.emit('playshow', { show: 'server' })
-      },
-      () => {
-        sceneMessageBus.emit('playshow', { show: 'free' })
-      },
-      ui.SwitchStyles.SQUARERED
-    )
+    // VJUI.addSwitch(
+    //   'DEFAULT SEQ',
+    //   -190,
+    //   -300,
+    //   () => {
+    //     sceneMessageBus.emit('playshow', { show: 'server' })
+    //   },
+    //   () => {
+    //     sceneMessageBus.emit('playshow', { show: 'free' })
+    //   },
+    //   ui.SwitchStyles.SQUARERED
+    // )
 
-    VJUI.addButton(
-      'Cake time!',
-      -140,
-      -140,
-      () => {
-        sceneMessageBus.emit('action', {
-          action: Action.CAKE,
-          freeMode: freeMode,
-          cake: cakeUp,
-          dj: djUp,
-          portal: portalUp,
-        })
-      },
-      ui.ButtonStyles.RED
-    )
+    // VJUI.addButton(
+    //   'Cake time!',
+    //   -140,
+    //   -140,
+    //   () => {
+    //     sceneMessageBus.emit('action', {
+    //       action: Action.CAKE,
+    //       freeMode: freeMode,
+    //       cake: cakeUp,
+    //       dj: djUp,
+    //       portal: portalUp,
+    //     })
+    //   },
+    //   ui.ButtonStyles.RED
+    // )
 
     // VJUI.addButton('DEFAULT SHOW', -130, -60, () => {
     //   sceneMessageBus.emit('playshow', { show: 'default' })
@@ -1049,15 +1049,15 @@ export async function initiateVJUI() {
     if (e.freeMode) {
       setFreeMode()
     }
-    if (e.cake && !cakeUp) {
-      runAction(Action.CAKE)
-    }
-    if (e.dj && !djUp) {
-      runAction(Action.RACAPPEAR)
-    }
-    if (e.portal && !portalUp) {
-      runAction(Action.TELEPORT)
-    }
+    // if (e.cake && !cakeUp) {
+    //   runAction(Action.CAKE)
+    // }
+    // if (e.dj && !djUp) {
+    //   runAction(Action.RACAPPEAR)
+    // }
+    // if (e.portal && !portalUp) {
+    //   runAction(Action.TELEPORT)
+    // }
 
     runAction(e.action)
   })

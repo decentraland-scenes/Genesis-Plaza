@@ -12,12 +12,13 @@ import { addBuildings } from './modules/buildings'
 import { addRobots } from './modules/npcRobotBuilder'
 import { addNFTs } from './modules/nftBuilder'
 import { addPiano } from './piano/pianoBuilder'
-import { updateMarketData } from './modules/serverHandler'
+import { sceneMessageBus, updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
 import { initiateVJUI } from './event/adminVJ'
+import { POAPDispenser } from './event/birthday/POAPdispenser'
 
 //////// LOG PLAYER POSITION
 
@@ -108,3 +109,14 @@ let forest2 = new AmbientSound(
 
 initiateVJUI()
 
+let POAPBooth = new POAPDispenser(
+  {
+    position: new Vector3(237, 0, 218),
+    rotation: Quaternion.Euler(0, 45 + 180, 0),
+  },
+  'lantern1'
+)
+
+sceneMessageBus.on('activatePoap', () => {
+  POAPBooth.activate()
+})
