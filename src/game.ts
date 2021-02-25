@@ -111,7 +111,7 @@ initiateVJUI()
 
 let POAPBooth = new POAPDispenser(
   {
-    position: new Vector3(237, 0, 218),
+    position: new Vector3(237, 0.25, 218),
     rotation: Quaternion.Euler(0, 45 + 180, 0),
   },
   'lantern1'
