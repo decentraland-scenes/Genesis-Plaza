@@ -33,15 +33,15 @@ addBuildings()
 
 /// MOVING PLATFORMS
 
-// placePlatforms()
+placePlatforms()
 
 ///TELEPORTERS
 
-// placeTeleports()
+placeTeleports()
 
 /// VIDEO SCEREEN
 
-// addScreen()
+addScreen()
 
 /// EVENTS BOARD
 
@@ -77,14 +77,14 @@ addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(60, 60, 60), () => {
 })
 
 /// ROBOTS
-// addRobots()
+addRobots()
 
 /// NFTS
-// addNFTs()
+addNFTs()
 
 /// Piano
 // BUG: need to hot reload for the red out of bound indicators to disappear - works fine when deployed
-// addPiano()
+addPiano()
 
 /// Sequencer Fountain
 addZenquencer()
