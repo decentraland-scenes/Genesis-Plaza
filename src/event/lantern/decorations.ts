@@ -92,9 +92,3 @@ bubblesD.addComponentOrReplace(
     scale: new Vector3(0.5, 0.5, 0.5),
   })
 )
-
-// Sure banner
-const sureBandBanner = new Entity()
-sureBandBanner.addComponent(new GLTFShape("models/lantern-festival/sureBandBanner.glb"))
-sureBandBanner.addComponent(new Transform({ rotation: Quaternion.Euler(0, 180, 0) }))
-engine.addEntity(sureBandBanner)
