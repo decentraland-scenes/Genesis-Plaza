@@ -1,6 +1,6 @@
 import { auditoriumCenter } from "../globals"
 
-const balloonShape1 = new GLTFShape('models/bday/balloon_group01.glb')
+const balloonShape1 = new GLTFShape('models/lantern-festival/lanternGroup.glb')
 const ballonTravelHeight = 120
 
 @Component("BalloonUpwards")
