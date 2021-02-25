@@ -92,3 +92,13 @@ bubblesD.addComponentOrReplace(
     scale: new Vector3(0.5, 0.5, 0.5),
   })
 )
+
+// Birds
+const birds = new Entity()
+birds.addComponent(new GLTFShape("models/lantern-festival/birds.glb"))
+engine.addEntity(birds)
+
+// Butterflies
+const butterflies = new Entity()
+butterflies.addComponent(new GLTFShape("models/lantern-festival/butterflies.glb"))
+engine.addEntity(butterflies)
