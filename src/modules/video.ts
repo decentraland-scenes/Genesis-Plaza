@@ -23,6 +23,11 @@ export class VideoScreen extends Entity {
     mat.roughness = 1
     mat.metallic = 0
 
+    // Brighten up the screen for night time events
+    // mat.emissiveTexture = this.texture
+    // mat.emissiveColor = Color3.White()
+    // mat.emissiveIntensity = 1
+
     this.addComponent(mat)
 
     const triggerEntity = new Entity()
