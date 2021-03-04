@@ -68,6 +68,7 @@ export function addScreen() {
     { position: new Vector3(270, 5, 255) },
     new Vector3(90, 90, 90),
     'https://d2lkrl9mesbz6t.cloudfront.net/out/v1/3fdb4f5e9b554e5c902a12aee30fbda6/index.m3u8'
+    //'https://pull-hls-l26.douyincdn.com/third/stream-108336847447654886_hd.m3u8'
   )
 
   screen1.getComponent(Transform).rotate(new Vector3(1, 0, 0), 10)

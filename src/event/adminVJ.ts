@@ -39,9 +39,14 @@ export let whiteListedIds = [
   'KJWalker',
   'Shibu',
   'imoasis',
+  'ChinWaan#a119',
 ]
 
-export let whiteListedAddresses = ['0x47e33894eD60A691a5c795325dAE461363863c8c']
+export let whiteListedAddresses = [
+  '0x47e33894eD60A691a5c795325dAE461363863c8c',
+  '0x14c9b847EdE1C5a20E86F37AaCfa4a167f59A119',
+  '0xe2b6024873d218B2E83B462D3658D8D7C3f55a18',
+]
 
 export const sceneMessageBus = new MessageBus()
 

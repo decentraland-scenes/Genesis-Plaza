@@ -71,7 +71,7 @@ export async function checkTime() {
 
 let checkServerSystem = new CheckServer('bdayRac', 5)
 
-engine.addSystem(checkServerSystem)
+//engine.addSystem(checkServerSystem)
 
 export async function checkEventServer(event: string) {
   try {
