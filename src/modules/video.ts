@@ -1,5 +1,4 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
-
+import * as utils from '@dcl/ecs-scene-utils'
 export class VideoScreen extends Entity {
   texture: VideoTexture
   constructor(
@@ -24,6 +23,11 @@ export class VideoScreen extends Entity {
     mat.roughness = 1
     mat.metallic = 0
 
+    // Brighten up the screen for night time events
+    // mat.emissiveTexture = this.texture
+    // mat.emissiveColor = Color3.White()
+    // mat.emissiveIntensity = 1
+
     this.addComponent(mat)
 
     const triggerEntity = new Entity()
@@ -34,17 +38,15 @@ export class VideoScreen extends Entity {
     triggerEntity.addComponent(
       new utils.TriggerComponent(
         triggerBox, //shape
-        0, //layer
-        0, //triggeredByLayer
-        null, //onTriggerEnter
-        null, //onTriggerExit
-        () => {
-          this.activate()
-        },
-        () => {
-          this.deactivate()
-        }, //onCameraExit
-        false
+        {
+          onCameraEnter: () => {
+            this.activate()
+          },
+
+          onCameraExit: () => {
+            this.deactivate()
+          },
+        }
       )
     )
     engine.addEntity(triggerEntity)

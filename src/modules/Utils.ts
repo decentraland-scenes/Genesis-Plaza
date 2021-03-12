@@ -1,4 +1,4 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
+import * as utils from '@dcl/ecs-scene-utils'
 
 export function shuffleArray<T>(array: T[]): T[] {
   for (let i = array.length - 1; i > 0; i--) {
@@ -39,18 +39,15 @@ export function addOneTimeTrigger(
   trigger.addComponent(
     new utils.TriggerComponent(
       triggerBox, //shape
-      0, //layer
-      0, //triggeredByLayers
-      null, //onTriggerEnter
-      null, //onTriggerExit
-      () => {
-        if (!entered) {
-          entered = true
-          onFirstPlayerEnter()
-        }
-      },
-      null, //onCameraExit
-      show
+      {
+        onCameraEnter: () => {
+          if (!entered) {
+            entered = true
+            onFirstPlayerEnter()
+          }
+        },
+        enableDebug: show,
+      }
     )
   )
 

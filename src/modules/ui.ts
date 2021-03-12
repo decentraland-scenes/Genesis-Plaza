@@ -3,7 +3,6 @@ import { WearableData, getWearableURL } from './wearables'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
-import { dialogWindow } from './npcRobotBuilder'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -35,15 +34,10 @@ closeDialogSound.setParent(Attachable.AVATAR)
 export function closeUI(npc?: boolean) {
   messagebg.visible = false
   wBackground.visible = false
-
-  // if the NPC UI is explicitly closed
-  if (npc) {
-    dialogWindow.closeDialogWindow()
-  }
 }
 
 export function checkUIOpen(): boolean {
-  if (messagebg.visible || wBackground.visible || dialogWindow.isDialogOpen) {
+  if (messagebg.visible || wBackground.visible) {
     return true
   } else {
     return false

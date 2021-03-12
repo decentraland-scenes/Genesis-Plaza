@@ -13,6 +13,13 @@ AWS.config.update({
   region: 'us-east-2',
 })
 
+export type MessageData = {
+  msg: string
+  author?: string
+  portrait?: string
+  date?: string
+}
+
 // Message boards
 
 export async function getMessageJSON(url: string): Promise<string[]> {
@@ -30,17 +37,41 @@ export async function getMessageJSON(url: string): Promise<string[]> {
 export async function updateMessageJSON(
   url: string,
   newMessage: string,
-  location: string
+  location: string,
+  author?: string,
+  portrait?: string
 ) {
   let currentMessages: string[] = await getMessageJSON(url)
   console.log('old messages: ', currentMessages)
 
-  currentMessages.push(newMessage)
+  let msg: string
+  if (author || portrait) {
+    msg = JSON.stringify({
+      msg: newMessage,
+      author: author,
+      portrait: portrait,
+      date: String(Date.now()),
+    })
+  } else {
+    msg = newMessage
+  }
 
-  uploadMessageBoardJSON(location, {
+  if (currentMessages && currentMessages.length > 0) {
+    currentMessages = currentMessages.slice(
+      Math.max(currentMessages.length - 50, 0)
+    )
+  } else {
+    currentMessages = []
+  }
+
+  currentMessages.push(msg)
+
+  await uploadMessageBoardJSON(location, {
     name: location,
     messages: currentMessages,
   })
+
+  return
 }
 
 export async function uploadMessageBoardJSON(
@@ -69,6 +100,8 @@ export async function uploadMessageBoardJSON(
       console.log('There was an error uploading json file: ', err.message)
     }
   )
+
+  return
 }
 
 ///// Sequencer
@@ -166,37 +199,13 @@ export async function uploadCoinData(jsonContents: CoinData) {
 /// Generic value
 // Generic value used for one-time events, like the SpaceX rocket launch
 
-export async function updateEventValue(value: any) {
-  var upload = new AWS.S3.ManagedUpload({
-    params: {
-      Bucket: 'genesis-plaza',
-      Key: 'event/event.json',
-      Body: JSON.stringify({ value: value }),
-      ACL: 'public-read',
-      ContentType: 'application/json; charset=utf-8',
-    },
-  })
-
-  var promise = upload.promise()
-
-  promise.then(
-    function (data: any) {
-      console.log('Successfully uploaded mural JSON')
-    },
-    function (err: any) {
-      console.log('There was an error uploading mural json file: ', err.message)
-    }
-  )
-}
-
-export async function updatePartyEventValue(value: any) {
+export async function updateEventValue(event: string, value: number) {
   var dateObject = new Date()
   dateObject.getTime()
-
   var upload = new AWS.S3.ManagedUpload({
     params: {
       Bucket: 'genesis-plaza',
-      Key: 'event/partyevent.json',
+      Key: 'event/' + event + '.json',
       Body: JSON.stringify({ value: value, time: dateObject.getTime() }),
       ACL: 'public-read',
       ContentType: 'application/json; charset=utf-8',

@@ -4,7 +4,6 @@ import {
   wearableNotForSale,
   openLoadingUI,
 } from './ui'
-import decentralandEcsUtils from '../../node_modules/decentraland-ecs-utils/index'
 
 export class Wearable extends Entity {
   wearableName: string

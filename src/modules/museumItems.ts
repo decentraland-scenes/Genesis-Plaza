@@ -1,32 +1,43 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
-import { DialogWindow } from './npcDialogWindow' // Fixes issue with modules not loading
-import { dialogWindow, robots } from './npcRobotBuilder'
-import { TrackUserSlerp } from './npcFaceUserSystem'
-import { RobotID } from './npcRobot'
-import resources from '../resources'
-import { openDialogSound, updateOpenUITime, setUiOpener } from './ui'
+import { Dialog, NPC } from '@dcl/npc-scene-utils'
+import {
+  alice,
+  ron,
+  bela,
+  betty,
+  charlie,
+  marsha,
+  bob,
+} from './npcRobotBuilder'
+import {
+  BettyDialog,
+  BobDialog,
+  CharlieDialog,
+  RonDialog,
+} from './npcDialogData'
 
 // Opens informational dialog about a piece
-function openPieceInfoWindow(piece: Entity, robotID: RobotID, textID: number) {
-  // used for closing UI when walking away or clicking
-  updateOpenUITime()
-  setUiOpener(piece)
+// function openPieceInfoWindow(piece: Entity, robot: NPC, textID: number) {
+//   // used for closing UI when walking away or clicking
+// //   updateOpenUITime()
+// //   setUiOpener(piece)
 
-  dialogWindow.isInfoPanel = true
-  openDialogSound.getComponent(AudioSource).playOnce()
-  robots[robotID].playTalk()
-  dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
-  // HACK: To avoid clashing with the input subscribe button down event
-  piece.addComponentOrReplace(
-    new utils.Delay(30, () => {
-      dialogWindow.isDialogOpen = true
-    })
-  )
+// //   dialogWindow.isInfoPanel = true
+//   openDialogSound.getComponent(AudioSource).playOnce()
+//   robot.talk()
 
-  // Stop robot from tracking the user
-  if (robots[robotID].hasComponent(TrackUserSlerp))
-    robots[robotID].removeComponent(TrackUserSlerp)
-}
+//   robots[robotID].playTalk()
+//   dialogWindow.openDialogWindow(robotID, textID) // RobotID and textID
+//   // HACK: To avoid clashing with the input subscribe button down event
+//   piece.addComponentOrReplace(
+//     new utils.Delay(30, () => {
+//       dialogWindow.isDialogOpen = true
+//     })
+//   )
+
+//   // Stop robot from tracking the user
+//   if (robots[robotID].hasComponent(TrackUserSlerp))
+//     robots[robotID].removeComponent(TrackUserSlerp)
+// }
 
 export class MuseumPiece extends Entity {
   model: GLTFShape
@@ -35,7 +46,8 @@ export class MuseumPiece extends Entity {
     model: GLTFShape | BoxShape,
     transform: TranformConstructorArgs,
     name: string,
-    robotID?: RobotID,
+    robot?: NPC,
+    dialog?: Dialog[],
     textID?: number
   ) {
     super()
@@ -51,7 +63,9 @@ export class MuseumPiece extends Entity {
     this.addComponent(
       new OnPointerDown(
         function () {
-          openPieceInfoWindow(thisPiece, robotID, textID)
+          if (robot && dialog) {
+            robot.talk(dialog, textID)
+          }
         },
         {
           button: ActionButton.PRIMARY,
@@ -83,7 +97,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 105, 0),
     },
     'DAO',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     8
   )
 
@@ -94,7 +109,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'The Vision',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     11
   )
 
@@ -105,7 +121,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'First Experiments',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     13
   )
 
@@ -116,7 +133,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 208, 0),
     },
     'First 3D Version',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     16
   )
 
@@ -127,7 +145,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 220, 0),
     },
     'Declaration of independance',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     17
   )
 
@@ -138,7 +157,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 212, 0),
     },
     'Original Logo',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     18
   )
 
@@ -149,7 +169,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 230, 0),
     },
     'First Avatars',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     19
   )
 
@@ -160,7 +181,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 230, 0),
     },
     'First Land Auction',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     28
   )
 
@@ -171,7 +193,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     20
   )
 
@@ -182,7 +205,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     21
   )
   let avatar3 = new MuseumPiece(
@@ -192,7 +216,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     23
   )
 
@@ -203,7 +228,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     24
   )
 
@@ -214,7 +240,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     25
   )
 
@@ -225,7 +252,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 315, 0),
     },
     'Avatar',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     26
   )
 
@@ -236,7 +264,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Second Land Auction',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     30
   )
 
@@ -247,7 +276,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 52, 0),
     },
     'New Logo',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     32
   )
 
@@ -258,7 +288,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 50, 0),
     },
     'Landing',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     34
   )
 
@@ -269,7 +300,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 45, 0),
     },
     'Builder',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     37
   )
 
@@ -280,7 +312,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 42, 0),
     },
     'Virtual identity',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     40
   )
 
@@ -291,7 +324,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 35, 0),
     },
     'Token Wearables',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     41
   )
 
@@ -326,7 +360,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.DISTRICTS)
-        openPieceInfoWindow(districts, RobotID.Whale, 51)
+        bob.talk(BobDialog, 51)
       },
       {
         button: ActionButton.PRIMARY,
@@ -353,7 +387,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.PLAZAS)
-        openPieceInfoWindow(plazas, RobotID.Whale, 49)
+        bob.talk(BobDialog, 49)
       },
       {
         button: ActionButton.PRIMARY,
@@ -380,7 +414,7 @@ export function placeMuseumPieces() {
     new OnPointerDown(
       function () {
         animateMap(MapItems.ROADS)
-        openPieceInfoWindow(roads, RobotID.Whale, 48)
+        bob.talk(BobDialog, 48)
       },
       {
         button: ActionButton.PRIMARY,
@@ -396,7 +430,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 195, 0),
     },
     'LAND Parcel',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     44
   )
 
@@ -416,7 +451,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 30, 0),
     },
     'Estate',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     47
   )
 
@@ -436,7 +472,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 50, 0),
     },
     'Museum District',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     54
   )
 
@@ -447,7 +484,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 50, 0),
     },
     'First Builder Contest',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     57
   )
 
@@ -458,7 +496,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 50, 0),
     },
     'Creator contest',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     59
   )
 
@@ -469,7 +508,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 135, 0),
     },
     'MANA',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     62
   )
 
@@ -480,7 +520,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 220, 0),
     },
     'September 2019 Hackathon',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     67
   )
 
@@ -491,7 +532,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 225, 0),
     },
     'Hackathons',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     66
   )
 
@@ -502,7 +544,8 @@ export function placeMuseumPieces() {
       rotation: Quaternion.Euler(0, 230, 0),
     },
     'Community Wearable Contest',
-    RobotID.Whale,
+    bob,
+    BobDialog,
     69
   )
 
@@ -527,7 +570,8 @@ export function placeWearablePieces() {
       rotation: Quaternion.Euler(0, 180, 0),
     },
     'About X-Mas Wearables',
-    RobotID.Shell,
+    ron,
+    RonDialog,
     14
   )
 
@@ -538,7 +582,8 @@ export function placeWearablePieces() {
       rotation: Quaternion.Euler(0, 150, 0),
     },
     'About Halloween Wearables',
-    RobotID.Shell,
+    ron,
+    RonDialog,
     15
   )
 }
@@ -557,7 +602,8 @@ export function placeTradecenterPieces() {
       rotation: Quaternion.Euler(0, 195, 0),
     },
     'LAND Parcel',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     12
   )
 
@@ -577,7 +623,8 @@ export function placeTradecenterPieces() {
       rotation: Quaternion.Euler(0, 30, 0),
     },
     'Estate',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     16
   )
 
@@ -598,7 +645,8 @@ export function placeTradecenterPieces() {
       scale: new Vector3(5.8, 1.2, 1.2),
     },
     'Wearables',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     17
   )
 
@@ -612,7 +660,8 @@ export function placeTradecenterPieces() {
       scale: new Vector3(5.8, 1.2, 1.2),
     },
     'Wearables',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     17
   )
 
@@ -626,7 +675,8 @@ export function placeTradecenterPieces() {
       scale: new Vector3(5.8, 1.2, 1.2),
     },
     'Wearables',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     17
   )
 
@@ -640,7 +690,8 @@ export function placeTradecenterPieces() {
       scale: new Vector3(5.8, 1.2, 1.2),
     },
     'Wearables',
-    RobotID.Trade,
+    charlie,
+    CharlieDialog,
     17
   )
 
@@ -658,7 +709,8 @@ export function placeGardenPieces() {
       rotation: Quaternion.Euler(0, 90, 0),
     },
     'Builder scene',
-    RobotID.Garden,
+    betty,
+    BettyDialog,
     34
   )
 
@@ -669,7 +721,8 @@ export function placeGardenPieces() {
       rotation: Quaternion.Euler(0, 180, 0),
     },
     'Smart Item scene',
-    RobotID.Garden,
+    betty,
+    BettyDialog,
     35
   )
 

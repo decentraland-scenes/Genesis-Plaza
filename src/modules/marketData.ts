@@ -1,4 +1,3 @@
-import utils from '../../node_modules/decentraland-ecs-utils/index'
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
 import { shortenText } from './helperFunctions'

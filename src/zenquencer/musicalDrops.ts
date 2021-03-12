@@ -1,6 +1,5 @@
 import { seqNumbers } from './stones'
 import { stones } from './stones'
-import resources from './resources'
 import { sceneMessageBus } from '../modules/serverHandler'
 import { energyAnimation, linear, random } from './zenquencerBuilder'
 

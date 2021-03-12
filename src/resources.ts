@@ -1,5 +1,4 @@
-import utils from '../node_modules/decentraland-ecs-utils/index'
-
+import { TriggerBoxShape, TriggerSphereShape } from '@dcl/npc-scene-utils'
 export default {
   sounds: {
     robots: {
@@ -60,17 +59,17 @@ export default {
   },
   models: {
     standard: {
-      pianoBase: new GLTFShape("models/piano/pianoBase.glb"),
-      muralWall: new GLTFShape("models/mural/muralWall.glb"),
+      pianoBase: new GLTFShape('models/piano/pianoBase.glb'),
+      muralWall: new GLTFShape('models/mural/muralWall.glb'),
     },
     robots: {
-      alice: new GLTFShape('models/robots/alice.glb'),
-      bela: new GLTFShape('models/robots/bela.glb'),
-      betty: new GLTFShape('models/robots/betty.glb'),
-      bob: new GLTFShape('models/robots/bob.glb'),
-      charlie: new GLTFShape('models/robots/charlie.glb'),
-      marsha: new GLTFShape('models/robots/marsha.glb'),
-      ron: new GLTFShape('models/robots/ron.glb'),
+      alice: 'models/robots/alice.glb',
+      bela: 'models/robots/bela.glb',
+      betty: 'models/robots/betty.glb',
+      bob: 'models/robots/bob.glb',
+      charlie: 'models/robots/charlie.glb',
+      marsha: 'models/robots/marsha.glb',
+      ron: 'models/robots/ron.glb',
       rings: new GLTFShape('models/robots/rings.glb'),
     },
   },
@@ -85,12 +84,12 @@ export default {
     placeholder: new Texture('images/ui/placeholder.png'),
   },
   trigger: {
-    triggerShape: new utils.TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
-    triggerWhitePianoKey: new utils.TriggerBoxShape(
+    triggerShape: new TriggerSphereShape(8, Vector3.Zero()), // Trigger sphere with a radius of 8m
+    triggerWhitePianoKey: new TriggerBoxShape(
       new Vector3(0.35, 3, 2),
       new Vector3(0, 0, -1)
     ),
-    triggerBlackPianoKey: new utils.TriggerBoxShape(
+    triggerBlackPianoKey: new TriggerBoxShape(
       new Vector3(0.35, 3, 2),
       Vector3.Zero()
     ),

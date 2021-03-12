@@ -6,7 +6,6 @@ import {
   getSeqJSON,
   uploadMessageBoardJSON,
   updateEventValue,
-  updatePartyEventValue,
   updateMessageJSON,
 } from './awsUpload'
 
@@ -48,6 +47,19 @@ app.post('/addmessage', (req: any, res: any) => {
   return res.status(200).send('updated message board')
 })
 
+app.post('/adddetailedmessage', async (req: any, res: any) => {
+  let location: string = String(req.body.location)
+  let message: string = String(req.body.message)
+  let author: string = String(req.body.author)
+  let portrait: string = String(req.body.portrait)
+
+  let url = awsBaseURL + '/messageboards/' + location + '.json'
+
+  await updateMessageJSON(url, message, location, author, portrait)
+
+  return res.status(200).send('updated message board')
+})
+
 /// SEQUENCER
 
 app.get('/sequencer', async (req: any, res: any) => {
@@ -71,18 +83,13 @@ app.post('/update-sequencer', async (req: any, res: any) => {
 
 app.get('/event', (req: any, res: any) => {
   let value = Number(req.query.value)
+  let event = String(req.query.event)
 
-  updateEventValue(value)
-  return res.status(200).send('Updated event data!')
-})
-
-app.get('/eventparty', (req: any, res: any) => {
-  let value = Number(req.query.value)
   let pass = req.query.pass
 
   if (pass != 'covinchrlz') return
 
-  updatePartyEventValue(value)
+  updateEventValue(event, value)
   return res.status(200).send('Updated event data!')
 })
 
