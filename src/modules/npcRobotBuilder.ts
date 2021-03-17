@@ -34,7 +34,7 @@ export function addRobots() {
 
   alice = new NPC(
     {
-      position: new Vector3(155, 2.25, 159),
+      position: new Vector3(135, 2.25, 159),
       rotation: Quaternion.Euler(0, 150, 0),
     },
     resources.models.robots.alice,

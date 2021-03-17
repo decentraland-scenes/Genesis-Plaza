@@ -27,9 +27,11 @@ export function addOneTimeTrigger(
   size: Vector3,
   onFirstPlayerEnter: () => void,
   parent?: Entity,
-  show: boolean = false
+  show: boolean = false,
+  onFirstExit: () => void = null
 ) {
   let entered = false
+  let exited = false
 
   const triggerBox = new utils.TriggerBoxShape(size, Vector3.Zero())
 
@@ -44,6 +46,12 @@ export function addOneTimeTrigger(
           if (!entered) {
             entered = true
             onFirstPlayerEnter()
+          }
+        },
+        onCameraExit: () => {
+          if (!exited) {
+            exited = true
+            onFirstExit()
           }
         },
         enableDebug: show,
