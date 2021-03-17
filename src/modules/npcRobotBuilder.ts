@@ -32,61 +32,61 @@ export let bob: NPC
 export function addRobots() {
   const ringShape = resources.models.robots.rings
 
-  alice = new NPC(
-    {
-      position: new Vector3(135, 2.25, 159),
-      rotation: Quaternion.Euler(0, 150, 0),
-    },
-    resources.models.robots.alice,
-    () => {
-      // animations
-      alice.playAnimation('Hello', true, 2)
+  //   alice = new NPC(
+  //     {
+  //       position: new Vector3(135, 2.25, 159),
+  //       rotation: Quaternion.Euler(0, 150, 0),
+  //     },
+  //     resources.models.robots.alice,
+  //     () => {
+  //       // animations
+  //       alice.playAnimation('Hello', true, 2)
 
-      let dummyent = new Entity()
-      dummyent.addComponent(
-        new NPCDelay(2, () => {
-          alice.playAnimation('Talk')
-        })
-      )
-      engine.addEntity(dummyent)
+  //       let dummyent = new Entity()
+  //       dummyent.addComponent(
+  //         new NPCDelay(2, () => {
+  //           alice.playAnimation('Talk')
+  //         })
+  //       )
+  //       engine.addEntity(dummyent)
 
-      // sound
-      alice.addComponentOrReplace(
-        new AudioSource(resources.sounds.robots.alice)
-      )
-      alice.getComponent(AudioSource).playOnce()
+  //       // sound
+  //       alice.addComponentOrReplace(
+  //         new AudioSource(resources.sounds.robots.alice)
+  //       )
+  //       alice.getComponent(AudioSource).playOnce()
 
-      // dialog UI
-      alice.talk(AliceDialog)
-    },
-    {
-      faceUser: true,
-      portrait: {
-        path: 'images/portraits/alice.png',
-        height: 256,
-        width: 256,
-        section: {
-          sourceHeight: 384,
-          sourceWidth: 384,
-        },
-      },
-      onlyETrigger: true,
-    }
-  )
+  //       // dialog UI
+  //       alice.talk(AliceDialog)
+  //     },
+  //     {
+  //       faceUser: true,
+  //       portrait: {
+  //         path: 'images/portraits/alice.png',
+  //         height: 256,
+  //         width: 256,
+  //         section: {
+  //           sourceHeight: 384,
+  //           sourceWidth: 384,
+  //         },
+  //       },
+  //       onlyETrigger: true,
+  //     }
+  //   )
 
-  tutorialEnableObservable.add((tutorialEnabled) => {
-    let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
-    alice.getComponent(Transform).scale = scale
-  })
+  //   tutorialEnableObservable.add((tutorialEnabled) => {
+  //     let scale: Vector3 = tutorialEnabled ? Vector3.Zero() : Vector3.One()
+  //     alice.getComponent(Transform).scale = scale
+  //   })
 
-  const aliceRings = new Entity()
-  aliceRings.addComponent(ringShape)
-  aliceRings.addComponent(
-    new Transform({
-      position: new Vector3(0, -0.65, 0),
-    })
-  )
-  aliceRings.setParent(alice)
+  //   const aliceRings = new Entity()
+  //   aliceRings.addComponent(ringShape)
+  //   aliceRings.addComponent(
+  //     new Transform({
+  //       position: new Vector3(0, -0.65, 0),
+  //     })
+  //   )
+  //   aliceRings.setParent(alice)
 
   ron = new NPC(
     {

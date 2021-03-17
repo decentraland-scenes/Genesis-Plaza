@@ -3,6 +3,7 @@ import {
   wearableClassic,
   wearableNotForSale,
   openLoadingUI,
+  UIDistanceSystem,
 } from './ui'
 
 export class Wearable extends Entity {
@@ -144,7 +145,10 @@ export function getWearableURL(wearable: WearableData) {
 }
 
 export function addWearables() {
-  //////// WEARABLES
+
+
+  // close UI when walking away
+  engine.addSystem(new UIDistanceSystem())
 
   // FLOOR 1
 

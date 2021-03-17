@@ -17,6 +17,7 @@ import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
+import { startMessageBoards } from './modules/messageboard'
 
 //////// LOG PLAYER POSITION
 
@@ -100,6 +101,9 @@ export function outsideBar() {
 
   /// Sequencer Fountain
   addZenquencer()
+
+  // MESSAGE BOARDS
+  startMessageBoards()
 
   /// AMBIENT SOUNDS
 

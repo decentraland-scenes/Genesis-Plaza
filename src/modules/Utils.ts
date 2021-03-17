@@ -25,10 +25,10 @@ export function setTimeout(ms: number, callback: () => void) {
 export function addOneTimeTrigger(
   position: Vector3,
   size: Vector3,
-  onFirstPlayerEnter: () => void,
+  onFirstPlayerEnter: () => void = undefined,
   parent?: Entity,
   show: boolean = false,
-  onFirstExit: () => void = null
+  onFirstExit: () => void = undefined
 ) {
   let entered = false
   let exited = false
@@ -43,13 +43,13 @@ export function addOneTimeTrigger(
       triggerBox, //shape
       {
         onCameraEnter: () => {
-          if (!entered) {
+          if (!entered && onFirstPlayerEnter) {
             entered = true
             onFirstPlayerEnter()
           }
         },
         onCameraExit: () => {
-          if (!exited) {
+          if (!exited && onFirstExit) {
             exited = true
             onFirstExit()
           }
