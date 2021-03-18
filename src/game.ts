@@ -1,5 +1,5 @@
 import { placeTeleports } from './modules/teleports'
-import { placePlatforms } from './modules/platforms'
+import { barPlatforms, placePlatforms } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
   placeMuseumPieces,
@@ -18,6 +18,7 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
 import { addOneTimeTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
+import { placeDoors } from './modules/doors'
 
 //////// LOG PLAYER POSITION
 
@@ -29,6 +30,15 @@ Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
 //// ADD BUILDINGS
 
 addBuildings()
+
+///////// BAR STUFF
+
+// BAR DOORS
+
+placeDoors()
+barPlatforms()
+
+// NPCS
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 

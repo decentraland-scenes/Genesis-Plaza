@@ -199,3 +199,33 @@ export function placePlatforms() {
     )
   })
 }
+
+export function barPlatforms() {
+  //ARTICHOKE ELEVATOR
+
+  let barElevatorLeft = new Platform(
+    new GLTFShape('models/core_building/Elevator_Left.glb'),
+    { rotation: Quaternion.Euler(0, 180, 0) },
+    { position: new Vector3(146, 2.5, 151) },
+    new Vector3(4, 4, 4),
+    'Elevator_Left_Up',
+    'elevatorLeft'
+  )
+
+  let barElevatorRight = new Platform(
+    new GLTFShape('models/core_building/Elevator_Right.glb'),
+    { rotation: Quaternion.Euler(0, 180, 0) },
+    { position: new Vector3(173, 2.5, 151) },
+    new Vector3(4, 4, 4),
+    'Elevator_Right_Up',
+    'elevatorRight'
+  )
+
+  sceneMessageBus.on('elevatorLeft', (e) => {
+    barElevatorLeft.activate()
+  })
+
+  sceneMessageBus.on('elevatorRight', (e) => {
+    barElevatorRight.activate()
+  })
+}
