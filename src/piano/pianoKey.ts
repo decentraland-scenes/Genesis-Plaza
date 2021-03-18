@@ -56,10 +56,12 @@ export class PianoKey extends Entity {
   }
 }
 
-sceneMessageBus.on('noteOn', (e) => {
-  keys[e.note].play()
-})
+export function addKeyListeners() {
+  sceneMessageBus.on('noteOn', (e) => {
+    keys[e.note].play()
+  })
 
-sceneMessageBus.on('noteOff', (e) => {
-  keys[e.note].end()
-})
+  sceneMessageBus.on('noteOff', (e) => {
+    keys[e.note].end()
+  })
+}

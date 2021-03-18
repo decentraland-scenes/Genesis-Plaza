@@ -41,7 +41,6 @@ const bkgModel = new Entity()
 
 bkgModel.addComponent(new GLTFShape('models/screen-moon.glb'))
 bkgModel.setParent(TowerFloatingText)
-
 engine.addEntity(bkgModel)
 
 let towerLetters: Entity[] = []
@@ -72,48 +71,6 @@ for (let i = 0; i < maxCharacters; i++) {
   towerLetters.push(letter)
 }
 
-let ArtichokeUIOpener = new Entity()
-ArtichokeUIOpener.addComponent(new GLTFShape('models/artichoke_message.glb')) // GLTFShape('models/Message.glb'))
-ArtichokeUIOpener.addComponent(
-  new Transform({
-    position: new Vector3(42, 8.4, 43),
-    scale: new Vector3(1, 1, 1),
-  })
-)
-ArtichokeUIOpener.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openMessageBoardUI(ArtichokeUIOpener, MessageBoards.ARTICHOKE)
-    },
-    {
-      button: ActionButton.PRIMARY,
-      hoverText: 'Write something',
-    }
-  )
-)
-engine.addEntity(ArtichokeUIOpener)
-
-let TowerUIOpener = new Entity()
-TowerUIOpener.addComponent(new GLTFShape('models/message_booth.glb'))
-TowerUIOpener.addComponent(
-  new Transform({
-    position: new Vector3(43.8, 37.4, 122.4),
-    scale: new Vector3(1, 1, 1),
-  })
-)
-TowerUIOpener.addComponent(
-  new OnPointerDown(
-    (e) => {
-      openMessageBoardUI(TowerUIOpener, MessageBoards.TOWER)
-    },
-    {
-      button: ActionButton.PRIMARY,
-      hoverText: 'Write something',
-    }
-  )
-)
-engine.addEntity(TowerUIOpener)
-
 export function setTowerText(text: string) {
   for (let i = 0; i <= maxCharacters - 1; i++) {
     let letter = towerLetters[i]
@@ -135,11 +92,56 @@ class SpinTextSystem implements ISystem {
   }
 }
 
-engine.addSystem(new SpinTextSystem())
-
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
 // how often to refresh scene, in seconds
 const messageRefreshInterval: number = 30
 // start system
 export let serverChecker = new CheckServer(messageRefreshInterval)
-engine.addSystem(serverChecker)
+
+export function startMessageBoards() {
+  engine.addSystem(new SpinTextSystem())
+
+  engine.addSystem(serverChecker)
+
+  let ArtichokeUIOpener = new Entity()
+  ArtichokeUIOpener.addComponent(new GLTFShape('models/artichoke_message.glb')) // GLTFShape('models/Message.glb'))
+  ArtichokeUIOpener.addComponent(
+    new Transform({
+      position: new Vector3(42, 8.4, 43),
+      scale: new Vector3(1, 1, 1),
+    })
+  )
+  ArtichokeUIOpener.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openMessageBoardUI(ArtichokeUIOpener, MessageBoards.ARTICHOKE)
+      },
+      {
+        button: ActionButton.PRIMARY,
+        hoverText: 'Write something',
+      }
+    )
+  )
+  engine.addEntity(ArtichokeUIOpener)
+
+  let TowerUIOpener = new Entity()
+  TowerUIOpener.addComponent(new GLTFShape('models/message_booth.glb'))
+  TowerUIOpener.addComponent(
+    new Transform({
+      position: new Vector3(43.8, 37.4, 122.4),
+      scale: new Vector3(1, 1, 1),
+    })
+  )
+  TowerUIOpener.addComponent(
+    new OnPointerDown(
+      (e) => {
+        openMessageBoardUI(TowerUIOpener, MessageBoards.TOWER)
+      },
+      {
+        button: ActionButton.PRIMARY,
+        hoverText: 'Write something',
+      }
+    )
+  )
+  engine.addEntity(TowerUIOpener)
+}

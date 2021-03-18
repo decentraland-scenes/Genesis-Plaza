@@ -3,7 +3,7 @@ import { NFT } from './nft'
 import { nftData } from './nftData'
 
 // UI Elements
-const canvas = new UICanvas()
+//const canvas = new UICanvas()
 
 export function addNFTs(): void {
   // NFTs

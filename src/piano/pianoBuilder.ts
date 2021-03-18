@@ -1,6 +1,6 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import resources from '../resources'
-import { PianoKey, keys } from './pianoKey'
+import { PianoKey, keys, addKeyListeners } from './pianoKey'
 
 export function addPiano(): void {
   // For piano for transforming the piano
@@ -112,4 +112,6 @@ export function addPiano(): void {
       new Vector3(0, -0.5, 0)
     )
   )
+
+  addKeyListeners()
 }

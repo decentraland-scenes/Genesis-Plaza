@@ -14,24 +14,36 @@ export var UIOpener: Entity
 // Open dialog sound
 export const openDialogSound = new Entity()
 openDialogSound.addComponent(new Transform())
-// This seems to work even when the player moves as oppose to getting the transform from the item
-// as the items transform might not be matching their position visuallly
-openDialogSound.addComponent(
-  new AudioSource(resources.sounds.ui.navigationForward)
-)
 engine.addEntity(openDialogSound)
-openDialogSound.setParent(Attachable.AVATAR)
+
+export function playOpenSound() {
+  if (!openDialogSound.hasComponent(AudioSource)) {
+    openDialogSound.addComponent(
+      new AudioSource(resources.sounds.ui.navigationForward)
+    )
+    openDialogSound.setParent(Attachable.AVATAR)
+  }
+  openDialogSound.getComponent(AudioSource).playOnce()
+}
 
 // Close dialog sound
 export const closeDialogSound = new Entity()
 closeDialogSound.addComponent(new Transform())
-closeDialogSound.addComponent(
-  new AudioSource(resources.sounds.ui.navigationBackward)
-)
 engine.addEntity(closeDialogSound)
-closeDialogSound.setParent(Attachable.AVATAR)
 
-export function closeUI(npc?: boolean) {
+export function playCloseSound() {
+  if (!closeDialogSound.hasComponent(AudioSource)) {
+    closeDialogSound.addComponent(
+      closeDialogSound.addComponent(
+        new AudioSource(resources.sounds.ui.navigationBackward)
+      )
+    )
+    closeDialogSound.setParent(Attachable.AVATAR)
+  }
+  closeDialogSound.getComponent(AudioSource).playOnce()
+}
+
+export function closeUI() {
   messagebg.visible = false
   wBackground.visible = false
 }
@@ -70,7 +82,7 @@ export function openMessageBoardUI(
   updateOpenUITime()
   messagebg.visible = false
   UIOpener = opener
-  openDialogSound.getComponent(AudioSource).playOnce()
+  playOpenSound()
 
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
@@ -110,7 +122,7 @@ export function openMessageBoardConfirmation(opener: Entity) {
   updateOpenUITime()
   messagebg.visible = false
   UIOpener = opener
-  openDialogSound.getComponent(AudioSource).playOnce()
+  playOpenSound()
 
   messagebg = new UIImage(screenSpaceUI, messageBoardTexture)
   messagebg.name = 'mmbBackground'
@@ -153,7 +165,7 @@ export function wearableClassic(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
-  openDialogSound.getComponent(AudioSource).playOnce()
+  playOpenSound()
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -173,7 +185,7 @@ export function wearableNotForSale(wearable: Entity) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
-  openDialogSound.getComponent(AudioSource).playOnce()
+  playOpenSound()
 
   wBackground = new UIImage(screenSpaceUI, wearableTexture)
   wBackground.name = 'wearablebackground'
@@ -193,7 +205,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   updateOpenUITime()
   wBackground.visible = false
   UIOpener = wearable
-  openDialogSound.getComponent(AudioSource).playOnce()
+  playOpenSound()
 
   const wearableThumnail = new Texture(wearableData.image)
 
@@ -271,7 +283,7 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   closeIcon.hAlign = 'center'
   closeIcon.vAlign = 'center'
   closeIcon.onClick = new OnClick(() => {
-    closeDialogSound.getComponent(AudioSource).playOnce()
+    playCloseSound()
     closeUI()
   })
 
@@ -446,10 +458,11 @@ input.subscribe('BUTTON_DOWN', ActionButton.POINTER, false, (e) => {
   // Won't close the UI if it was just opened
   if (checkUIOpen() && currentTime - UIOpenTime > 100) {
     closeUI()
+    playCloseSound()
   }
 })
 
-class UIDistanceSystem implements ISystem {
+export class UIDistanceSystem implements ISystem {
   update() {
     if (checkUIOpen()) {
       let dist = distance(
@@ -460,13 +473,12 @@ class UIDistanceSystem implements ISystem {
       // if player walks too far from entity
       if (dist > 8 * 8) {
         // close all UIs, including NPC
-        closeUI(true)
+        closeUI()
+        playCloseSound()
       }
     }
   }
 }
-
-engine.addSystem(new UIDistanceSystem())
 
 // Get distance
 /* 

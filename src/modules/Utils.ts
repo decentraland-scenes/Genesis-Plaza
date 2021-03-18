@@ -25,11 +25,13 @@ export function setTimeout(ms: number, callback: () => void) {
 export function addOneTimeTrigger(
   position: Vector3,
   size: Vector3,
-  onFirstPlayerEnter: () => void,
+  onFirstPlayerEnter: () => void = undefined,
   parent?: Entity,
-  show: boolean = false
+  show: boolean = false,
+  onFirstExit: () => void = undefined
 ) {
   let entered = false
+  let exited = false
 
   const triggerBox = new utils.TriggerBoxShape(size, Vector3.Zero())
 
@@ -41,9 +43,15 @@ export function addOneTimeTrigger(
       triggerBox, //shape
       {
         onCameraEnter: () => {
-          if (!entered) {
+          if (!entered && onFirstPlayerEnter) {
             entered = true
             onFirstPlayerEnter()
+          }
+        },
+        onCameraExit: () => {
+          if (!exited && onFirstExit) {
+            exited = true
+            onFirstExit()
           }
         },
         enableDebug: show,
