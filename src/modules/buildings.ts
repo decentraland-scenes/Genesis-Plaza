@@ -318,3 +318,13 @@ zepellin.addComponent(
   })
 )
 engine.addEntity(zepellin)
+
+//add eth logos in bar
+let ethLogos = new Entity()
+ethLogos.addComponent(new GLTFShape('models/core_building/Eth_Details.glb'))
+ethLogos.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+engine.addEntity(ethLogos)
