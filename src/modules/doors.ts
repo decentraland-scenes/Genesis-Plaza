@@ -73,8 +73,8 @@ export class Door extends Entity {
 
     // this.animationClose1.stop()
     // this.animationClose2.stop()
-    // this.animationOpen1.stop()
-    // this.animationOpen2.stop()
+    this.animationOpen1.stop()
+    this.animationOpen2.stop()
   }
 
   public open(): void {
@@ -108,7 +108,7 @@ export function placeDoors() {
     new GLTFShape('models/core_building/Door_Entrance.glb'),
     { rotation: Quaternion.Euler(0, 180, 0) },
     { position: new Vector3(160, 2, 126) },
-    new Vector3(16, 8, 6),
+    new Vector3(16, 8, 8),
     'DoorRight_Open',
     'DoorLeft_Open',
     'DoorRight_Close',
@@ -128,7 +128,7 @@ export function placeDoors() {
     new GLTFShape('models/core_building/EntranceRight.glb'),
     { rotation: Quaternion.Euler(0, 180, 0) },
     { position: new Vector3(186, 2, 153) },
-    new Vector3(6, 8, 16),
+    new Vector3(8, 8, 16),
     'EntranceRight_DoorRight_Open',
     'EntranceRight_DoorLeft_Open',
     'EntranceRight_DoorRight_Close',
@@ -148,7 +148,7 @@ export function placeDoors() {
     new GLTFShape('models/core_building/EntranceLeft.glb'),
     { rotation: Quaternion.Euler(0, 180, 0) },
     { position: new Vector3(135, 2, 153) },
-    new Vector3(6, 8, 16),
+    new Vector3(8, 8, 16),
     'EntranceLeft_DoorRight_Open',
     'EntranceLeft_DoorLeft_Open',
     'EntranceLeft_DoorRight_Close',

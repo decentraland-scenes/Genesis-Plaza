@@ -19,6 +19,7 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { addOneTimeTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/doors'
+import { NPC } from '@dcl/npc-scene-utils'
 
 //////// LOG PLAYER POSITION
 
@@ -39,6 +40,13 @@ placeDoors()
 barPlatforms()
 
 // NPCS
+
+// let octopus = new NPC(
+//   { position: new Vector3(160, 0, 140) },
+//   'models/core_building/octotest4.glb',
+//   () => {},
+//   {}
+// )
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 
