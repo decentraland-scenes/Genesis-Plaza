@@ -1,4 +1,5 @@
 import * as utils from '@dcl/ecs-scene-utils'
+import { barMusicStream, isInBar } from './jukebox'
 import { sceneMessageBus } from './serverHandler'
 
 /// Reusable class for all platforms
@@ -100,6 +101,10 @@ export class Door extends Entity {
     this.animationClose1.play()
     this.animationClose2.play()
     this.isOpen = false
+
+    if (!isInBar) {
+      barRadioOff()
+    }
   }
 }
 
@@ -163,4 +168,7 @@ export function placeDoors() {
       left_door.close()
     }
   })
+}
+function barRadioOff() {
+  throw new Error('Function not implemented.')
 }

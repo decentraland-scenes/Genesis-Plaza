@@ -64,3 +64,40 @@ export function addOneTimeTrigger(
   }
   engine.addEntity(trigger)
 }
+
+/**
+ * Add a trigger that will be triggered each time
+ */
+export function addRepeatTrigger(
+  position: Vector3,
+  size: Vector3,
+  onPlayerEnter: () => void = undefined,
+  parent?: Entity,
+  show: boolean = false,
+  onExit: () => void = undefined
+) {
+  const triggerBox = new utils.TriggerBoxShape(size, Vector3.Zero())
+
+  const trigger = new Entity()
+  trigger.addComponent(new Transform({ position }))
+
+  trigger.addComponent(
+    new utils.TriggerComponent(
+      triggerBox, //shape
+      {
+        onCameraEnter: () => {
+          onPlayerEnter()
+        },
+        onCameraExit: () => {
+          onExit()
+        },
+        enableDebug: show,
+      }
+    )
+  )
+
+  if (parent) {
+    trigger.setParent(parent)
+  }
+  engine.addEntity(trigger)
+}

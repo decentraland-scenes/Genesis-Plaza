@@ -16,10 +16,17 @@ import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
-import { addOneTimeTrigger } from './modules/Utils'
+import { addOneTimeTrigger, addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/doors'
 import { NPC } from '@dcl/npc-scene-utils'
+import {
+  lowerVolume,
+  outOfBar,
+  raiseVolume,
+  setBarMusicOff,
+  setBarMusicOn,
+} from './modules/jukebox'
 
 //////// LOG PLAYER POSITION
 
@@ -41,14 +48,57 @@ barPlatforms()
 
 // NPCS
 
-// let octopus = new NPC(
-//   { position: new Vector3(160, 0, 140) },
-//   'models/core_building/octotest4.glb',
-//   () => {},
-//   {}
-// )
+let octopus = new NPC(
+  { position: new Vector3(160, 0.3, 140) },
+  'models/core_building/BobOctorossV42.glb',
+  () => {
+    octopus.idleAnim.stop()
+    octopus.idleAnim = new AnimationState('TalkLoop', { looping: true })
+    octopus.getComponent(Animator).addClip(octopus.idleAnim)
+    octopus.playAnimation('TalkIntro', true, 0.63)
+    //octopus.talk()
+  },
+  {
+    idleAnim: 'Idle',
+    faceUser: false,
+  }
+)
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
+
+// proper bar interior
+addRepeatTrigger(
+  new Vector3(160, 10, 155),
+  new Vector3(50, 30, 50),
+  () => {
+    setBarMusicOn()
+    log('went in')
+  },
+  null,
+  false,
+  () => {
+    outOfBar()
+    lowerVolume()
+    log('mid distance')
+    //setBarMusicOff()
+  }
+)
+
+//outer perimeter
+addRepeatTrigger(
+  new Vector3(160, 10, 155),
+  new Vector3(70, 30, 70),
+  () => {
+    lowerVolume()
+    log('got closer')
+  },
+  null,
+  false,
+  () => {
+    setBarMusicOff()
+    log('got far')
+  }
+)
 
 addOneTimeTrigger(
   new Vector3(160, 40, 155),
@@ -57,7 +107,9 @@ addOneTimeTrigger(
   null,
   false,
   () => {
+    lowerVolume()
     outsideBar()
+    log('stepped out')
   }
 )
 
