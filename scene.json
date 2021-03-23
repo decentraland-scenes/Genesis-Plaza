@@ -413,7 +413,7 @@
       "default": true,
       "position": {
         "x": [154, 162.7],
-        "y": 2,
+        "y": 50,
         "z": [148, 156]
       },
       "cameraTarget": {

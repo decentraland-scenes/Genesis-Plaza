@@ -18,21 +18,140 @@ const barMusicStreamEnt = new Entity()
 engine.addEntity(barMusicStreamEnt)
 
 export let barMusicStream: AudioStream | null = null
-barMusicStream = new AudioStream(barCurrentRadio)
-barMusicStream.volume = 0.4
-barMusicStream.playing = false
 
 let baseJukeBox = new Entity()
-baseJukeBox.addComponent(
-  new GLTFShape('models/core_building/jukebox/Jukebox_Base.glb')
-)
-baseJukeBox.addComponent(
-  new Transform({
-    position: new Vector3(179, 0, 144),
-    rotation: Quaternion.Euler(0, -45, 0),
+
+export function placeJukeBox() {
+  barMusicStream = new AudioStream(barCurrentRadio)
+  barMusicStream.volume = 0.4
+  barMusicStream.playing = false
+
+  baseJukeBox.addComponent(
+    new GLTFShape('models/core_building/jukebox/Jukebox_Base.glb')
+  )
+  baseJukeBox.addComponent(
+    new Transform({
+      position: new Vector3(179, 0, 144),
+      rotation: Quaternion.Euler(0, -45, 0),
+    })
+  )
+  engine.addEntity(baseJukeBox)
+
+  let JukeboxScreen = new Entity()
+  let JukeBoxText = new TextShape('Radio:\nRave Party')
+  JukeBoxText.fontSize = 1
+  JukeboxScreen.addComponent(JukeBoxText)
+
+  JukeboxScreen.setParent(baseJukeBox)
+  JukeboxScreen.addComponent(
+    new Transform({
+      position: new Vector3(0, 2.55, 0.25),
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+
+  let onButton = new JukeboxButton(
+    new GLTFShape('models/core_building/jukebox/Button_On.glb'),
+    'Button_On',
+    () => {
+      let musicState = barMusicStream && barMusicStream.playing
+      sceneMessageBus.emit('BarRadioToggle', {
+        state: !musicState,
+      })
+    },
+    'On/Off'
+  )
+
+  let nextButton = new JukeboxButton(
+    new GLTFShape('models/core_building/jukebox/ButtonForward.glb'),
+    'Button_Forward',
+    () => {
+      barCurrentRadioIndex += 1
+      if (barCurrentRadioIndex > radioCount) barCurrentRadioIndex = 0
+      JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
+
+      if (barMusicStream && barMusicStream.playing) {
+        sceneMessageBus.emit('setBarRadio', {
+          index: barCurrentRadioIndex,
+        })
+      }
+    },
+    'Next'
+  )
+
+  let prewiousButton = new JukeboxButton(
+    new GLTFShape('models/core_building/jukebox/Button_Previous.glb'),
+    'Button_Preview',
+    () => {
+      barCurrentRadioIndex -= 1
+      if (barCurrentRadioIndex < 0) barCurrentRadioIndex = radioCount - 1
+      JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
+
+      if (barMusicStream && barMusicStream.playing) {
+        sceneMessageBus.emit('setBarRadio', {
+          index: barCurrentRadioIndex,
+        })
+      }
+    },
+    'Previous'
+  )
+
+  sceneMessageBus.on('BarRadioToggle', (e) => {
+    if (barMusicStream && e.state == barMusicStream.playing) return
+    if (e.state) {
+      barRadioOn()
+    } else {
+      barRadioOff()
+    }
   })
-)
-engine.addEntity(baseJukeBox)
+
+  sceneMessageBus.on('setBarRadio', (e) => {
+    // update display
+
+    let newRadio: Radios
+    switch (e.index) {
+      case 0:
+        newRadio = Radios.RAVE
+        break
+      case 1:
+        newRadio = Radios.DELTA
+        break
+      case 2:
+        newRadio = Radios.INTERVIEW
+        break
+      case 3:
+        newRadio = Radios.MKLAB
+        break
+      case 4:
+        newRadio = Radios.SIGNS
+        break
+      case null:
+        newRadio = null
+        break
+    }
+
+    if (barCurrentRadio == newRadio && barMusicStream && barMusicStream.playing)
+      return
+    if (barMusicStream) {
+      barMusicStream.playing = false
+      barMusicStream = null
+    }
+    barCurrentRadioIndex = e.index
+    barCurrentRadio = newRadio
+
+    JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
+
+    barRadioOn(barCurrentRadio)
+  })
+
+  sceneMessageBus.on('enteredRadioRange', (e) => {
+    if (!isInBar || barCurrentRadio == null) return
+    if (e.radio == barCurrentRadioIndex) return
+    sceneMessageBus.emit('setBarRadio', {
+      index: barCurrentRadioIndex,
+    })
+  })
+}
 
 export class JukeboxButton extends Entity {
   clickAnim: AnimationState
@@ -74,98 +193,6 @@ export class JukeboxButton extends Entity {
     this.getComponent(AudioSource).playOnce()
   }
 }
-
-let onButton = new JukeboxButton(
-  new GLTFShape('models/core_building/jukebox/Button_On.glb'),
-  'Button_On',
-  () => {
-    let musicState = barMusicStream && barMusicStream.playing
-    sceneMessageBus.emit('BarRadioToggle', {
-      state: !musicState,
-    })
-  },
-  'On/Off'
-)
-
-let nextButton = new JukeboxButton(
-  new GLTFShape('models/core_building/jukebox/ButtonForward.glb'),
-  'Button_Forward',
-  () => {
-    barCurrentRadioIndex += 1
-    if (barCurrentRadioIndex > radioCount) barCurrentRadioIndex = 0
-    // update display
-
-    if (barMusicStream && barMusicStream.playing) {
-      sceneMessageBus.emit('setBarRadio', {
-        index: barCurrentRadioIndex,
-      })
-    }
-  },
-  'Next'
-)
-
-let prewiousButton = new JukeboxButton(
-  new GLTFShape('models/core_building/jukebox/Button_Previous.glb'),
-  'Button_Preview',
-  () => {
-    barCurrentRadioIndex -= 1
-    if (barCurrentRadioIndex < 0) barCurrentRadioIndex = radioCount - 1
-    // update display
-
-    if (barMusicStream && barMusicStream.playing) {
-      sceneMessageBus.emit('setBarRadio', {
-        index: barCurrentRadioIndex,
-      })
-    }
-  },
-  'Previous'
-)
-
-sceneMessageBus.on('BarRadioToggle', (e) => {
-  if (barMusicStream && e.state == barMusicStream.playing) return
-  if (e.state) {
-    barRadioOn()
-  } else {
-    barRadioOff()
-  }
-})
-
-sceneMessageBus.on('setBarRadio', (e) => {
-  // update display
-
-  let newRadio: Radios
-  switch (e.index) {
-    case 0:
-      newRadio = Radios.RAVE
-      break
-    case 1:
-      newRadio = Radios.DELTA
-      break
-    case 2:
-      newRadio = Radios.INTERVIEW
-      break
-    case 3:
-      newRadio = Radios.MKLAB
-      break
-    case 4:
-      newRadio = Radios.SIGNS
-      break
-    case null:
-      newRadio = null
-      break
-  }
-
-  if (barCurrentRadio == newRadio && barMusicStream && barMusicStream.playing)
-    return
-  if (barMusicStream) {
-    barMusicStream.playing = false
-    barMusicStream = null
-  }
-  barCurrentRadioIndex = e.index
-  barCurrentRadio = newRadio
-
-  barRadioOn(barCurrentRadio)
-})
 
 function barRadioOn(station?) {
   if (isInBar) {
@@ -219,6 +246,7 @@ export function lowerVolume() {
     barMusicStream.playing = true
   }
   barMusicStream.volume = 0.1
+  return
 }
 
 export function raiseVolume() {
@@ -229,10 +257,27 @@ export function raiseVolume() {
   barMusicStream.volume = 0.4
 }
 
-sceneMessageBus.on('enteredRadioRange', (e) => {
-  if (!isInBar || barCurrentRadio == null) return
-  if (e.radio == barCurrentRadioIndex) return
-  sceneMessageBus.emit('setBarRadio', {
-    index: barCurrentRadioIndex,
-  })
-})
+function getRadioName(radio: number) {
+  let radioName: string = ''
+  switch (radio) {
+    case 0:
+      radioName = 'Rave Party'
+      break
+    case 1:
+      radioName = 'Delta'
+      break
+    case 3:
+      radioName = 'DCL Core'
+      break
+    case 4:
+      radioName = 'MK Lab'
+      break
+    case 5:
+      radioName = 'Signs'
+      break
+    case null:
+      radioName = 'Off'
+      break
+  }
+  return radioName
+}

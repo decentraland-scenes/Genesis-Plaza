@@ -19,14 +19,16 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 import { addOneTimeTrigger, addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/doors'
-import { NPC } from '@dcl/npc-scene-utils'
+
 import {
   lowerVolume,
   outOfBar,
-  raiseVolume,
+  placeJukeBox,
   setBarMusicOff,
   setBarMusicOn,
 } from './modules/jukebox'
+
+import { addBarNPCs } from './modules/barNPCs'
 
 //////// LOG PLAYER POSITION
 
@@ -46,25 +48,22 @@ addBuildings()
 placeDoors()
 barPlatforms()
 
-// NPCS
+/// TRIGGER FOR STUFF OUTSIDE BAR
 
-let octopus = new NPC(
-  { position: new Vector3(160, 0.3, 140) },
-  'models/core_building/BobOctorossV42.glb',
+addOneTimeTrigger(
+  new Vector3(160, 10, 155),
+  new Vector3(50, 30, 50),
   () => {
-    octopus.idleAnim.stop()
-    octopus.idleAnim = new AnimationState('TalkLoop', { looping: true })
-    octopus.getComponent(Animator).addClip(octopus.idleAnim)
-    octopus.playAnimation('TalkIntro', true, 0.63)
-    //octopus.talk()
+    insideBar()
   },
-  {
-    idleAnim: 'Idle',
-    faceUser: false,
+  null,
+  false,
+  async () => {
+    await lowerVolume()
+    outsideBar()
+    log('stepped out')
   }
 )
-
-/// TRIGGER FOR STUFF OUTSIDE BAR
 
 // proper bar interior
 addRepeatTrigger(
@@ -87,7 +86,7 @@ addRepeatTrigger(
 //outer perimeter
 addRepeatTrigger(
   new Vector3(160, 10, 155),
-  new Vector3(70, 30, 70),
+  new Vector3(75, 30, 75),
   () => {
     lowerVolume()
     log('got closer')
@@ -100,18 +99,10 @@ addRepeatTrigger(
   }
 )
 
-addOneTimeTrigger(
-  new Vector3(160, 40, 155),
-  new Vector3(50, 250, 50),
-  null,
-  null,
-  false,
-  () => {
-    lowerVolume()
-    outsideBar()
-    log('stepped out')
-  }
-)
+export function insideBar() {
+  addBarNPCs()
+  placeJukeBox()
+}
 
 export function outsideBar() {
   /// MOVING PLATFORMS
