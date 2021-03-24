@@ -1,4 +1,17 @@
 export function addBuildings() {
+
+    // CLOUD LOBBY
+
+  // add lobby platform + teleport beam
+  let lobby = new Entity()
+  lobby.addComponent(new GLTFShape('models/lobby/lobby_platform.glb'))
+  lobby.addComponent(
+    new Transform({
+      rotation: Quaternion.Euler(0, 180, 0),
+    })
+  )
+  engine.addEntity(lobby)
+  
   // AGORA BUILDING
 
   // add agora
