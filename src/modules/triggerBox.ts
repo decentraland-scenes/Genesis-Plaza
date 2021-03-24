@@ -1,3 +1,7 @@
+interface NoArgCallBack {
+	() : void;
+}
+
 let debugMat = new Material()
 
 debugMat.albedoColor = Color4.FromHexString('66000066')
@@ -20,8 +24,13 @@ export class TriggerBox extends Entity {
   areaZMin: number = 0
   areaZMax: number = 0
 
-  constructor(_pos: Vector3, _size: Vector3) {
+  callback:NoArgCallBack
+
+  constructor(_pos: Vector3, _size: Vector3, _callback:NoArgCallBack) {
     super()
+
+    this.callback = _callback
+
     this.position.copyFrom(_pos)
     this.sizeX = _size.x
     this.sizeY = _size.y
@@ -82,6 +91,7 @@ export class TriggerBox extends Entity {
       if (!this.fired) {
         //log("Box Zone Triggered!")
         this.fired = true
+        this.callback()
         return true
       }
     } else {

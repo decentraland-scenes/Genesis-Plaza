@@ -106,5 +106,5 @@ let forest2 = new AmbientSound(
   0.6
 )
 
-initiateVJUI()
+//initiateVJUI()
 

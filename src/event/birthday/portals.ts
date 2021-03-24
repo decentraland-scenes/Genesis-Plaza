@@ -1,6 +1,6 @@
 import { auditoriumCenter } from '../globals'
-import { TriggerBox } from './triggerBox'
-import { player } from './player'
+import { TriggerBox } from '../../modules/triggerBox'
+import { player } from '../../modules/player'
 import * as ui from '@dcl/ui-scene-utils'
 
 let nextSceneCoords = '-67,85'

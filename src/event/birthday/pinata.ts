@@ -1,5 +1,6 @@
 //import { sendpoap } from './poap'
-//piñata
+
+const pinataLocation = new Vector3(8,0,8)
 
 const confettiShape = new GLTFShape('models/bday/confetti.glb')
 const hitClip = new AudioClip('sounds/collision_wood_soft_02.mp3')
@@ -13,7 +14,7 @@ const player = Camera.instance
 
 const poapShape = new GLTFShape('models/bday/pinata_poap.glb')
 
-const pinataLocation = new Vector3(244,0,212)
+
 
 let poapDummy = new Entity()
 poapDummy.addComponent(new Transform({position: new Vector3(105,-10,80)}))
@@ -46,9 +47,6 @@ const pinataChainTransform = new Transform({
     scale: new Vector3(1, 1, 1),
   })
 
-
-
-
 const pinataChain = new Entity()
 pinataChain.addComponent(new GLTFShape('models/bday/pinata_chain.glb'))
 pinataChain.addComponent(pinataChainTransform)
@@ -68,7 +66,6 @@ pinataBroken.addComponent(new GLTFShape('models/bday/pinata_broken.glb'))
 pinataBroken.addComponent(new Transform())
 pinataBroken.getComponent(Transform).position.y =-10
 pinataBroken.setParent(pinataFrame)
-//engine.addEntity(pinataBroken)
 
 function breakPinata(){
     pinataBroken.getComponent(Transform).position.y = 0.01
@@ -122,11 +119,6 @@ pinataMain.addComponent(new OnPointerDown( () => {
 pinataMain.addComponent(hitSource)
 pinataMain.setParent(pinataChain)
 
-// const pinataMain = new Entity()
-// pinataMain.addComponent(new GLTFShape('models/piñataInteractive.glb'))
-// pinataMain.addComponent(pinataTransform)
-// engine.addEntity(pinataMain)
-
 export function ToDegrees(radians)
 {
     var pi = Math.PI;
@@ -138,7 +130,6 @@ export function ToRadian(degrees)
     var pi = Math.PI;
     return degrees * (pi/180);
 }
-
 
 class PinataSystem {
 
