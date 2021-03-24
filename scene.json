@@ -405,6 +405,10 @@
     "blacklist": [],
     "teleportPosition": ""
   },
+  "requiredPermissions": [
+    "ALLOW_TO_MOVE_PLAYER_INSIDE_SCENE",
+	"ALLOW_TO_TRIGGER_AVATAR_EMOTE"
+  ],
   "main": "bin/game.js",
   "tags": [],
   "spawnPoints": [
@@ -412,9 +416,9 @@
       "name": "center",
       "default": true,
       "position": {
-        "x": [154, 162.7],
-        "y": 50,
-        "z": [148, 156]
+        "x": [156, 164],
+        "y": 130,
+        "z": [138, 142]
       },
       "cameraTarget": {
         "x": 158,
