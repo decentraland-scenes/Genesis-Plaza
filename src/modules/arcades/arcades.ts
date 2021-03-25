@@ -18,15 +18,15 @@ export function addArcades() {
   // Ethereum arcade positions and triggers
   const arcadeEthereumPos: Transform[] = [
     new Transform({
-      position: new Vector3(167, 10.8, 164),
+      position: new Vector3(167, 10.7, 164),
       rotation: Quaternion.Euler(0, 180 + 24, 0),
     }),
     new Transform({
-      position: new Vector3(154, 10.8, 163),
+      position: new Vector3(154, 10.7, 163),
       rotation: Quaternion.Euler(0, 180 + -24, 0),
     }),
     new Transform({
-      position: new Vector3(175, 10.8, 144.7),
+      position: new Vector3(175, 10.7, 144.7),
       rotation: Quaternion.Euler(0, 180 + 24, 0),
     }),
     //   new Transform({

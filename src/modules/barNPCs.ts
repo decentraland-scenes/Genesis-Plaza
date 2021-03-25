@@ -34,7 +34,7 @@ export async function addBarNPCs() {
       position: new Vector3(160, 0.3, 141),
       scale: new Vector3(1.2, 1.2, 1.2),
     },
-    'models/core_building/BobOctorossV42.glb',
+    'models/core_building/BobOctorossPartA_V42.glb',
     () => {
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
@@ -52,16 +52,19 @@ export async function addBarNPCs() {
   )
 
   let octopusObjects = new Entity()
-
+  octopusObjects.addComponent(new Transform())
   octopusObjects.addComponent(
     new GLTFShape('models/core_building/BobOctorossPartB_V02.glb')
   )
+  engine.addEntity(octopusObjects)
   octopusObjects.setParent(octopus)
 
   let dogePath: FollowPathData = {
     path: [
       new Vector3(175, 0.3, 160),
       new Vector3(169, 0.4, 164),
+      new Vector3(153, 0.3, 154),
+      new Vector3(142, 0.3, 158),
       new Vector3(139, 0.3, 147),
       new Vector3(151, 0.3, 140),
       new Vector3(155, 0.3, 145),
@@ -103,7 +106,7 @@ export async function addBarNPCs() {
       darkUI: true,
       hoverText: 'WOW',
       onlyETrigger: true,
-      walkingSpeed: 2,
+      walkingSpeed: 1.2,
       onWalkAway: () => {
         doge.followPath()
       },
