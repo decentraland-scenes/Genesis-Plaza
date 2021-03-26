@@ -29,6 +29,7 @@ import {
 } from './modules/jukebox'
 
 import { addBarNPCs } from './modules/barNPCs'
+import { addArcades } from './modules/arcades/arcades'
 
 //////// LOG PLAYER POSITION
 
@@ -102,6 +103,7 @@ addRepeatTrigger(
 export function insideBar() {
   addBarNPCs()
   placeJukeBox()
+  addArcades()
 }
 
 export function outsideBar() {
@@ -111,7 +113,7 @@ export function outsideBar() {
 
   ///TELEPORTERS
 
-  placeTeleports()
+  //   placeTeleports()
 
   /// VIDEO SCEREEN
 
