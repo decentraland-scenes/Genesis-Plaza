@@ -3,6 +3,7 @@ const modelFolder = "models/lobby/"
 
 export let roundedSquareAlpha = new Texture ("images/rounded_alpha_square.png")
 export let dummySceneBG = new Texture ("images/dummy_scene.png")
+export let beamUIBG = new Texture ("images/ui_beam_up_bg.png")
 
 //MENU
 export let menuTopEventsShape =     new GLTFShape(modelFolder + "menu_top_events.glb")
@@ -26,6 +27,9 @@ export let cloudPuffShape=          new GLTFShape(modelFolder + "cloud_puff.glb"
 export let cloudSmallShape=         new GLTFShape(modelFolder + "clouds_small.glb")
 export let cloudSmall2Shape=        new GLTFShape(modelFolder + "clouds_small2.glb")
 export let cloudBigShape=           new GLTFShape(modelFolder + "clouds_big.glb")
+
+//BEAM
+export let portalSpiralShape=       new GLTFShape(modelFolder + "portal_lift_spiral.glb")
 
 export const dateBGColor:Color3 = Color3.FromHexString("#cdcdcd")
 export const dateMonthColor:Color3 = Color3.FromHexString("#333333")

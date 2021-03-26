@@ -447,19 +447,43 @@ function roundNumber(num, dec) {
   return Math.round(largeNum) / Math.pow(10, dec)
 }
 
+// TELEPORT BEAM UI
+const beamUIBGTexture = new Texture ("images/ui_beam_up_bg.png")
+
 let teleportUIContainer = new UIContainerRect(screenSpaceUI)
-teleportUIContainer.width = '10%'
-teleportUIContainer.height = '30%'
+teleportUIContainer.width = '40%'
+teleportUIContainer.vAlign = 'top'
+teleportUIContainer.height = '20%'
 teleportUIContainer.isPointerBlocker = false
+
+let teleportUIBG = new UIImage(teleportUIContainer,beamUIBGTexture )
+teleportUIBG.sourceLeft = 0
+teleportUIBG.sourceTop = 0
+teleportUIBG.sourceWidth = 512
+teleportUIBG.sourceHeight = 256
+teleportUIBG.width = '256px'
+teleportUIBG.height = '128px'
 
 let teleportCountdownText = new UIText(teleportUIContainer)
 teleportCountdownText.value = "3"
-teleportCountdownText.fontSize = 64
+teleportCountdownText.fontSize = 32
+teleportCountdownText.color = Color4.Black()
+teleportCountdownText.font = new Font(Fonts.SanFrancisco_Heavy)
 teleportCountdownText.hAlign = "center"
 teleportCountdownText.hTextAlign = "center"
-teleportCountdownText.vAlign = "top"
-teleportCountdownText.vTextAlign = "top"
+teleportCountdownText.vAlign = "bottom"
+teleportCountdownText.vTextAlign = "bottom"
+teleportCountdownText.positionY = 16
 teleportCountdownText.isPointerBlocker = false
+
+// let teleportBeamMessage = new UIText(teleportUIContainer)
+// teleportBeamMessage.value = "BEAMING UP"
+// teleportBeamMessage.fontSize = 48
+// teleportBeamMessage.hAlign = "center"
+// teleportBeamMessage.hTextAlign = "center"
+// teleportBeamMessage.vAlign = "bottom"
+// teleportBeamMessage.vTextAlign = "bottom"
+// teleportBeamMessage.isPointerBlocker = false
 
 export function showTeleportUI(_visible:boolean){
   teleportUIContainer.visible = _visible

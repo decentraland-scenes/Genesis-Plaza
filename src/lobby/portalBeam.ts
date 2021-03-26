@@ -3,6 +3,7 @@ import { player } from '../modules/player'
 import { movePlayerTo } from '@decentraland/RestrictedActions'
 import {lobbyCenter, lobbyHeight} from './resources/globals'
 import {showTeleportUI, setTeleportCountdown } from '../modules/ui'
+import * as resource from "./resources/resources"
 
 @Component("DelayedTriggerBox")
 export class DelayedTriggerBox{  
@@ -21,7 +22,8 @@ export class TeleportController {
     triggerBoxDown:TriggerBox
     triggers:TriggerBox[]
     delayedTriggers:TriggerBox[]
-    portalSys:PortalCheckSystem    
+    portalSys:PortalCheckSystem   
+    portalLiftSpiral:Entity 
     
     constructor(){
         this.triggers = []
@@ -35,7 +37,7 @@ export class TeleportController {
                 //{x:lobbyCenter.x, y:lobbyHeight+100, z:lobbyCenter.z+12}
             }
         )
-        this.triggerBoxUp.addComponent(new DelayedTriggerBox(2))
+        this.triggerBoxUp.addComponent(new DelayedTriggerBox(3))
 
       engine.addEntity(this.triggerBoxUp)
   
@@ -50,6 +52,15 @@ export class TeleportController {
 
       this.delayedTriggers.push(this.triggerBoxUp)
       this.triggers.push(this.triggerBoxDown)
+
+      this.portalLiftSpiral = new Entity()
+      this.portalLiftSpiral.addComponent(new Transform({
+        position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
+        scale: new Vector3(1,0,1)
+      }))
+      this.portalLiftSpiral.addComponent(resource.portalSpiralShape)
+
+      engine.addEntity(this.portalLiftSpiral)
   
       this.portalSys = new PortalCheckSystem(this)
       engine.addSystem(this.portalSys)
@@ -73,32 +84,41 @@ export class TeleportController {
       }
     }
     collideDelayed(dt:number){
+      const liftSpiralTransform = this.portalLiftSpiral.getComponent(Transform)
+
       for(let i=0; i< this.delayedTriggers.length; i++){
 
         if(this.delayedTriggers[i].collide(player.feetPos, true)){
           const delayInfo = this.delayedTriggers[i].getComponent(DelayedTriggerBox)
           delayInfo.elapsed += dt
           showTeleportUI(true)
-          let countDownNum = delayInfo.delay - delayInfo.elapsed 
-          if(countDownNum < 0)
-            countDownNum = 0         
+          let countDownNum = delayInfo.delay - delayInfo.elapsed  +1
+          if(countDownNum < 1)
+            countDownNum = 1         
           setTeleportCountdown( countDownNum.toFixed(0) )
+          liftSpiralTransform.scale.y += dt/delayInfo.delay
+          liftSpiralTransform.position.y += 0.9*dt
 
           if(delayInfo.elapsed > delayInfo.delay){
             this.delayedTriggers[i].fire()
             delayInfo.elapsed = 0
+            liftSpiralTransform.scale.y = 0
+            liftSpiralTransform.position.y = lobbyCenter.y
           }
         } 
         else{
           this.delayedTriggers[i].getComponent(DelayedTriggerBox).elapsed = 0
           showTeleportUI(false)
           setTeleportCountdown( '0')
+          liftSpiralTransform.scale.y = 0
+          liftSpiralTransform.position.y = lobbyCenter.y
          
 
         }
       }
     }
   }
+  
   
   
 class PortalCheckSystem {

@@ -37,7 +37,8 @@ function addClouds(_count:number, _radius:number, _center:Vector3){
     }
 }
 
-addClouds(16, 
+addClouds(
+    16, 
     20, 
     new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
     )
