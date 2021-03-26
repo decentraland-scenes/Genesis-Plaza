@@ -33,6 +33,7 @@ export function placeJukeBox() {
     new Transform({
       position: new Vector3(179, 0, 144),
       rotation: Quaternion.Euler(0, -45, 0),
+      scale: new Vector3(0.75, 0.75, 0.75),
     })
   )
   engine.addEntity(baseJukeBox)
@@ -180,7 +181,7 @@ export class JukeboxButton extends Entity {
           this.press()
         },
         {
-          button: ActionButton.PRIMARY,
+          button: ActionButton.POINTER,
           hoverText: text ? text : 'Press',
         }
       )
