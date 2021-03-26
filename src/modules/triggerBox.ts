@@ -76,7 +76,7 @@ export class TriggerBox extends Entity {
     this.areaZMax = this.position.z + this.sizeZ / 2
   }
 
-  collide(pos: Vector3): boolean {
+  collide(pos: Vector3, _delayed?:boolean): boolean {
     //log("check collide: " + pos + " - " + this.position)
     const worldPos = this.getComponent(Transform).position
 
@@ -87,16 +87,20 @@ export class TriggerBox extends Entity {
       pos.y < this.areaYMax &&
       pos.z > this.areaZMin &&
       pos.z < this.areaZMax
-    ) {
-      if (!this.fired) {
-        //log("Box Zone Triggered!")
-        this.fired = true
-        this.callback()
+    ) {      
+        //log("Box Zone Triggered!")        
+        if(!_delayed){
+          this.fire()
+        }        
         return true
-      }
+      
     } else {
-      this.fired = false
+      
       return false
     }
+  }
+
+  fire(){
+    this.callback()
   }
 }

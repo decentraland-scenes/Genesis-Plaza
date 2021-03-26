@@ -3,6 +3,7 @@ import { WearableData, getWearableURL } from './wearables'
 import './../extensions/entityExtensions'
 import { MessageBoards } from './messageboard'
 import resources from '../resources'
+import { canvas } from 'node_modules/@dcl/npc-scene-utils/dist/utils/default-ui-components'
 
 export const screenSpaceUI = new UICanvas()
 screenSpaceUI.visible = true
@@ -446,6 +447,27 @@ function roundNumber(num, dec) {
   return Math.round(largeNum) / Math.pow(10, dec)
 }
 
+let teleportUIContainer = new UIContainerRect(screenSpaceUI)
+teleportUIContainer.width = '10%'
+teleportUIContainer.height = '30%'
+teleportUIContainer.isPointerBlocker = false
+
+let teleportCountdownText = new UIText(teleportUIContainer)
+teleportCountdownText.value = "3"
+teleportCountdownText.fontSize = 64
+teleportCountdownText.hAlign = "center"
+teleportCountdownText.hTextAlign = "center"
+teleportCountdownText.vAlign = "top"
+teleportCountdownText.vTextAlign = "top"
+teleportCountdownText.isPointerBlocker = false
+
+export function showTeleportUI(_visible:boolean){
+  teleportUIContainer.visible = _visible
+}
+export function setTeleportCountdown(_numberString:string){
+  teleportCountdownText.value = _numberString
+}
+
 /////// CLOSE UI
 
 // Instance the input object
@@ -492,3 +514,4 @@ function distance(pos1: Vector3, pos2: Vector3): number {
   const b = pos1.z - pos2.z
   return a * a + b * b
 }
+

@@ -110,14 +110,14 @@ export class VerticalScrollMenu extends Entity {
             // 'E' to scroll up
             if(e.buttonId == 1){                         
                 scrollInfo.scrollUp() 
-                //this.deselectAll()
+                this.deselectAll()
                 this.showItem(scrollInfo.currentItem+4)
                 this.hideItem(scrollInfo.currentItem-2)
             }
             // 'F' to scroll down
             if(e.buttonId == 2){                
                 scrollInfo.scrollDown() 
-               // this.deselectAll()
+                this.deselectAll()
                 this.showItem(scrollInfo.currentItem-1)
                 this.hideItem(scrollInfo.currentItem+5)
             }         
@@ -161,14 +161,14 @@ export class VerticalScrollMenu extends Entity {
             // 'E' to scroll up
             if(e.buttonId == 1){                         
                 scrollInfo.scrollUp() 
-                //this.deselectAll()
+                this.deselectAll()
                 this.showItem(scrollInfo.currentItem+4)
                 this.hideItem(scrollInfo.currentItem-2)
             }
             // 'F' to scroll down
             if(e.buttonId == 2){                
                 scrollInfo.scrollDown() 
-               // this.deselectAll()
+                this.deselectAll()
                 this.showItem(scrollInfo.currentItem-1)
                 this.hideItem(scrollInfo.currentItem+5)
             }         
