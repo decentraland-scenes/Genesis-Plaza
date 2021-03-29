@@ -13,6 +13,7 @@ export let isInBar: boolean = false
 let barCurrentRadio: Radios | null = Radios.RAVE
 let barCurrentRadioIndex: number = 0
 let radioCount = 5
+let radioIsOn: boolean = true
 
 const barMusicStreamEnt = new Entity()
 engine.addEntity(barMusicStreamEnt)
@@ -129,8 +130,10 @@ export function placeJukeBox() {
     if (barMusicStream && e.state == barMusicStream.playing) return
     if (e.state) {
       barRadioOn()
+      radioIsOn = true
     } else {
       barRadioOff()
+      radioIsOn = false
     }
   })
 
@@ -237,16 +240,17 @@ function barRadioOn(station?) {
       })
     )
   }
+  radioIsOn = true
 }
 
 function barRadioOff() {
   if (barMusicStream) {
     barMusicStream.playing = false
-    baseJukeBoxLights1.getComponent(GLTFShape).visible = false
-    baseJukeBoxLights2.getComponent(GLTFShape).visible = false
     // jukeBoxLightsAnim1.stop()
     // jukeBoxLightsAnim2.stop()
   }
+  baseJukeBoxLights1.getComponent(GLTFShape).visible = false
+  baseJukeBoxLights2.getComponent(GLTFShape).visible = false
   //barCurrentRadio = null
 }
 
@@ -256,7 +260,7 @@ export function setBarMusicOn() {
   })
   isInBar = true
   barMusicStream.volume = 0.4
-  if (barCurrentRadio) {
+  if (radioIsOn && barCurrentRadio) {
     barRadioOn(barCurrentRadio)
   }
 
@@ -279,7 +283,7 @@ export function setBarMusicOff() {
 export function lowerVolume() {
   if (isInBar) return
 
-  if (barMusicStream && !barMusicStream.playing) {
+  if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
   barMusicStream.volume = 0.1
@@ -288,7 +292,7 @@ export function lowerVolume() {
 
 export function raiseVolume() {
   isInBar = true
-  if (barMusicStream && !barMusicStream.playing) {
+  if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
   barMusicStream.volume = 0.4
