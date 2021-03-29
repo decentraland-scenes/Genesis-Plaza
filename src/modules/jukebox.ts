@@ -20,6 +20,14 @@ engine.addEntity(barMusicStreamEnt)
 export let barMusicStream: AudioStream | null = null
 
 let baseJukeBox = new Entity()
+let baseJukeBoxLights1 = new Entity()
+let baseJukeBoxLights2 = new Entity()
+// let jukeBoxLightsAnim1 = new AnimationState('Light_Action', { looping: true })
+// jukeBoxLightsAnim1.stop()
+// let jukeBoxLightsAnim2 = new AnimationState('Jukebox_Lights_Action', {
+//   looping: true,
+// })
+// jukeBoxLightsAnim2.stop()
 
 export function placeJukeBox() {
   barMusicStream = new AudioStream(barCurrentRadio)
@@ -37,6 +45,26 @@ export function placeJukeBox() {
     })
   )
   engine.addEntity(baseJukeBox)
+
+  baseJukeBoxLights1.addComponent(
+    new GLTFShape('models/core_building/jukebox/Lights_01.glb')
+  )
+  baseJukeBoxLights1.getComponent(GLTFShape).visible = false
+  baseJukeBoxLights1.addComponent(new Transform({}))
+  //baseJukeBoxLights1.addComponent(new Animator())
+  baseJukeBoxLights1.setParent(baseJukeBox)
+  engine.addEntity(baseJukeBoxLights1)
+  //   baseJukeBoxLights1.getComponent(Animator).addClip(jukeBoxLightsAnim1)
+
+  baseJukeBoxLights2.addComponent(
+    new GLTFShape('models/core_building/jukebox/Lights_02.glb')
+  )
+  baseJukeBoxLights2.getComponent(GLTFShape).visible = false
+  baseJukeBoxLights2.addComponent(new Transform({}))
+  //baseJukeBoxLights2.addComponent(new Animator())
+  baseJukeBoxLights2.setParent(baseJukeBox)
+  engine.addEntity(baseJukeBoxLights2)
+  //baseJukeBoxLights2.getComponent(Animator).addClip(jukeBoxLightsAnim2)
 
   let JukeboxScreen = new Entity()
   let JukeBoxText = new TextShape('Radio:\nRave Party')
@@ -202,6 +230,10 @@ function barRadioOn(station?) {
         barMusicStream = new AudioStream(station ? station : barCurrentRadio)
         barMusicStream.volume = 0.4
         barMusicStreamEnt.addComponentOrReplace(barMusicStream)
+        baseJukeBoxLights1.getComponent(GLTFShape).visible = true
+        baseJukeBoxLights2.getComponent(GLTFShape).visible = true
+        // jukeBoxLightsAnim1.play()
+        // jukeBoxLightsAnim2.play()
       })
     )
   }
@@ -210,6 +242,10 @@ function barRadioOn(station?) {
 function barRadioOff() {
   if (barMusicStream) {
     barMusicStream.playing = false
+    baseJukeBoxLights1.getComponent(GLTFShape).visible = false
+    baseJukeBoxLights2.getComponent(GLTFShape).visible = false
+    // jukeBoxLightsAnim1.stop()
+    // jukeBoxLightsAnim2.stop()
   }
   //barCurrentRadio = null
 }
