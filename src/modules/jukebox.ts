@@ -3,8 +3,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
-  INTERVIEW = 'https://dclcoreradio.com/dclradio.ogg',
   DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
+  GRAFFITI = 'https://n07.radiojar.com/2qm1fc5kb.m4a?1617129761=&rj-tok=AAABeIR7VqwAilDFeUM39SDjmw&rj-ttl=5',
   SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
   MKLAB = 'https://freeuk13.listen2myradio.com/live.mp3?typeportmount=s2_20223_stream_944192845',
 }
@@ -13,6 +13,7 @@ export let isInBar: boolean = false
 let barCurrentRadio: Radios | null = Radios.RAVE
 let barCurrentRadioIndex: number = 0
 let radioCount = 5
+let radioIsOn: boolean = true
 
 const barMusicStreamEnt = new Entity()
 engine.addEntity(barMusicStreamEnt)
@@ -129,8 +130,10 @@ export function placeJukeBox() {
     if (barMusicStream && e.state == barMusicStream.playing) return
     if (e.state) {
       barRadioOn()
+      radioIsOn = true
     } else {
       barRadioOff()
+      radioIsOn = false
     }
   })
 
@@ -146,7 +149,7 @@ export function placeJukeBox() {
         newRadio = Radios.DELTA
         break
       case 2:
-        newRadio = Radios.INTERVIEW
+        newRadio = Radios.GRAFFITI
         break
       case 3:
         newRadio = Radios.MKLAB
@@ -237,16 +240,17 @@ function barRadioOn(station?) {
       })
     )
   }
+  radioIsOn = true
 }
 
 function barRadioOff() {
   if (barMusicStream) {
     barMusicStream.playing = false
-    baseJukeBoxLights1.getComponent(GLTFShape).visible = false
-    baseJukeBoxLights2.getComponent(GLTFShape).visible = false
     // jukeBoxLightsAnim1.stop()
     // jukeBoxLightsAnim2.stop()
   }
+  baseJukeBoxLights1.getComponent(GLTFShape).visible = false
+  baseJukeBoxLights2.getComponent(GLTFShape).visible = false
   //barCurrentRadio = null
 }
 
@@ -255,8 +259,11 @@ export function setBarMusicOn() {
     radio: barCurrentRadioIndex,
   })
   isInBar = true
-  barMusicStream.volume = 0.4
-  if (barCurrentRadio) {
+  if (barMusicStream) {
+    barMusicStream.volume = 0.4
+  }
+
+  if (radioIsOn && barCurrentRadio) {
     barRadioOn(barCurrentRadio)
   }
 
@@ -279,16 +286,19 @@ export function setBarMusicOff() {
 export function lowerVolume() {
   if (isInBar) return
 
-  if (barMusicStream && !barMusicStream.playing) {
+  if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
-  barMusicStream.volume = 0.1
+  if (barMusicStream) {
+    barMusicStream.volume = 0.1
+  }
+
   return
 }
 
 export function raiseVolume() {
   isInBar = true
-  if (barMusicStream && !barMusicStream.playing) {
+  if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
   barMusicStream.volume = 0.4
@@ -303,13 +313,13 @@ function getRadioName(radio: number) {
     case 1:
       radioName = 'Delta'
       break
-    case 3:
-      radioName = 'DCL Core'
+    case 2:
+      radioName = 'Graffiti Kings'
       break
-    case 4:
+    case 3:
       radioName = 'MK Lab'
       break
-    case 5:
+    case 4:
       radioName = 'Signs'
       break
     case null:
