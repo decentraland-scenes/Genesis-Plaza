@@ -3,8 +3,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
-  INTERVIEW = 'https://dclcoreradio.com/dclradio.ogg',
   DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
+  GRAFFITI = 'https://n07.radiojar.com/2qm1fc5kb.m4a?1617129761=&rj-tok=AAABeIR7VqwAilDFeUM39SDjmw&rj-ttl=5',
   SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
   MKLAB = 'https://freeuk13.listen2myradio.com/live.mp3?typeportmount=s2_20223_stream_944192845',
 }
@@ -149,7 +149,7 @@ export function placeJukeBox() {
         newRadio = Radios.DELTA
         break
       case 2:
-        newRadio = Radios.INTERVIEW
+        newRadio = Radios.GRAFFITI
         break
       case 3:
         newRadio = Radios.MKLAB
@@ -313,13 +313,13 @@ function getRadioName(radio: number) {
     case 1:
       radioName = 'Delta'
       break
-    case 3:
-      radioName = 'DCL Core'
+    case 2:
+      radioName = 'Graffiti Kings'
       break
-    case 4:
+    case 3:
       radioName = 'MK Lab'
       break
-    case 5:
+    case 4:
       radioName = 'Signs'
       break
     case null:
