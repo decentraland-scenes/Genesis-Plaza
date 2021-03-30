@@ -259,7 +259,10 @@ export function setBarMusicOn() {
     radio: barCurrentRadioIndex,
   })
   isInBar = true
-  barMusicStream.volume = 0.4
+  if (barMusicStream) {
+    barMusicStream.volume = 0.4
+  }
+
   if (radioIsOn && barCurrentRadio) {
     barRadioOn(barCurrentRadio)
   }
@@ -286,7 +289,10 @@ export function lowerVolume() {
   if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
-  barMusicStream.volume = 0.1
+  if (barMusicStream) {
+    barMusicStream.volume = 0.1
+  }
+
   return
 }
 

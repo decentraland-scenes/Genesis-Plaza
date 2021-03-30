@@ -115,28 +115,28 @@ sceneMessageBus.on('artichokeMessage', (e) => {
 
 ///// EVENTS BOARD
 
-export async function getEvents() {
-  let events: any[] = []
-  let url = 'https://events.decentraland.org/api/events/?limit=5'
+// export async function getEvents() {
+//   let events: any[] = []
+//   let url = 'https://events.decentraland.org/api/events/?limit=5'
 
-  try {
-    let response = await fetch(url)
-    let json = await response.json()
+//   try {
+//     let response = await fetch(url)
+//     let json = await response.json()
 
-    log(json)
+//     log(json)
 
-    for (let event of json.data) {
-      if (event.live) {
-        events.push(event)
-      }
-    }
+//     for (let event of json.data) {
+//       if (event.live) {
+//         events.push(event)
+//       }
+//     }
 
-    log(events)
-    return events
-  } catch (e) {
-    log('error getting event data ', e)
-  }
-}
+//     log(events)
+//     return events
+//   } catch (e) {
+//     log('error getting event data ', e)
+//   }
+// }
 
 //////// TRADE CENTER DATA
 

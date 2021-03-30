@@ -5,6 +5,8 @@ export let octopus: NPC
 export let doge: NPC
 export let catGuy: NPC
 
+export let areNPCsAdded: boolean = false
+
 export let userData: UserData = {
   displayName: '',
   publicKey: '',
@@ -28,6 +30,7 @@ setUserData()
 export async function addBarNPCs() {
   // fetch player name
   //setUserData()
+  areNPCsAdded = true
 
   octopus = new NPC(
     {
@@ -77,18 +80,22 @@ export async function addBarNPCs() {
 
   let catGuyPath: FollowPathData = {
     path: [
-      new Vector3(181.8, 11.1, 160),
-      new Vector3(173.4, 11.1, 168.6),
-      new Vector3(145.7, 11.1, 166.3),
-      new Vector3(141.1, 11.1, 159.5),
-      new Vector3(140.8, 11.1, 137.7),
-      new Vector3(161.5, 11.1, 130),
-      new Vector3(179.3, 11.1, 139),
-      new Vector3(181.3, 11.1, 141.4),
+      new Vector3(181.8, 10.8, 160),
+      new Vector3(173.4, 10.8, 168.6),
+      new Vector3(145.7, 10.8, 166.3),
+      new Vector3(141.1, 10.8, 159.5),
+      new Vector3(140.8, 10.8, 137.7),
+      new Vector3(161.5, 10.8, 130),
+      new Vector3(179.3, 10.8, 139),
+      new Vector3(181.3, 10.8, 141.4),
     ],
     loop: true,
     speed: 2,
     curve: false,
+    onReachedPointCallback: () => {
+      let randomNum = Math.floor(Math.random() * 4)
+      catGuy.talkBubble(whereCat, randomNum)
+    },
   }
 
   doge = new NPC(
@@ -96,9 +103,9 @@ export async function addBarNPCs() {
     'models/core_building/dogeNPCV04.glb',
     () => {
       doge.stopWalking()
-      doge.playAnimation('Talk1')
+      doge.playAnimation('Talk1', true)
       let randomNum = Math.floor(Math.random() * 4)
-      doge.talk(DogeTalk, randomNum)
+      doge.talkBubble(DogeTalk, randomNum)
     },
     {
       walkingAnim: 'Walk',
@@ -107,9 +114,13 @@ export async function addBarNPCs() {
       hoverText: 'WOW',
       onlyETrigger: true,
       walkingSpeed: 1.2,
+      continueOnWalkAway: true,
       onWalkAway: () => {
         doge.followPath()
       },
+      textBubble: true,
+      noUI: true,
+      bubbleHeight: 2.5,
     }
   )
   doge.followPath(dogePath)
@@ -118,12 +129,17 @@ export async function addBarNPCs() {
     { position: new Vector3(181.8, 11.1, 160) },
     'models/core_building/CatGuy.glb',
     () => {
+      catGuy.bubble.closeDialogWindow()
       catGuy.stopWalking()
       catGuy.talk(ILoveCats, 0)
       catGuy.playAnimation(`Head_Yes`, true, 2.63)
     },
     {
-      portrait: { path: 'images/catguy.png', height: 128, width: 128 },
+      portrait: {
+        path: 'images/portraits/catguy.png',
+        height: 128,
+        width: 128,
+      },
       reactDistance: 4,
       idleAnim: `Weight_Shift`,
       walkingAnim: 'Walk',
@@ -134,6 +150,8 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         catGuy.followPath()
       },
+      textBubble: true,
+      bubbleHeight: 2.3,
     }
   )
   catGuy.followPath(catGuyPath)
@@ -194,6 +212,7 @@ export let DogeTalk: Dialog[] = [
     triggeredByNext: () => {
       doge.followPath()
     },
+    timeOn: 4.1,
     isEndOfDialog: true,
   },
   {
@@ -201,6 +220,7 @@ export let DogeTalk: Dialog[] = [
     triggeredByNext: () => {
       doge.followPath()
     },
+    timeOn: 4.1,
     isEndOfDialog: true,
   },
   {
@@ -208,6 +228,7 @@ export let DogeTalk: Dialog[] = [
     triggeredByNext: () => {
       doge.followPath()
     },
+    timeOn: 4.1,
     isEndOfDialog: true,
   },
   {
@@ -216,6 +237,7 @@ export let DogeTalk: Dialog[] = [
     triggeredByNext: () => {
       doge.followPath()
     },
+    timeOn: 4.1,
     isEndOfDialog: true,
   },
   {
@@ -223,6 +245,7 @@ export let DogeTalk: Dialog[] = [
     triggeredByNext: () => {
       doge.followPath()
     },
+    timeOn: 4.1,
     isEndOfDialog: true,
   },
 ]
@@ -283,6 +306,21 @@ export let ILoveCats: Dialog[] = [
   },
   {
     text: `The one that you can't skip. Capiche?`,
+    isEndOfDialog: true,
+  },
+]
+
+export let whereCat: Dialog[] = [
+  {
+    text: `Where did that rascal go?`,
+    isEndOfDialog: true,
+  },
+  {
+    text: `Come oooooooooon,  come out and play, it's just me`,
+    isEndOfDialog: true,
+  },
+  {
+    text: `Where could he be now?`,
     isEndOfDialog: true,
   },
 ]
