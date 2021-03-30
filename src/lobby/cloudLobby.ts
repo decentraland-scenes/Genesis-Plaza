@@ -1,5 +1,5 @@
 import { TeleportController } from './portalBeam'
-import { createEventsVerticalMenu, fillEventsMenu, createCrowdVerticalMenu, fillCrowdsMenu } from './eventBoard'
+import { createEventsVerticalMenu, fillEventsMenu, createCrowdVerticalMenu, fillCrowdsMenu, createClassicsVerticalMenu, fillClassicsMenu } from './eventBoard'
 import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 
 const portalControl = new TeleportController()
@@ -15,10 +15,9 @@ let eventsMenu = createEventsVerticalMenu({
     position: posVec,
     rotation: rotation,
     scale: new Vector3(1.2,1.2,1.2)
-    },
-    false
+    }    
   )
-fillEventsMenu(eventsMenu,  false)    
+fillEventsMenu(eventsMenu)    
 
 
 
@@ -29,26 +28,19 @@ let crowdsMenu = createCrowdVerticalMenu({
     position: posVec,
     rotation: rotation,
     scale: new Vector3(menuScale,menuScale,menuScale)
-    },
-    false
+    }    
   )
 
-  fillCrowdsMenu(crowdsMenu, false)
+fillCrowdsMenu(crowdsMenu)
 
 rotation = Quaternion.Euler(0,-45,0)
 posVec = center.add(Vector3.Forward().rotate(rotation).multiplyByFloats(lobbyRadius,lobbyRadius,lobbyRadius))
 
-createEventsVerticalMenu({
+let classicsMenu = createClassicsVerticalMenu({
     position: posVec,
     rotation: rotation,
     scale: new Vector3(menuScale,menuScale,menuScale)
-    },
-    false
+    }
+    
   )
-// createEventsVerticalMenu({
-//     position: new Vector3(lobbyCenter.x, lobbyHeight+2, lobbyCenter.z - lobbyRadius ),
-//     rotation: Quaternion.Euler(0,-135,0),
-//     scale: new Vector3(menuScale,menuScale,menuScale)
-//     },
-//     false
-//   )
+fillClassicsMenu(classicsMenu)

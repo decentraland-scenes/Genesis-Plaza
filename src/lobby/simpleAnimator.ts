@@ -1,3 +1,5 @@
+import { NoArgCallBack } from './resources/globals'
+
 @Component("AnimatedItem")
 export class AnimatedItem {  
     wasClicked:boolean = false
@@ -6,12 +8,17 @@ export class AnimatedItem {
     highlightTransform:TransformConstructorArgs
     animFraction:number = 0
     animVeclocity:number = 0
-    speed:number = 2
+    speed:number = 2   
 
-    constructor(_defaultTransform:TransformConstructorArgs, _highlightTransform:TransformConstructorArgs, _speed:number){
+    constructor(
+        _defaultTransform:TransformConstructorArgs, 
+        _highlightTransform:TransformConstructorArgs, 
+        _speed:number        
+        )
+        {
         this.defaultTransform = _defaultTransform
         this.highlightTransform = _highlightTransform       
-        this.speed = _speed
+        this.speed = _speed        
     }    
 }
 
@@ -27,15 +34,15 @@ class ItemAnimationSystem {
             const info = item.getComponent(AnimatedItem)
             const transform = item.getComponent(Transform)
 
-            if(info.isHighlighted){        
+            if(info.isHighlighted){
+
                 transform.scale = this.springVec3(info.highlightTransform.scale, transform.scale, info.animVeclocity, info.speed*dt)        
                 transform.position = this.springVec3(info.highlightTransform.position, transform.position, info.animVeclocity, info.speed*dt)  
-
             }
             else{
                 transform.scale = this.springVec3(info.defaultTransform.scale, transform.scale, info.animVeclocity, info.speed*dt)
-                transform.position = this.springVec3(info.defaultTransform.position, transform.position, info.animVeclocity, info.speed*dt) 
-               
+                transform.position = this.springVec3(info.defaultTransform.position, transform.position, info.animVeclocity, info.speed*dt)              
+                
             }
         }
     }

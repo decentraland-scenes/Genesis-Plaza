@@ -32,8 +32,7 @@ export class TrendingMenuItem extends Entity {
     startTimeText:TextShape
 
     constructor(
-        _transform:TranformConstructorArgs, 
-        _isGrabbable:boolean,        
+        _transform:TranformConstructorArgs,               
         _alphaTexture:Texture,
         _scene:any)
         {
@@ -140,6 +139,18 @@ export class TrendingMenuItem extends Entity {
         this.userCountRoot.addComponent(userCountText)
         this.usersTitleRoot.addComponent(usersTitleText)
 
+        //selection event animation
+        this.addComponent(new AnimatedItem(
+            {
+                position: new Vector3(0,0,0),
+                scale: new Vector3(2,2,2)
+            },
+            {
+                position: new Vector3(0,0,-0.6),
+                scale:  new Vector3(2.3,2.3,2.3)
+            },
+            2            
+        ))
                // DETAILS APPEARING ON SELECTION EVENT
         this.detailsRoot = new Entity()
         this.detailsRoot.addComponent(new Transform())

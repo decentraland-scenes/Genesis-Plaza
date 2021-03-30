@@ -6,8 +6,10 @@ export let dummySceneBG = new Texture ("images/dummy_scene.png")
 export let beamUIBG = new Texture ("images/ui_beam_up_bg.png")
 
 //MENU
+export let menuFrameShape =         new GLTFShape(modelFolder + "menu_collider.glb")
 export let menuTopEventsShape =     new GLTFShape(modelFolder + "menu_top_events.glb")
 export let menuTopCrowdShape =      new GLTFShape(modelFolder + "menu_top_crowd.glb")
+export let menuTopClassicsShape =   new GLTFShape(modelFolder + "menu_top_classics.glb")
 export let dateBGShape =            new GLTFShape(modelFolder + "date_bg.glb")
 export let shelfShape =             new GLTFShape(modelFolder + "shelf_clickable.glb")
 export let jumpInButtonShape =      new GLTFShape(modelFolder + "jump_in_btn.glb")

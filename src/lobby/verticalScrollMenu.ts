@@ -37,6 +37,7 @@ export class VerticalScroller{
 export class VerticalScrollMenu extends Entity {
 
     items:EventMenuItem[]
+    visibleItemCount:number = 5
     verticalSpacing:number = 1.2
     currentOffset:number = 0
     maxHeight:number = 1
@@ -51,8 +52,10 @@ export class VerticalScrollMenu extends Entity {
 
    
 
-    constructor(_transform:TranformConstructorArgs, _spacing:number, _topMesh:GLTFShape){
+    constructor(_transform:TranformConstructorArgs, _spacing:number, _numOfVisibleItems:number, _topMesh:GLTFShape){
         super()
+        this.visibleItemCount = _numOfVisibleItems
+
         this.items = []
         this.clickBoxes = []
         this.itemRoots = []
@@ -66,7 +69,7 @@ export class VerticalScrollMenu extends Entity {
 
         this.topMesh = new Entity()
         this.topMesh.addComponent(new Transform({
-            position: new Vector3(0,5*_spacing -1,0),
+            position: new Vector3(0, this.visibleItemCount * _spacing -1,0),
             scale: new Vector3(4,4,4)
         }))
         this.topMesh.addComponent(_topMesh)
@@ -104,28 +107,27 @@ export class VerticalScrollMenu extends Entity {
         }))
         this.instructions.addComponent(resource.scrollInstructionShape)
         this.instructions.addComponent(new OnPointerDown( (e) => {    
-            const scrollInfo = this.scrollerRoot.getComponent(VerticalScroller) 
-            
+            const scrollInfo = this.scrollerRoot.getComponent(VerticalScroller)             
                   
             // 'E' to scroll up
             if(e.buttonId == 1){                         
                 scrollInfo.scrollUp() 
                 this.deselectAll()
-                this.showItem(scrollInfo.currentItem+4)
-                this.hideItem(scrollInfo.currentItem-2)
+                this.showItem(scrollInfo.currentItem + (this.visibleItemCount -1))
+                this.hideItem(scrollInfo.currentItem - 2)
             }
             // 'F' to scroll down
             if(e.buttonId == 2){                
                 scrollInfo.scrollDown() 
                 this.deselectAll()
-                this.showItem(scrollInfo.currentItem-1)
-                this.hideItem(scrollInfo.currentItem+5)
+                this.showItem(scrollInfo.currentItem - 1)
+                this.hideItem(scrollInfo.currentItem+this.visibleItemCount)
             }         
 
         },{distance:40, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
         this.instructions.setParent(this)
         
-        this.maxHeight = 5 * this.verticalSpacing + 1
+        this.maxHeight =this.visibleItemCount * this.verticalSpacing + 1
         this.menuFrame.getComponent(Transform).position.y = this.maxHeight/2 - this.verticalSpacing
         this.menuFrame.getComponent(Transform).scale.y = this.maxHeight
         //this.collider.addComponent()        
@@ -141,6 +143,8 @@ export class VerticalScrollMenu extends Entity {
         itemRoot.setParent(this.scrollerRoot)
 
         this.itemRoots.push(itemRoot)
+
+        
         
         
         // COLLIDER BOX FOR USER INPUT
@@ -162,34 +166,28 @@ export class VerticalScrollMenu extends Entity {
             if(e.buttonId == 1){                         
                 scrollInfo.scrollUp() 
                 this.deselectAll()
-                this.showItem(scrollInfo.currentItem+4)
-                this.hideItem(scrollInfo.currentItem-2)
+                this.showItem(scrollInfo.currentItem + (this.visibleItemCount-1))
+                this.hideItem(scrollInfo.currentItem - 2)
             }
             // 'F' to scroll down
             if(e.buttonId == 2){                
                 scrollInfo.scrollDown() 
                 this.deselectAll()
-                this.showItem(scrollInfo.currentItem-1)
-                this.hideItem(scrollInfo.currentItem+5)
+                this.showItem(scrollInfo.currentItem - 1)
+                this.hideItem(scrollInfo.currentItem + this.visibleItemCount)
             }         
 
         },{distance:40, showFeedback:true, hoverText:"SELECT"} ))        
 
-        _item.addComponent(new AnimatedItem(
-            {
-                position: new Vector3(0,0,0),
-                scale: new Vector3(2,2,2)
-            },
-            {
-                position: new Vector3(0,0,-0.6),
-                scale:  new Vector3(2.3,2.3,2.3)
-            },
-            2
-            
-        ))
+        
         this.items.push(_item)
         this.clickBoxes.push(clickBox)
-        _item.setParent(itemRoot)
+
+        if(this.itemRoots.length < this.visibleItemCount){
+            _item.setParent(itemRoot)
+        }
+
+        
         // _item.getComponent(Transform).position.y = this.currentOffset
         this.currentOffset += this.verticalSpacing
         // this.maxHeight = this.items.length * this.verticalSpacing + 1
@@ -201,15 +199,22 @@ export class VerticalScrollMenu extends Entity {
     selectItem(_item:any){
         //if(_id < this.items.length){
            // this.items[_id].select()
-            let wasHighlighted = _item.getComponent(AnimatedItem).isHighlighted
+           if(_item.hasComponent(AnimatedItem)){
+                let wasHighlighted = _item.getComponent(AnimatedItem).isHighlighted
 
-            //deselect all other items
-            this.deselectAll()
+                //deselect all other items
+                this.deselectAll()
 
-            if(!wasHighlighted){
-                _item.getComponent(AnimatedItem).isHighlighted = true  
-                _item.openDetails()              
-            }
+                if(!wasHighlighted){
+                    _item.getComponent(AnimatedItem).isHighlighted = true  
+                    _item.openDetails()              
+                }
+           }
+           else{
+                _item.openDetails()  
+           }
+
+            
        // }
         
     }
@@ -228,6 +233,7 @@ export class VerticalScrollMenu extends Entity {
     showItem(_id:number){
         if(_id < this.items.length && _id >= 0){
             engine.addEntity(this.itemRoots[_id])
+            this.items[_id].setParent(this.itemRoots[_id])
         }
         
     }

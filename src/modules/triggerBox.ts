@@ -1,6 +1,4 @@
-interface NoArgCallBack {
-	() : void;
-}
+import { NoArgCallBack } from '../lobby/resources/globals'
 
 let debugMat = new Material()
 

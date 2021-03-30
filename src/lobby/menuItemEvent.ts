@@ -33,9 +33,7 @@ export class EventMenuItem extends Entity {
     startTimeText:TextShape
 
     constructor(
-        _transform:TranformConstructorArgs, 
-        _isGrabbable:boolean,
-       // _thumbnail:Texture, 
+        _transform:TranformConstructorArgs,        
         _alphaTexture:Texture,
         _event:any)
         {
@@ -128,7 +126,20 @@ export class EventMenuItem extends Entity {
             this.dateRoot.addComponent(dateText)
             this.dateMonthRoot.addComponent(dateMonthText)
 
-        }   
+        } 
+
+        //selection event animation
+        this.addComponent(new AnimatedItem(
+            {
+                position: new Vector3(0,0,0),
+                scale: new Vector3(2,2,2)
+            },
+            {
+                position: new Vector3(0,0,-0.6),
+                scale:  new Vector3(2.3,2.3,2.3)
+            },
+            2            
+        ))
 
         // DETAILS APPEARING ON SELECTION EVENT
         this.detailsRoot = new Entity()

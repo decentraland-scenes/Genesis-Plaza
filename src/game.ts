@@ -1,4 +1,4 @@
-import { placeTeleports } from './modules/teleports'
+
 import { barPlatforms, placePlatforms } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
