@@ -28,7 +28,7 @@ import {
   setBarMusicOn,
 } from './modules/jukebox'
 
-import { addBarNPCs } from './modules/barNPCs'
+import { addBarNPCs, areNPCsAdded } from './modules/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 
 //////// LOG PLAYER POSITION
@@ -68,8 +68,8 @@ addOneTimeTrigger(
 
 // proper bar interior
 addRepeatTrigger(
-  new Vector3(160, 10, 155),
-  new Vector3(50, 30, 50),
+  new Vector3(160, 50, 155),
+  new Vector3(50, 102, 50),
   () => {
     setBarMusicOn()
     log('went in')
@@ -86,8 +86,8 @@ addRepeatTrigger(
 
 //outer perimeter
 addRepeatTrigger(
-  new Vector3(160, 10, 155),
-  new Vector3(75, 30, 75),
+  new Vector3(160, 50, 155),
+  new Vector3(75, 103, 75),
   () => {
     lowerVolume()
     log('got closer')
@@ -101,7 +101,10 @@ addRepeatTrigger(
 )
 
 export function insideBar() {
-  addBarNPCs()
+  if (!areNPCsAdded) {
+    addBarNPCs()
+  }
+
   placeJukeBox()
   addArcades()
 }
