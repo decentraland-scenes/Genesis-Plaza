@@ -401,7 +401,7 @@ export class Teleport extends Entity {
 export let teleports = [
   {
     name: 'Dragon Rush',
-    model: new GLTFShape('models/teleports/dragon_rush.glb'),
+    model: new GLTFShape('models/lobby/classics/dragon_rush.glb'),
     location: Locations.DRAGONRUSH,
     transform: teleportPos1,
     description:
@@ -409,7 +409,7 @@ export let teleports = [
   },
   {
     name: 'Toki Toki Land',
-    model: new GLTFShape('models/teleports/toki_land.glb'),
+    model: new GLTFShape('models/lobby/classics/toki_land.glb'),
     location: Locations.TOKI,
     transform: teleportPos2,
     description:
@@ -425,23 +425,23 @@ export let teleports = [
   // },
   {
     name: 'Block Runner',
-    model: new GLTFShape('models/teleports/block_runner.glb'),
+    model: new GLTFShape('models/lobby/classics/block_runner.glb'),
     location: Locations.BLOCK,
     transform: teleportPos4,
     description:
       'A collection of competitive minigames\nthat are a lot of fun to play!\n',
   },
-  {
-    name: 'Serenity Island Casino',
-    model: new GLTFShape('models/teleports/roulette.glb'),
-    location: Locations.CASINO,
-    transform: teleportPos5,
-    description:
-      'Play roulette and slot machines in a\nluxurious casino by the shore!\n',
-  },
+  // {
+  //   name: 'Serenity Island Casino',
+  //   model: new GLTFShape('models/teleports/roulette.glb'),
+  //   location: Locations.CASINO,
+  //   transform: teleportPos5,
+  //   description:
+  //     'Play roulette and slot machines in a\nluxurious casino by the shore!\n',
+  // },
   {
     name: 'Koko Jones',
-    model: new GLTFShape('models/teleports/koko_jones.glb'),
+    model: new GLTFShape('models/lobby/classics/koko_jones.glb'),
     location: Locations.KOKO,
     transform: teleportPos6,
     description:
@@ -449,7 +449,7 @@ export let teleports = [
   },
   {
     name: 'Fruit Catcher',
-    model: new GLTFShape('models/teleports/fruit_catcher.glb'),
+    model: new GLTFShape('models/lobby/classics/fruit_catcher.glb'),
     location: Locations.FRUIT,
     transform: teleportPos7,
     description:
@@ -473,7 +473,7 @@ export let teleports = [
   // },
   {
     name: 'Book of Salmonomicon',
-    model: new GLTFShape('models/teleports/salmonomicon.glb'),
+    model: new GLTFShape('models/lobby/classics/salmonomicon.glb'),
     location: Locations.SALMONOMICON,
     transform: teleportPos10,
     description:
@@ -481,7 +481,7 @@ export let teleports = [
   },
   {
     name: 'Museum District',
-    model: new GLTFShape('models/teleports/museum_district.glb'),
+    model: new GLTFShape('models/lobby/classics/museum_district.glb'),
     location: Locations.MUSEUM,
     transform: teleportPos11,
     description:
@@ -496,7 +496,7 @@ export let teleports = [
   // },
   {
     name: 'Tomb Chaser',
-    model: new GLTFShape('models/teleports/tomb_chaser.glb'),
+    model: new GLTFShape('models/lobby/classics/tomb_chaser.glb'),
     location: Locations.TOMBCHASER,
     transform: teleportPos13,
     description:
@@ -504,7 +504,7 @@ export let teleports = [
   },
   {
     name: 'Infinity Engine',
-    model: new GLTFShape('models/teleports/infinity_engine.glb'),
+    model: new GLTFShape('models/lobby/classics/infinity_engine.glb'),
     location: Locations.INFINITY,
     transform: teleportPos14,
     description:

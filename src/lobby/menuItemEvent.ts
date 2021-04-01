@@ -323,7 +323,8 @@ export class EventMenuItem extends Entity {
         // EVENT DETAILS TEXT
         this.detailTextPanel = new Entity()
         this.detailTextPanel.addComponent(new Transform({
-            position: new Vector3(0.9,0,0),
+            position: new Vector3(0.8,0,0.2),
+            scale: new Vector3(0,0.8,0),
             rotation: Quaternion.Euler(0,30,0)
         }))
         this.detailTextPanel.addComponent(resource.detailsBGShape)

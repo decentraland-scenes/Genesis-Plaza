@@ -33,7 +33,7 @@ export class ClassicMenuItem extends Entity {
         // event card root
         this.itemBox = new Entity()
         this.itemBox.addComponent(new Transform({
-            position: new Vector3(0,-0.48,-0.2),
+            position: new Vector3(0,0,-0.2),
             scale: new Vector3(0.75,0.75,0.75),
             
         }))
@@ -48,11 +48,11 @@ export class ClassicMenuItem extends Entity {
         //selection event animation
         this.addComponent(new AnimatedItem(
             {
-                position: new Vector3(0,-0.48,-0.2),
+                position: new Vector3(0,0,-0.2),
                 scale: new Vector3(1,1,1)
             },
             {
-                position: new Vector3(-0.7,-0.48,-0.2),
+                position: new Vector3(-0.7,0,-0.2),
                 scale: new Vector3(1,1,1),
             },
             2            
@@ -61,7 +61,7 @@ export class ClassicMenuItem extends Entity {
          // DETAILS APPEARING ON SELECTION EVENT
          this.detailsRoot = new Entity()
          this.detailsRoot.addComponent(new Transform({
-             position: new Vector3(0, 0.5,0),
+             position: new Vector3(0, 0.15,0),
              rotation: Quaternion.Euler(0,180,0)
          }))
          this.detailsRoot.setParent(this)
@@ -70,7 +70,7 @@ export class ClassicMenuItem extends Entity {
         this.detailTextPanel = new Entity()
         this.detailTextPanel.addComponent(new Transform({
             position: new Vector3(0.9,0,0),
-            rotation: Quaternion.Euler(0,30,0)
+            rotation: Quaternion.Euler(0,15,0)
         }))
         this.detailTextPanel.addComponent(resource.detailsBGShape)
         this.detailTextPanel.setParent(this.detailsRoot)
@@ -81,7 +81,7 @@ export class ClassicMenuItem extends Entity {
             },
             {
                 position: new Vector3(0.9,0,-0.1),
-                scale: new Vector3(1,1,1)
+                scale: new Vector3(1.5,1.5,1.5)
 
             },
             2.2
