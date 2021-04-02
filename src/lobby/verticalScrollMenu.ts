@@ -2,6 +2,10 @@ import { EventMenuItem } from "./menuItemEvent"
 import { AnimatedItem } from "./simpleAnimator"
 import { player } from "./player"
 import * as resource from "./resources/resources"
+import * as sfx from "./resources/sounds"
+import { MenuItem } from "./menuItem"
+
+
 
 
 @Component("VerticalScroller")
@@ -36,7 +40,7 @@ export class VerticalScroller{
 
 export class VerticalScrollMenu extends Entity {
 
-    items:EventMenuItem[]
+    items:MenuItem[]
     visibleItemCount:number = 5
     verticalSpacing:number = 1.2
     currentOffset:number = 0
@@ -49,6 +53,11 @@ export class VerticalScrollMenu extends Entity {
     clickBoxes:Entity[]
     itemRoots:Entity[]
     instructions:Entity
+
+    
+    selectSound:Entity
+    deselectSound:Entity
+
 
    
 
@@ -66,6 +75,7 @@ export class VerticalScrollMenu extends Entity {
         }))
         this.menuFrame.addComponent(new GLTFShape("models/lobby/menu_collider.glb"))
         this.menuFrame.setParent(this)
+        this.menuFrame.addComponent(sfx.menuDownSource)
 
         this.topMesh = new Entity()
         this.topMesh.addComponent(new Transform({
@@ -74,6 +84,8 @@ export class VerticalScrollMenu extends Entity {
         }))
         this.topMesh.addComponent(_topMesh)
         this.topMesh.setParent(this)
+
+        this.addComponent(sfx.menuUpSource)
 
         // this.bg = new Entity()
         // this.bg.addComponent(new Transform({
@@ -132,19 +144,29 @@ export class VerticalScrollMenu extends Entity {
         this.menuFrame.getComponent(Transform).scale.y = this.maxHeight
         //this.collider.addComponent()        
 
+        //sounds
+        this.selectSound = new Entity()
+        this.selectSound.addComponent(new Transform())
+        this.selectSound.addComponent(sfx.menuSelectSource)
+        this.selectSound.setParent(this)
+
+        this.deselectSound = new Entity()
+        this.deselectSound.addComponent(new Transform())
+        this.deselectSound.addComponent(sfx.menuDeselectSource)
+        this.deselectSound.setParent(this)
+
     }
 
-    addMenuItem(_item:any){   
+    addMenuItem(_item:MenuItem){   
 
         let itemRoot = new Entity()
         itemRoot.addComponent(new Transform({
             position: new Vector3(0, this.currentOffset, 0)
         }))    
-        itemRoot.setParent(this.scrollerRoot)
+        
 
         this.itemRoots.push(itemRoot)
-
-        
+        //itemRoot.addComponent(sfx.menuSelectSource)  
         
         
         // COLLIDER BOX FOR USER INPUT
@@ -158,9 +180,19 @@ export class VerticalScrollMenu extends Entity {
             const scrollInfo = this.scrollerRoot.getComponent(VerticalScroller) 
             
             // click to select
-            if(e.buttonId == 0){                
-                this.selectItem(_item)
-                clickBox.getComponent(OnPointerDown).hoverText = "DESELECT"                
+            if(e.buttonId == 0){
+                
+                if(!_item.selected){
+                    this.selectItem(_item)
+                    clickBox.getComponent(OnPointerDown).hoverText = "DESELECT" 
+                    sfx.menuSelectSource.playOnce()   
+                }
+                else{
+                    this.deselectItem(_item, false)
+                    clickBox.getComponent(OnPointerDown).hoverText = "SELECT" 
+                    sfx.menuDeselectSource.playOnce()   
+                }                
+                          
             }          
             // 'E' to scroll up
             if(e.buttonId == 1){                         
@@ -168,6 +200,7 @@ export class VerticalScrollMenu extends Entity {
                 this.deselectAll()
                 this.showItem(scrollInfo.currentItem + (this.visibleItemCount-1))
                 this.hideItem(scrollInfo.currentItem - 2)
+                sfx.menuUpSource.playOnce()
             }
             // 'F' to scroll down
             if(e.buttonId == 2){                
@@ -175,6 +208,7 @@ export class VerticalScrollMenu extends Entity {
                 this.deselectAll()
                 this.showItem(scrollInfo.currentItem - 1)
                 this.hideItem(scrollInfo.currentItem + this.visibleItemCount)
+                sfx.menuDownSource.playOnce()
             }         
 
         },{distance:40, showFeedback:true, hoverText:"SELECT"} ))        
@@ -184,6 +218,7 @@ export class VerticalScrollMenu extends Entity {
         this.clickBoxes.push(clickBox)
 
         if(this.itemRoots.length < this.visibleItemCount){
+            itemRoot.setParent(this.scrollerRoot)
             _item.setParent(itemRoot)
         }
 
@@ -196,32 +231,39 @@ export class VerticalScrollMenu extends Entity {
         
     }
 
-    selectItem(_item:any){
+    selectItem(_item:MenuItem){
         //if(_id < this.items.length){
            // this.items[_id].select()
-           if(_item.hasComponent(AnimatedItem)){
-                let wasHighlighted = _item.getComponent(AnimatedItem).isHighlighted
+           if(_item.hasComponent(AnimatedItem)){           
 
-                //deselect all other items
-                this.deselectAll()
-
-                if(!wasHighlighted){
+                if(!_item.selected){
+                     this.deselectAll()
                     _item.getComponent(AnimatedItem).isHighlighted = true  
-                    _item.openDetails()              
+                    _item.select()              
                 }
            }
            else{
-                _item.openDetails()  
-           }
+                _item.select()  
+           }    
+        
+    }
+    deselectItem(_item:MenuItem, _silent:boolean){     
+           if(_item.hasComponent(AnimatedItem)){           
 
-            
-       // }
+                if(_item.selected){
+                    _item.getComponent(AnimatedItem).isHighlighted = false  
+                    _item.deselect(_silent)              
+                }
+           }
+           else{
+                _item.deselect(_silent)    
+           }    
         
     }
     deselectAll(){
         for(let i=0; i< this.items.length; i++){            
                 this.items[i].getComponent(AnimatedItem).isHighlighted = false            
-                this.items[i].closeDetails()         
+                this.deselectItem(this.items[i], true)       
                 this.clickBoxes[i].getComponent(OnPointerDown).hoverText = "SELECT"        
         }
     }
@@ -231,8 +273,9 @@ export class VerticalScrollMenu extends Entity {
         }
     }
     showItem(_id:number){
-        if(_id < this.items.length && _id >= 0){
+        if(_id < this.itemRoots.length && _id >= 0){
             engine.addEntity(this.itemRoots[_id])
+            this.itemRoots[_id].setParent(this.scrollerRoot)
             this.items[_id].setParent(this.itemRoots[_id])
         }
         

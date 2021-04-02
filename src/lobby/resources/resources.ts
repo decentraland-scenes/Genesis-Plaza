@@ -1,6 +1,7 @@
 
 const modelFolder = "models/lobby/"
 
+
 export let roundedSquareAlpha = new Texture ("images/rounded_alpha_square.png")
 export let dummySceneBG = new Texture ("images/dummy_scene.png")
 export let beamUIBG = new Texture ("images/ui_beam_up_bg.png")
@@ -44,3 +45,5 @@ dateUIBGMaterial.transparencyMode = 2
 dateUIBGMaterial.metallic = 0
 dateUIBGMaterial.roughness = 1
 dateUIBGMaterial.specularIntensity = 0
+
+

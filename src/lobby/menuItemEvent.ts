@@ -2,12 +2,14 @@ import { ThumbnailPlane } from "./thumbnail"
 import { monthToString, wordWrap } from "./helperFunctions"
 import { AnimatedItem } from "./simpleAnimator"
 import * as resource from "./resources/resources"
+import { MenuItem } from "./menuItem"
+import * as sfx from "./resources/sounds"
 
 
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
-export class EventMenuItem extends Entity {
+export class EventMenuItem extends MenuItem {
     public thumbNail:ThumbnailPlane
     public scale:Vector3
     public scaleMultiplier:number
@@ -410,28 +412,47 @@ export class EventMenuItem extends Entity {
             },
             3
         ))
+
+        // this.selectSound = new Entity()
+        // this.selectSound.addComponent(new Transform())
+        // this.selectSound.addComponent(sfx.menuSelectSource)
+        // this.selectSound.setParent(this)
+
+        // this.deselectSound = new Entity()
+        // this.deselectSound.addComponent(new Transform())
+        // this.deselectSound.addComponent(sfx.menuDeselectSource)
+        // this.deselectSound.setParent(this)
       
     }
-    openDetails(){
+    select(){   
+         
 
-    let wasHighlighted = this.jumpInButton.getComponent(AnimatedItem).isHighlighted
-        
-        if(!wasHighlighted){
+        if(!this.selected){
+            this.selected = true 
             this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true  
             this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true       
             this.highlightRays.getComponent(AnimatedItem).isHighlighted = true       
             this.coordsPanel.getComponent(AnimatedItem).isHighlighted = true    
             this.timePanel.getComponent(AnimatedItem).isHighlighted = true   
+
+            
         }
     }
-    closeDetails(){
-        
+    deselect(_silent?:boolean){
+
+        this.selected = false
+
         this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
         this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
         this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
         this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false   
         this.timePanel.getComponent(AnimatedItem).isHighlighted = false   
-                 
+
+        // if(!_silent){
+        //     sfx.menuDeselectSource.playOnce()
+        // }
+          
+        
         
     }
     show(){

@@ -3,11 +3,11 @@ import { monthToString, wordWrap } from "./helperFunctions"
 import * as resource from "./resources/resources"
 import { AnimatedItem } from "./simpleAnimator"
 import { Teleport } from "./teleports"
-
+import { MenuItem } from "./menuItem"
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
-export class ClassicMenuItem extends Entity {
+export class ClassicMenuItem extends MenuItem {
     public thumbNail:ThumbnailPlane
     public scale:Vector3
     public scaleMultiplier:number  
@@ -93,7 +93,7 @@ export class ClassicMenuItem extends Entity {
         detailTitle.height = 20
         detailTitle.width = 2
         detailTitle.resizeToFit = true        
-        detailTitle.fontSize = 1
+        detailTitle.fontSize = 3
         detailTitle.color = Color3.Black()
         detailTitle.hTextAlign = 'left'
         detailTitle.vTextAlign = 'top'  
@@ -101,7 +101,7 @@ export class ClassicMenuItem extends Entity {
         this.detailTitle = new Entity()
         this.detailTitle.addComponent(new Transform({
             position: new Vector3(0.1,0.5,0),
-            scale: new Vector3(0.5, 0.5, 0.5)
+            scale: new Vector3(0.4, 0.4, 0.4)
         }))
         this.detailTitle.addComponent(detailTitle)
         this.detailTitle.setParent(this.detailTextPanel)       
@@ -112,7 +112,7 @@ export class ClassicMenuItem extends Entity {
         detailTextContent.height = 20
         detailTextContent.width = 2
         detailTextContent.resizeToFit = true        
-        detailTextContent.fontSize = 1
+        detailTextContent.fontSize = 2
         detailTextContent.color = Color3.FromHexString("#111111")
         detailTextContent.hTextAlign = 'left'
         detailTextContent.vTextAlign = 'top'  
@@ -120,8 +120,8 @@ export class ClassicMenuItem extends Entity {
         
         this.detailTextBody = new Entity()
         this.detailTextBody.addComponent(new Transform({
-            position: new Vector3(0.1,0.5,0),
-            scale: new Vector3(0.4, 0.4, 0.4)
+            position: new Vector3(0.1,0.4,0),
+            scale: new Vector3(0.3, 0.3, 0.3)
         }))
         this.detailTextBody.addComponent(detailTextContent)        
         this.detailTextBody.setParent(this.detailTextPanel)
@@ -131,27 +131,23 @@ export class ClassicMenuItem extends Entity {
         
       
     }
-    openDetails(){
-        
-            teleportTo(this.teleportLocation)
-          
-    // let wasHighlighted = this.jumpInButton.getComponent(AnimatedItem).isHighlighted
-        
-    //     if(!wasHighlighted){
-    //         this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true  
-    this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true       
-    //         this.highlightRays.getComponent(AnimatedItem).isHighlighted = true       
-    //         this.coordsPanel.getComponent(AnimatedItem).isHighlighted = true    
-    //         //this.timePanel.getComponent(AnimatedItem).isHighlighted = true   
-    //     }
+    select(){
+        if(!this.selected){
+            this.selected = true 
+            //teleportTo(this.teleportLocation)
+
+            this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true  
+        }   
+         
+    
     }
-    closeDetails(){
-        
-    //     this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
-    this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
-    //     this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
-    //     this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false   
-    //    // this.timePanel.getComponent(AnimatedItem).isHighlighted = false   
+    deselect(){
+        this.selected = false 
+        //     this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
+        this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
+        //     this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
+        //     this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false   
+        //    // this.timePanel.getComponent(AnimatedItem).isHighlighted = false   
                  
         
     }

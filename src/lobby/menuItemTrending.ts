@@ -2,11 +2,11 @@ import { ThumbnailPlane } from "./thumbnail"
 import { monthToString, wordWrap } from "./helperFunctions"
 import * as resource from "./resources/resources"
 import { AnimatedItem } from "./simpleAnimator"
-
+import { MenuItem } from "./menuItem"
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
-export class TrendingMenuItem extends Entity {
+export class TrendingMenuItem extends MenuItem {
     public thumbNail:ThumbnailPlane
     public scale:Vector3
     public scaleMultiplier:number
@@ -393,11 +393,10 @@ export class TrendingMenuItem extends Entity {
         ))
       
     }
-    openDetails(){
+    select(){
 
-    let wasHighlighted = this.jumpInButton.getComponent(AnimatedItem).isHighlighted
-        
-        if(!wasHighlighted){
+        if(!this.selected){
+            this.selected = true 
             this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true  
            // this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true       
             this.highlightRays.getComponent(AnimatedItem).isHighlighted = true       
@@ -405,7 +404,8 @@ export class TrendingMenuItem extends Entity {
             //this.timePanel.getComponent(AnimatedItem).isHighlighted = true   
         }
     }
-    closeDetails(){
+    deselect(){
+        this.selected = false 
         
         this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
        // this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
