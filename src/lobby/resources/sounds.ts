@@ -14,3 +14,19 @@ const menuDeselectClip = new AudioClip('sounds/menu_deselect.mp3')
 export const menuDeselectSource = new AudioSource(menuDeselectClip)
 menuDeselectSource.volume = 1
 
+const beamChargeClip = new AudioClip('sounds/beam_charge.mp3')
+export const beamChargeSource = new AudioSource(beamChargeClip)
+beamChargeSource.volume = 0.8
+
+const beamFireClip = new AudioClip('sounds/beam_fire.mp3')
+export const beamFireSource = new AudioSource(beamFireClip)
+beamFireSource.volume = 1.2
+
+const beamFallClip = new AudioClip('sounds/beam_fall.mp3')
+export const beamFallSource = new AudioSource(beamFallClip)
+beamFallSource.volume = 1.8
+
+const impactHardClip = new AudioClip('sounds/impact_hard.mp3')
+export const impactHardSource = new AudioSource(impactHardClip)
+impactHardSource.volume = 1.2
+

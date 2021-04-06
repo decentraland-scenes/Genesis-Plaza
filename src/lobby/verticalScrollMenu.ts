@@ -217,7 +217,7 @@ export class VerticalScrollMenu extends Entity {
         this.items.push(_item)
         this.clickBoxes.push(clickBox)
 
-        if(this.itemRoots.length < this.visibleItemCount){
+        if(this.itemRoots.length <= this.visibleItemCount){
             itemRoot.setParent(this.scrollerRoot)
             _item.setParent(itemRoot)
         }
@@ -277,20 +277,22 @@ export class VerticalScrollMenu extends Entity {
             engine.addEntity(this.itemRoots[_id])
             this.itemRoots[_id].setParent(this.scrollerRoot)
             this.items[_id].setParent(this.itemRoots[_id])
+            this.items[_id].getComponent(Transform).scale.setAll(0)
+            this.items[_id].getComponent(Transform).position.z  = 2
         }
         
     }
-    showFirstXItems(_count:number){
-        // only show the first 5 events on init
-        for(let i=0; i< this.itemRoots.length; i++){
-            if(i < _count){
-                this.showItem(i)
-            }
-            else{
-                this.hideItem(i)
-            }
-        }
-    }
+    // showFirstXItems(_count:number){
+    //     // only show the first 5 events on init
+    //     for(let i=0; i< this.itemRoots.length; i++){
+    //         if(i < _count){
+    //             this.showItem(i)
+    //         }
+    //         else{
+    //             this.hideItem(i)
+    //         }
+    //     }
+    // }
 
 }
 

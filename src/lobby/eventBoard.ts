@@ -48,7 +48,7 @@ export async function fillEventsMenu(_menu:VerticalScrollMenu) {
     events[i]
   ))
   }   
-  _menu.showFirstXItems(_menu.visibleItemCount)
+  //_menu.showFirstXItems(_menu.visibleItemCount)
 }
 
 // CROWD HOTSPOTS MENU 
@@ -90,7 +90,7 @@ export async function fillCrowdsMenu(_menu:VerticalScrollMenu) {
     scenes[i]
   ))
   } 
-  _menu.showFirstXItems(_menu.visibleItemCount)
+  //_menu.showFirstXItems(_menu.visibleItemCount)
 
 
 
@@ -136,7 +136,7 @@ export async function fillClassicsMenu(_menu:VerticalScrollMenu) {
     ))
   } 
 
-  _menu.showFirstXItems(_menu.visibleItemCount)
+  //_menu.showFirstXItems(_menu.visibleItemCount)
 
 
 

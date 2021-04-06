@@ -4,6 +4,7 @@ import { movePlayerTo } from '@decentraland/RestrictedActions'
 import {lobbyCenter, lobbyHeight} from './resources/globals'
 import {showTeleportUI, setTeleportCountdown } from '../modules/ui'
 import * as resource from "./resources/resources"
+import * as sfx from "./resources/sounds"
 
 @Component("DelayedTriggerBox")
 export class DelayedTriggerBox{  
@@ -20,38 +21,56 @@ export class DelayedTriggerBox{
 export class TeleportController {    
     triggerBoxUp:TriggerBox
     triggerBoxDown:TriggerBox
+    triggerBoxFallCheck:TriggerBox
     triggers:TriggerBox[]
     delayedTriggers:TriggerBox[]
     portalSys:PortalCheckSystem   
     portalLiftSpiral:Entity 
+    beamFireSound:Entity
+    beamFallSound:Entity
+    impactSound:Entity
     
     constructor(){
-        this.triggers = []
-        this.delayedTriggers = []
+      this.triggers = []
+      this.delayedTriggers = []
 
-        this.triggerBoxUp = new TriggerBox(
-            new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
-            new Vector3(6, 3, 6),
-            () => {
-                movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 } )
-                //{x:lobbyCenter.x, y:lobbyHeight+100, z:lobbyCenter.z+12}
-            }
-        )
-        this.triggerBoxUp.addComponent(new DelayedTriggerBox(3))
+      // Trigger to handle teleporting the player up to the cloud
+      this.triggerBoxUp = new TriggerBox(
+          new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
+          new Vector3(6, 3, 6),
+          () => {
+              movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 } )
+              //{x:lobbyCenter.x, y:lobbyHeight+100, z:lobbyCenter.z+12}
+          }
+      )
+      this.triggerBoxUp.addComponent(new DelayedTriggerBox(3))
 
       engine.addEntity(this.triggerBoxUp)
-  
-        this.triggerBoxDown = new TriggerBox(
-            new Vector3(lobbyCenter.x, lobbyCenter.y+8, lobbyCenter.z),
-            new Vector3(6, 6, 6),
-            () => {
-                movePlayerTo({ x: lobbyCenter.x-10, y: 0, z: lobbyCenter.z+2 }, {x:lobbyCenter.x, y:2, z:lobbyCenter.z-12})
-            }
-        )
+
+      // Trigger that handles landing offset
+      this.triggerBoxDown = new TriggerBox(
+          new Vector3(lobbyCenter.x, lobbyCenter.y+8, lobbyCenter.z),
+          new Vector3(6, 6, 6),
+          () => {
+              movePlayerTo({ x: lobbyCenter.x-5, y: 0, z: lobbyCenter.z+2 }, {x:lobbyCenter.x, y:2, z:lobbyCenter.z-12})
+              this.impactSound.getComponent(AudioSource).playOnce()
+          }
+      )
       engine.addEntity(this.triggerBoxDown)
+
+      // Trigger to play fall SFX
+      this.triggerBoxFallCheck = new TriggerBox(
+          new Vector3(lobbyCenter.x, lobbyCenter.y+90, lobbyCenter.z),
+          new Vector3(6, 10, 6),
+          () => {
+              this.beamFallSound.getComponent(AudioSource).playOnce()
+          }
+      )
+      engine.addEntity(this.triggerBoxFallCheck)
 
       this.delayedTriggers.push(this.triggerBoxUp)
       this.triggers.push(this.triggerBoxDown)
+      this.triggers.push(this.triggerBoxFallCheck)
 
       this.portalLiftSpiral = new Entity()
       this.portalLiftSpiral.addComponent(new Transform({
@@ -59,11 +78,41 @@ export class TeleportController {
         scale: new Vector3(1,0,1)
       }))
       this.portalLiftSpiral.addComponent(resource.portalSpiralShape)
+      this.portalLiftSpiral.addComponent(sfx.beamChargeSource)
 
       engine.addEntity(this.portalLiftSpiral)
   
       this.portalSys = new PortalCheckSystem(this)
       engine.addSystem(this.portalSys)
+
+      //beam teleport sound attached to player
+      this.beamFireSound = new Entity()
+      this.beamFireSound.addComponent(new Transform({
+        //position: new Vector3(lobbyCenter.x, lobbyHeight+40, lobbyCenter.z-7)
+        position: new Vector3(0,1,0)
+      }))
+      this.beamFireSound.addComponent(sfx.beamFireSource)
+      engine.addEntity(this.beamFireSound)
+      this.beamFireSound.setParent(Attachable.AVATAR)
+
+      //beam fall sound attached to player
+      this.beamFallSound = new Entity()
+      this.beamFallSound.addComponent(new Transform({
+        position: new Vector3(0,4,0)
+      }))
+      this.beamFallSound.addComponent(sfx.beamFallSource)
+      engine.addEntity(this.beamFallSound)
+      this.beamFallSound.setParent(Attachable.AVATAR)
+
+      //impact sound when landing
+      this.impactSound = new Entity()
+      this.impactSound.addComponent(new Transform({
+        position: new Vector3(0,1,0)
+      }))
+      this.impactSound.addComponent(sfx.impactHardSource)
+      engine.addEntity(this.impactSound)
+      this.impactSound.setParent(Attachable.AVATAR)
+
   
       
     }
@@ -99,8 +148,15 @@ export class TeleportController {
           liftSpiralTransform.scale.y += dt/delayInfo.delay
           liftSpiralTransform.position.y += 0.9*dt
 
+          if(!this.portalLiftSpiral.getComponent(AudioSource).playing){
+            this.portalLiftSpiral.getComponent(AudioSource).playOnce()
+          }
+          
+
           if(delayInfo.elapsed > delayInfo.delay){
             this.delayedTriggers[i].fire()
+            this.portalLiftSpiral.getComponent(AudioSource).playing = false 
+            this.beamFireSound.getComponent(AudioSource).playOnce()
             delayInfo.elapsed = 0
             liftSpiralTransform.scale.y = 0
             liftSpiralTransform.position.y = lobbyCenter.y
@@ -112,7 +168,9 @@ export class TeleportController {
           setTeleportCountdown( '0')
           liftSpiralTransform.scale.y = 0
           liftSpiralTransform.position.y = lobbyCenter.y
-         
+
+          this.portalLiftSpiral.getComponent(AudioSource).playing = false         
+         // this.beamFireSound.getComponent(AudioSource).playing = false         
 
         }
       }

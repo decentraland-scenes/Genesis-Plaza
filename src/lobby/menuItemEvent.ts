@@ -428,6 +428,7 @@ export class EventMenuItem extends MenuItem {
          
 
         if(!this.selected){
+           // engine.addEntity(this.detailsRoot)
             this.selected = true 
             this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true  
             this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true       
@@ -439,9 +440,10 @@ export class EventMenuItem extends MenuItem {
         }
     }
     deselect(_silent?:boolean){
-
-        this.selected = false
-
+        if(this.selected){
+            this.selected = false
+           // engine.removeEntity(this.detailsRoot)
+        }
         this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
         this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
         this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
