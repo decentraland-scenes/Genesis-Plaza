@@ -19,6 +19,7 @@ export class PianoKey extends Entity {
     note: number
   ) {
     super()
+    engine.addEntity(this)
     this.addComponent(shape)
     this.addComponent(transform)
     this.material.albedoColor = color
@@ -42,8 +43,7 @@ export class PianoKey extends Entity {
           },
           onCameraExit: () => {
             sceneMessageBus.emit('noteOff', { note: this.note })
-          },
-          enableDebug: true,
+          }
         }
       )
     )

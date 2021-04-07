@@ -104,14 +104,5 @@ export function addPiano(): void {
     skipKey % 3 != 0 ? (blackKeyXPos += 0.8) : (blackKeyXPos += 1.6)
     if (skipKey == 6) skipKey = 1
   }
-
-  // Modify player's trigger shape
-  //   utils.TriggerSystem.instance.setCameraTriggerShape(
-  //     new utils.TriggerBoxShape(
-  //       new Vector3(0.5, 0.25, 0.5),
-  //       new Vector3(0, -0.5, 0)
-  //     ),
-  //   )
-
   addKeyListeners()
 }
