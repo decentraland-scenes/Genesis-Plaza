@@ -14,6 +14,7 @@ import {
   CharlieDialog,
   RonDialog,
 } from './npcDialogData'
+import { addOneTimeTrigger } from './Utils'
 
 // Opens informational dialog about a piece
 // function openPieceInfoWindow(piece: Entity, robot: NPC, textID: number) {
@@ -64,6 +65,16 @@ export class MuseumPiece extends Entity {
       new OnPointerDown(
         function () {
           if (robot && dialog) {
+            addOneTimeTrigger(
+              thisPiece.getComponent(Transform).position.clone(),
+              new Vector3(10, 5, 10),
+              null,
+              null,
+              false,
+              () => {
+                robot.endInteraction()
+              }
+            )
             robot.talk(dialog, textID)
           }
         },

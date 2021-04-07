@@ -43,6 +43,7 @@ export class PianoKey extends Entity {
           onCameraExit: () => {
             sceneMessageBus.emit('noteOff', { note: this.note })
           },
+          enableDebug: true,
         }
       )
     )

@@ -47,11 +47,19 @@ export function addOneTimeTrigger(
             entered = true
             onFirstPlayerEnter()
           }
+          if ((entered || !onFirstPlayerEnter) && (exited || !onFirstExit)) {
+            engine.removeEntity(trigger)
+            //trigger.removeComponent(utils.TriggerComponent)
+          }
         },
         onCameraExit: () => {
           if (!exited && onFirstExit) {
             exited = true
             onFirstExit()
+          }
+          if ((entered || !onFirstPlayerEnter) && (exited || !onFirstExit)) {
+            engine.removeEntity(trigger)
+            //trigger.removeComponent(utils.TriggerComponent)
           }
         },
         enableDebug: show,

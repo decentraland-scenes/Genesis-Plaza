@@ -106,12 +106,12 @@ export function addPiano(): void {
   }
 
   // Modify player's trigger shape
-  utils.TriggerSystem.instance.setCameraTriggerShape(
-    new utils.TriggerBoxShape(
-      new Vector3(0.5, 0.25, 0.5),
-      new Vector3(0, -0.5, 0)
-    )
-  )
+  //   utils.TriggerSystem.instance.setCameraTriggerShape(
+  //     new utils.TriggerBoxShape(
+  //       new Vector3(0.5, 0.25, 0.5),
+  //       new Vector3(0, -0.5, 0)
+  //     ),
+  //   )
 
   addKeyListeners()
 }

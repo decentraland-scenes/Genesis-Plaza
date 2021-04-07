@@ -125,6 +125,10 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      reactDistance: 8,
+      onWalkAway: () => {
+        ron.playAnimation('Goodbye', true, 2)
+      },
     }
   )
 
@@ -174,6 +178,7 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      continueOnWalkAway: false,
     }
   )
 
@@ -224,6 +229,10 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      reactDistance: 8,
+      onWalkAway: () => {
+        betty.playAnimation('Goodbye', true, 2)
+      },
     }
   )
 
@@ -275,6 +284,10 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      reactDistance: 8,
+      onWalkAway: () => {
+        charlie.playAnimation('Goodbye', true, 2)
+      },
     }
   )
 
@@ -325,6 +338,10 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      reactDistance: 8,
+      onWalkAway: () => {
+        marsha.playAnimation('Goodbye', true, 2)
+      },
     }
   )
 
@@ -374,6 +391,10 @@ export function addRobots() {
         },
       },
       onlyETrigger: true,
+      reactDistance: 8,
+      onWalkAway: () => {
+        bob.playAnimation('Goodbye', true, 2)
+      },
     }
   )
 
