@@ -67,7 +67,7 @@ export class MuseumPiece extends Entity {
           if (robot && dialog) {
             addOneTimeTrigger(
               thisPiece.getComponent(Transform).position.clone(),
-              new Vector3(10, 5, 10),
+              new Vector3(14, 5, 14),
               null,
               null,
               false,

@@ -1,4 +1,3 @@
-
 import { barPlatforms, placePlatforms } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
@@ -16,7 +15,11 @@ import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
-import { addOneTimeTrigger, addRepeatTrigger } from './modules/Utils'
+import {
+  addOneTimeTrigger,
+  addRepeatTrigger,
+  setTimeout,
+} from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/doors'
 
@@ -48,6 +51,13 @@ addBuildings()
 
 placeDoors()
 barPlatforms()
+
+setTimeout(20000, () => {
+  if (!areNPCsAdded) {
+    addBarNPCs()
+    log('loaing NPCs')
+  }
+})
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 
