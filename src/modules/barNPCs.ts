@@ -34,8 +34,8 @@ export async function addBarNPCs() {
 
   octopus = new NPC(
     {
-      position: new Vector3(160, 0.3, 141),
-      scale: new Vector3(1.2, 1.2, 1.2),
+      position: new Vector3(160, 0.25, 141.4),
+      //scale: new Vector3(1.2, 1.2, 1.2),
     },
     'models/core_building/BobOctorossPartA_V42.glb',
     () => {
