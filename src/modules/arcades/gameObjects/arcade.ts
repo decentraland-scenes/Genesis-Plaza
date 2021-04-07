@@ -9,7 +9,7 @@ export class Arcade extends Entity {
     this.addComponent(transform)
 
     if (knob) {
-      this.knob.addComponent(new GLTFShape("models/knob.glb"))
+      this.knob.addComponent(new GLTFShape("models/core_building/knob.glb"))
       this.knob.addComponent(new Transform({ position: new Vector3(0, 1.383, -0.397) }))
       this.knob.getComponent(Transform).rotate(Vector3.Left(), 11.6)
       this.knob.setParent(this)
