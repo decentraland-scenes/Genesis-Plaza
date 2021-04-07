@@ -341,3 +341,12 @@ ethLogos.addComponent(
   })
 )
 engine.addEntity(ethLogos)
+
+let ethLogos_02 = new Entity()
+ethLogos_02.addComponent(new GLTFShape('models/core_building/Eth_Details_02.glb'))
+ethLogos_02.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+engine.addEntity(ethLogos_02)
