@@ -18,6 +18,13 @@ export class DelayedTriggerBox{
 
 }
 
+let beam = new Entity()
+beam.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z)
+}))
+beam.addComponent(resource.beamShape)
+engine.addEntity(beam)
+
 export class TeleportController {    
     triggerBoxUp:TriggerBox
     triggerBoxDown:TriggerBox
@@ -39,7 +46,7 @@ export class TeleportController {
           new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
           new Vector3(6, 3, 6),
           () => {
-              movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 } )
+              movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
               //{x:lobbyCenter.x, y:lobbyHeight+100, z:lobbyCenter.z+12}
           }
       )

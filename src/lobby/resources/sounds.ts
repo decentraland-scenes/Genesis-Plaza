@@ -24,7 +24,7 @@ beamFireSource.volume = 1.2
 
 const beamFallClip = new AudioClip('sounds/beam_fall.mp3')
 export const beamFallSource = new AudioSource(beamFallClip)
-beamFallSource.volume = 1.8
+beamFallSource.volume = 3
 
 const impactHardClip = new AudioClip('sounds/impact_hard.mp3')
 export const impactHardSource = new AudioSource(impactHardClip)
