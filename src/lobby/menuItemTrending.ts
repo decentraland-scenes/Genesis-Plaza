@@ -24,6 +24,7 @@ export class TrendingMenuItem extends MenuItem {
     detailText:Entity
     detailTextPanel:Entity
     highlightRays:Entity
+    highlightFrame:Entity
     detailEventTitle:Entity
     readMoreButton:Entity
     coordsPanel:Entity
@@ -54,9 +55,7 @@ export class TrendingMenuItem extends MenuItem {
 
         if(_scene.thumbnail){
 
-            let imgPath:string = _scene.thumbnail
-            log("scene thumbnail : " + imgPath)
-            
+            let imgPath:string = _scene.thumbnail                     
     
                 this.thumbNail = new ThumbnailPlane(
                     new Texture(_scene.thumbnail), 
@@ -67,10 +66,8 @@ export class TrendingMenuItem extends MenuItem {
                     _alphaTexture)               
                 this.thumbNail.setParent(this.itemBox) 
             
-            
         }
-        else{        
-    
+        else{ 
             this.thumbNail = new ThumbnailPlane(
                 resource.dummySceneBG, 
                 {
@@ -80,8 +77,6 @@ export class TrendingMenuItem extends MenuItem {
                 _alphaTexture)               
             this.thumbNail.setParent(this.itemBox) 
         }
-        
-               
 
         this.leftDetailsRoot = new Entity()
         this.leftDetailsRoot.addComponent(new Transform({
@@ -90,12 +85,8 @@ export class TrendingMenuItem extends MenuItem {
         }))
         this.leftDetailsRoot.setParent(this.itemBox)
         
-      
-       
         
-        
-        // -- USER COUNTER PANEL           
-        
+        // -- USER COUNTER PANEL     
         this.playerCounterBG = new Entity()
         this.playerCounterBG.addComponent(new Transform({
             position: new Vector3(-0.25,0,0),
@@ -151,43 +142,19 @@ export class TrendingMenuItem extends MenuItem {
             },
             2            
         ))
-               // DETAILS APPEARING ON SELECTION EVENT
+
+        // DETAILS APPEARING ON SELECTION EVENT
         this.detailsRoot = new Entity()
         this.detailsRoot.addComponent(new Transform())
-        this.detailsRoot.setParent(this)
-        
-        // this.timePanel = new Entity()
-        // this.timePanel.addComponent(new Transform({
-        //     position: new Vector3(-0.4, 0, -0.1),
-        //     rotation: Quaternion.Euler(0,-30,0)
-        // }))
-        // this.timePanel.addComponent(resource.timePanelShape)
-        // this.timePanel.setParent(this.detailsRoot)
-
-        // this.timePanel.addComponent(new AnimatedItem(
-        //     {
-        //         position: new Vector3(-0.7,0.25,0.1),
-        //         scale: new Vector3(0,0,0)
-        //     },
-        //     {
-        //         position: new Vector3(-1.1, 0.25, -0.1),
-        //         scale: new Vector3(1,1,1)
-        //     },
-        //     2
-        // ))      
-       
+        this.detailsRoot.setParent(this)   
 
 
         // TITLE
         let titleText = new TextShape()
         let title = new Entity()
         let rawText:string = _scene.name
-
-        // if(rawText.length > 36){
-        //     rawText = (rawText.substring(0,36) + "\n" + rawText.substring(36,rawText.length) )
-        // }
-
         
+        //exception for unnamed scenes
         if(rawText === "interactive-text"){
             titleText.value = "Unnamed Scene"
         }
@@ -199,10 +166,7 @@ export class TrendingMenuItem extends MenuItem {
         titleText.font = new Font(Fonts.SanFrancisco_Heavy)
         titleText.height = 20
         titleText.width = 2
-        titleText.resizeToFit = true
-        // titleText.textWrapping = true
-        // titleText.lineCount = 2
-        // titleText.lineSpacing = "10%"
+        titleText.resizeToFit = true        
         titleText.fontSize = 2
         titleText.color = Color3.Black()
         titleText.hTextAlign = 'center'
@@ -213,7 +177,6 @@ export class TrendingMenuItem extends MenuItem {
             scale: new Vector3(0.3,0.3,0.3)
         }))
         title.addComponent(titleText)
-
         title.setParent(this.itemBox)
 
         
@@ -237,16 +200,8 @@ export class TrendingMenuItem extends MenuItem {
             },
             1.9
         ))
-        this.coordsPanel.addComponent(new OnPointerDown( 
-            async function () {
-                teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
-              },
-              {
-                button: ActionButton.POINTER,
-                hoverText: "GO THERE",
-              }
-            //movePlayerTo({ x: lobbyCenter.x, y: 110, z: lobbyCenter.z-8 } )
-        ))
+
+       
 
         let coords = new Entity
         let coordsText = new TextShape()
@@ -298,81 +253,52 @@ export class TrendingMenuItem extends MenuItem {
         
         jumpButtonText.setParent(this.jumpInButton)
 
-        
-        jumpButtonTextShape.value = "JUMP IN"
-        this.jumpInButton.addComponent(new OnPointerDown( 
-            async function () {
-                teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
+        //exception for Genesis Plaza
+        if(_scene.baseCoords[0] < 10 &&_scene.baseCoords[0] > -10){
+            coordsText.value = "0,0"
+            this.coordsPanel.addComponent(new OnPointerDown( 
+                async function () {                   
+                  },
+                  {
+                    button: ActionButton.POINTER,
+                    hoverText: "YOU ARE HERE",
+                  }                
+            ))
+            jumpButtonTextShape.value = "YOU'RE HERE"
+            jumpButtonTextShape.fontSize = 7
+            this.jumpInButton.addComponent(new OnPointerDown( 
+                async function () {                
                 },
                 {
                 button: ActionButton.POINTER,
-                hoverText: "JUMP IN",
+                hoverText: "YOU ARE HERE",
                 }
-            //movePlayerTo({ x: lobbyCenter.x, y: 110, z: lobbyCenter.z-8 } )
-        ))
-        
-           
+                
+            ))
+        }
+        else{
+            this.coordsPanel.addComponent(new OnPointerDown( 
+                async function () {
+                    teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
+                  },
+                  {
+                    button: ActionButton.POINTER,
+                    hoverText: "GO THERE",
+                  }                
+            ))
 
-        // EVENT DETAILS TEXT
-        // this.detailTextPanel = new Entity()
-        // this.detailTextPanel.addComponent(new Transform({
-        //     position: new Vector3(0.9,0,0),
-        //     rotation: Quaternion.Euler(0,30,0)
-        // }))
-        // this.detailTextPanel.addComponent(resource.detailsBGShape)
-        // this.detailTextPanel.setParent(this.detailsRoot)
-        // this.detailTextPanel.addComponent(new AnimatedItem(
-        //     {
-        //         position: new Vector3(0.8,0,0.2),
-        //         scale: new Vector3(0,0.8,0)
-        //     },
-        //     {
-        //         position: new Vector3(0.9,0,-0.1),
-        //         scale: new Vector3(1,1,1)
-
-        //     },
-        //     2.2
-        // ))
-
-        // let detailTitle = new TextShape()
-        // detailTitle.value = (_scene.name)
-        // detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
-        // detailTitle.height = 20
-        // detailTitle.width = 2
-        // detailTitle.resizeToFit = true        
-        // detailTitle.fontSize = 1
-        // detailTitle.color = Color3.Black()
-        // detailTitle.hTextAlign = 'left'
-        // detailTitle.vTextAlign = 'top'  
-
-        // this.detailEventTitle = new Entity()
-        // this.detailEventTitle.addComponent(new Transform({
-        //     position: new Vector3(0.1,0.5,0),
-        //     scale: new Vector3(0.5, 0.5, 0.5)
-        // }))
-        // this.detailEventTitle.addComponent(detailTitle)
-        // this.detailEventTitle.setParent(this.detailTextPanel)       
-
-        // let detailTextContent = new TextShape()
-        // //detailTextContent.value = ("\n\n" + wordWrap(_scene.description, 100, 11) + "</cspace>")
-        // detailTextContent.value = "Description"
-        // detailTextContent.font = new Font(Fonts.SanFrancisco_Semibold)
-        // detailTextContent.height = 20
-        // detailTextContent.width = 2
-        // detailTextContent.resizeToFit = true        
-        // detailTextContent.fontSize = 1
-        // detailTextContent.color = Color3.FromHexString("#111111")
-        // detailTextContent.hTextAlign = 'left'
-        // detailTextContent.vTextAlign = 'top'  
-        // detailTextContent.lineSpacing = '0'        
-        
-        // this.detailText = new Entity()
-        // this.detailText.addComponent(new Transform({
-        //     position: new Vector3(0.1,0.5,0),
-        //     scale: new Vector3(0.4, 0.4, 0.4)
-        // }))
-        // this.detailText.addComponent(detailTextContent)        
-        // this.detailText.setParent(this.detailTextPanel)        
+            jumpButtonTextShape.value = "JUMP IN"
+            this.jumpInButton.addComponent(new OnPointerDown( 
+                async function () {
+                    teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
+                    },
+                    {
+                    button: ActionButton.POINTER,
+                    hoverText: "JUMP IN",
+                    }
+                
+            ))
+        }             
 
         // highlights BG on selection
         this.highlightRays = new Entity()
@@ -391,6 +317,12 @@ export class TrendingMenuItem extends MenuItem {
             },
             3
         ))
+        
+        this.highlightFrame = new Entity()
+        this.highlightFrame.addComponent(new Transform())
+        this.highlightFrame.addComponent(resource.highlightFrameShape)
+        this.highlightFrame.setParent(this.highlightRays)
+       
       
     }
     select(){

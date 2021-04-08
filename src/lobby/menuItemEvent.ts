@@ -27,6 +27,7 @@ export class EventMenuItem extends MenuItem {
     detailText:Entity
     detailTextPanel:Entity
     highlightRays:Entity
+    highlightFrame:Entity
     detailEventTitle:Entity
     readMoreButton:Entity
     coordsPanel:Entity
@@ -413,15 +414,10 @@ export class EventMenuItem extends MenuItem {
             3
         ))
 
-        // this.selectSound = new Entity()
-        // this.selectSound.addComponent(new Transform())
-        // this.selectSound.addComponent(sfx.menuSelectSource)
-        // this.selectSound.setParent(this)
-
-        // this.deselectSound = new Entity()
-        // this.deselectSound.addComponent(new Transform())
-        // this.deselectSound.addComponent(sfx.menuDeselectSource)
-        // this.deselectSound.setParent(this)
+        this.highlightFrame = new Entity()
+        this.highlightFrame.addComponent(new Transform())
+        this.highlightFrame.addComponent(resource.highlightFrameShape)
+        this.highlightFrame.setParent(this.highlightRays)
       
     }
     select(){   

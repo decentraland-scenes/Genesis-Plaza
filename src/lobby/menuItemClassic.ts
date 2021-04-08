@@ -18,7 +18,9 @@ export class ClassicMenuItem extends MenuItem {
     detailTextPanel:Entity
     detailTitle:Entity
     detailTextBody:Entity
-    
+    highlightRays:Entity
+    jumpInButton:Entity    
+    coordsPanel:Entity
 
     constructor(
         _transform:TranformConstructorArgs,       
@@ -39,6 +41,7 @@ export class ClassicMenuItem extends MenuItem {
         }))
         this.itemBox.addComponent(_mesh)
         this.itemBox.getComponent(GLTFShape).isPointerBlocker = false
+        this.itemBox.addComponent(new Billboard(false,true,false))
         this.itemBox.setParent(this)
         
         this.scaleMultiplier = 1.2     
@@ -126,6 +129,108 @@ export class ClassicMenuItem extends MenuItem {
         this.detailTextBody.addComponent(detailTextContent)        
         this.detailTextBody.setParent(this.detailTextPanel)
 
+        // -- COORDS PANEL
+        this.coordsPanel = new Entity()
+        this.coordsPanel.addComponent(new Transform({
+            position: new Vector3(-0.3,-0.2,0),
+            scale: new Vector3(0.4, 0.4, 0.4)
+        }))
+        this.coordsPanel.addComponent(resource.coordsPanelShape)
+        this.coordsPanel.setParent(this.detailTextPanel)
+        this.coordsPanel.addComponent(new AnimatedItem(
+            {
+                position: new Vector3(0,0.0,0.2),
+                scale: new Vector3(0.1, 0.1, 0.1)
+            },
+            {
+                position: new Vector3(1.1,-0.3,-0.05),
+                scale: new Vector3(0.5, 0.5, 0.5)
+            },
+            1.9
+        ))
+
+         // -- JUMP IN BUTTON
+         this.jumpInButton = new Entity()
+         this.jumpInButton.addComponent(new Transform({
+             position: new Vector3(0,-0.2,0),
+             scale: new Vector3(0.4, 0.4, 0.4)
+         }))
+         this.jumpInButton.addComponent(resource.jumpInButtonShape)
+         this.jumpInButton.setParent(this.detailTextPanel)
+         this.jumpInButton.addComponent(new AnimatedItem(
+             {
+                 position: new Vector3(0,0.0,0.2),
+                 scale: new Vector3(0.1, 0.1, 0.1)
+             },
+             {
+                 position: new Vector3(0.35,-0.3,-0.05),
+                 scale: new Vector3(0.5, 0.5, 0.5)
+             },
+             1.8
+         ))
+ 
+         let jumpButtonText = new Entity
+         let jumpButtonTextShape = new TextShape()
+         
+         jumpButtonTextShape.color = Color3.FromHexString("#FFFFFF")
+         jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+         jumpButtonTextShape.hTextAlign = "center"
+         
+ 
+         jumpButtonText.addComponent(jumpButtonTextShape)
+         jumpButtonText.addComponent(new Transform({
+             position: new Vector3(0, -0.33, -0.05),
+             scale: new Vector3(0.22, 0.22, 0.22)
+         }))
+
+         jumpButtonTextShape.value = "JUMP IN"
+            this.jumpInButton.addComponent(new OnPointerDown( 
+                async function () {
+                    teleportTo(_location)
+                    },
+                    {
+                    button: ActionButton.POINTER,
+                    hoverText: "JUMP IN",
+                    }
+                
+            ))
+         
+         jumpButtonText.setParent(this.jumpInButton)
+
+       
+
+        let coords = new Entity
+        let coordsText = new TextShape()
+        coordsText.value = (_location)
+        coordsText.color = Color3.FromHexString("#111111")
+        coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
+
+        coords.addComponent(coordsText)
+        coords.addComponent(new Transform({
+            position: new Vector3(0.18,-0.33,-0.05),
+            scale: new Vector3(0.18, 0.18, 0.18)
+        }))
+        
+        coords.setParent(this.coordsPanel)
+
+        // highlights BG on selection
+        this.highlightRays = new Entity()
+        this.highlightRays.addComponent(new Transform())
+        this.highlightRays.addComponent(resource.highlightRaysShape)
+        this.highlightRays.setParent(this.detailsRoot)
+        this.highlightRays.addComponent(new AnimatedItem(
+            {
+                position: new Vector3(0,0,0.3),
+                scale: new Vector3(0,0,0)
+            },
+            {
+                position: new Vector3(0,0,0.3),
+                scale: new Vector3(1,1,1)
+
+            },
+            3
+        ))
+        this.highlightRays.addComponent(new Billboard(false,true,false))
         
 
         
@@ -135,18 +240,21 @@ export class ClassicMenuItem extends MenuItem {
         if(!this.selected){
             this.selected = true 
             //teleportTo(this.teleportLocation)
-
+            this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true  
             this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true  
+            this.highlightRays.getComponent(AnimatedItem).isHighlighted = true
+            this.coordsPanel.getComponent(AnimatedItem).isHighlighted = true   
+            
         }   
          
     
     }
     deselect(){
         this.selected = false 
-        //     this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
+        this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false      
         this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false   
-        //     this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
-        //     this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false   
+        this.highlightRays.getComponent(AnimatedItem).isHighlighted = false              
+        this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false   
         //    // this.timePanel.getComponent(AnimatedItem).isHighlighted = false   
                  
         

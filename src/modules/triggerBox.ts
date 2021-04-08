@@ -6,7 +6,7 @@ debugMat.albedoColor = Color4.FromHexString('66000066')
 debugMat.transparencyMode = 2
 
 export class TriggerBox extends Entity {
-  fired: boolean = false
+  active: boolean = true
   sizeX: number = 1
   sizeY: number = 1
   sizeZ: number = 1
@@ -99,6 +99,9 @@ export class TriggerBox extends Entity {
   }
 
   fire(){
-    this.callback()
+    if(this.active){
+      this.callback()
+    }
+    
   }
 }

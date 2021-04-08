@@ -44,10 +44,12 @@ export class TeleportController {
       // Trigger to handle teleporting the player up to the cloud
       this.triggerBoxUp = new TriggerBox(
           new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
-          new Vector3(6, 3, 6),
+          new Vector3(6, 4.5, 6),
           () => {
               movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
-              //{x:lobbyCenter.x, y:lobbyHeight+100, z:lobbyCenter.z+12}
+
+              //enable fall sound trigger
+              this.triggerBoxFallCheck.active = true
           }
       )
       this.triggerBoxUp.addComponent(new DelayedTriggerBox(3))
@@ -71,6 +73,9 @@ export class TeleportController {
           new Vector3(6, 10, 6),
           () => {
               this.beamFallSound.getComponent(AudioSource).playOnce()
+
+              //disable after one fire
+              this.triggerBoxFallCheck.active = false
           }
       )
       engine.addEntity(this.triggerBoxFallCheck)
