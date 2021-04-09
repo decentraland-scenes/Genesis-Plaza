@@ -346,20 +346,20 @@ export class EventMenuItem extends MenuItem {
         ))
 
         let detailTitle = new TextShape()
-        detailTitle.value = (_event.name)
+        detailTitle.value = wordWrap(_event.name,45,3)
         detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
         detailTitle.height = 20
         detailTitle.width = 2
         detailTitle.resizeToFit = true        
-        detailTitle.fontSize = 1
+        detailTitle.fontSize = 2
         detailTitle.color = Color3.Black()
         detailTitle.hTextAlign = 'left'
         detailTitle.vTextAlign = 'top'  
 
         this.detailEventTitle = new Entity()
         this.detailEventTitle.addComponent(new Transform({
-            position: new Vector3(0.1,0.5,0),
-            scale: new Vector3(0.5, 0.5, 0.5)
+            position: new Vector3(0.1,0.55,0),
+            scale: new Vector3(0.3, 0.3, 0.3)
         }))
         this.detailEventTitle.addComponent(detailTitle)
         this.detailEventTitle.setParent(this.detailTextPanel)       
