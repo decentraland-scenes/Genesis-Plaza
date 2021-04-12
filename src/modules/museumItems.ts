@@ -1,4 +1,4 @@
-import { Dialog, NPC } from '@dcl/npc-scene-utils'
+import { Dialog, NPC, TriggerBoxShape } from '@dcl/npc-scene-utils'
 import {
   alice,
   ron,
@@ -14,7 +14,7 @@ import {
   CharlieDialog,
   RonDialog,
 } from './npcDialogData'
-import { addOneTimeTrigger } from './Utils'
+import * as utils from '@dcl/ecs-scene-utils'
 
 // Opens informational dialog about a piece
 // function openPieceInfoWindow(piece: Entity, robot: NPC, textID: number) {
@@ -65,15 +65,18 @@ export class MuseumPiece extends Entity {
       new OnPointerDown(
         function () {
           if (robot && dialog) {
-            addOneTimeTrigger(
-              thisPiece.getComponent(Transform).position.clone(),
-              new Vector3(14, 5, 14),
-              null,
-              null,
-              false,
-              () => {
-                robot.endInteraction()
-              }
+            utils.addOneTimeTrigger(
+              new TriggerBoxShape(
+                new Vector3(10, 5, 10),
+                Vector3.Zero() //thisPiece.getComponent(Transform).position.clone()
+              ),
+              {
+                onCameraExit: () => {
+                  robot.endInteraction()
+                },
+                enableDebug: true,
+              },
+              thisPiece
             )
             robot.talk(dialog, textID)
           }
