@@ -1,9 +1,13 @@
 import { NPC, Dialog, FollowPathData } from '@dcl/npc-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
-
+import * as utils from '@dcl/ecs-scene-utils'
 export let octopus: NPC
 export let doge: NPC
 export let catGuy: NPC
+export let wearablesC: NPC
+export let artist1: NPC
+export let artist2: NPC
+export let wenMoon: NPC
 
 export let areNPCsAdded: boolean = false
 
@@ -156,6 +160,27 @@ export async function addBarNPCs() {
   )
   catGuy.followPath(catGuyPath)
 }
+
+
+
+wearablesC = new NPC(
+  { position: new Vector3(163, 0.3, 133) },
+  'models/core_building/WearableConnoisseur3.glb',
+  () => {
+   // wearablesC.playAnimation('TurnIn', true, 3.13)
+ //   wearablesC.changeIdleAnim('Talk')
+    wearablesC.talk(DogeTalk, 0)
+  },
+  {
+    faceUser: true,
+    darkUI: true,
+    hoverText: 'Talk',
+    onlyETrigger: true,
+    onWalkAway: ()=>{
+      wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+    }
+  }
+)
 
 /// OCTO
 
