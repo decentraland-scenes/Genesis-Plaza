@@ -83,6 +83,9 @@ export async function addBarNPCs() {
     loop: true,
   }
 
+
+
+
   let catGuyPath: FollowPathData = {
     path: [
       new Vector3(181.8, 10.8, 160),
@@ -159,7 +162,7 @@ export async function addBarNPCs() {
     }
   )
   catGuy.followPath(catGuyPath)
-}
+
 
 
 
@@ -244,6 +247,65 @@ reactDistance: 5,
     }
   }
 )
+}
+
+
+export function addWenMoon(){
+
+  let wenPath: FollowPathData = {
+    path: [
+      new Vector3(82, 0.3, 138),
+      new Vector3(45, 0.4, 149),
+      new Vector3(40, 0.3, 179),
+      new Vector3(45, 0.3, 216),
+      new Vector3(101, 0.3, 259),
+      new Vector3(132, 0.3, 253),
+      new Vector3(159, 0.3, 228),
+      new Vector3(166, 0.3, 195),
+      new Vector3(198, 0.3, 189),
+      new Vector3(207, 0.3, 141),
+      new Vector3(197, 0.3, 155),
+      new Vector3(156, 0.3, 103),
+      new Vector3(98, 0.3, 62),
+      new Vector3(70, 0.3, 89),
+    ],
+    loop: true,
+  }
+
+  
+  wenMoon = new NPC(
+    { position: wenPath.path[0] },
+    'models/core_building/wenMoonV10.glb',
+    () => {
+    
+      wenMoon.stopWalking()
+      wenMoon.talk(wenMoonTalk, 0)
+      wenMoon.playAnimation(`TurnIn`, true, 5.77)
+
+    },
+    {
+      portrait: {
+        path: 'images/portraits/catguy.png',
+        height: 128,
+        width: 128,
+      },
+      reactDistance: 4,
+      idleAnim: `Talk`,
+      walkingAnim: 'Walk',
+      dialogSound: `sounds/navigationForward.mp3`,
+      faceUser: true,
+      darkUI: true,
+      walkingSpeed: 1,
+      onWalkAway: () => {
+        wenMoon.followPath()
+      },
+     
+    }
+  )
+  wenMoon.followPath(wenPath)
+
+
+}
 
 /// OCTO
 
@@ -628,3 +690,56 @@ export let artist2Talk: Dialog[] = [
      }
   },
 ]
+
+
+
+
+
+export let wenMoonTalk: Dialog[] = [
+  {
+    text:
+    'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time.. Imagine if you sold those for eth then?',
+  },
+  {
+    text:
+    'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
+  },
+  {
+    text:
+    'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
+  },
+  {
+    text:
+    'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+  },
+  {
+    text:
+    'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
+  },
+  {
+    text:
+    'Any of these could be the next bitcoin...',
+  },
+  {
+    text:
+    '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
+  },
+  {
+    text:
+    'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
+  },
+  {
+    text:
+    'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
+    isEndOfDialog: true,
+     
+    triggeredByNext: ()=>{
+      wenMoon.endInteraction()
+      wenMoon.followPath()
+     }
+  },
+
+]
+
+
+
