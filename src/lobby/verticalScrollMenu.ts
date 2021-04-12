@@ -46,7 +46,8 @@ export class VerticalScrollMenu extends Entity {
     currentOffset:number = 0
     maxHeight:number = 1
     origin:Vector3 
-    scrollerRoot:Entity
+    scrollerRootA:Entity
+    scrollerRootB:Entity
     menuFrame:Entity
     bg:Entity
     topMesh:Entity
@@ -102,13 +103,13 @@ export class VerticalScrollMenu extends Entity {
 
         this.verticalSpacing = _spacing             
         
-        this.scrollerRoot = new Entity()
-        this.scrollerRoot.addComponent(new Transform())
+        this.scrollerRootA = new Entity()
+        this.scrollerRootA.addComponent(new Transform())
 
-        this.scrollerRoot.addComponent(new VerticalScroller())   
-        this.scrollerRoot.getComponent(VerticalScroller).base = this.scrollerRoot.getComponent(Transform).position.y
-        this.scrollerRoot.getComponent(VerticalScroller).scrollStep =  this.verticalSpacing   
-        this.scrollerRoot.setParent(this)
+        this.scrollerRootA.addComponent(new VerticalScroller())   
+        this.scrollerRootA.getComponent(VerticalScroller).base = this.scrollerRootA.getComponent(Transform).position.y
+        this.scrollerRootA.getComponent(VerticalScroller).scrollStep =  this.verticalSpacing   
+        this.scrollerRootA.setParent(this)        
 
         engine.addEntity(this)
 
@@ -119,7 +120,7 @@ export class VerticalScrollMenu extends Entity {
         }))
         this.instructions.addComponent(resource.scrollInstructionShape)
         this.instructions.addComponent(new OnPointerDown( (e) => {    
-            const scrollInfo = this.scrollerRoot.getComponent(VerticalScroller)             
+            const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)             
                   
             // 'E' to scroll up
             if(e.buttonId == 1){                         
@@ -177,7 +178,7 @@ export class VerticalScrollMenu extends Entity {
         clickBox.addComponent(resource.shelfShape)
         clickBox.setParent(itemRoot)    
         clickBox.addComponent(new OnPointerDown( (e) => {    
-            const scrollInfo = this.scrollerRoot.getComponent(VerticalScroller) 
+            const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller) 
             
             // click to select
             if(e.buttonId == 0){
@@ -218,7 +219,7 @@ export class VerticalScrollMenu extends Entity {
         this.clickBoxes.push(clickBox)
 
         if(this.itemRoots.length <= this.visibleItemCount){
-            itemRoot.setParent(this.scrollerRoot)
+            itemRoot.setParent(this.scrollerRootA)
             _item.setParent(itemRoot)
         }
 
@@ -227,7 +228,7 @@ export class VerticalScrollMenu extends Entity {
         this.currentOffset += this.verticalSpacing
         // this.maxHeight = this.items.length * this.verticalSpacing + 1
         
-        this.scrollerRoot.getComponent(VerticalScroller).stops = this.items.length        
+        this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length        
         
     }
 
@@ -275,7 +276,7 @@ export class VerticalScrollMenu extends Entity {
     showItem(_id:number){
         if(_id < this.itemRoots.length && _id >= 0){
             engine.addEntity(this.itemRoots[_id])
-            this.itemRoots[_id].setParent(this.scrollerRoot)
+            this.itemRoots[_id].setParent(this.scrollerRootA)
             this.items[_id].setParent(this.itemRoots[_id])
             this.items[_id].getComponent(Transform).scale.setAll(0)
             this.items[_id].getComponent(Transform).position.z  = 2
