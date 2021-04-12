@@ -30,8 +30,14 @@ export async function setRealm() {
   if (realm) {
     log(`You are in the realm: ${JSON.stringify(realm.displayName)}`)
     playerRealm = realm
+    if(realm.domain == 'http://127.0.0.1:8000' ||realm.domain ==  'http://192.168.0.18:8000'){
+      realm.domain ='https://peer.decentraland.org'
+      log('CHANGED REALM TO: ',  realm.domain)
+    }
+  
   }
-}
+  }
+
 
 /**
  * Returns profile of an address
@@ -39,18 +45,17 @@ export async function setRealm() {
  * @param address ETH address
  */
 export async function getUserInfo() {
-  if (!userData) await setUserData()
-  if (!playerRealm) await setRealm()
-  const realm =
-    playerRealm.domain == 'http://127.0.0.1:8000'
-      ? 'https://peer.decentraland.org'
-      : playerRealm.domain
+ 
 
   return (await fetch(
-    `${realm}/content/entities/profiles?pointer=${userData.userId}`
+    `${playerRealm.domain}/content/entities/profiles?pointer=${userData.userId}`
   )
     .then((res) => res.json())
-    .then((res) => (res.length ? res[0] : res))) as Profiles
+    .then((res) => {
+      log('USERINF:', res)
+    return res.length ? res[0] : res
+  }
+    )) as Profiles
 }
 
 /**
@@ -59,11 +64,16 @@ export async function getUserInfo() {
  * @param address ETH address
  */
 export async function getUserInventory() {
-  if (!userData) await setUserData()
-  const response = await fetch(
-    `https://wearable-api.decentraland.org/v2/addresses/${userData.userId}/wearables`
-  )
-  const inventory: Wearable[] = await response.json()
+
+  log(`${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`)
+  const response = await fetch(`${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`)
+  const inventory = await response.json()
+
+  //const response = await fetch(
+ //   `https://wearable-api.decentraland.org/v2/addresses/${userData.userId}/wearables`
+ // )
+  //const inventory: Wearable[] = await response.json()
+  
   return inventory
 }
 
@@ -76,23 +86,33 @@ export async function getUserInventory() {
 export async function rarestItem(
   equiped: boolean = false
 ): Promise<rarityLevel> {
+
+  if (!userData) await setUserData()
+  if (!playerRealm) await setRealm()
+  if(!userData.hasConnectedWeb3) return rarityLevel.none
+
+
   const profile = await getUserInfo()
+  log('PROFILE:, ',profile )
   const inventory = await getUserInventory()
+  log('INVENTORY:, ',inventory )
   if (!profile || !inventory) return rarityLevel.none
-  log('PROFILE: ', profile)
-  log('INVENTORY :', inventory)
+ // log('PROFILE: ', profile)
+  //log('INVENTORY :', inventory)
   if (equiped) {
-    for (const item of profile.metadata.avatars[0]?.avatar.wearables) {
+    const equipedAsUrn = profile.metadata.avatars[0]?.avatar?.wearables?.map(mapToUrn)
+    for (const item of equipedAsUrn) {
       for (let invItem of inventory) {
-        if (item == invItem.id && invItem.rarity) {
-          updateRarity(invItem.rarity)
+        if (item == invItem.definition.id && invItem.definition.rarity) {
+          updateRarity(invItem.definition.rarity)
+          log('ONE ITEM OF RARITY ', invItem.definition.rarity)
         }
       }
     }
   } else {
     for (let invItem of inventory) {
-      if (invItem.rarity) {
-        updateRarity(invItem.rarity)
+      if (invItem.definition.rarity) {
+        updateRarity(invItem.definition.rarity)
       }
     }
   }
@@ -161,6 +181,20 @@ export async function getPlayerSnapshots(
     })
   //
   // )
+}
+
+
+function mapToUrn(wearableId: string) {
+  if (wearableId.indexOf('dcl://') < 0) {
+    // Already urn
+    return wearableId
+  }
+  const [collectionName, wearableName ] = wearableId.replace('dcl://', '').split('/')
+  if (collectionName === 'base-avatars') {
+    return `urn:decentraland:off-chain:base-avatars:${wearableName}`
+  } else {
+    return `urn:decentraland:ethereum:collections-v1:${collectionName}:${wearableName}`
+  }
 }
 
 export enum rarityLevel {
