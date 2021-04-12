@@ -56,7 +56,7 @@ export function placePlatforms() {
   let artichoke_Elevator = new Platform(
     new GLTFShape("models/L'architoque_Elevator.glb"),
     { rotation: Quaternion.Euler(0, 180, 0) },
-    { position: new Vector3(51, 2.5, 39.5) },
+    { position: new Vector3(51, 3, 39.5) },
     new Vector3(4, 4, 4),
     "L'architoque_Elevator",
     'artichokeElevatorActivated'

@@ -1,13 +1,6 @@
 import { sceneMessageBus } from './serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
-
-export enum Radios {
-  RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
-  INTERVIEW = 'https://dclcoreradio.com/dclradio.ogg',
-  DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
-  SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
-  MKLAB = 'https://freeuk13.listen2myradio.com/live.mp3?typeportmount=s2_20223_stream_944192845',
-}
+import { Radios } from './jukebox'
 
 let isInRadioRange: boolean = false
 let currentRadio: Radios | null = null
@@ -87,13 +80,13 @@ greenButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: Radios.INTERVIEW,
+        station: Radios.JAZZ,
       })
       greenButton.press()
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'DCL Interviews',
+      hoverText: 'Vegas Jazz FM',
     }
   )
 )
@@ -150,13 +143,13 @@ yellowButton.addComponent(
   new OnPointerDown(
     () => {
       sceneMessageBus.emit('setRadio', {
-        station: Radios.MKLAB,
+        station: Radios.GRAFFITI,
       })
       yellowButton.press()
     },
     {
       button: ActionButton.PRIMARY,
-      hoverText: 'Signs',
+      hoverText: 'Graffiti Kings',
     }
   )
 )
