@@ -27,7 +27,7 @@ import {
   setBarMusicOn,
 } from './modules/jukebox'
 
-import { addBarNPCs, areNPCsAdded } from './modules/barNPCs'
+import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 
 //////// LOG PLAYER POSITION
@@ -115,6 +115,8 @@ export function insideBar() {
 }
 
 export function outsideBar() {
+
+  addWenMoon()
   /// MOVING PLATFORMS
 
   placePlatforms()

@@ -6,7 +6,7 @@ export enum Radios {
   DELTA = 'https://cdn.instream.audio/:9069/stream?_=171cd6c2b6e',
   GRAFFITI = 'https://n07.radiojar.com/2qm1fc5kb.m4a?1617129761=&rj-tok=AAABeIR7VqwAilDFeUM39SDjmw&rj-ttl=5',
   SIGNS = 'https://edge.singsingmusic.net/MC2.mp3',
-  MKLAB = 'https://freeuk13.listen2myradio.com/live.mp3?typeportmount=s2_20223_stream_944192845',
+  JAZZ = 'https://live.vegascity.fm/radio/8010/the_flamingos.mp3',
 }
 
 export let isInBar: boolean = false
@@ -152,7 +152,7 @@ export function placeJukeBox() {
         newRadio = Radios.GRAFFITI
         break
       case 3:
-        newRadio = Radios.MKLAB
+        newRadio = Radios.JAZZ
         break
       case 4:
         newRadio = Radios.SIGNS
@@ -317,7 +317,7 @@ function getRadioName(radio: number) {
       radioName = 'Graffiti Kings'
       break
     case 3:
-      radioName = 'MK Lab'
+      radioName = 'Vegas Jazz FM'
       break
     case 4:
       radioName = 'Signs'
