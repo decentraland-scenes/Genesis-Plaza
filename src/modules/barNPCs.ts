@@ -1,4 +1,4 @@
-import { NPC, Dialog, FollowPathData, NPCDelay } from '@dcl/npc-scene-utils'
+import { NPC, Dialog, FollowPathData } from '@dcl/npc-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
@@ -171,13 +171,10 @@ export async function addBarNPCs() {
       let rareItem = await rarestItem(true)
       wearablesC.playAnimation('TurnIn', true, 3.13)
 
-      let dummyent = new Entity()
-      dummyent.addComponent(
-        new NPCDelay( 3.13, () => {
-          wearablesC.playAnimation('Talk')
-        })
-      )
-      engine.addEntity(dummyent)
+      utils.setTimeout(3130,  () => {
+        wearablesC.playAnimation('Talk')
+      })
+
 
       switch (rareItem) {
         case rarityLevel.none:
@@ -345,13 +342,12 @@ export function addWenMoon() {
       onWalkAway: () => {
         // turnOut
         wenMoon.playAnimation(`TurnOut`, true, 0.53)
-        let dummyent = new Entity()
-        dummyent.addComponent(
-          new NPCDelay(2, () => {
-            wenMoon.followPath()
-          })
-        )
-        engine.addEntity(dummyent)
+     
+        utils.setTimeout(2000,  () => {
+          wenMoon.followPath()
+        })
+        
+      
        
       },
     }
@@ -938,13 +934,11 @@ export let wenMoonTalk: Dialog[] = [
 
     triggeredByNext: () => {
       wenMoon.playAnimation(`TurnOut`, true, 0.53)
-      let dummyent = new Entity()
-      dummyent.addComponent(
-        new NPCDelay(0.53, () => {
-          wenMoon.followPath()
-        })
-      )
-      engine.addEntity(dummyent)
+
+      utils.setTimeout(530,  () => {
+        wenMoon.followPath()
+      })
+
     },
   },
 ]
