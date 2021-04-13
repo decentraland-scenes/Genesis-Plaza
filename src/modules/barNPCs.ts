@@ -83,9 +83,6 @@ export async function addBarNPCs() {
     loop: true,
   }
 
-
-
-
   let catGuyPath: FollowPathData = {
     path: [
       new Vector3(181.8, 10.8, 160),
@@ -101,14 +98,14 @@ export async function addBarNPCs() {
     speed: 2,
     curve: false,
     onReachedPointCallback: () => {
-     // let randomNum = Math.floor(Math.random() * 4)
-     // catGuy.talkBubble(whereCat, randomNum)
+      // let randomNum = Math.floor(Math.random() * 4)
+      // catGuy.talkBubble(whereCat, randomNum)
     },
   }
 
   doge = new NPC(
     { position: new Vector3(175, 0.3, 160), scale: new Vector3(2, 2, 2) },
-    'models/core_building/dogeNPCV04.glb',
+    'models/core_building/dogeNPC.glb',
     () => {
       doge.stopWalking()
       doge.playAnimation('Talk1', true)
@@ -163,95 +160,86 @@ export async function addBarNPCs() {
   )
   catGuy.followPath(catGuyPath)
 
+  wearablesC = new NPC(
+    { position: new Vector3(163, 0.3, 133) },
+    'models/core_building/WearableConnoisseur.glb',
+    async () => {
+      // wearablesC.playAnimation('TurnIn', true, 3.13)
+      //   wearablesC.changeIdleAnim('Talk')
+      let rareItem = await rarestItem(true)
 
-
-
-wearablesC = new NPC(
-  { position: new Vector3(163, 0.3, 133) },
-  'models/core_building/WearableConnoisseur3.glb',
-  async() => {
-   // wearablesC.playAnimation('TurnIn', true, 3.13)
- //   wearablesC.changeIdleAnim('Talk')
-   let rareItem = await rarestItem(true)
-
-    
-
-    switch (rareItem) {
-      case rarityLevel.none:
-        wearablesC.talk(wearabesCTalk, 'none')
-        break
-      case rarityLevel.common |
-         rarityLevel.uncommon | rarityLevel.rare :
-         wearablesC.talk(wearabesCTalk, 'common')
-        break
-      case rarityLevel.epic |rarityLevel.legendary :
-        wearablesC.talk(wearabesCTalk, 'epic')
-        break
-      case rarityLevel.mythic | rarityLevel.unique:
-        wearablesC.talk(wearabesCTalk, 'mythic')
-        break
-
+      switch (rareItem) {
+        case rarityLevel.none:
+          wearablesC.talk(wearabesCTalk, 'none')
+          break
+        case rarityLevel.common | rarityLevel.uncommon | rarityLevel.rare:
+          wearablesC.talk(wearabesCTalk, 'common')
+          break
+        case rarityLevel.epic | rarityLevel.legendary:
+          wearablesC.talk(wearabesCTalk, 'epic')
+          break
+        case rarityLevel.mythic | rarityLevel.unique:
+          wearablesC.talk(wearabesCTalk, 'mythic')
+          break
+      }
+    },
+    {
+      faceUser: true,
+      darkUI: true,
+      hoverText: 'Talk',
+      onlyETrigger: true,
+      onWalkAway: () => {
+        wearablesC.addComponentOrReplace(
+          new utils.RotateTransformComponent(
+            wearablesC.getComponent(Transform).rotation.clone(),
+            Quaternion.Euler(0, 0, 0),
+            1
+          )
+        )
+      },
     }
+  )
 
-
-  },
-  {
-    faceUser: true,
-    darkUI: true,
-    hoverText: 'Talk',
-    onlyETrigger: true,
-    onWalkAway: ()=>{
-      wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+  artist1 = new NPC(
+    { position: new Vector3(151, 0, 133) },
+    'models/core_building/ch1_crowd.glb',
+    () => {
+      // talk w UI
+    },
+    {
+      darkUI: true,
+      hoverText: 'Ask art places',
+      onlyETrigger: true,
+      onWalkAway: () => {
+        // artist1.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+      },
     }
-  }
-)
+  )
 
+  artist2 = new NPC(
+    { position: new Vector3(150, 0.3, 133) },
+    'models/core_building/ch2_crowd.glb',
+    () => {
+      // wearablesC.playAnimation('TurnIn', true, 3.13)
+      //   wearablesC.changeIdleAnim('Talk')
+      artist1.talkBubble(artist1Talk, '1st')
+    },
+    {
+      faceUser: true,
+      darkUI: true,
+      hoverText: 'Talk',
+      reactDistance: 5,
 
-artist1 = new NPC(
-  { position: new Vector3(151, 0, 133) },
-  'models/core_building/ch1_crowd.glb',
-  () => {
-   // talk w UI
-
-
-  },
-  {
-   
-    darkUI: true,
-    hoverText: 'Ask art places',
-    onlyETrigger: true,
-    onWalkAway: ()=>{
-     // artist1.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+      onWalkAway: () => {
+        artist1.endInteraction()
+        artist2.endInteraction()
+        //  wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+      },
     }
-  }
-)
-
-artist2 = new NPC(
-  { position: new Vector3(150, 0.3, 133) },
-  'models/core_building/ch2_crowd.glb',
-  () => {
-   // wearablesC.playAnimation('TurnIn', true, 3.13)
- //   wearablesC.changeIdleAnim('Talk')
- artist1.talkBubble(artist1Talk,'1st')
-  },
-  {
-    faceUser: true,
-    darkUI: true,
-    hoverText: 'Talk',
-reactDistance: 5,
-   
-    onWalkAway: ()=>{
-      artist1.endInteraction()
-      artist2.endInteraction()
-    //  wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
-    }
-  }
-)
+  )
 }
 
-
-export function addWenMoon(){
-
+export function addWenMoon() {
   let wenPath: FollowPathData = {
     path: [
       new Vector3(82, 0.3, 138),
@@ -272,16 +260,13 @@ export function addWenMoon(){
     loop: true,
   }
 
-  
   wenMoon = new NPC(
     { position: wenPath.path[0] },
     'models/core_building/wenMoonV10.glb',
     () => {
-    
       wenMoon.stopWalking()
       wenMoon.talk(wenMoonTalk, 0)
       wenMoon.playAnimation(`TurnIn`, true, 5.77)
-
     },
     {
       portrait: {
@@ -299,12 +284,9 @@ export function addWenMoon(){
       onWalkAway: () => {
         wenMoon.followPath()
       },
-     
     }
   )
   wenMoon.followPath(wenPath)
-
-
 }
 
 /// OCTO
@@ -475,271 +457,257 @@ export let whereCat: Dialog[] = [
   },
 ]
 
-
-
-
-
 export let wearabesCTalk: Dialog[] = [
   {
     name: 'none',
-    text:
-    'Why? … Umm, what would someone dressed like you have to say to me?',
+    text: 'Why? … Umm, what would someone dressed like you have to say to me?',
     skipable: true,
   },
   {
     text:
-    'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
+      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
     skipable: true,
   },
   {
     text:
-    'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
+      'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
-    triggeredByNext: ()=>{
-wearablesC.talk(wearabesCTalk, 'default')
-    }
+    triggeredByNext: () => {
+      wearablesC.talk(wearabesCTalk, 'default')
+    },
   },
   {
     name: 'common',
     text:
-    'Well look at you, all dressed up with outlet-grade clothes that you probably bought at a gas station.',
+      'Well look at you, all dressed up with outlet-grade clothes that you probably bought at a gas station.',
     skipable: true,
   },
   {
     text:
-    'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
+      'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
-    triggeredByNext: ()=>{
-wearablesC.talk(wearabesCTalk, 'default')
-    }
+    triggeredByNext: () => {
+      wearablesC.talk(wearabesCTalk, 'default')
+    },
   },
   {
     name: 'epic',
     text:
-    'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. Not that it’s a very high bar, but it would be quite an improvement.',
+      'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. Not that it’s a very high bar, but it would be quite an improvement.',
     skipable: true,
-    triggeredByNext: ()=>{
+    triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
-          }
-  },{
+    },
+  },
+  {
     name: 'mythic',
     text:
-    'Oh well _finally_ someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
+      'Oh well _finally_ someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
     skipable: true,
-    triggeredByNext: ()=>{
+    triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
-          }
-  },{
+    },
+  },
+  {
     // had to add a dummy to skip to
     name: 'default',
     text:
-    'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
     skipable: true,
-  }, {
+  },
+  {
     text:
-    'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
     skipable: true,
-  },{
+  },
+  {
     text:
-    'And me, as you can tell I’m one of a kind. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
+      'And me, as you can tell I’m one of a kind. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
     skipable: true,
-  },{
+  },
+  {
     text:
-    'And you, who do your clothes say you are? Have a think about that, hun.',
+      'And you, who do your clothes say you are? Have a think about that, hun.',
     skipable: true,
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       wearablesC.endInteraction()
-      wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
-          }
+      wearablesC.addComponentOrReplace(
+        new utils.RotateTransformComponent(
+          wearablesC.getComponent(Transform).rotation.clone(),
+          Quaternion.Euler(0, 0, 0),
+          1
+        )
+      )
+    },
   },
 ]
-
-
-
-
 
 export let artist1Talk: Dialog[] = [
   {
     name: '1st',
     text:
-    'So there I was, questioning what my work really meant to me as an artist, after having spent so much time on it and put so much of myself into it.',
-   
+      'So there I was, questioning what my work really meant to me as an artist, after having spent so much time on it and put so much of myself into it.',
   },
   {
     text:
-    'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some flamboyant scandalous way.',
+      'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some flamboyant scandalous way.',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       artist2.talkBubble(artist2Talk, '1st')
-     }
+    },
   },
   {
     name: '2nd',
     text:
-    'Well yeah, but back then there wasn’t much of a market for NFTs, or I didn’t know about it at least. I was just trying to make a living by selling canvases, like everyone else.',
-     isEndOfDialog: true,
-     
-     triggeredByNext: ()=>{
-       artist2.talkBubble(artist2Talk, '2nd')
-      }
-     
+      'Well yeah, but back then there wasn’t much of a market for NFTs, or I didn’t know about it at least. I was just trying to make a living by selling canvases, like everyone else.',
+    isEndOfDialog: true,
+
+    triggeredByNext: () => {
+      artist2.talkBubble(artist2Talk, '2nd')
+    },
   },
   {
     name: '3rd',
     text:
-    ' The thing is I would still be removing my work from the public view, the form of payment doesn’t change that.',
-   
+      ' The thing is I would still be removing my work from the public view, the form of payment doesn’t change that.',
   },
   {
     text:
-    'My audience suddenly got reduced to some rich guy and maybe his occasional dinner guests. That’s the part that upset me.',
+      'My audience suddenly got reduced to some rich guy and maybe his occasional dinner guests. That’s the part that upset me.',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
-      artist2.talkBubble(artist2Talk, '3rd')
-     }
-  },{
-    name:'4th',
-    text:
-    'Kinda… yes and no. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
-    isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
-      artist2.talkBubble(artist2Talk, '4th')
-      artist2.playAnimation('TurnIn',true, 0.57)
 
-     }
-  },{
-    name:'5th',
+    triggeredByNext: () => {
+      artist2.talkBubble(artist2Talk, '3rd')
+    },
+  },
+  {
+    name: '4th',
     text:
-    'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, you’re in for a treat!',
+      'Kinda… yes and no. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
+      artist2.talkBubble(artist2Talk, '4th')
+      artist2.playAnimation('TurnIn', true, 0.57)
+    },
+  },
+  {
+    name: '5th',
+    text:
+      'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, you’re in for a treat!',
+    isEndOfDialog: true,
+
+    triggeredByNext: () => {
       artist2.talkBubble(artist2Talk, '5th')
       artist2.playAnimation('Talk')
-     }
-  },{
-    name:'6th',
-    text:
-    'Yeah and well… it’s good art too. A lot of it, at least.',
-  },{
-   
-    text:
-    'Ask me and I’ll give you some hints.',
-    isEndOfDialog: true,
-   
+    },
   },
-  
-  
+  {
+    name: '6th',
+    text: 'Yeah and well… it’s good art too. A lot of it, at least.',
+  },
+  {
+    text: 'Ask me and I’ll give you some hints.',
+    isEndOfDialog: true,
+  },
 ]
-
 
 export let artist2Talk: Dialog[] = [
   {
     name: '1st',
     text:
-    'And that was such a good time to get into ether, so cheap back then. Imagine if you sold those for eth then?',
+      'And that was such a good time to get into ether, so cheap back then. Imagine if you sold those for eth then?',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       artist1.talkBubble(artist1Talk, '2nd')
-     }
+    },
   },
   {
     name: '2nd',
     text:
-    ' Just imagine if you sold a painting for 200 eth, it was nothing back then.',
+      ' Just imagine if you sold a painting for 200 eth, it was nothing back then.',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       artist1.talkBubble(artist1Talk, '3rd')
-     }
-  },  {
+    },
+  },
+  {
     name: '3nd',
     text:
-    'But your NFTs also end up going to the wallet of some rich whale just the same.',
+      'But your NFTs also end up going to the wallet of some rich whale just the same.',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       artist1.talkBubble(artist1Talk, '4th')
-     }
+    },
   },
   {
     name: '4th',
     text:
-    'Speaking of audiences, looks like we have one here. Hey! I take it that you have an interest in art',
+      'Speaking of audiences, looks like we have one here. Hey! I take it that you have an interest in art',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
-      artist1.playAnimation('TurnIn',true, 0.57)
+
+    triggeredByNext: () => {
+      artist1.playAnimation('TurnIn', true, 0.57)
       artist1.talkBubble(artist1Talk, '5th')
-     }
-  }, {
+    },
+  },
+  {
     name: '5th',
     text:
-    'A ton of places you can check out. With crazy expensive virtual art on display. You can’t imagine what some of these cost!',
+      'A ton of places you can check out. With crazy expensive virtual art on display. You can’t imagine what some of these cost!',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
 
+    triggeredByNext: () => {
       artist1.talkBubble(artist1Talk, '6th')
-     }
+    },
   },
 ]
-
-
-
-
 
 export let wenMoonTalk: Dialog[] = [
   {
     text:
-    'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time.. Imagine if you sold those for eth then?',
+      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time.. Imagine if you sold those for eth then?',
+  },
+  {
+    text: 'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
   },
   {
     text:
-    'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
+      'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
   },
   {
     text:
-    'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
+      'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
   },
   {
     text:
-    'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+      'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
+  },
+  {
+    text: 'Any of these could be the next bitcoin...',
   },
   {
     text:
-    'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
+      '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
   },
   {
     text:
-    'Any of these could be the next bitcoin...',
+      'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
   },
   {
     text:
-    '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
-  },
-  {
-    text:
-    'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
-  },
-  {
-    text:
-    'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
+      'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
     isEndOfDialog: true,
-     
-    triggeredByNext: ()=>{
+
+    triggeredByNext: () => {
       wenMoon.endInteraction()
       wenMoon.followPath()
-     }
+    },
   },
-
 ]
-
-
-
