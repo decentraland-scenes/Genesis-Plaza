@@ -69,16 +69,16 @@ export async function addBarNPCs() {
 
   let dogePath: FollowPathData = {
     path: [
-      new Vector3(175, 0.3, 160),
-      new Vector3(169, 0.4, 164),
-      new Vector3(153, 0.3, 154),
-      new Vector3(142, 0.3, 158),
-      new Vector3(139, 0.3, 147),
-      new Vector3(151, 0.3, 140),
-      new Vector3(155, 0.3, 145),
-      new Vector3(155, 0.3, 149),
-      new Vector3(159, 0.3, 157),
-      new Vector3(168, 0.3, 154),
+      new Vector3(175, 0.24, 160),
+      new Vector3(169, 0.24, 164),
+      new Vector3(153, 0.24, 154),
+      new Vector3(142, 0.24, 158),
+      new Vector3(139, 0.24, 147),
+      new Vector3(151, 0.24, 140),
+      new Vector3(155, 0.24, 145),
+      new Vector3(155, 0.24, 149),
+      new Vector3(159, 0.24, 157),
+      new Vector3(168, 0.24, 154),
     ],
     loop: true,
   }
@@ -242,20 +242,20 @@ export async function addBarNPCs() {
 export function addWenMoon() {
   let wenPath: FollowPathData = {
     path: [
-      new Vector3(82, 0.3, 138),
-      new Vector3(45, 0.4, 149),
-      new Vector3(40, 0.3, 179),
-      new Vector3(45, 0.3, 216),
-      new Vector3(101, 0.3, 259),
-      new Vector3(132, 0.3, 253),
-      new Vector3(159, 0.3, 228),
-      new Vector3(166, 0.3, 195),
-      new Vector3(198, 0.3, 189),
-      new Vector3(207, 0.3, 141),
-      new Vector3(197, 0.3, 155),
-      new Vector3(156, 0.3, 103),
-      new Vector3(98, 0.3, 62),
-      new Vector3(70, 0.3, 89),
+      new Vector3(82, 0, 138),
+      new Vector3(45, 0, 149),
+      new Vector3(40, 0, 179),
+      new Vector3(45, 0, 216),
+      new Vector3(101, 0, 259),
+      new Vector3(132, 0, 253),
+      new Vector3(159, 0, 228),
+      new Vector3(166, 0, 195),
+      new Vector3(198, 0, 189),
+      new Vector3(207, 0, 141),
+      new Vector3(197, 0, 155),
+      new Vector3(156, 0, 103),
+      new Vector3(98, 0, 62),
+      new Vector3(70, 0, 89),
     ],
     loop: true,
   }
@@ -282,6 +282,7 @@ export function addWenMoon() {
       darkUI: true,
       walkingSpeed: 1,
       onWalkAway: () => {
+        // turnOut
         wenMoon.followPath()
       },
     }
@@ -672,7 +673,7 @@ export let artist2Talk: Dialog[] = [
 export let wenMoonTalk: Dialog[] = [
   {
     text:
-      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time.. Imagine if you sold those for eth then?',
+      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time..',
   },
   {
     text: 'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
@@ -706,7 +707,7 @@ export let wenMoonTalk: Dialog[] = [
     isEndOfDialog: true,
 
     triggeredByNext: () => {
-      wenMoon.endInteraction()
+      //wenMoon.endInteraction()
       wenMoon.followPath()
     },
   },
