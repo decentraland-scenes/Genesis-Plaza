@@ -1,4 +1,4 @@
-import { NPC, Dialog, FollowPathData } from '@dcl/npc-scene-utils'
+import { NPC, Dialog, FollowPathData, NPCDelay } from '@dcl/npc-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
@@ -108,8 +108,10 @@ export async function addBarNPCs() {
     'models/core_building/dogeNPC.glb',
     () => {
       doge.stopWalking()
+      artist1.endInteraction()
+      artist2.endInteraction()
       doge.playAnimation('Talk1', true)
-      let randomNum = Math.floor(Math.random() * 4)
+      let randomNum = Math.floor(Math.random() * 10)
       doge.talkBubble(DogeTalk, randomNum)
     },
     {
@@ -124,7 +126,7 @@ export async function addBarNPCs() {
       },
       textBubble: true,
       noUI: true,
-      bubbleHeight: 2.5,
+      bubbleHeight: 2.2,
     }
   )
   doge.followPath(dogePath)
@@ -161,12 +163,21 @@ export async function addBarNPCs() {
   catGuy.followPath(catGuyPath)
 
   wearablesC = new NPC(
-    { position: new Vector3(163, 0.3, 133) },
+    { position: new Vector3(162.5, 0.23, 133) },
     'models/core_building/WearableConnoisseur.glb',
     async () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
       //   wearablesC.changeIdleAnim('Talk')
       let rareItem = await rarestItem(true)
+      wearablesC.playAnimation('TurnIn', true, 3.13)
+
+      let dummyent = new Entity()
+      dummyent.addComponent(
+        new NPCDelay( 3.13, () => {
+          wearablesC.playAnimation('Talk')
+        })
+      )
+      engine.addEntity(dummyent)
 
       switch (rareItem) {
         case rarityLevel.none:
@@ -189,6 +200,8 @@ export async function addBarNPCs() {
       hoverText: 'Talk',
       onlyETrigger: true,
       onWalkAway: () => {
+        wearablesC.endInteraction()
+        wearablesC.playAnimation('TurnOut', true, 1.47)
         wearablesC.addComponentOrReplace(
           new utils.RotateTransformComponent(
             wearablesC.getComponent(Transform).rotation.clone(),
@@ -201,43 +214,91 @@ export async function addBarNPCs() {
   )
 
   artist1 = new NPC(
-    { position: new Vector3(151, 0, 133) },
-    'models/core_building/ch1_crowd.glb',
+    { position: new Vector3(142.7, -0.25, 165.8) ,
+    rotation: Quaternion.Euler(0,180+90
+      ,0)},
+    'models/core_building/ch2_crowd.glb',
     () => {
-      // talk w UI
+      artist1.endInteraction()
+      artist2.endInteraction()
+      artist1.talk(artistHints)
+
+      artist1.playAnimation('TurnIn', true, 0.57)
+      utils.setTimeout(570, ()=>{
+        artist1.playAnimation('TalkToUser')
+      })
+      artist2.playAnimation('TurnIn', true, 0.57)
+      utils.setTimeout(570, ()=>{
+        artist2.playAnimation('TalkToUser')
+      } )
     },
     {
+      idleAnim: 'Talk',
       darkUI: true,
-      hoverText: 'Ask art places',
+      faceUser: false,
+      hoverText: 'Art Recommendations',
       onlyETrigger: true,
+      textBubble: true,
       onWalkAway: () => {
-        // artist1.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
-      },
+
+        if(artist1.dialog.container.visible){
+
+          artist1.playAnimation('TurnOut', true, 0.5)
+          artist2.playAnimation('TurnOut', true, 0.5)
+             
+         utils.setTimeout(500, ()=>{
+           artist1.playAnimation('Talk')
+           artist2.playAnimation('Talk')
+         
+         })
+        }
+      }
     }
-  )
+    )
+       
+     
 
   artist2 = new NPC(
-    { position: new Vector3(150, 0.3, 133) },
-    'models/core_building/ch2_crowd.glb',
+    { position: new Vector3(142.7, -0.25, 165.8) ,
+      rotation: Quaternion.Euler(0,180+90,0)},
+    'models/core_building/ch1_crowd.glb',
     () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
       //   wearablesC.changeIdleAnim('Talk')
+      log('ARTIST 2 TRIGGGERERD')
+      artist2.endInteraction()
       artist1.talkBubble(artist1Talk, '1st')
     },
     {
-      faceUser: true,
+      idleAnim: 'Talk',
+      faceUser: false,
       darkUI: true,
       hoverText: 'Talk',
-      reactDistance: 5,
+      reactDistance: 16,
+      textBubble: true,
 
       onWalkAway: () => {
         artist1.endInteraction()
         artist2.endInteraction()
-        //  wearablesC.addComponentOrReplace(new utils.RotateTransformComponent(wearablesC.getComponent(Transform).rotation.clone(), Quaternion.Euler(0, 0, 0), 1))
+        if(!artist1.getComponent(Animator).getClip('Talk').playing){
+          artist1.playAnimation('Talk')
+        }
+        if(!artist2.getComponent(Animator).getClip('Talk').playing){
+          artist2.playAnimation('Talk')
+        }
+    
       },
     }
   )
+
+  artist2.removeComponent(OnPointerDown)
+
+  artist2.bubble.rootEntity.getComponent(Transform).position = new Vector3(0.4, 0.6, 0.5)
+  artist1.bubble.rootEntity.getComponent(Transform).position = new Vector3(0.4, 0.6, -0.9)
+
+  
 }
+
 
 export function addWenMoon() {
   let wenPath: FollowPathData = {
@@ -283,7 +344,15 @@ export function addWenMoon() {
       walkingSpeed: 1,
       onWalkAway: () => {
         // turnOut
-        wenMoon.followPath()
+        wenMoon.playAnimation(`TurnOut`, true, 0.53)
+        let dummyent = new Entity()
+        dummyent.addComponent(
+          new NPCDelay(2, () => {
+            wenMoon.followPath()
+          })
+        )
+        engine.addEntity(dummyent)
+       
       },
     }
   )
@@ -381,82 +450,81 @@ export let DogeTalk: Dialog[] = [
     timeOn: 4.1,
     isEndOfDialog: true,
   },
+  {
+    text: 'Much open source',
+    triggeredByNext: () => {
+      doge.followPath()
+    },
+    timeOn: 4.1,
+    isEndOfDialog: true,
+  },
+  {
+    text: 'So 3d social platform',
+    triggeredByNext: () => {
+      doge.followPath()
+    },
+    timeOn: 4.1,
+    isEndOfDialog: true,
+  },
+  {
+    text: 'How social experiment in self-governance',
+    triggeredByNext: () => {
+      doge.followPath()
+    },
+    timeOn: 4.1,
+    isEndOfDialog: true,
+  },
+  {
+    text: 'Very redefining how we interchange value with each other',
+    triggeredByNext: () => {
+      doge.followPath()
+    },
+    timeOn: 4.1,
+    isEndOfDialog: true,
+  },
+  {
+    text: 'Much persistent virtual world',
+    triggeredByNext: () => {
+      doge.followPath()
+    },
+    timeOn: 4.1,
+    isEndOfDialog: true,
+  },
 ]
 
 export let ILoveCats: Dialog[] = [
   {
-    text: `I love cats. I love every kind of cat`,
-    triggeredByNext: () => {
-      catGuy.playAnimation(`HeadShake_No`, true, 1.83)
-    },
+    text: `Hey there! Let me introduce myself. I’m the cat guy`,
     skipable: true,
   },
   {
-    text: `I just want to hug them all. But I can't hug every cat.`,
-    triggeredByNext: () => {
-      catGuy.playAnimation(`Annoyed_HeadShake`, true, 2.6)
-    },
+    text: `That’s what everyone calls me. Or well, my cats don’t call me anything really, I wish they did. But if people other than my cats were to hang out with me, that’s what they’d call me for sure.`,
     skipable: true,
   },
   {
-    text: `Can't hug every cat.`,
+    text: `You’re welcome to call me that, but no pressure. But you see I’m really into cats, that’s my thing.`,
+    skipable: true,
+  },
+  {
+    text: `So it would make sense to call me the cat guy.`,
+  
+    skipable: true,
+  },
+  {
+    text: `I’m sorry, I’m talking about cats again. Such a broken record, aren’t I? Like a cat that won’t stop meowing all day.`,
 
-    triggeredByNext: () => {
-      catGuy.playAnimation(`Dismissing`, true, 3.3)
-    },
     skipable: true,
   },
   {
-    text: `...so anyway.`,
-    triggeredByNext: () => {
-      catGuy.playAnimation(`Cocky`, true, 2.93)
-    },
+    text: `Dammit!`,
     skipable: true,
-  },
-  {
-    text: `I am a cat person, and I love to run.`,
-    triggeredByNext: () => {
-      catGuy.playAnimation(`Annoyed_HeadShake`, true, 2.6)
-    },
-    skipable: true,
-  },
-  {
-    text: `Oh sorry I'm thinking about cats again.`,
-    triggeredByNext: () => {
-      catGuy.playAnimation(`Acknowledging`, true, 1.97)
-    },
-    skipable: true,
-  },
-  {
-    text: `I really Lo-ove cats. Really Lo-ove cats.`,
+    isEndOfDialog: true,
     triggeredByNext: () => {
       catGuy.followPath()
     },
-    skipable: true,
-  },
-  {
-    text: `This is the really important part.`,
-  },
-  {
-    text: `The one that you can't skip. Capiche?`,
-    isEndOfDialog: true,
   },
 ]
 
-export let whereCat: Dialog[] = [
-  {
-    text: `Where did that rascal go?`,
-    isEndOfDialog: true,
-  },
-  {
-    text: `Come oooooooooon,  come out and play, it's just me`,
-    isEndOfDialog: true,
-  },
-  {
-    text: `Where could he be now?`,
-    isEndOfDialog: true,
-  },
-]
 
 export let wearabesCTalk: Dialog[] = [
   {
@@ -534,6 +602,7 @@ export let wearabesCTalk: Dialog[] = [
 
     triggeredByNext: () => {
       wearablesC.endInteraction()
+      wearablesC.playAnimation('TurnOut', true, 1.47)
       wearablesC.addComponentOrReplace(
         new utils.RotateTransformComponent(
           wearablesC.getComponent(Transform).rotation.clone(),
@@ -593,6 +662,11 @@ export let artist1Talk: Dialog[] = [
     triggeredByNext: () => {
       artist2.talkBubble(artist2Talk, '4th')
       artist2.playAnimation('TurnIn', true, 0.57)
+      
+      utils.setTimeout(570, ()=>{
+        artist2.playAnimation('TalkToUser')
+      } )
+    
     },
   },
   {
@@ -612,6 +686,18 @@ export let artist1Talk: Dialog[] = [
   },
   {
     text: 'Ask me and I’ll give you some hints.',
+    triggeredByNext: () => {
+      artist2.playAnimation('TurnOut', true, 0.5)
+      artist1.playAnimation('TurnOut', true, 0.5)
+      
+      utils.setTimeout(500, ()=>{
+        artist2.playAnimation('Talk')
+        artist1.playAnimation('Talk')
+        artist1.talkBubble(artist1Talk, '1st')
+      } )
+    },
+
+
     isEndOfDialog: true,
   },
 ]
@@ -638,7 +724,7 @@ export let artist2Talk: Dialog[] = [
     },
   },
   {
-    name: '3nd',
+    name: '3rd',
     text:
       'But your NFTs also end up going to the wallet of some rich whale just the same.',
     isEndOfDialog: true,
@@ -655,6 +741,10 @@ export let artist2Talk: Dialog[] = [
 
     triggeredByNext: () => {
       artist1.playAnimation('TurnIn', true, 0.57)
+      utils.setTimeout(570, ()=>{
+        artist1.playAnimation('TalkToUser')
+      })
+
       artist1.talkBubble(artist1Talk, '5th')
     },
   },
@@ -670,45 +760,191 @@ export let artist2Talk: Dialog[] = [
   },
 ]
 
+
+export let artistHints: Dialog[] = [
+  {
+    text: 'Hey so you want to find out where you can find good art to admire?',
+     isQuestion: true,
+     buttons:[
+       {label:'yes',
+      goToDialog: 'voltaire'},
+      {label:'no',
+      goToDialog: 'no'}
+     ]
+  },
+  {
+    name:'no',
+    text: 'Alright, I’ll be around if you want to hear more.',
+    isEndOfDialog:true
+  },
+  {
+    name:'dummy',
+    text: '',
+    isEndOfDialog:true
+  },
+  {
+    name:'voltaire',
+    text: 'Ok, so first there’s Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('50,50')
+          }
+        },
+      {label:'More',
+      goToDialog: 'museum'}
+     ]
+  }, {
+    name:'museum',
+    text: 'There’s the Museum district at x & x, quite a pioneer of the metaverse.',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('50,50')
+          }
+      },
+      {label:'More',
+      goToDialog: 'rapture'}
+     ]
+  },{
+    name:'rapture',
+    text: 'The Rapture Gallery at -88,-65 is also a really hip spot worth visiting',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('-88,-65')
+          }
+      },
+      {label:'More',
+      goToDialog: '100x'}
+     ]
+  },
+  {
+    name:'100x',
+    text: 'Also 100x Gallery, at x&x, there’s a whole bunch of things around that area.',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('50,50')
+          }
+      },
+      {label:'More',
+      goToDialog: 'momus'}
+     ]
+  },
+  {
+    name:'momus',
+    text: 'Momus Park covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at x,x.',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('50,50')
+          }
+      },
+      {label:'More',
+      goToDialog: 'vegas'}
+     ]
+  },
+  {
+    name:'vegas',
+    text: 'Also the Vegas Art Village includes a whole assortment of very creative small museums from the community.',
+     isQuestion: true,
+     buttons:[
+       {label:'Visit',
+        goToDialog: 'dummy',
+          triggeredActions: ()=>{
+            teleportTo('50,50')
+          }
+      },
+      {label:'Done',
+      goToDialog: 'end'}
+     ]
+  },
+  {
+    name:'end',
+    text: 'Those are the ones that come to mind to me right now. But there´s a LOT more to explore too.',
+  },
+  {
+    isEndOfDialog: true,
+    text: 'Hope you have fun exploring!',
+    triggeredByNext: () => {
+      artist1.playAnimation('TurnOut', true, 0.57)
+      artist2.playAnimation('TurnOut', true, 0.57)
+      utils.setTimeout(570, ()=>{
+        artist1.playAnimation('Talk')
+        artist2.playAnimation('Talk')
+      })
+
+      artist1.talkBubble(artist1Talk, '1st')
+    },
+  }
+  
+]
+
 export let wenMoonTalk: Dialog[] = [
   {
     text:
       'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time..',
+      skipable: true
   },
   {
     text: 'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
+    skipable: true
   },
   {
     text:
       'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
+      skipable: true
   },
   {
     text:
       'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+      skipable: true
   },
   {
     text:
       'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
+      skipable: true
   },
   {
     text: 'Any of these could be the next bitcoin...',
+    skipable: true
   },
   {
     text:
       '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
+      skipable: true
   },
   {
     text:
       'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
+      skipable: true
   },
   {
     text:
       'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
+      skipable: true,
     isEndOfDialog: true,
 
     triggeredByNext: () => {
-      //wenMoon.endInteraction()
-      wenMoon.followPath()
+      wenMoon.playAnimation(`TurnOut`, true, 0.53)
+      let dummyent = new Entity()
+      dummyent.addComponent(
+        new NPCDelay(0.53, () => {
+          wenMoon.followPath()
+        })
+      )
+      engine.addEntity(dummyent)
     },
   },
 ]
