@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@dcl/ecs-scene-utils": "^1.6.2-20210408012032.commit-5921be1",
-    "@dcl/npc-scene-utils": "^1.3.4-20210414182205.commit-a88bb6a",
+    "@dcl/npc-scene-utils": "^1.3.4-20210414205254.commit-d0eaf33",
     "@dcl/ui-scene-utils": "^1.7.1",
     "cors": "^2.8.5",
     "express": "^4.17.1"
