@@ -146,7 +146,7 @@ export async function addBarNPCs() {
         height: 128,
         width: 128,
       },
-      turningSpeed: 0.3,
+      turningSpeed: 0.8,
       reactDistance: 4,
       idleAnim: `idle`,
       onlyETrigger: true,
@@ -196,7 +196,7 @@ export async function addBarNPCs() {
       faceUser: true,
       darkUI: true,
       hoverText: 'Talk',
-      turningSpeed: 0.5,
+      turningSpeed: 0.35,
       onlyETrigger: true,
       onWalkAway: () => {
         wearablesC.endInteraction()
