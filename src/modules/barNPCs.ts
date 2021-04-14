@@ -42,7 +42,7 @@ export async function addBarNPCs() {
       position: new Vector3(160, 0.25, 141.4),
       //scale: new Vector3(1.2, 1.2, 1.2),
     },
-    'models/core_building/BobOctorossPartA_V42.glb',
+    'models/core_building/BobOctorossPartA_V43.glb',
     () => {
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
@@ -62,7 +62,7 @@ export async function addBarNPCs() {
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
   octopusObjects.addComponent(
-    new GLTFShape('models/core_building/BobOctorossPartB_V02.glb')
+    new GLTFShape('models/core_building/BobOctorossV43.glb')
   )
   engine.addEntity(octopusObjects)
   octopusObjects.setParent(octopus)
@@ -83,25 +83,25 @@ export async function addBarNPCs() {
     loop: true,
   }
 
-  let catGuyPath: FollowPathData = {
-    path: [
-      new Vector3(181.8, 10.8, 160),
-      new Vector3(173.4, 10.8, 168.6),
-      new Vector3(145.7, 10.8, 166.3),
-      new Vector3(141.1, 10.8, 159.5),
-      new Vector3(140.8, 10.8, 137.7),
-      new Vector3(161.5, 10.8, 130),
-      new Vector3(179.3, 10.8, 139),
-      new Vector3(181.3, 10.8, 141.4),
-    ],
-    loop: true,
-    speed: 2,
-    curve: false,
-    onReachedPointCallback: () => {
-      // let randomNum = Math.floor(Math.random() * 4)
-      // catGuy.talkBubble(whereCat, randomNum)
-    },
-  }
+  //   let catGuyPath: FollowPathData = {
+  //     path: [
+  //       new Vector3(181.8, 10.8, 160),
+  //       new Vector3(173.4, 10.8, 168.6),
+  //       new Vector3(145.7, 10.8, 166.3),
+  //       new Vector3(141.1, 10.8, 159.5),
+  //       new Vector3(140.8, 10.8, 137.7),
+  //       new Vector3(161.5, 10.8, 130),
+  //       new Vector3(179.3, 10.8, 139),
+  //       new Vector3(181.3, 10.8, 141.4),
+  //     ],
+  //     loop: true,
+  //     speed: 2,
+  //     curve: false,
+  //     onReachedPointCallback: () => {
+  //       // let randomNum = Math.floor(Math.random() * 4)
+  //       // catGuy.talkBubble(whereCat, randomNum)
+  //     },
+  //   }
 
   doge = new NPC(
     { position: new Vector3(175, 0.3, 160), scale: new Vector3(2, 2, 2) },
@@ -132,13 +132,13 @@ export async function addBarNPCs() {
   doge.followPath(dogePath)
 
   catGuy = new NPC(
-    { position: new Vector3(181.8, 11.1, 160) },
+    { position: new Vector3(180.8, 10.8, 160) },
     'models/core_building/CatGuy.glb',
     () => {
-      catGuy.bubble.closeDialogWindow()
-      catGuy.stopWalking()
+      //   catGuy.bubble.closeDialogWindow()
+      //   catGuy.stopWalking()
       catGuy.talk(ILoveCats, 0)
-      catGuy.playAnimation(`Head_Yes`, true, 2.63)
+      catGuy.playAnimation(`talk`)
     },
     {
       portrait: {
@@ -147,20 +147,21 @@ export async function addBarNPCs() {
         width: 128,
       },
       reactDistance: 4,
-      idleAnim: `Weight_Shift`,
-      walkingAnim: 'Walk',
+      idleAnim: `idle`,
+      onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: true,
       darkUI: true,
-      walkingSpeed: 2,
-      onWalkAway: () => {
-        catGuy.followPath()
-      },
-      textBubble: true,
-      bubbleHeight: 2.3,
+      //walkingAnim: 'Walk',
+      //walkingSpeed: 2,
+      //   onWalkAway: () => {
+      //     catGuy.followPath()
+      //   },
+      //textBubble: true,
+      //  bubbleHeight: 2.3,
     }
   )
-  catGuy.followPath(catGuyPath)
+  //catGuy.followPath(catGuyPath)
 
   wearablesC = new NPC(
     { position: new Vector3(162.5, 0.23, 133) },
@@ -171,10 +172,9 @@ export async function addBarNPCs() {
       let rareItem = await rarestItem(true)
       wearablesC.playAnimation('TurnIn', true, 3.13)
 
-      utils.setTimeout(3130,  () => {
+      utils.setTimeout(3130, () => {
         wearablesC.playAnimation('Talk')
       })
-
 
       switch (rareItem) {
         case rarityLevel.none:
@@ -211,9 +211,10 @@ export async function addBarNPCs() {
   )
 
   artist1 = new NPC(
-    { position: new Vector3(142.7, -0.25, 165.8) ,
-    rotation: Quaternion.Euler(0,180+90
-      ,0)},
+    {
+      position: new Vector3(142.7, -0.25, 165.8),
+      rotation: Quaternion.Euler(0, 180 + 90, 0),
+    },
     'models/core_building/ch2_crowd.glb',
     () => {
       artist1.endInteraction()
@@ -221,13 +222,13 @@ export async function addBarNPCs() {
       artist1.talk(artistHints)
 
       artist1.playAnimation('TurnIn', true, 0.57)
-      utils.setTimeout(570, ()=>{
+      utils.setTimeout(570, () => {
         artist1.playAnimation('TalkToUser')
       })
       artist2.playAnimation('TurnIn', true, 0.57)
-      utils.setTimeout(570, ()=>{
+      utils.setTimeout(570, () => {
         artist2.playAnimation('TalkToUser')
-      } )
+      })
     },
     {
       idleAnim: 'Talk',
@@ -237,27 +238,24 @@ export async function addBarNPCs() {
       onlyETrigger: true,
       textBubble: true,
       onWalkAway: () => {
-
-        if(artist1.dialog.container.visible){
-
+        if (artist1.dialog.container.visible) {
           artist1.playAnimation('TurnOut', true, 0.5)
           artist2.playAnimation('TurnOut', true, 0.5)
-             
-         utils.setTimeout(500, ()=>{
-           artist1.playAnimation('Talk')
-           artist2.playAnimation('Talk')
-         
-         })
+
+          utils.setTimeout(500, () => {
+            artist1.playAnimation('Talk')
+            artist2.playAnimation('Talk')
+          })
         }
-      }
+      },
     }
-    )
-       
-     
+  )
 
   artist2 = new NPC(
-    { position: new Vector3(142.7, -0.25, 165.8) ,
-      rotation: Quaternion.Euler(0,180+90,0)},
+    {
+      position: new Vector3(142.7, -0.25, 165.8),
+      rotation: Quaternion.Euler(0, 180 + 90, 0),
+    },
     'models/core_building/ch1_crowd.glb',
     () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
@@ -277,25 +275,29 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         artist1.endInteraction()
         artist2.endInteraction()
-        if(!artist1.getComponent(Animator).getClip('Talk').playing){
+        if (!artist1.getComponent(Animator).getClip('Talk').playing) {
           artist1.playAnimation('Talk')
         }
-        if(!artist2.getComponent(Animator).getClip('Talk').playing){
+        if (!artist2.getComponent(Animator).getClip('Talk').playing) {
           artist2.playAnimation('Talk')
         }
-    
       },
     }
   )
 
   artist2.removeComponent(OnPointerDown)
 
-  artist2.bubble.rootEntity.getComponent(Transform).position = new Vector3(0.4, 0.6, 0.5)
-  artist1.bubble.rootEntity.getComponent(Transform).position = new Vector3(0.4, 0.6, -0.9)
-
-  
+  artist2.bubble.rootEntity.getComponent(Transform).position = new Vector3(
+    0.4,
+    0.6,
+    0.5
+  )
+  artist1.bubble.rootEntity.getComponent(Transform).position = new Vector3(
+    0.4,
+    0.6,
+    -0.9
+  )
 }
-
 
 export function addWenMoon() {
   let wenPath: FollowPathData = {
@@ -320,7 +322,7 @@ export function addWenMoon() {
 
   wenMoon = new NPC(
     { position: wenPath.path[0] },
-    'models/core_building/wenMoonV10.glb',
+    'models/core_building/wenMoonV11.glb',
     () => {
       wenMoon.stopWalking()
       wenMoon.talk(wenMoonTalk, 0)
@@ -332,9 +334,10 @@ export function addWenMoon() {
         height: 128,
         width: 128,
       },
-      reactDistance: 4,
+      reactDistance: 10,
       idleAnim: `Talk`,
       walkingAnim: 'Walk',
+      onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: true,
       darkUI: true,
@@ -342,13 +345,10 @@ export function addWenMoon() {
       onWalkAway: () => {
         // turnOut
         wenMoon.playAnimation(`TurnOut`, true, 0.53)
-     
-        utils.setTimeout(2000,  () => {
+
+        utils.setTimeout(2000, () => {
           wenMoon.followPath()
         })
-        
-      
-       
       },
     }
   )
@@ -503,7 +503,7 @@ export let ILoveCats: Dialog[] = [
   },
   {
     text: `So it would make sense to call me the cat guy.`,
-  
+
     skipable: true,
   },
   {
@@ -516,11 +516,10 @@ export let ILoveCats: Dialog[] = [
     skipable: true,
     isEndOfDialog: true,
     triggeredByNext: () => {
-      catGuy.followPath()
+      catGuy.playAnimation('idle')
     },
   },
 ]
-
 
 export let wearabesCTalk: Dialog[] = [
   {
@@ -658,11 +657,10 @@ export let artist1Talk: Dialog[] = [
     triggeredByNext: () => {
       artist2.talkBubble(artist2Talk, '4th')
       artist2.playAnimation('TurnIn', true, 0.57)
-      
-      utils.setTimeout(570, ()=>{
+
+      utils.setTimeout(570, () => {
         artist2.playAnimation('TalkToUser')
-      } )
-    
+      })
     },
   },
   {
@@ -685,14 +683,13 @@ export let artist1Talk: Dialog[] = [
     triggeredByNext: () => {
       artist2.playAnimation('TurnOut', true, 0.5)
       artist1.playAnimation('TurnOut', true, 0.5)
-      
-      utils.setTimeout(500, ()=>{
+
+      utils.setTimeout(500, () => {
         artist2.playAnimation('Talk')
         artist1.playAnimation('Talk')
         artist1.talkBubble(artist1Talk, '1st')
-      } )
+      })
     },
-
 
     isEndOfDialog: true,
   },
@@ -737,7 +734,7 @@ export let artist2Talk: Dialog[] = [
 
     triggeredByNext: () => {
       artist1.playAnimation('TurnIn', true, 0.57)
-      utils.setTimeout(570, ()=>{
+      utils.setTimeout(570, () => {
         artist1.playAnimation('TalkToUser')
       })
 
@@ -756,119 +753,125 @@ export let artist2Talk: Dialog[] = [
   },
 ]
 
-
 export let artistHints: Dialog[] = [
   {
     text: 'Hey so you want to find out where you can find good art to admire?',
-     isQuestion: true,
-     buttons:[
-       {label:'yes',
-      goToDialog: 'voltaire'},
-      {label:'no',
-      goToDialog: 'no'}
-     ]
+    isQuestion: true,
+    buttons: [
+      { label: 'yes', goToDialog: 'voltaire' },
+      { label: 'no', goToDialog: 'no' },
+    ],
   },
   {
-    name:'no',
+    name: 'no',
     text: 'Alright, I’ll be around if you want to hear more.',
-    isEndOfDialog:true
+    isEndOfDialog: true,
   },
   {
-    name:'dummy',
+    name: 'dummy',
     text: '',
-    isEndOfDialog:true
+    isEndOfDialog: true,
   },
   {
-    name:'voltaire',
-    text: 'Ok, so first there’s Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
+    name: 'voltaire',
+    text:
+      'Ok, so first there’s Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
         goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('50,50')
-          }
+        triggeredActions: () => {
+          teleportTo('50,50')
         },
-      {label:'More',
-      goToDialog: 'museum'}
-     ]
-  }, {
-    name:'museum',
-    text: 'There’s the Museum district at x & x, quite a pioneer of the metaverse.',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
-        goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('50,50')
-          }
       },
-      {label:'More',
-      goToDialog: 'rapture'}
-     ]
-  },{
-    name:'rapture',
-    text: 'The Rapture Gallery at -88,-65 is also a really hip spot worth visiting',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
-        goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('-88,-65')
-          }
-      },
-      {label:'More',
-      goToDialog: '100x'}
-     ]
+      { label: 'More', goToDialog: 'museum' },
+    ],
   },
   {
-    name:'100x',
-    text: 'Also 100x Gallery, at x&x, there’s a whole bunch of things around that area.',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
+    name: 'museum',
+    text:
+      'There’s the Museum district at x & x, quite a pioneer of the metaverse.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
         goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('50,50')
-          }
+        triggeredActions: () => {
+          teleportTo('50,50')
+        },
       },
-      {label:'More',
-      goToDialog: 'momus'}
-     ]
+      { label: 'More', goToDialog: 'rapture' },
+    ],
   },
   {
-    name:'momus',
-    text: 'Momus Park covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at x,x.',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
+    name: 'rapture',
+    text:
+      'The Rapture Gallery at -88,-65 is also a really hip spot worth visiting',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
         goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('50,50')
-          }
+        triggeredActions: () => {
+          teleportTo('-88,-65')
+        },
       },
-      {label:'More',
-      goToDialog: 'vegas'}
-     ]
+      { label: 'More', goToDialog: '100x' },
+    ],
   },
   {
-    name:'vegas',
-    text: 'Also the Vegas Art Village includes a whole assortment of very creative small museums from the community.',
-     isQuestion: true,
-     buttons:[
-       {label:'Visit',
+    name: '100x',
+    text:
+      'Also 100x Gallery, at x&x, there’s a whole bunch of things around that area.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
         goToDialog: 'dummy',
-          triggeredActions: ()=>{
-            teleportTo('50,50')
-          }
+        triggeredActions: () => {
+          teleportTo('50,50')
+        },
       },
-      {label:'Done',
-      goToDialog: 'end'}
-     ]
+      { label: 'More', goToDialog: 'momus' },
+    ],
   },
   {
-    name:'end',
-    text: 'Those are the ones that come to mind to me right now. But there´s a LOT more to explore too.',
+    name: 'momus',
+    text:
+      'Momus Park covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at x,x.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
+        goToDialog: 'dummy',
+        triggeredActions: () => {
+          teleportTo('50,50')
+        },
+      },
+      { label: 'More', goToDialog: 'vegas' },
+    ],
+  },
+  {
+    name: 'vegas',
+    text:
+      'Also the Vegas Art Village includes a whole assortment of very creative small museums from the community.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
+        goToDialog: 'dummy',
+        triggeredActions: () => {
+          teleportTo('50,50')
+        },
+      },
+      { label: 'Done', goToDialog: 'end' },
+    ],
+  },
+  {
+    name: 'end',
+    text:
+      'Those are the ones that come to mind to me right now. But there´s a LOT more to explore too.',
   },
   {
     isEndOfDialog: true,
@@ -876,69 +879,67 @@ export let artistHints: Dialog[] = [
     triggeredByNext: () => {
       artist1.playAnimation('TurnOut', true, 0.57)
       artist2.playAnimation('TurnOut', true, 0.57)
-      utils.setTimeout(570, ()=>{
+      utils.setTimeout(570, () => {
         artist1.playAnimation('Talk')
         artist2.playAnimation('Talk')
       })
 
       artist1.talkBubble(artist1Talk, '1st')
     },
-  }
-  
+  },
 ]
 
 export let wenMoonTalk: Dialog[] = [
   {
     text:
       'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time..',
-      skipable: true
+    skipable: true,
   },
   {
     text: 'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
-    skipable: true
+    skipable: true,
   },
   {
     text:
       'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
-      skipable: true
+    skipable: true,
   },
   {
     text:
       'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
-      skipable: true
+    skipable: true,
   },
   {
     text:
       'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
-      skipable: true
+    skipable: true,
   },
   {
     text: 'Any of these could be the next bitcoin...',
-    skipable: true
+    skipable: true,
   },
   {
     text:
       '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
-      skipable: true
+    skipable: true,
   },
   {
     text:
       'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
-      skipable: true
+    skipable: true,
   },
   {
     text:
       'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
-      skipable: true,
+    skipable: true,
     isEndOfDialog: true,
 
     triggeredByNext: () => {
       wenMoon.playAnimation(`TurnOut`, true, 0.53)
 
-      utils.setTimeout(530,  () => {
+      utils.setTimeout(535, () => {
         wenMoon.followPath()
       })
-
     },
   },
 ]
