@@ -104,7 +104,7 @@ export async function addBarNPCs() {
   //   }
 
   doge = new NPC(
-    { position: new Vector3(175, 0.3, 160), scale: new Vector3(2, 2, 2) },
+    { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
     'models/core_building/dogeNPC.glb',
     () => {
       doge.stopWalking()
