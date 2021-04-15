@@ -83,25 +83,6 @@ export async function addBarNPCs() {
     loop: true,
   }
 
-  //   let catGuyPath: FollowPathData = {
-  //     path: [
-  //       new Vector3(181.8, 10.8, 160),
-  //       new Vector3(173.4, 10.8, 168.6),
-  //       new Vector3(145.7, 10.8, 166.3),
-  //       new Vector3(141.1, 10.8, 159.5),
-  //       new Vector3(140.8, 10.8, 137.7),
-  //       new Vector3(161.5, 10.8, 130),
-  //       new Vector3(179.3, 10.8, 139),
-  //       new Vector3(181.3, 10.8, 141.4),
-  //     ],
-  //     loop: true,
-  //     speed: 2,
-  //     curve: false,
-  //     onReachedPointCallback: () => {
-  //       // let randomNum = Math.floor(Math.random() * 4)
-  //       // catGuy.talkBubble(whereCat, randomNum)
-  //     },
-  //   }
 
   doge = new NPC(
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
@@ -504,7 +485,7 @@ export let ILoveCats: Dialog[] = [
     skipable: true,
   },
   {
-    text: `So it would make sense to call me the cat guy.`,
+    text: `So it would make sense to call me the <b>cat guy</b>.`,
 
     skipable: true,
   },
@@ -514,7 +495,7 @@ export let ILoveCats: Dialog[] = [
     skipable: true,
   },
   {
-    text: `Dammit!`,
+    text: `<b>Dammit!</b>`,
     skipable: true,
     isEndOfDialog: true,
     triggeredByNext: () => {
@@ -526,17 +507,17 @@ export let ILoveCats: Dialog[] = [
 export let wearabesCTalk: Dialog[] = [
   {
     name: 'none',
-    text: 'Why? … Umm, what would someone dressed like you have to say to me?',
+    text: 'Why? … Umm, what would someone <i>dressed like you</i> have to say to me?',
     skipable: true,
   },
   {
     text:
-      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
+      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: <b>you don’t cause a good impression on me like that</b>.',
     skipable: true,
   },
   {
     text:
-      'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
+      'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -545,12 +526,12 @@ export let wearabesCTalk: Dialog[] = [
   {
     name: 'common',
     text:
-      'Well look at you, all dressed up with outlet-grade clothes that you probably bought at a gas station.',
+      'Well look at you, <i>all dressed up</i> with outlet-grade clothes that you probably bought at a gas station.',
     skipable: true,
   },
   {
     text:
-      'I guess you’re fine, I mean we’re not going to be friends, but I’m feeling generous today and will acknowledge that you exist.',
+      'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -559,7 +540,7 @@ export let wearabesCTalk: Dialog[] = [
   {
     name: 'epic',
     text:
-      'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. Not that it’s a very high bar, but it would be quite an improvement.',
+      'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. <i>Not that it’s a very high bar</i>, but it would be quite an improvement.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -578,22 +559,22 @@ export let wearabesCTalk: Dialog[] = [
     // had to add a dummy to skip to
     name: 'default',
     text:
-      'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others',
     skipable: true,
   },
   {
     text:
-      'I always say “you are what you wear”. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others',
     skipable: true,
   },
   {
     text:
-      'And me, as you can tell I’m one of a kind. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
+      'Me, as you can tell, I’m <i>one of a kind</i>. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
     skipable: true,
   },
   {
     text:
-      'And you, who do your clothes say you are? Have a think about that, hun.',
+      'And you, who do your clothes say you are? <i>Have a think about that, hun</i>.',
     skipable: true,
     isEndOfDialog: true,
 
@@ -615,11 +596,11 @@ export let artist1Talk: Dialog[] = [
   {
     name: '1st',
     text:
-      'So there I was, questioning what my work really meant to me as an artist, after having spent so much time on it and put so much of myself into it.',
+      'So there I was, questioning what my work really meant to me as an artist, after having spent <b>so much</b> time on it and put <b>so much</b> of myself into it.',
   },
   {
     text:
-      'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some flamboyant scandalous way.',
+      'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some <i>flamboyant scandalous way</i>.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -629,7 +610,7 @@ export let artist1Talk: Dialog[] = [
   {
     name: '2nd',
     text:
-      'Well yeah, but back then there wasn’t much of a market for NFTs, or I didn’t know about it at least. I was just trying to make a living by selling canvases, like everyone else.',
+      'Well yeah, but back then there wasn’t much of a market for NFTs, <i>or I didn’t know about it at least</i>. I was just trying to make a living by selling canvases, like everyone else.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -639,11 +620,11 @@ export let artist1Talk: Dialog[] = [
   {
     name: '3rd',
     text:
-      ' The thing is I would still be removing my work from the public view, the form of payment doesn’t change that.',
+      ' The thing is <b>I would still be removing my work from the public view</b>, the form of payment doesn’t change that.',
   },
   {
     text:
-      'My audience suddenly got reduced to some rich guy and maybe his occasional dinner guests. That’s the part that upset me.',
+      'My audience suddenly got reduced to some rich guy and <i>maybe</i> his occasional dinner guests. That’s the part that upset me.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -653,7 +634,7 @@ export let artist1Talk: Dialog[] = [
   {
     name: '4th',
     text:
-      'Kinda… yes and no. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
+      'Kinda… <i>yes and no</i>. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -668,7 +649,7 @@ export let artist1Talk: Dialog[] = [
   {
     name: '5th',
     text:
-      'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, you’re in for a treat!',
+      'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, <i>you’re in for a treat!</i>',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -678,7 +659,7 @@ export let artist1Talk: Dialog[] = [
   },
   {
     name: '6th',
-    text: 'Yeah and well… it’s good art too. A lot of it, at least.',
+    text: 'Yeah and well… it’s <i>good</i> art too. A lot of it, at least.',
   },
   {
     text: 'Ask me and I’ll give you some hints.',
@@ -701,7 +682,7 @@ export let artist2Talk: Dialog[] = [
   {
     name: '1st',
     text:
-      'And that was such a good time to get into ether, so cheap back then. Imagine if you sold those for eth then?',
+      'And that was <i>such a good time</i> to get into ether, so cheap back then. Imagine if you sold those for eth then?',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -711,7 +692,7 @@ export let artist2Talk: Dialog[] = [
   {
     name: '2nd',
     text:
-      ' Just imagine if you sold a painting for 200 eth, it was nothing back then.',
+      ' Just imagine if you sold a painting for 200 eth, it was <b>nothing</b> back then.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -746,7 +727,7 @@ export let artist2Talk: Dialog[] = [
   {
     name: '5th',
     text:
-      'A ton of places you can check out. With crazy expensive virtual art on display. You can’t imagine what some of these cost!',
+      'A ton of places you can check out. With <b>crazy expensive</b> virtual art on display. You can’t imagine what some of these cost!',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -777,7 +758,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'voltaire',
     text:
-      'Ok, so first there’s Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
+      'Ok, so first there’s <color="red">Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
     isQuestion: true,
     buttons: [
       {
@@ -793,14 +774,14 @@ export let artistHints: Dialog[] = [
   {
     name: 'museum',
     text:
-      'There’s the Museum district at x & x, quite a pioneer of the metaverse.',
+      'There’s the <color="red"> Museum District</color> at <b>20,80</b>, quite a pioneer of the metaverse.',
     isQuestion: true,
     buttons: [
       {
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
-          teleportTo('50,50')
+          teleportTo('20,80')
         },
       },
       { label: 'More', goToDialog: 'rapture' },
@@ -809,7 +790,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'rapture',
     text:
-      'The Rapture Gallery at -88,-65 is also a really hip spot worth visiting',
+      'The  <color="red">Rapture Gallery</color> at <b>-88,-65</b> is also a really hip spot worth visiting',
     isQuestion: true,
     buttons: [
       {
@@ -825,7 +806,7 @@ export let artistHints: Dialog[] = [
   {
     name: '100x',
     text:
-      'Also 100x Gallery, at x&x, there’s a whole bunch of things around that area.',
+      'Also  <color="red">100x Gallery</color>, at <b>X,Y</b>, there’s a whole bunch of things around that area.',
     isQuestion: true,
     buttons: [
       {
@@ -841,14 +822,14 @@ export let artistHints: Dialog[] = [
   {
     name: 'momus',
     text:
-      'Momus Park covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at x,x.',
+      ' <color="red">Momus Park</color> covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at <b>8,43</b>.',
     isQuestion: true,
     buttons: [
       {
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
-          teleportTo('50,50')
+          teleportTo('8,43')
         },
       },
       { label: 'More', goToDialog: 'vegas' },
@@ -857,7 +838,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'vegas',
     text:
-      'Also the Vegas Art Village includes a whole assortment of very creative small museums from the community.',
+      'Also the <color="red">Vegas Art Village</color> at <b>X,Y</b> includes a whole assortment of very creative small museums from the community.',
     isQuestion: true,
     buttons: [
       {
@@ -894,11 +875,11 @@ export let artistHints: Dialog[] = [
 export let wenMoonTalk: Dialog[] = [
   {
     text:
-      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the right place at the right time..',
+      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the <i>right place</i> at the <i>right time</i>..',
     skipable: true,
   },
   {
-    text: 'I’m Wen Moon, a future millionaire, you’ll see. Any minute now!',
+    text: 'I’m <b>Wen Moon</b>, a future millionaire, you’ll see. Any minute now!',
     skipable: true,
   },
   {
@@ -908,21 +889,21 @@ export let wenMoonTalk: Dialog[] = [
   },
   {
     text:
-      'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+      'For example, my friend was really psyched about <b>Ponzy Coin</b>, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
     skipable: true,
   },
   {
     text:
-      'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? Go tweet about it haha',
+      'Then there’s <b>Bad Press Coin</b>: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? <i>Go tweet about it haha</i>',
     skipable: true,
   },
   {
-    text: 'Any of these could be the next bitcoin...',
+    text: 'Any of these could be the <b>next bitcoin</b>...',
     skipable: true,
   },
   {
     text:
-      '<i>Gotta get them all!<i> Haha You know, just like that yellow cat says..',
+      '<i>Gotta get them all!</i> Haha You know, just like that yellow cat says..',
     skipable: true,
   },
   {
