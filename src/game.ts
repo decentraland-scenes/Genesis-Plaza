@@ -15,14 +15,10 @@ import { updateMarketData } from './modules/serverHandler'
 import { AmbientSound } from './modules/ambientSound'
 import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
-import {
-  addOneTimeTrigger,
-  addRepeatTrigger,
-  setTimeout,
-} from './modules/Utils'
+import { addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/doors'
-
+import * as utils from '@dcl/ecs-scene-utils'
 import {
   lowerVolume,
   outOfBar,
@@ -31,7 +27,7 @@ import {
   setBarMusicOn,
 } from './modules/jukebox'
 
-import { addBarNPCs, areNPCsAdded } from './modules/barNPCs'
+import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 
 //////// LOG PLAYER POSITION
@@ -52,7 +48,7 @@ addBuildings()
 placeDoors()
 barPlatforms()
 
-setTimeout(20000, () => {
+utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     addBarNPCs()
     log('loaing NPCs')
@@ -61,18 +57,17 @@ setTimeout(20000, () => {
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 
-addOneTimeTrigger(
-  new Vector3(160, 10, 155),
-  new Vector3(50, 30, 50),
-  () => {
-    insideBar()
-  },
-  null,
-  false,
-  async () => {
-    await lowerVolume()
-    outsideBar()
-    log('stepped out')
+utils.addOneTimeTrigger(
+  new utils.TriggerBoxShape(new Vector3(50, 30, 50), new Vector3(160, 10, 155)),
+  {
+    onCameraEnter: () => {
+      insideBar()
+    },
+    onCameraExit: async () => {
+      await lowerVolume()
+      outsideBar()
+      log('stepped out')
+    },
   }
 )
 
@@ -120,6 +115,8 @@ export function insideBar() {
 }
 
 export function outsideBar() {
+
+  addWenMoon()
   /// MOVING PLATFORMS
 
   placePlatforms()
@@ -139,31 +136,54 @@ export function outsideBar() {
   //   rotation: Quaternion.Euler(0, 225, 0),
   // })
 
-  /// WEARABLES
-
-  addOneTimeTrigger(new Vector3(180, 2, 244), new Vector3(60, 60, 60), () => {
-    placeMuseumPieces()
-  })
-
   /// MUSEUM
 
-  addOneTimeTrigger(new Vector3(273, 2, 127), new Vector3(50, 50, 50), () => {
-    addWearables()
-    placeWearablePieces()
-  })
+  utils.addOneTimeTrigger(
+    new utils.TriggerBoxShape(
+      new Vector3(60, 60, 60),
+      new Vector3(180, 2, 244)
+    ),
+    {
+      onCameraEnter: () => {
+        placeMuseumPieces()
+      },
+    }
+  )
+
+  /// WEARABLES
+
+  utils.addOneTimeTrigger(
+    new utils.TriggerBoxShape(new Vector3(50, 50, 50), new Vector3(269, 5, 37)),
+    {
+      onCameraEnter: () => {
+        addWearables()
+        placeWearablePieces()
+      },
+    }
+  )
 
   /// TRADE CENTER
 
-  addOneTimeTrigger(new Vector3(269, 5, 37), new Vector3(80, 80, 80), () => {
-    updateMarketData()
-    placeTradecenterPieces()
-  })
+  utils.addOneTimeTrigger(
+    new utils.TriggerBoxShape(new Vector3(80, 80, 80), new Vector3(269, 5, 37)),
+    {
+      onCameraEnter: () => {
+        updateMarketData()
+        placeTradecenterPieces()
+      },
+    }
+  )
 
   /// GARDEN
 
-  addOneTimeTrigger(new Vector3(118, 3, 39), new Vector3(60, 60, 60), () => {
-    placeGardenPieces()
-  })
+  utils.addOneTimeTrigger(
+    new utils.TriggerBoxShape(new Vector3(60, 60, 60), new Vector3(118, 3, 39)),
+    {
+      onCameraEnter: () => {
+        placeGardenPieces()
+      },
+    }
+  )
 
   /// ROBOTS
   addRobots()
