@@ -2,6 +2,13 @@ import * as utils from '@dcl/ecs-scene-utils'
 import { barMusicStream, isInBar } from './jukebox'
 import { sceneMessageBus } from './serverHandler'
 
+let open = new AudioClip('sounds/door-open.mp3')
+let close = new AudioClip('sounds/door-close.mp3')
+open.volume = 0.7
+open.loop = false
+close.volume = 0.7
+close.loop = false
+
 /// Reusable class for all platforms
 export class Door extends Entity {
   model: GLTFShape
@@ -11,6 +18,8 @@ export class Door extends Entity {
   animationClose2: AnimationState
   isOpen: boolean = false
   isPlayerIn: boolean = false
+  soundOpen: AudioClip
+  soundClose: AudioClip
 
   constructor(
     model: GLTFShape,
@@ -46,6 +55,8 @@ export class Door extends Entity {
       looping: false,
     })
     this.getComponent(Animator).addClip(this.animationClose2)
+
+    this.addComponent(new AudioSource(open))
 
     const triggerEntity = new Entity()
     triggerEntity.addComponent(new Transform(triggerPos))
@@ -89,6 +100,10 @@ export class Door extends Entity {
     this.animationOpen2.play()
 
     this.isOpen = true
+
+    const source = new AudioSource(open)
+    this.addComponentOrReplace(source)
+    source.playing = true
   }
 
   public close(): void {
@@ -101,6 +116,10 @@ export class Door extends Entity {
     this.animationClose1.play()
     this.animationClose2.play()
     this.isOpen = false
+
+    const source = new AudioSource(close)
+    this.addComponentOrReplace(source)
+    source.playing = true
 
     if (!isInBar) {
       barRadioOff()
