@@ -48,4 +48,7 @@ export class ThumbnailPlane extends Entity{
         //engine.addEntity(this)
 
     }
+    updateImage(texture:Texture){
+        this.material.albedoTexture = texture
+    }
 }

@@ -46,7 +46,7 @@ export class TeleportController {
           new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
           new Vector3(6, 4.5, 6),
           () => {
-              movePlayerTo({ x: lobbyCenter.x, y: 140, z: lobbyCenter.z-8 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
+              movePlayerTo({ x: lobbyCenter.x+5, y: 140, z: lobbyCenter.z-10 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
 
               //enable fall sound trigger
               this.triggerBoxFallCheck.active = true
