@@ -4,7 +4,15 @@ import { AnimatedItem } from "./simpleAnimator"
 import * as resource from "./resources/resources"
 import { MenuItem } from "./menuItem"
 import * as sfx from "./resources/sounds"
+import { lobbyCenter } from "./resources/globals"
 
+
+let dummyLiveBadge = new Entity()
+dummyLiveBadge.addComponent(new Transform({
+    position: new Vector3(lobbyCenter.x, lobbyCenter.y -20, lobbyCenter.z)
+}))
+dummyLiveBadge.addComponent(resource.liveSignShape)
+engine.addEntity(dummyLiveBadge)
 
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
@@ -13,7 +21,10 @@ export class EventMenuItem extends MenuItem {
     public thumbNail:ThumbnailPlane
     public scale:Vector3
     public scaleMultiplier:number
+
     itemBox:Entity
+    title:Entity
+    titleText:TextShape
     leftDetailsRoot:Entity
     dateRoot:Entity
     dateMonthRoot:Entity
@@ -24,6 +35,8 @@ export class EventMenuItem extends MenuItem {
     liveText:TextShape
     detailsRoot:Entity
     jumpInButton:Entity
+    jumpButtonTextShape:TextShape
+    jumpButtonText:Entity
     detailText:Entity
     detailTextPanel:Entity
     highlightRays:Entity
@@ -31,9 +44,13 @@ export class EventMenuItem extends MenuItem {
     detailEventTitle:Entity
     readMoreButton:Entity
     coordsPanel:Entity
+    coords:Entity
+    coordsText:TextShape
     timePanel:Entity
     startTime:Entity
     startTimeText:TextShape
+    detailTitle:TextShape
+    detailTextContent:TextShape
 
     constructor(
         _transform:TranformConstructorArgs,        
@@ -83,51 +100,53 @@ export class EventMenuItem extends MenuItem {
             position: new Vector3(-0.25,0,0),
             scale: new Vector3(0.4, 0.4, 0.4)
         }))
-        this.liveSign.setParent(this.leftDetailsRoot)
-        if(this.live){
-            this.liveText.value = "LIVE"
-            this.liveSign.addComponent(resource.liveSignShape)
+
+        
+        this.liveSign.addComponent(resource.liveSignShape)
+        this.dateBG = new Entity()
+        this.dateBG.addComponent(new Transform({
+            position: new Vector3(-0.25,0,0),
+            scale: new Vector3(0.4, 0.4, 0.4)
+        }))
+        this.dateBG.addComponent(resource.dateBGShape)                       
+
+        this.dateRoot = new Entity()
+        this.dateRoot.addComponent(new Transform({
+            position: new Vector3(0,-0.15,-0.05)
+        }))
+        this.dateRoot.setParent(this.dateBG)    
+
+        this.dateMonthRoot = new Entity()
+        this.dateMonthRoot.addComponent(new Transform({
+            position: new Vector3(0,0.2,-0.05)
+        }))
+        this.dateMonthRoot.setParent(this.dateBG)      
+
+        let dateText = new TextShape()
+        let dateMonthText = new TextShape()
+
+        this.date = new Date(_event.next_start_at)
+
+        dateText.value = this.date.getDate().toString()
+        dateText.fontSize = 5
+        dateText.color = resource.dateDayColor
+        dateText.outlineColor = resource.dateDayColor
+        dateText.outlineWidth = 0.2   
+
+        dateMonthText.value = monthToString(this.date.getMonth()).toUpperCase()
+        dateMonthText.fontSize = 3
+        dateMonthText.color = resource.dateMonthColor
+
+        this.dateRoot.addComponent(dateText)
+        this.dateMonthRoot.addComponent(dateMonthText)
+
+        if(this.live){   
+            //add live badge         
+            this.liveSign.setParent(this.leftDetailsRoot)
         }
         else{
-            // -- DATE PANEL           
-            
-            this.dateBG = new Entity()
-            this.dateBG.addComponent(new Transform({
-                position: new Vector3(-0.25,0,0),
-                scale: new Vector3(0.4, 0.4, 0.4)
-            }))
-            this.dateBG.addComponent(resource.dateBGShape)       
-            this.dateBG.setParent(this.leftDetailsRoot)    
-
-            this.dateRoot = new Entity()
-            this.dateRoot.addComponent(new Transform({
-                position: new Vector3(0,-0.15,-0.05)
-            }))
-            this.dateRoot.setParent(this.dateBG)    
-
-            this.dateMonthRoot = new Entity()
-            this.dateMonthRoot.addComponent(new Transform({
-                position: new Vector3(0,0.2,-0.05)
-            }))
-            this.dateMonthRoot.setParent(this.dateBG)      
-
-            let dateText = new TextShape()
-            let dateMonthText = new TextShape()
-
-            this.date = new Date(_event.next_start_at)
-
-            dateText.value = this.date.getDate().toString()
-            dateText.fontSize = 5
-            dateText.color = resource.dateDayColor
-            dateText.outlineColor = resource.dateDayColor
-            dateText.outlineWidth = 0.2   
-
-            dateMonthText.value = monthToString(this.date.getMonth()).toUpperCase()
-            dateMonthText.fontSize = 3
-            dateMonthText.color = resource.dateMonthColor
-
-            this.dateRoot.addComponent(dateText)
-            this.dateMonthRoot.addComponent(dateMonthText)
+            // add calendar panel          
+            this.dateBG.setParent(this.leftDetailsRoot)         
 
         } 
 
@@ -184,35 +203,29 @@ export class EventMenuItem extends MenuItem {
 
 
         // TITLE
-        let titleText = new TextShape()
-        let title = new Entity()
-        let rawText:string = _event.name
-
-        // if(rawText.length > 36){
-        //     rawText = (rawText.substring(0,36) + "\n" + rawText.substring(36,rawText.length) )
-        // }
+        this.titleText = new TextShape()
+        this.title = new Entity()
+        let rawText:string = _event.name       
 
         rawText = wordWrap(rawText,36,3)
-        titleText.value = rawText
-        titleText.font = new Font(Fonts.SanFrancisco_Heavy)
-        titleText.height = 20
-        titleText.width = 2
-        titleText.resizeToFit = true
-        // titleText.textWrapping = true
-        // titleText.lineCount = 2
-        // titleText.lineSpacing = "10%"
-        titleText.fontSize = 2
-        titleText.color = Color3.Black()
-        titleText.hTextAlign = 'center'
-        titleText.vTextAlign = 'center'        
+        this.titleText.value = rawText
+        this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.titleText.height = 20
+        this.titleText.width = 2
+        this.titleText.resizeToFit = true
         
-        title.addComponent(new Transform({
+        this.titleText.fontSize = 2
+        this.titleText.color = Color3.Black()
+        this.titleText.hTextAlign = 'center'
+        this.titleText.vTextAlign = 'center'        
+        
+        this.title.addComponent(new Transform({
             position: new Vector3(0,-0.15, -0.01),
             scale: new Vector3(0.3,0.3,0.3)
         }))
-        title.addComponent(titleText)
+        this.title.addComponent(this.titleText)
 
-        title.setParent(this.itemBox)
+        this.title.setParent(this.itemBox)
 
         
 
@@ -246,19 +259,19 @@ export class EventMenuItem extends MenuItem {
             //movePlayerTo({ x: lobbyCenter.x, y: 110, z: lobbyCenter.z-8 } )
         ))
 
-        let coords = new Entity
-        let coordsText = new TextShape()
-        coordsText.value = (_event.coordinates[0] + "," + _event.coordinates[1])
-        coordsText.color = Color3.FromHexString("#111111")
-        coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.coords = new Entity
+        this.coordsText = new TextShape()
+        this.coordsText.value = (_event.coordinates[0] + "," + _event.coordinates[1])
+        this.coordsText.color = Color3.FromHexString("#111111")
+        this.coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
 
-        coords.addComponent(coordsText)
-        coords.addComponent(new Transform({
+        this.coords.addComponent(this.coordsText)
+        this.coords.addComponent(new Transform({
             position: new Vector3(0.18,-0.33,-0.05),
             scale: new Vector3(0.18, 0.18, 0.18)
         }))
         
-        coords.setParent(this.coordsPanel)
+        this.coords.setParent(this.coordsPanel)
 
         // -- JUMP IN BUTTON
         this.jumpInButton = new Entity()
@@ -280,24 +293,24 @@ export class EventMenuItem extends MenuItem {
             1.8
         ))
 
-        let jumpButtonText = new Entity
-        let jumpButtonTextShape = new TextShape()
+        this.jumpButtonText = new Entity
+        this.jumpButtonTextShape = new TextShape()
         
-        jumpButtonTextShape.color = Color3.FromHexString("#FFFFFF")
-        jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
-        jumpButtonTextShape.hTextAlign = "center"
+        this.jumpButtonTextShape.color = Color3.FromHexString("#FFFFFF")
+        this.jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.jumpButtonTextShape.hTextAlign = "center"
         
 
-        jumpButtonText.addComponent(jumpButtonTextShape)
-        jumpButtonText.addComponent(new Transform({
+        this.jumpButtonText.addComponent(this.jumpButtonTextShape)
+        this.jumpButtonText.addComponent(new Transform({
             position: new Vector3(0, -0.33, -0.05),
             scale: new Vector3(0.22, 0.22, 0.22)
         }))
         
-        jumpButtonText.setParent(this.jumpInButton)
+        this.jumpButtonText.setParent(this.jumpInButton)
 
         if(this.live){
-            jumpButtonTextShape.value = "JUMP IN"
+            this.jumpButtonTextShape.value = "JUMP IN"
             this.jumpInButton.addComponent(new OnPointerDown( 
                 async function () {
                     teleportTo((_event.coordinates[0] + "," + _event.coordinates[1]))
@@ -310,7 +323,7 @@ export class EventMenuItem extends MenuItem {
             ))
         }
         else{
-            jumpButtonTextShape.value = "SIGN UP"
+            this.jumpButtonTextShape.value = "SIGN UP"
             this.jumpInButton.addComponent(new OnPointerDown( ()=> {
                 openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
             },
@@ -345,43 +358,43 @@ export class EventMenuItem extends MenuItem {
             2.2
         ))
 
-        let detailTitle = new TextShape()
-        detailTitle.value = wordWrap(_event.name,45,3)
-        detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
-        detailTitle.height = 20
-        detailTitle.width = 2
-        detailTitle.resizeToFit = true        
-        detailTitle.fontSize = 2
-        detailTitle.color = Color3.Black()
-        detailTitle.hTextAlign = 'left'
-        detailTitle.vTextAlign = 'top'  
+        this.detailTitle = new TextShape()
+        this.detailTitle.value = wordWrap(_event.name,45,3)
+        this.detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.detailTitle.height = 20
+        this.detailTitle.width = 2
+        this.detailTitle.resizeToFit = true        
+        this.detailTitle.fontSize = 2
+        this.detailTitle.color = Color3.Black()
+        this.detailTitle.hTextAlign = 'left'
+        this.detailTitle.vTextAlign = 'top'  
 
         this.detailEventTitle = new Entity()
         this.detailEventTitle.addComponent(new Transform({
             position: new Vector3(0.1,0.55,0),
             scale: new Vector3(0.3, 0.3, 0.3)
         }))
-        this.detailEventTitle.addComponent(detailTitle)
+        this.detailEventTitle.addComponent(this.detailTitle)
         this.detailEventTitle.setParent(this.detailTextPanel)       
 
-        let detailTextContent = new TextShape()
-        detailTextContent.value = ("\n\n" + wordWrap(_event.description, 75, 11) + "</cspace>")
-        detailTextContent.font = new Font(Fonts.SanFrancisco_Semibold)
-        detailTextContent.height = 20
-        detailTextContent.width = 2
-        detailTextContent.resizeToFit = true        
-        detailTextContent.fontSize = 1
-        detailTextContent.color = Color3.FromHexString("#111111")
-        detailTextContent.hTextAlign = 'left'
-        detailTextContent.vTextAlign = 'top'  
-        detailTextContent.lineSpacing = '0'        
+        this.detailTextContent = new TextShape()
+        this.detailTextContent.value = ("\n\n" + wordWrap(_event.description, 75, 11) + "</cspace>")
+        this.detailTextContent.font = new Font(Fonts.SanFrancisco_Semibold)
+        this.detailTextContent.height = 20
+        this.detailTextContent.width = 2
+        this.detailTextContent.resizeToFit = true        
+        this.detailTextContent.fontSize = 1
+        this.detailTextContent.color = Color3.FromHexString("#111111")
+        this.detailTextContent.hTextAlign = 'left'
+        this.detailTextContent.vTextAlign = 'top'  
+        this.detailTextContent.lineSpacing = '0'        
         
         this.detailText = new Entity()
         this.detailText.addComponent(new Transform({
             position: new Vector3(0.1,0.5,0),
             scale: new Vector3(0.4, 0.4, 0.4)
         }))
-        this.detailText.addComponent(detailTextContent)        
+        this.detailText.addComponent( this.detailTextContent)        
         this.detailText.setParent(this.detailTextPanel)
 
         //details website button
@@ -419,6 +432,72 @@ export class EventMenuItem extends MenuItem {
         this.highlightFrame.addComponent(resource.highlightFrameShape)
         this.highlightFrame.setParent(this.highlightRays)
       
+    }
+    updateItemInfo(_event:any){
+        
+        //image
+        this.thumbNail.updateImage(new Texture(_event.image))
+
+        //live or not
+        this.live = _event.live
+        if(this.live){   
+            //add live badge         
+            this.liveSign.setParent(this.leftDetailsRoot)
+
+            //update jump in button
+            this.jumpButtonTextShape.value = "JUMP IN"
+            this.jumpInButton.getComponent(OnPointerDown).callback =  
+                async function () {
+                    teleportTo((_event.coordinates[0] + "," + _event.coordinates[1]))
+                  }
+            this.jumpInButton.getComponent(OnPointerDown).hoverText = "JUMP IN"
+            this.jumpInButton.getComponent(OnPointerDown).button = ActionButton.POINTER
+            this.dateBG.setParent(null)                       
+            
+        }
+        else{
+            // add calendar panel          
+            this.dateBG.setParent(this.leftDetailsRoot) 
+
+            //update jump in button to sign up button
+            this.jumpButtonTextShape.value = "SIGN UP"
+
+            this.jumpInButton.getComponent(OnPointerDown).callback =  
+                async function () {
+                    openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
+                  }
+            this.jumpInButton.getComponent(OnPointerDown).hoverText = "CHECK EVENT PAGE"
+            this.jumpInButton.getComponent(OnPointerDown).button = ActionButton.POINTER
+            this.liveSign.setParent(null) 
+        }
+         
+
+        //date
+        this.date = new Date(_event.next_start_at)
+        this.dateRoot.getComponent(TextShape).value = this.date.getDate().toString()
+        this.dateMonthRoot.getComponent(TextShape).value = monthToString(this.date.getMonth()).toUpperCase()
+
+        //time
+        this.startTimeText.value = (_event.next_start_at).substring(11,16) + "\nUTC"
+
+        //title
+        let rawText:string = _event.name
+        rawText = wordWrap(rawText,36,3)
+        this.title.getComponent(TextShape).value = rawText
+
+        //coords
+        this.coords.getComponent(TextShape).value = (_event.coordinates[0] + "," + _event.coordinates[1])
+
+        //detail text
+        this.detailTitle.value = wordWrap(_event.name,45,3)
+        this.detailTextContent.value = ("\n\n" + wordWrap(_event.description, 75, 11) + "</cspace>")
+
+        //details website button (read more)
+        this.readMoreButton.getComponent(OnPointerDown).callback = () => {
+            openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
+        }
+        this.readMoreButton.getComponent(OnPointerDown).hoverText = "READ MORE"
+
     }
     select(){   
          

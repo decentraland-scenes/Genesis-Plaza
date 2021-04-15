@@ -11,7 +11,8 @@ export let portalSpiralShape=       new GLTFShape(modelFolder + "portal_lift_spi
 export let beamShape =              new GLTFShape(modelFolder + "beam.glb")
 
 //MENU
-export let menuFrameShape =         new GLTFShape(modelFolder + "menu_collider.glb")
+export let menuPillarsShape =       new GLTFShape(modelFolder + "menu_pillars.glb")
+export let menuBaseShape =          new GLTFShape(modelFolder + "menu_base.glb")
 export let menuTopEventsShape =     new GLTFShape(modelFolder + "menu_top_events.glb")
 export let menuTopCrowdShape =      new GLTFShape(modelFolder + "menu_top_crowd.glb")
 export let menuTopClassicsShape =   new GLTFShape(modelFolder + "menu_top_classics.glb")

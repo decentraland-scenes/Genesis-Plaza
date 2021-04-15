@@ -74,7 +74,7 @@ export class VerticalScrollMenu extends Entity {
             position: new Vector3(0,0,0.05),
             scale: new Vector3(4,1,4)
         }))
-        this.menuFrame.addComponent(new GLTFShape("models/lobby/menu_collider.glb"))
+        this.menuFrame.addComponent(resource.menuPillarsShape)
         this.menuFrame.setParent(this)
         this.menuFrame.addComponent(sfx.menuDownSource)
 
@@ -156,15 +156,14 @@ export class VerticalScrollMenu extends Entity {
         this.deselectSound.addComponent(sfx.menuDeselectSource)
         this.deselectSound.setParent(this)
 
-    }
+    }    
 
     addMenuItem(_item:MenuItem){   
 
         let itemRoot = new Entity()
         itemRoot.addComponent(new Transform({
             position: new Vector3(0, this.currentOffset, 0)
-        }))    
-        
+        }))           
 
         this.itemRoots.push(itemRoot)
         //itemRoot.addComponent(sfx.menuSelectSource)  
@@ -230,6 +229,21 @@ export class VerticalScrollMenu extends Entity {
         
         this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length        
         
+    }
+
+    removeMenuItem(index:number){
+        
+        if (index > -1) {
+            engine.removeEntity(this.items[index])
+            engine.removeEntity(this.clickBoxes[index])
+
+            this.items.splice(index, 1)
+            this.clickBoxes.splice(index, 1)
+
+            this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length   
+            this.currentOffset -= this.verticalSpacing
+        }        
+
     }
 
     selectItem(_item:MenuItem){

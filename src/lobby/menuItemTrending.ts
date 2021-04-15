@@ -15,10 +15,13 @@ export class TrendingMenuItem extends MenuItem {
     userCountRoot:Entity
     usersTitleRoot:Entity
     playerCounterBG:Entity
-    userCount:Date
+    userCount:number
+    userCountText:TextShape
     live:boolean
     liveSign:Entity
     liveText:TextShape
+    titleText:TextShape
+    title:Entity
     detailsRoot:Entity
     jumpInButton:Entity
     detailText:Entity
@@ -28,9 +31,13 @@ export class TrendingMenuItem extends MenuItem {
     detailEventTitle:Entity
     readMoreButton:Entity
     coordsPanel:Entity
+    coords:Entity
+    coordsText:TextShape
     timePanel:Entity
     startTime:Entity
     startTimeText:TextShape
+    jumpButtonText:Entity
+    jumpButtonTextShape:TextShape
 
     constructor(
         _transform:TranformConstructorArgs,               
@@ -53,18 +60,16 @@ export class TrendingMenuItem extends MenuItem {
         this.scale = new Vector3(1,0.5,1)
         this.scaleMultiplier = 1.2
 
-        if(_scene.thumbnail){
-
-            let imgPath:string = _scene.thumbnail                     
+        if(_scene.thumbnail){                               
     
-                this.thumbNail = new ThumbnailPlane(
-                    new Texture(_scene.thumbnail), 
-                    {
-                        position:new Vector3(0.25,0.275,0),
-                        scale: new Vector3(1.1,0.55,1)
-                    } ,
-                    _alphaTexture)               
-                this.thumbNail.setParent(this.itemBox) 
+            this.thumbNail = new ThumbnailPlane(
+                new Texture(_scene.thumbnail), 
+                {
+                    position:new Vector3(0.25,0.275,0),
+                    scale: new Vector3(1.1,0.55,1)
+                } ,
+                _alphaTexture)               
+            this.thumbNail.setParent(this.itemBox) 
             
         }
         else{ 
@@ -109,25 +114,25 @@ export class TrendingMenuItem extends MenuItem {
         }))
         this.usersTitleRoot.setParent(this.playerCounterBG)      
 
-        let userCountText = new TextShape()
+        this.userCountText = new TextShape()
         let usersTitleText = new TextShape()
 
         this.userCount =_scene.usersTotalCount
 
-        userCountText.value = this.userCount.toString()
+        this.userCountText.value = this.userCount.toString()
         //userCountText.value = "12345"
-        userCountText.fontSize = 4
-        userCountText.hTextAlign = "right"
-        userCountText.color = resource.dateDayColor
-        userCountText.outlineColor = resource.dateDayColor
-        userCountText.outlineWidth = 0.2   
+        this.userCountText.fontSize = 4
+        this.userCountText.hTextAlign = "right"
+        this.userCountText.color = resource.dateDayColor
+        this.userCountText.outlineColor = resource.dateDayColor
+        this.userCountText.outlineWidth = 0.2   
 
         usersTitleText.value = "PLAYERS:"
         usersTitleText.fontSize = 2
         usersTitleText.font = new Font(Fonts.SanFrancisco_Semibold)
         usersTitleText.color = Color3.Black()
 
-        this.userCountRoot.addComponent(userCountText)
+        this.userCountRoot.addComponent(this.userCountText)
         this.usersTitleRoot.addComponent(usersTitleText)
 
         //selection event animation
@@ -150,34 +155,34 @@ export class TrendingMenuItem extends MenuItem {
 
 
         // TITLE
-        let titleText = new TextShape()
-        let title = new Entity()
+        this.titleText = new TextShape()
+        this.title = new Entity()
         let rawText:string = _scene.name
         
         //exception for unnamed scenes
         if(rawText === "interactive-text"){
-            titleText.value = "Unnamed Scene"
+            this.titleText.value = "Unnamed Scene"
         }
         else{
             rawText = wordWrap(rawText,36,3)
-            titleText.value = rawText
+            this.titleText.value = rawText
         }
         
-        titleText.font = new Font(Fonts.SanFrancisco_Heavy)
-        titleText.height = 20
-        titleText.width = 2
-        titleText.resizeToFit = true        
-        titleText.fontSize = 2
-        titleText.color = Color3.Black()
-        titleText.hTextAlign = 'center'
-        titleText.vTextAlign = 'center'        
+        this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.titleText.height = 20
+        this.titleText.width = 2
+        this.titleText.resizeToFit = true        
+        this.titleText.fontSize = 2
+        this.titleText.color = Color3.Black()
+        this.titleText.hTextAlign = 'center'
+        this.titleText.vTextAlign = 'center'        
         
-        title.addComponent(new Transform({
+        this.title.addComponent(new Transform({
             position: new Vector3(0,-0.15, -0.01),
             scale: new Vector3(0.3,0.3,0.3)
         }))
-        title.addComponent(titleText)
-        title.setParent(this.itemBox)
+        this.title.addComponent(this.titleText)
+        this.title.setParent(this.itemBox)
 
         
 
@@ -199,23 +204,21 @@ export class TrendingMenuItem extends MenuItem {
                 scale: new Vector3(0.5, 0.5, 0.5)
             },
             1.9
-        ))
+        ))       
 
-       
+        this.coords = new Entity
+        this.coordsText = new TextShape()
+        this.coordsText.value = (_scene.baseCoords[0] + "," + _scene.baseCoords[1])
+        this.coordsText.color = Color3.FromHexString("#111111")
+        this.coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
 
-        let coords = new Entity
-        let coordsText = new TextShape()
-        coordsText.value = (_scene.baseCoords[0] + "," + _scene.baseCoords[1])
-        coordsText.color = Color3.FromHexString("#111111")
-        coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
-
-        coords.addComponent(coordsText)
-        coords.addComponent(new Transform({
+        this.coords.addComponent(this.coordsText)
+        this.coords.addComponent(new Transform({
             position: new Vector3(0.18,-0.33,-0.05),
             scale: new Vector3(0.18, 0.18, 0.18)
         }))
         
-        coords.setParent(this.coordsPanel)
+        this.coords.setParent(this.coordsPanel)
 
         // -- JUMP IN BUTTON
         this.jumpInButton = new Entity()
@@ -237,25 +240,26 @@ export class TrendingMenuItem extends MenuItem {
             1.8
         ))
 
-        let jumpButtonText = new Entity
-        let jumpButtonTextShape = new TextShape()
+        this.jumpButtonText = new Entity
+        this.jumpButtonTextShape = new TextShape()
         
-        jumpButtonTextShape.color = Color3.FromHexString("#FFFFFF")
-        jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
-        jumpButtonTextShape.hTextAlign = "center"
+        this.jumpButtonTextShape.color = Color3.FromHexString("#FFFFFF")
+        this.jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.jumpButtonTextShape.fontSize = 10
+        this.jumpButtonTextShape.hTextAlign = "center"
         
 
-        jumpButtonText.addComponent(jumpButtonTextShape)
-        jumpButtonText.addComponent(new Transform({
+        this.jumpButtonText.addComponent(this.jumpButtonTextShape)
+        this.jumpButtonText.addComponent(new Transform({
             position: new Vector3(0, -0.33, -0.05),
             scale: new Vector3(0.22, 0.22, 0.22)
         }))
         
-        jumpButtonText.setParent(this.jumpInButton)
+        this.jumpButtonText.setParent(this.jumpInButton)
 
         //exception for Genesis Plaza
         if(_scene.baseCoords[0] < 10 &&_scene.baseCoords[0] > -10){
-            coordsText.value = "0,0"
+            this.coordsText.value = "0,0"
             this.coordsPanel.addComponent(new OnPointerDown( 
                 async function () {                   
                   },
@@ -264,8 +268,8 @@ export class TrendingMenuItem extends MenuItem {
                     hoverText: "YOU ARE HERE",
                   }                
             ))
-            jumpButtonTextShape.value = "YOU'RE HERE"
-            jumpButtonTextShape.fontSize = 7
+            this.jumpButtonTextShape.value = "YOU'RE HERE"
+            this.jumpButtonTextShape.fontSize = 7
             this.jumpInButton.addComponent(new OnPointerDown( 
                 async function () {                
                 },
@@ -287,7 +291,7 @@ export class TrendingMenuItem extends MenuItem {
                   }                
             ))
 
-            jumpButtonTextShape.value = "JUMP IN"
+            this.jumpButtonTextShape.value = "JUMP IN"
             this.jumpInButton.addComponent(new OnPointerDown( 
                 async function () {
                     teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
@@ -324,6 +328,72 @@ export class TrendingMenuItem extends MenuItem {
         this.highlightFrame.setParent(this.highlightRays)
        
       
+    }
+
+    updateItemInfo(_scene:any){
+        //image
+        if(_scene.thumbnail){
+            this.thumbNail.updateImage(new Texture(_scene.thumbnail))
+        }
+        else{ 
+            this.thumbNail.updateImage(resource.dummySceneBG)            
+        }
+
+        //counter
+        this.userCount =_scene.usersTotalCount
+        this.userCountText.value = this.userCount.toString()
+
+        //scene title
+        let rawText:string = _scene.name
+        
+        //exception for unnamed scenes
+        if(rawText === "interactive-text"){
+            this.titleText.value = "Unnamed Scene"
+        }
+        else{
+            rawText = wordWrap(rawText,36,3)
+            this.titleText.value = rawText
+        }
+
+        //coords
+        this.coordsText.value = (_scene.baseCoords[0] + "," + _scene.baseCoords[1])
+
+        //exception for Genesis Plaza
+        if(_scene.baseCoords[0] < 10 &&_scene.baseCoords[0] > -10){
+            this.coordsText.value = "0,0"
+            this.coordsPanel.getComponent(OnPointerDown).callback =  
+                async function () {                   
+                  },
+                  {
+                    button: ActionButton.POINTER,
+                    hoverText: "YOU ARE HERE",
+                  }                
+            
+            this.jumpButtonTextShape.value = "YOU'RE HERE"
+            this.jumpButtonTextShape.fontSize = 7
+            this.jumpInButton.getComponent(OnPointerDown).hoverText = "YOU ARE HERE"
+            
+        }
+        else{
+            this.coordsPanel.getComponent(OnPointerDown).callback =  
+                async function () {
+                    teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
+                  },
+                  {
+                    button: ActionButton.POINTER,
+                    hoverText: "GO THERE",
+                  }              
+
+            this.jumpButtonTextShape.value = "JUMP IN"
+            this.jumpButtonTextShape.fontSize = 10
+            this.jumpInButton.getComponent(OnPointerDown).callback =  
+                async function () {
+                        teleportTo((_scene.baseCoords[0] + "," + _scene.baseCoords[1]))
+                    }
+            this.jumpInButton.getComponent(OnPointerDown).hoverText ="JUMP IN"
+                    
+        }             
+        
     }
     select(){
 

@@ -12,6 +12,9 @@ export class MenuItem extends Entity {
         super()       
         
     }
+    updateItemInfo(_info:any){
+
+    }
            
     select(){
 
