@@ -32,9 +32,15 @@ import { addArcades } from './modules/arcades/arcades'
 
 //////// LOG PLAYER POSITION
 
-Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, false, (e) => {
+Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
   log(`pos: `, Camera.instance.position)
   log(`rot: `, Camera.instance.rotation)
+  // if(e.hit){
+  //   console.log(
+  //     'ENT: ',  engine.entities[e.hit.entityId],
+  //     'POS:', engine.entities[e.hit.entityId].getComponent(Transform)
+  //   )
+  // }
 })
 
 //// ADD BUILDINGS

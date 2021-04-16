@@ -52,7 +52,7 @@ export async function getUserInfo() {
   )
     .then((res) => res.json())
     .then((res) => {
-      log('USERINF:', res)
+    //  log('USERINF:', res)
     return res.length ? res[0] : res
   }
     )) as Profiles
@@ -93,9 +93,9 @@ export async function rarestItem(
 
 
   const profile = await getUserInfo()
-  log('PROFILE:, ',profile )
+  //log('PROFILE:, ',profile )
   const inventory = await getUserInventory()
-  log('INVENTORY:, ',inventory )
+  //log('INVENTORY:, ',inventory )
   if (!profile || !inventory) return rarityLevel.none
  // log('PROFILE: ', profile)
   //log('INVENTORY :', inventory)
@@ -116,7 +116,7 @@ export async function rarestItem(
       }
     }
   }
-  log(rarityLevel[rarestEquippedItem])
+ // log(rarityLevel[rarestEquippedItem])
   return rarestEquippedItem
 }
 
@@ -174,7 +174,7 @@ export async function getPlayerSnapshots(
   )
     .then((res) => res.json())
     .then((res) => {
-      log(res)
+     // log(res)
       return res[0].avatars.length
         ? (res[0].avatars[0].avatar.snapshots as Snapshots)
         : null
