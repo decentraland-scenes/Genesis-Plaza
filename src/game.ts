@@ -30,6 +30,7 @@ import {
 import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/bar/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
+import { addPanels } from './modules/bar/panels'
 
 //////// LOG PLAYER POSITION
 
@@ -117,6 +118,7 @@ export function insideBar() {
     addBarNPCs()
   }
 
+  addPanels()
   placeJukeBox()
   addArcades()
 }

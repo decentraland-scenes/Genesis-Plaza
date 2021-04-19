@@ -69,16 +69,43 @@ export async function addBarNPCs() {
 
   let dogePath: FollowPathData = {
     path: [
-      new Vector3(175, 0.24, 160),
-      new Vector3(169, 0.24, 164),
-      new Vector3(153, 0.24, 154),
-      new Vector3(142, 0.24, 158),
-      new Vector3(139, 0.24, 147),
-      new Vector3(151, 0.24, 140),
-      new Vector3(155, 0.24, 145),
-      new Vector3(155, 0.24, 149),
-      new Vector3(159, 0.24, 157),
-      new Vector3(168, 0.24, 154),
+      // new Vector3(169, 0.24, 160),
+      // new Vector3(172, 0.24, 159),
+      // new Vector3(169.2, 0.24, 163.5),
+      new Vector3(166.7, 0.24, 163.9),
+      new Vector3(161, 0.24, 160),
+      new Vector3(157.5, 0.24, 157.4),
+      new Vector3(153.7, 0.24, 156.2),
+      new Vector3(148.1, 0.24, 156.8),
+
+
+      new Vector3(146.4, 0.24, 156),
+
+      new Vector3(143.1, 0.24, 153.1),
+      new Vector3(143, 0.24, 152.8),
+
+      new Vector3(143.2, 0.24, 150.7),
+    
+
+      new Vector3(143.26, 0.24, 147.5),
+      new Vector3(148.1, 0.24, 142.3),
+
+
+      new Vector3(151.9, 0.24, 142.3),
+      new Vector3(153.8, 0.24, 144.9),
+      new Vector3(154, 0.24, 146.9),
+
+      new Vector3(154.6, 0.24, 149.57),
+      new Vector3(156.65, 0.24, 154.7),
+      new Vector3(162.3, 0.24, 156.2),
+
+      new Vector3(166.4, 0.24, 156.1),
+      new Vector3(169.7, 0.24, 156.2),
+      new Vector3(171.9, 0.24, 157.8),
+      new Vector3(173.8, 0.24, 158.7),
+      new Vector3(173.8, 0.24, 160.1),
+      new Vector3(173.15, 0.24, 161.59),
+      new Vector3(171.3, 0.24, 163.22),
     ],
     loop: true,
   }
@@ -146,7 +173,7 @@ export async function addBarNPCs() {
   //catGuy.followPath(catGuyPath)
 
   wearablesC = new NPC(
-    { position: new Vector3(162.5, 0.23, 133) },
+    { position: new Vector3(162.65, 0.23, 133.15) },
     'models/core_building/WearableConnoisseur.glb',
     async () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
@@ -298,11 +325,15 @@ export function addWenMoon() {
       new Vector3(159, 0, 228),
       new Vector3(166, 0, 195),
       new Vector3(198, 0, 189),
-      new Vector3(207, 0, 141),
-      new Vector3(197, 0, 155),
-      new Vector3(156, 0, 103),
-      new Vector3(98, 0, 62),
-      new Vector3(70, 0, 89),
+      new Vector3(204, 0, 151),
+      new Vector3(201.9, 0, 121),
+      new Vector3(207.6, 0, 87.3),
+      new Vector3(175.6, 0, 70),
+      new Vector3(159.8, 0, 75.5),
+      new Vector3(139.1, 0, 70),
+      new Vector3(116.3, 0, 84.9),
+      new Vector3(91, 0, 110),
+
     ],
     loop: true,
   }
