@@ -139,38 +139,6 @@ export async function addBarNPCs() {
   )
   doge.followPath(dogePath)
 
-  catGuy = new NPC(
-    { position: new Vector3(180.8, 10.8, 160) },
-    'models/core_building/CatGuy.glb',
-    () => {
-      //   catGuy.bubble.closeDialogWindow()
-      //   catGuy.stopWalking()
-      catGuy.talk(ILoveCats, 0)
-      catGuy.playAnimation(`talk`)
-    },
-    {
-      portrait: {
-        path: 'images/portraits/catguy.png',
-        height: 128,
-        width: 128,
-      },
-      turningSpeed: 0.8,
-      reactDistance: 4,
-      idleAnim: `idle`,
-      onlyETrigger: true,
-      dialogSound: `sounds/navigationForward.mp3`,
-      faceUser: true,
-      darkUI: true,
-      //walkingAnim: 'Walk',
-      //walkingSpeed: 2,
-      //   onWalkAway: () => {
-      //     catGuy.followPath()
-      //   },
-      //textBubble: true,
-      //  bubbleHeight: 2.3,
-    }
-  )
-  //catGuy.followPath(catGuyPath)
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },
@@ -313,7 +281,7 @@ export async function addBarNPCs() {
   )
 }
 
-export function addWenMoon() {
+export function addNPCsOutside() {
   let wenPath: FollowPathData = {
     path: [
       new Vector3(82, 0, 138),
@@ -371,9 +339,59 @@ export function addWenMoon() {
     }
   )
   wenMoon.followPath(wenPath)
+
+
+
+
+
+  // Cat guy
+  catGuy = new NPC(
+    { position: new Vector3(191.8, 0.225, 68.2), 
+      rotation: Quaternion.Euler(0,290,0) },
+  
+    'models/core_building/CatGuy.glb',
+    () => {
+
+      catGuy.talk(ILoveCats, 0)
+      catGuy.playAnimation(`talk`)
+    },
+    {
+      portrait: {
+        path: 'images/portraits/catguy.png',
+        height: 128,
+        width: 128,
+      },
+      turningSpeed: 0.8,
+      reactDistance: 4,
+      idleAnim: `idle`,
+      onlyETrigger: true,
+      dialogSound: `sounds/navigationForward.mp3`,
+      faceUser: false,
+      darkUI: true,
+      onWalkAway:()=>{
+        catGuy.playAnimation(`idle`)
+      }
+   
+    }
+  )
+ 
 }
 
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////DIALOGS/////////////////////////
+
 /// OCTO
+
+export function backToIdle() {
+  octopus.changeIdleAnim('Idle')
+  octopus.playAnimation('TalkOutro', true, 0.63)
+}
+
 
 export let OctoHi: Dialog[] = [
   {
@@ -416,10 +434,6 @@ export let OctoHi: Dialog[] = [
   },
 ]
 
-export function backToIdle() {
-  octopus.changeIdleAnim('Idle')
-  octopus.playAnimation('TalkOutro', true, 0.63)
-}
 
 export let DogeTalk: Dialog[] = [
   {

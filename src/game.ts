@@ -27,7 +27,7 @@ import {
   setBarMusicOn,
 } from './modules/bar/jukebox'
 
-import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/bar/barNPCs'
+import { addBarNPCs, addNPCsOutside, areNPCsAdded } from './modules/bar/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
 import { addPanels } from './modules/bar/panels'
@@ -125,7 +125,7 @@ export function insideBar() {
 
 export function outsideBar() {
 
-  addWenMoon()
+  addNPCsOutside()
   /// MOVING PLATFORMS
 
   placePlatforms()
