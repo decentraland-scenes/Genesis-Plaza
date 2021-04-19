@@ -26,6 +26,31 @@ export async function getEvents() {
   }
 }
 
+export async function rsvpToEvent(_eventID:string, _timeStamp:Date) {
+  let url = 'https://events.decentraland.org/api/message'
+  let body = JSON.stringify({
+    type: "attend",
+    timestamp: _timeStamp,
+    event: _eventID,
+    attend: true
+   
+  })
+
+  log('sending req to: ', url)
+  try {
+    let response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: body }),
+    })
+    let data = await response.json()
+   
+  }  catch (e) {
+    log('error signing up to event ', e)
+  }
+  
+}
+
 export async function getTrendingScenes(_limit:number) {
   let trendingScenes: any[] = []
   let url = 'https://peer.decentraland.org/lambdas/explore/hot-scenes/'
