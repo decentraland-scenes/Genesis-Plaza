@@ -195,8 +195,8 @@ export async function addBarNPCs() {
 
   artist1 = new NPC(
     {
-      position: new Vector3(142.7, -0.25, 165.8),
-      rotation: Quaternion.Euler(0, 180 + 90, 0),
+      position: new Vector3(142.7, -0.2, 165.8),
+      rotation: Quaternion.Euler(0, 180 + 70, 0),
     },
     'models/core_building/ch2_crowd.glb',
     () => {
@@ -236,8 +236,8 @@ export async function addBarNPCs() {
 
   artist2 = new NPC(
     {
-      position: new Vector3(142.7, -0.25, 165.8),
-      rotation: Quaternion.Euler(0, 180 + 90, 0),
+      position: new Vector3(142.7, -0.2, 165.8),
+      rotation: Quaternion.Euler(0, 180 + 75, 0),
     },
     'models/core_building/ch1_crowd.glb',
     () => {
@@ -268,17 +268,21 @@ export async function addBarNPCs() {
     }
   )
 
-  artist2.removeComponent(OnPointerDown)
+  artist2.addComponentOrReplace(new OnPointerDown(
+    ()=>{
+      artist1.activate()
+    },{hoverText:'Art Recommendations' ,  button: ActionButton.PRIMARY  }
+  ))
 
   artist2.bubble.rootEntity.getComponent(Transform).position = new Vector3(
-    0.4,
+    -0.1,
     0.6,
-    0.5
+    0.8
   )
   artist1.bubble.rootEntity.getComponent(Transform).position = new Vector3(
-    0.4,
+    0.2,
     0.6,
-    -0.9
+    -0.3
   )
 }
 
@@ -485,7 +489,7 @@ export let ILoveCats: Dialog[] = [
     skipable: true,
   },
   {
-    text: `So it would make sense to call me the <b>cat guy</b>.`,
+    text: `So it would make sense to call me the  <color="red">cat guy </color>.`,
 
     skipable: true,
   },
@@ -495,7 +499,7 @@ export let ILoveCats: Dialog[] = [
     skipable: true,
   },
   {
-    text: `<b>Dammit!</b>`,
+    text: `Dammit!`,
     skipable: true,
     isEndOfDialog: true,
     triggeredByNext: () => {
@@ -512,7 +516,7 @@ export let wearabesCTalk: Dialog[] = [
   },
   {
     text:
-      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: <b>you don’t cause a good impression on me like that</b>.',
+      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
     skipable: true,
   },
   {
@@ -758,7 +762,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'voltaire',
     text:
-      'Ok, so first there’s <color="red">Voltaire District, at x & x. Lots of big players in the crypto art space have spot there.',
+      'Ok, so first there’s <color="red">Voltaire District</color>, at x & x. Lots of big players in the crypto art space have spot there.',
     isQuestion: true,
     buttons: [
       {
@@ -774,7 +778,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'museum',
     text:
-      'There’s the <color="red"> Museum District</color> at <b>20,80</b>, quite a pioneer of the metaverse.',
+      'There’s the <color="red"> Museum District</color> at 20,80, quite a pioneer of the metaverse.',
     isQuestion: true,
     buttons: [
       {
@@ -790,7 +794,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'rapture',
     text:
-      'The  <color="red">Rapture Gallery</color> at <b>-88,-65</b> is also a really hip spot worth visiting',
+      'The  <color="red">Rapture Gallery</color> at -88,-65 is also a really hip spot worth visiting',
     isQuestion: true,
     buttons: [
       {
@@ -806,7 +810,7 @@ export let artistHints: Dialog[] = [
   {
     name: '100x',
     text:
-      'Also  <color="red">100x Gallery</color>, at <b>X,Y</b>, there’s a whole bunch of things around that area.',
+      'Also  <color="red">100x Gallery</color>, at X,Y, there’s a whole bunch of things around that area.',
     isQuestion: true,
     buttons: [
       {
@@ -822,7 +826,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'momus',
     text:
-      ' <color="red">Momus Park</color> covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at <b>8,43</b>.',
+      ' <color="red">Momus Park</color> covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at 8,43.',
     isQuestion: true,
     buttons: [
       {
@@ -838,7 +842,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'vegas',
     text:
-      'Also the <color="red">Vegas Art Village</color> at <b>X,Y</b> includes a whole assortment of very creative small museums from the community.',
+      'Also the <color="red">Vegas Art Village</color> atX,Y includes a whole assortment of very creative small museums from the community.',
     isQuestion: true,
     buttons: [
       {
@@ -879,7 +883,7 @@ export let wenMoonTalk: Dialog[] = [
     skipable: true,
   },
   {
-    text: 'I’m <b>Wen Moon</b>, a future millionaire, you’ll see. Any minute now!',
+    text: 'I’m  <color="red">Wen Moon </color>, a future millionaire, you’ll see. Any minute now!',
     skipable: true,
   },
   {
@@ -889,16 +893,16 @@ export let wenMoonTalk: Dialog[] = [
   },
   {
     text:
-      'For example, my friend was really psyched about <b>Ponzy Coin</b>, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+      'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
     skipable: true,
   },
   {
     text:
-      'Then there’s <b>Bad Press Coin</b>: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? <i>Go tweet about it haha</i>',
+      'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? <i>Go tweet about it haha</i>',
     skipable: true,
   },
   {
-    text: 'Any of these could be the <b>next bitcoin</b>...',
+    text: 'Any of these could be the <i>next bitcoin</i>...',
     skipable: true,
   },
   {
