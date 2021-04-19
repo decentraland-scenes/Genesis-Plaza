@@ -105,4 +105,7 @@ export function addPiano(): void {
     if (skipKey == 6) skipKey = 1
   }
   addKeyListeners()
+
+
+  
 }

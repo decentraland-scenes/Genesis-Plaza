@@ -3,7 +3,7 @@ import resources from './resources'
 import { Stone, stones, seqNumbers } from './stones'
 import { getStones } from './serverHandler'
 import { sceneMessageBus } from '../modules/serverHandler'
-import { loopPlayer, loopDuration } from './musicalDrops'
+import { loopPlayer, loopDuration, drops } from './musicalDrops'
 
 export function addZenquencer(): void {
   // create trigger area object, setting size and relative position
@@ -220,6 +220,11 @@ export function addZenquencer(): void {
       { hoverText: 'Very Fast' }
     )
   )
+
+  // pick up message bus events, from you and other players
+  sceneMessageBus.on('playStone', (e) => {
+    drops[e.note].play()
+  })
 
   sceneMessageBus.on('seqOn', (e) => {
     loopPlayer.playingMode = 1

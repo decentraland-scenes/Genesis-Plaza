@@ -52,10 +52,7 @@ export class MusicalDrop extends Entity {
   }
 }
 
-// pick up message bus events, from you and other players
-sceneMessageBus.on('playStone', (e) => {
-  drops[e.note].play()
-})
+
 
 // system to play the loop continuously
 export class PlaySequence implements ISystem {

@@ -29,6 +29,7 @@ import {
 
 import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
+import { startArtichoke } from './modules/artichoke'
 
 //////// LOG PLAYER POSITION
 
@@ -141,6 +142,8 @@ export function outsideBar() {
   //   position: new Vector3(175.8, 3.5, 168),
   //   rotation: Quaternion.Euler(0, 225, 0),
   // })
+
+  startArtichoke()
 
   /// MUSEUM
 
