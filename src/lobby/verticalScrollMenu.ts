@@ -36,6 +36,17 @@ export class VerticalScroller{
             this.scrollTarget = this.base - this.currentItem * this.scrollStep            
         }
     }
+
+    reset(){
+        this.base = 0
+        this.stops = 0
+        this.currentItem = 0    
+        this.scrollTarget = 0
+        this.scrollStep = 2.2
+        this.scrollFraction =0
+        this.speed = 3
+        this.currentMenuVelocity = 0  
+    }
 }
 
 export class VerticalScrollMenu extends Entity {
@@ -140,7 +151,7 @@ export class VerticalScrollMenu extends Entity {
         },{distance:40, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
         this.instructions.setParent(this)
         
-        this.maxHeight =this.visibleItemCount * this.verticalSpacing + 1
+        this.maxHeight = this.visibleItemCount * this.verticalSpacing + 1
         this.menuFrame.getComponent(Transform).position.y = this.maxHeight/2 - this.verticalSpacing
         this.menuFrame.getComponent(Transform).scale.y = this.maxHeight
         //this.collider.addComponent()        
@@ -235,9 +246,11 @@ export class VerticalScrollMenu extends Entity {
         
         if (index > -1) {
             engine.removeEntity(this.items[index])
+            engine.removeEntity(this.itemRoots[index])
             engine.removeEntity(this.clickBoxes[index])
 
             this.items.splice(index, 1)
+            this.itemRoots.splice(index, 1)
             this.clickBoxes.splice(index, 1)
 
             this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length   
@@ -296,6 +309,23 @@ export class VerticalScrollMenu extends Entity {
             this.items[_id].getComponent(Transform).position.z  = 2
         }
         
+    }
+
+    resetScroll(){
+        this.deselectAll()
+        this.scrollerRootA.getComponent(VerticalScroller).reset()
+        //this.scrollerRootA.getComponent(VerticalScroller).base = 0
+        this.scrollerRootA.getComponent(VerticalScroller).scrollStep =  this.verticalSpacing   
+        this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length 
+
+        for (let i=0; i< this.items.length; i++){
+            if(i < this.visibleItemCount){
+                this.showItem(i)
+            }
+            else{
+                this.hideItem(i)
+            }
+        }
     }
     // showFirstXItems(_count:number){
     //     // only show the first 5 events on init

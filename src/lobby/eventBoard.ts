@@ -76,9 +76,6 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
     return
   } 
 
-  log("events list size: " + events.length ) 
-  log("current menu size: " + _menu.items.length) 
-
   for(let i=0; i < events.length; i++){
 
     if (i < _menu.items.length){
@@ -97,6 +94,8 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
   if(events.length <= _menu.items.length){
     removeLastXItems(_menu, _menu.items.length - events.length)
   }
+
+  _menu.resetScroll()
 }
 
 export async function fillEventsMenu(_menu:VerticalScrollMenu) {
@@ -206,6 +205,7 @@ export async function updateCrowdsMenu(_menu:VerticalScrollMenu){
   if(scenes.length <= _menu.items.length){
     removeLastXItems(_menu, _menu.items.length - scenes.length)
   }
+  _menu.resetScroll()
 }
 
 export function removeLastXItems(_menu:VerticalScrollMenu, x:number){
