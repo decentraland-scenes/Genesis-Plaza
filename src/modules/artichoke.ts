@@ -1,6 +1,6 @@
 import { sceneMessageBus } from './serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
-import { Radios } from './jukebox'
+import { Radios } from './bar/jukebox'
 
 
 export function startArtichoke(){

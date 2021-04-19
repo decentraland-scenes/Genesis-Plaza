@@ -1,4 +1,4 @@
-import { sceneMessageBus } from './serverHandler'
+import { sceneMessageBus } from '../serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
 
 export enum Radios {

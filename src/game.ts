@@ -17,7 +17,7 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
 import { addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
-import { placeDoors } from './modules/doors'
+import { placeDoors } from './modules/bar/doors'
 import * as utils from '@dcl/ecs-scene-utils'
 import {
   lowerVolume,
@@ -25,9 +25,9 @@ import {
   placeJukeBox,
   setBarMusicOff,
   setBarMusicOn,
-} from './modules/jukebox'
+} from './modules/bar/jukebox'
 
-import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/barNPCs'
+import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/bar/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
 

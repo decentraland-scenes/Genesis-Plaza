@@ -1,12 +1,12 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { barMusicStream, isInBar } from './jukebox'
-import { sceneMessageBus } from './serverHandler'
+import { sceneMessageBus } from '../serverHandler'
 
 let open = new AudioClip('sounds/door-open.mp3')
 let close = new AudioClip('sounds/door-close.mp3')
-open.volume = 0.7
+open.volume = 1
 open.loop = false
-close.volume = 0.7
+close.volume = 1
 close.loop = false
 
 /// Reusable class for all platforms
