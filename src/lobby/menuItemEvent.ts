@@ -467,7 +467,8 @@ export class EventMenuItem extends MenuItem {
 
             this.jumpInButton.getComponent(OnPointerDown).callback =  
                 async function () {
-                    openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
+                    rsvpToEvent(_event.id, new Date("2021-14-16T15:58:59.227Z"))
+                   // openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
                   }
             this.jumpInButton.getComponent(OnPointerDown).hoverText = "CHECK EVENT PAGE"
             this.jumpInButton.getComponent(OnPointerDown).button = ActionButton.POINTER
