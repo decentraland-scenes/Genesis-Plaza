@@ -17,7 +17,7 @@ import { addZenquencer } from './zenquencer/zenquencerBuilder'
 //import { createEventsBoard } from './modules/eventBoard'
 import { addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
-import { placeDoors } from './modules/doors'
+import { placeDoors } from './modules/bar/doors'
 import * as utils from '@dcl/ecs-scene-utils'
 import {
   lowerVolume,
@@ -25,10 +25,12 @@ import {
   placeJukeBox,
   setBarMusicOff,
   setBarMusicOn,
-} from './modules/jukebox'
+} from './modules/bar/jukebox'
 
-import { addBarNPCs, addWenMoon, areNPCsAdded } from './modules/barNPCs'
+import { addBarNPCs, addNPCsOutside, areNPCsAdded } from './modules/bar/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
+import { startArtichoke } from './modules/artichoke'
+import { addPanels } from './modules/bar/panels'
 
 //////// LOG PLAYER POSITION
 
@@ -116,13 +118,14 @@ export function insideBar() {
     addBarNPCs()
   }
 
+  addPanels()
   placeJukeBox()
   addArcades()
 }
 
 export function outsideBar() {
 
-  addWenMoon()
+  addNPCsOutside()
   /// MOVING PLATFORMS
 
   placePlatforms()
@@ -141,6 +144,8 @@ export function outsideBar() {
   //   position: new Vector3(175.8, 3.5, 168),
   //   rotation: Quaternion.Euler(0, 225, 0),
   // })
+
+  startArtichoke()
 
   /// MUSEUM
 

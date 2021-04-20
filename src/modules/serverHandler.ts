@@ -105,13 +105,7 @@ export async function updateMessageBoards() {
 
 ///// HANDLE MESSAGEBUS UPDATES
 
-sceneMessageBus.on('towerMessage', (e) => {
-  setTowerText(e.text)
-})
 
-sceneMessageBus.on('artichokeMessage', (e) => {
-  ArtichokeFloatingTextShape.value = e.text
-})
 
 ///// EVENTS BOARD
 
