@@ -49,6 +49,7 @@ export async function addBarNPCs() {
       octopus.talk(OctoHi)
     },
     {
+      portrait: `images/portraits/bartender.png`,
       dialogSound: `sounds/navigationForward.mp3`,
       idleAnim: 'Idle',
       faceUser: false,
@@ -164,6 +165,7 @@ export async function addBarNPCs() {
       }
     },
     {
+      portrait: `images/portraits/WearableConnoisseur.png`,
       faceUser: true,
       darkUI: true,
       hoverText: 'Talk',
@@ -204,6 +206,7 @@ export async function addBarNPCs() {
       })
     },
     {
+      portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
       darkUI: true,
       faceUser: false,
@@ -238,6 +241,7 @@ export async function addBarNPCs() {
       artist1.talkBubble(artist1Talk, '1st')
     },
     {
+      portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
       faceUser: false,
       darkUI: true,
@@ -313,9 +317,7 @@ export function addNPCsOutside() {
     },
     {
       portrait: {
-        path: 'images/portraits/catguy.png',
-        height: 128,
-        width: 128,
+        path: 'images/portraits/wenmoon.png',
       },
       reactDistance: 10,
       idleAnim: `Talk`,
@@ -352,8 +354,6 @@ export function addNPCsOutside() {
     {
       portrait: {
         path: 'images/portraits/catguy.png',
-        height: 128,
-        width: 128,
       },
       turningSpeed: 0.8,
       reactDistance: 4,
