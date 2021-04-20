@@ -190,8 +190,8 @@ export async function addBarNPCs() {
 
   artist1 = new NPC(
     {
-      position: new Vector3(142.7, -0.2, 165.8),
-      rotation: Quaternion.Euler(0, 180 + 70, 0),
+      position: new Vector3(142.9, -0.2, 165.7),
+      rotation: Quaternion.Euler(0, 180 +90, 0),
     },
     'models/core_building/ch2_crowd.glb',
     () => {
@@ -231,8 +231,8 @@ export async function addBarNPCs() {
 
   artist2 = new NPC(
     {
-      position: new Vector3(142.7, -0.2, 165.8),
-      rotation: Quaternion.Euler(0, 180 + 75, 0),
+      position: new Vector3(142.9, -0.2, 165.7),
+      rotation: Quaternion.Euler(0, 180 +90, 0),
     },
     'models/core_building/ch1_crowd.glb',
     () => {
@@ -396,18 +396,16 @@ export function backToIdle() {
 export let OctoHi: Dialog[] = [
   {
     text:
-      'Hey there ' +
-      userData.displayName +
-      ', how is it going? I have a long story to tell you',
+    'Welcome traveler, how can I help you!',
     skipable: true,
   },
   {
-    text: 'Dam, I forgot what it was I wanted to tell you.',
+    text: 'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
 
     skipable: true,
   },
   {
-    text: 'Want a drink?',
+    text: 'Is this your first time here? Do you want some pointers about how you can get around the place?',
     isQuestion: true,
     buttons: [
       { label: 'YES', goToDialog: 'yes', fontSize: 14 },
@@ -416,8 +414,8 @@ export let OctoHi: Dialog[] = [
   },
   {
     name: 'no',
-    text: "Okay, I'll be around if you get thirsty!",
-
+    text: "Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!",
+    skipable: true,
     triggeredByNext: () => {
       backToIdle()
     },
@@ -425,8 +423,43 @@ export let OctoHi: Dialog[] = [
   },
   {
     name: 'yes',
-    text: "I'm all out, sorry",
+    text: "Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.",
+    skipable: true,
+  },
+  {
+    text: 'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
 
+    skipable: true,
+  },
+  {
+    text: 'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
+
+    skipable: true,
+  },
+  {
+    text: 'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
+
+    skipable: true,
+  },
+  {
+    text: 'Or you can just walk out the door and keep walking, and see what you run into.',
+
+    skipable: true,
+  },
+  {
+    text: 'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
+
+    skipable: true,
+  },
+  {
+    text: 'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
+
+    skipable: true,
+  },
+  {
+    text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
+
+    skipable: true,
     triggeredByNext: () => {
       backToIdle()
     },
@@ -785,6 +818,19 @@ export let artist2Talk: Dialog[] = [
   },
 ]
 
+
+export function artistsBackToNormal(){
+
+  artist1.playAnimation('TurnOut', true, 0.57)
+  artist2.playAnimation('TurnOut', true, 0.57)
+  utils.setTimeout(570, () => {
+    artist1.playAnimation('Talk')
+    artist2.playAnimation('Talk')
+  })
+
+  artist1.talkBubble(artist1Talk, '1st')
+}
+
 export let artistHints: Dialog[] = [
   {
     text: 'Hey so you want to find out where you can find good art to admire?',
@@ -797,6 +843,9 @@ export let artistHints: Dialog[] = [
   {
     name: 'no',
     text: 'Alright, I’ll be around if you want to hear more.',
+    triggeredByNext:()=>{
+      artistsBackToNormal()
+    },
     isEndOfDialog: true,
   },
   {
@@ -814,6 +863,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('50,50')
         },
       },
@@ -830,6 +881,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('20,80')
         },
       },
@@ -846,6 +899,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('-88,-65')
         },
       },
@@ -862,6 +917,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('50,50')
         },
       },
@@ -878,6 +935,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('8,43')
         },
       },
@@ -894,6 +953,8 @@ export let artistHints: Dialog[] = [
         label: 'Visit',
         goToDialog: 'dummy',
         triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
           teleportTo('50,50')
         },
       },
@@ -909,14 +970,7 @@ export let artistHints: Dialog[] = [
     isEndOfDialog: true,
     text: 'Hope you have fun exploring!',
     triggeredByNext: () => {
-      artist1.playAnimation('TurnOut', true, 0.57)
-      artist2.playAnimation('TurnOut', true, 0.57)
-      utils.setTimeout(570, () => {
-        artist1.playAnimation('Talk')
-        artist2.playAnimation('Talk')
-      })
-
-      artist1.talkBubble(artist1Talk, '1st')
+      artistsBackToNormal()
     },
   },
 ]
