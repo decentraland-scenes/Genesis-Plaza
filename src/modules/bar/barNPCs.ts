@@ -1,4 +1,4 @@
-import { NPC, Dialog, FollowPathData } from '@dcl/npc-scene-utils'
+import { NPC, Dialog, FollowPathData, NPCTriggerComponent } from '@dcl/npc-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
@@ -44,6 +44,9 @@ export async function addBarNPCs() {
     },
     'models/core_building/BobOctorossPartA_V42.glb',
     () => {
+      if(octopus.getComponent(NPCTriggerComponent).onCameraEnter){
+        octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
+      }
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
       octopus.talk(OctoHi)
@@ -59,6 +62,18 @@ export async function addBarNPCs() {
       },
     }
   )
+
+  // octopus.addComponentOrReplace(new OnPointerDown(
+  //   ()=>{
+  //     if(octopus.inCooldown)return
+  //     octopus.changeIdleAnim('TalkLoop')
+  //     octopus.playAnimation('TalkIntro', true, 0.63)
+  //     octopus.talk(OctoHi)
+  //   }, {
+  //     hoverText: 'Talk'
+  //   , button: ActionButton.PRIMARY
+  //   }
+  // ))
 
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
@@ -236,7 +251,6 @@ export async function addBarNPCs() {
     () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
       //   wearablesC.changeIdleAnim('Talk')
-      log('ARTIST 2 TRIGGGERERD')
       artist2.endInteraction()
       artist1.talkBubble(artist1Talk, '1st')
     },
@@ -265,6 +279,7 @@ export async function addBarNPCs() {
   artist2.addComponentOrReplace(
     new OnPointerDown(
       () => {
+        if(artist1.inCooldown || artist1.dialog.isDialogOpen)return
         artist1.activate()
       },
       { hoverText: 'Art Recommendations', button: ActionButton.PRIMARY }
@@ -404,7 +419,6 @@ export let OctoHi: Dialog[] = [
     name: 'no',
     text:
       'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
-    skipable: true,
     triggeredByNext: () => {
       backToIdle()
     },
