@@ -42,7 +42,7 @@ export async function addBarNPCs() {
       position: new Vector3(160, 0.25, 141.4),
       //scale: new Vector3(1.2, 1.2, 1.2),
     },
-    'models/core_building/BobOctorossPartA_V43.glb',
+    'models/core_building/BobOctorossPartA_V42.glb',
     () => {
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
@@ -62,7 +62,7 @@ export async function addBarNPCs() {
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
   octopusObjects.addComponent(
-    new GLTFShape('models/core_building/BobOctorossV43.glb')
+    new GLTFShape('models/core_building/BobOctorossPartB_V02.glb')
   )
   engine.addEntity(octopusObjects)
   octopusObjects.setParent(octopus)
@@ -78,18 +78,15 @@ export async function addBarNPCs() {
       new Vector3(153.7, 0.24, 156.2),
       new Vector3(148.1, 0.24, 156.8),
 
-
       new Vector3(146.4, 0.24, 156),
 
       new Vector3(143.1, 0.24, 153.1),
       new Vector3(143, 0.24, 152.8),
 
       new Vector3(143.2, 0.24, 150.7),
-    
 
       new Vector3(143.26, 0.24, 147.5),
       new Vector3(148.1, 0.24, 142.3),
-
 
       new Vector3(151.9, 0.24, 142.3),
       new Vector3(153.8, 0.24, 144.9),
@@ -109,7 +106,6 @@ export async function addBarNPCs() {
     ],
     loop: true,
   }
-
 
   doge = new NPC(
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
@@ -138,7 +134,6 @@ export async function addBarNPCs() {
     }
   )
   doge.followPath(dogePath)
-
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },
@@ -191,7 +186,7 @@ export async function addBarNPCs() {
   artist1 = new NPC(
     {
       position: new Vector3(142.9, -0.2, 165.7),
-      rotation: Quaternion.Euler(0, 180 +90, 0),
+      rotation: Quaternion.Euler(0, 180 + 90, 0),
     },
     'models/core_building/ch2_crowd.glb',
     () => {
@@ -232,7 +227,7 @@ export async function addBarNPCs() {
   artist2 = new NPC(
     {
       position: new Vector3(142.9, -0.2, 165.7),
-      rotation: Quaternion.Euler(0, 180 +90, 0),
+      rotation: Quaternion.Euler(0, 180 + 90, 0),
     },
     'models/core_building/ch1_crowd.glb',
     () => {
@@ -263,11 +258,14 @@ export async function addBarNPCs() {
     }
   )
 
-  artist2.addComponentOrReplace(new OnPointerDown(
-    ()=>{
-      artist1.activate()
-    },{hoverText:'Art Recommendations' ,  button: ActionButton.PRIMARY  }
-  ))
+  artist2.addComponentOrReplace(
+    new OnPointerDown(
+      () => {
+        artist1.activate()
+      },
+      { hoverText: 'Art Recommendations', button: ActionButton.PRIMARY }
+    )
+  )
 
   artist2.bubble.rootEntity.getComponent(Transform).position = new Vector3(
     -0.1,
@@ -301,7 +299,6 @@ export function addNPCsOutside() {
       new Vector3(139.1, 0, 70),
       new Vector3(116.3, 0, 84.9),
       new Vector3(91, 0, 110),
-
     ],
     loop: true,
   }
@@ -340,18 +337,15 @@ export function addNPCsOutside() {
   )
   wenMoon.followPath(wenPath)
 
-
-
-
-
   // Cat guy
   catGuy = new NPC(
-    { position: new Vector3(191.8, 0.225, 68.2), 
-      rotation: Quaternion.Euler(0,290,0) },
-  
+    {
+      position: new Vector3(191.8, 0.225, 68.2),
+      rotation: Quaternion.Euler(0, 290, 0),
+    },
+
     'models/core_building/CatGuy.glb',
     () => {
-
       catGuy.talk(ILoveCats, 0)
       catGuy.playAnimation(`talk`)
     },
@@ -368,18 +362,12 @@ export function addNPCsOutside() {
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: false,
       darkUI: true,
-      onWalkAway:()=>{
+      onWalkAway: () => {
         catGuy.playAnimation(`idle`)
-      }
-   
+      },
     }
   )
- 
 }
-
-
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -392,20 +380,20 @@ export function backToIdle() {
   octopus.playAnimation('TalkOutro', true, 0.63)
 }
 
-
 export let OctoHi: Dialog[] = [
   {
-    text:
-    'Welcome traveler, how can I help you!',
+    text: 'Welcome traveler, how can I help you!',
     skipable: true,
   },
   {
-    text: 'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
+    text:
+      'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
 
     skipable: true,
   },
   {
-    text: 'Is this your first time here? Do you want some pointers about how you can get around the place?',
+    text:
+      'Is this your first time here? Do you want some pointers about how you can get around the place?',
     isQuestion: true,
     buttons: [
       { label: 'YES', goToDialog: 'yes', fontSize: 14 },
@@ -414,7 +402,8 @@ export let OctoHi: Dialog[] = [
   },
   {
     name: 'no',
-    text: "Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!",
+    text:
+      'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
     skipable: true,
     triggeredByNext: () => {
       backToIdle()
@@ -423,41 +412,49 @@ export let OctoHi: Dialog[] = [
   },
   {
     name: 'yes',
-    text: "Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.",
+    text:
+      'Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.',
     skipable: true,
   },
   {
-    text: 'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
+    text:
+      'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
 
     skipable: true,
   },
   {
-    text: 'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
+    text:
+      'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
 
     skipable: true,
   },
   {
-    text: 'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
+    text:
+      'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
 
     skipable: true,
   },
   {
-    text: 'Or you can just walk out the door and keep walking, and see what you run into.',
+    text:
+      'Or you can just walk out the door and keep walking, and see what you run into.',
 
     skipable: true,
   },
   {
-    text: 'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
+    text:
+      'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
 
     skipable: true,
   },
   {
-    text: 'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
+    text:
+      'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
 
     skipable: true,
   },
   {
-    text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
+    text:
+      'Well that´s it from me. So what are you waiting for? Go and explore the world!',
 
     skipable: true,
     triggeredByNext: () => {
@@ -466,7 +463,6 @@ export let OctoHi: Dialog[] = [
     isEndOfDialog: true,
   },
 ]
-
 
 export let DogeTalk: Dialog[] = [
   {
@@ -589,7 +585,8 @@ export let ILoveCats: Dialog[] = [
 export let wearabesCTalk: Dialog[] = [
   {
     name: 'none',
-    text: 'Why? … Umm, what would someone <i>dressed like you</i> have to say to me?',
+    text:
+      'Why? … Umm, what would someone <i>dressed like you</i> have to say to me?',
     skipable: true,
   },
   {
@@ -818,9 +815,7 @@ export let artist2Talk: Dialog[] = [
   },
 ]
 
-
-export function artistsBackToNormal(){
-
+export function artistsBackToNormal() {
   artist1.playAnimation('TurnOut', true, 0.57)
   artist2.playAnimation('TurnOut', true, 0.57)
   utils.setTimeout(570, () => {
@@ -843,7 +838,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'no',
     text: 'Alright, I’ll be around if you want to hear more.',
-    triggeredByNext:()=>{
+    triggeredByNext: () => {
       artistsBackToNormal()
     },
     isEndOfDialog: true,
@@ -982,7 +977,8 @@ export let wenMoonTalk: Dialog[] = [
     skipable: true,
   },
   {
-    text: 'I’m  <color="red">Wen Moon </color>, a future millionaire, you’ll see. Any minute now!',
+    text:
+      'I’m  <color="red">Wen Moon </color>, a future millionaire, you’ll see. Any minute now!',
     skipable: true,
   },
   {
