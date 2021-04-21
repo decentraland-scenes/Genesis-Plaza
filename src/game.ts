@@ -27,7 +27,12 @@ import {
   setBarMusicOn,
 } from './modules/bar/jukebox'
 
-import { addBarNPCs, addNPCsOutside, areNPCsAdded } from './modules/bar/barNPCs'
+import {
+  addBarNPCs,
+  addNPCsOutside,
+  areNPCsAdded,
+  endArtistTalk,
+} from './modules/bar/barNPCs'
 import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
 import { addPanels } from './modules/bar/panels'
@@ -91,8 +96,10 @@ addRepeatTrigger(
   false,
   () => {
     outOfBar()
+    endArtistTalk()
     lowerVolume()
     log('mid distance')
+
     //setBarMusicOff()
   }
 )
@@ -124,7 +131,6 @@ export function insideBar() {
 }
 
 export function outsideBar() {
-
   addNPCsOutside()
   /// MOVING PLATFORMS
 

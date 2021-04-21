@@ -1,4 +1,9 @@
-import { NPC, Dialog, FollowPathData, NPCTriggerComponent } from '@dcl/npc-scene-utils'
+import {
+  NPC,
+  Dialog,
+  FollowPathData,
+  NPCTriggerComponent,
+} from '@dcl/npc-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
@@ -42,9 +47,9 @@ export async function addBarNPCs() {
       position: new Vector3(160, 0.25, 141.4),
       //scale: new Vector3(1.2, 1.2, 1.2),
     },
-    'models/core_building/BobOctorossPartA_V42.glb',
+    'models/core_building/BobOctorossV43.glb',
     () => {
-      if(octopus.getComponent(NPCTriggerComponent).onCameraEnter){
+      if (octopus.getComponent(NPCTriggerComponent).onCameraEnter) {
         octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
       }
       octopus.changeIdleAnim('TalkLoop')
@@ -121,6 +126,7 @@ export async function addBarNPCs() {
       new Vector3(171.3, 0.24, 163.22),
     ],
     loop: true,
+    curve: true,
   }
 
   doge = new NPC(
@@ -279,7 +285,7 @@ export async function addBarNPCs() {
   artist2.addComponentOrReplace(
     new OnPointerDown(
       () => {
-        if(artist1.inCooldown || artist1.dialog.isDialogOpen)return
+        if (artist1.inCooldown || artist1.dialog.isDialogOpen) return
         artist1.activate()
       },
       { hoverText: 'Art Recommendations', button: ActionButton.PRIMARY }
@@ -331,9 +337,7 @@ export function addNPCsOutside() {
       wenMoon.playAnimation(`TurnIn`, true, 5.77)
     },
     {
-      portrait: {
-        path: 'images/portraits/wenmoon.png',
-      },
+      portrait: 'images/portraits/wenmoon.png',
       reactDistance: 10,
       idleAnim: `Talk`,
       walkingAnim: 'Walk',
@@ -367,9 +371,7 @@ export function addNPCsOutside() {
       catGuy.playAnimation(`talk`)
     },
     {
-      portrait: {
-        path: 'images/portraits/catguy.png',
-      },
+      portrait: 'images/portraits/catguy.png',
       turningSpeed: 0.8,
       reactDistance: 4,
       idleAnim: `idle`,
@@ -403,7 +405,6 @@ export let OctoHi: Dialog[] = [
   {
     text:
       'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
-
     skipable: true,
   },
   {
@@ -412,11 +413,11 @@ export let OctoHi: Dialog[] = [
     isQuestion: true,
     buttons: [
       { label: 'YES', goToDialog: 'yes', fontSize: 14 },
-      { label: 'NO', goToDialog: 'no', fontSize: 14 },
+      { label: 'NO', goToDialog: 'nope', fontSize: 14 },
     ],
   },
   {
-    name: 'no',
+    name: 'nope',
     text:
       'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
     triggeredByNext: () => {
@@ -1039,3 +1040,8 @@ export let wenMoonTalk: Dialog[] = [
     },
   },
 ]
+
+export function endArtistTalk() {
+  artist1.endInteraction()
+  artist2.endInteraction()
+}
