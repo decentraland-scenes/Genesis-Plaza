@@ -213,8 +213,9 @@ export async function addBarNPCs() {
     },
     'models/core_building/ch2_crowd.glb',
     () => {
-      artist1.endInteraction()
-      artist2.endInteraction()
+      artist1.bubble.closeDialogEndAll()
+      artist2.bubble.closeDialogEndAll()
+
       artist1.talk(artistHints)
 
       artist1.playAnimation('TurnIn', true, 0.57)
@@ -270,8 +271,8 @@ export async function addBarNPCs() {
       textBubble: true,
 
       onWalkAway: () => {
-        artist1.endInteraction()
-        artist2.endInteraction()
+        artist1.bubble.closeDialogEndAll()
+        artist2.bubble.closeDialogEndAll()
         if (!artist1.getComponent(Animator).getClip('Talk').playing) {
           artist1.playAnimation('Talk')
         }
@@ -1042,6 +1043,6 @@ export let wenMoonTalk: Dialog[] = [
 ]
 
 export function endArtistTalk() {
-  artist1.endInteraction()
-  artist2.endInteraction()
+  artist1.bubble.closeDialogEndAll()
+  artist2.bubble.closeDialogEndAll()
 }
