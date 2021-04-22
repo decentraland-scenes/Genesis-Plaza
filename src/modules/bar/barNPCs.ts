@@ -44,10 +44,10 @@ export async function addBarNPCs() {
 
   octopus = new NPC(
     {
-      position: new Vector3(160, 0.25, 141.4),
+      position: new Vector3(160, 0.2, 141.4),
       //scale: new Vector3(1.2, 1.2, 1.2),
     },
-    'models/core_building/BobOctorossV43.glb',
+    'models/core_building/BobOctorossV44.glb',
     () => {
       if (octopus.getComponent(NPCTriggerComponent).onCameraEnter) {
         octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
@@ -159,7 +159,7 @@ export async function addBarNPCs() {
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },
-    'models/core_building/WearableConnoisseur.glb',
+    'models/core_building/WearableConnoisseurRotatedV08.glb',
     async () => {
       // wearablesC.playAnimation('TurnIn', true, 3.13)
       //   wearablesC.changeIdleAnim('Talk')
@@ -211,7 +211,7 @@ export async function addBarNPCs() {
       position: new Vector3(142.9, -0.2, 165.7),
       rotation: Quaternion.Euler(0, 180 + 90, 0),
     },
-    'models/core_building/ch2_crowd.glb',
+    'models/core_building/ch2_crowdV5.glb',
     () => {
       artist1.bubble.closeDialogEndAll()
       artist2.bubble.closeDialogEndAll()
@@ -254,10 +254,8 @@ export async function addBarNPCs() {
       position: new Vector3(142.9, -0.2, 165.7),
       rotation: Quaternion.Euler(0, 180 + 90, 0),
     },
-    'models/core_building/ch1_crowd.glb',
+    'models/core_building/ch1_crowdV5.glb',
     () => {
-      // wearablesC.playAnimation('TurnIn', true, 3.13)
-      //   wearablesC.changeIdleAnim('Talk')
       artist2.endInteraction()
       artist1.talkBubble(artist1Talk, '1st')
     },
@@ -331,7 +329,7 @@ export function addNPCsOutside() {
 
   wenMoon = new NPC(
     { position: wenPath.path[0] },
-    'models/core_building/wenMoonV11.glb',
+    'models/core_building/wenMoonV12.glb',
     () => {
       wenMoon.stopWalking()
       wenMoon.talk(wenMoonTalk, 0)
@@ -366,7 +364,7 @@ export function addNPCsOutside() {
       rotation: Quaternion.Euler(0, 290, 0),
     },
 
-    'models/core_building/CatGuy.glb',
+    'models/core_building/cat_guySittedV10.glb',
     () => {
       catGuy.talk(ILoveCats, 0)
       catGuy.playAnimation(`talk`)
