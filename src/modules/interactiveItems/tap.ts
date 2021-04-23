@@ -5,7 +5,7 @@ import { sceneMessageBus } from "../interactiveItems"
 
 // Dispenser
 export const beerDispenser = new Entity()
-beerDispenser.addComponent(new GLTFShape("models/core_building/interactiveItems/dispenser/beerDispenser.glb"))
+beerDispenser.addComponent(new GLTFShape("models/core_building/interactiveItems/beerDispenser.glb"))
 beerDispenser.addComponent(new Transform({ position: new Vector3(164.275, 1.28, 137.82) }))
 beerDispenser.getComponent(Transform).rotate(Vector3.Up(), -90)
 engine.addEntity(beerDispenser)
@@ -72,13 +72,13 @@ sceneMessageBus.on("TapPourAnim", (tapID: TapID) => {
 })
 
 // Taps
-const redTap = new Tap(0, new GLTFShape("models/core_building/interactiveItems/dispenser/redTap.gltf"), beerGlasses, BeerBaseState.RED_BEER)
+const redTap = new Tap(0, new GLTFShape("models/core_building/interactiveItems/redTap.glb"), beerGlasses, BeerBaseState.RED_BEER)
 redTap.setParent(beerDispenser)
 
-const yellowTap = new Tap(1, new GLTFShape("models/core_building/interactiveItems/dispenser/yellowTap.gltf"), beerGlasses, BeerBaseState.YELLOW_BEER)
+const yellowTap = new Tap(1, new GLTFShape("models/core_building/interactiveItems/yellowTap.glb"), beerGlasses, BeerBaseState.YELLOW_BEER)
 yellowTap.setParent(beerDispenser)
 
-const greenTap = new Tap(2, new GLTFShape("models/core_building/interactiveItems/dispenser/greenTap.gltf"), beerGlasses, BeerBaseState.GREEN_BEER)
+const greenTap = new Tap(2, new GLTFShape("models/core_building/interactiveItems/greenTap.glb"), beerGlasses, BeerBaseState.GREEN_BEER)
 greenTap.setParent(beerDispenser)
 
 const taps: Tap[] = [redTap, yellowTap, greenTap]

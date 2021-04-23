@@ -140,7 +140,7 @@ sceneMessageBus.on("BeerGlassPourAnim", (beerGlassState: BeerGlassState) => {
 })
 
 // Beer glasses
-const beerGlassShape = new GLTFShape("models/core_building/interactiveItems/dispenser/beerGlass.gltf")
+const beerGlassShape = new GLTFShape("models/core_building/interactiveItems/beerGlass.glb")
 
 const beerGlass1 = new BeerGlass(0, beerGlassShape, new Vector3(163.77, 1.28, 139.87), new Vector3(0, -0.4, 0.5), -10)
 const beerGlass2 = new BeerGlass(1, beerGlassShape, new Vector3(156.32, 1.28, 140.20), new Vector3(0, -0.4, 0.5), -10)
