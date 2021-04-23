@@ -9,6 +9,9 @@ export enum Radios {
   JAZZ = 'https://live.vegascity.fm/radio/8010/the_flamingos.mp3',
 }
 
+let FullVolume = 0.3
+let DistantVolume = 0.1
+
 export let isInBar: boolean = false
 let barCurrentRadio: Radios | null = Radios.RAVE
 let barCurrentRadioIndex: number = 0
@@ -32,7 +35,7 @@ let baseJukeBoxLights2 = new Entity()
 
 export function placeJukeBox() {
   barMusicStream = new AudioStream(barCurrentRadio)
-  barMusicStream.volume = 0.4
+  barMusicStream.volume = FullVolume
   barMusicStream.playing = false
 
   baseJukeBox.addComponent(
@@ -231,7 +234,7 @@ function barRadioOn(station?) {
     barMusicStreamEnt.addComponent(
       new utils.Delay(100, () => {
         barMusicStream = new AudioStream(station ? station : barCurrentRadio)
-        barMusicStream.volume = 0.4
+        barMusicStream.volume = FullVolume
         barMusicStreamEnt.addComponentOrReplace(barMusicStream)
         baseJukeBoxLights1.getComponent(GLTFShape).visible = true
         baseJukeBoxLights2.getComponent(GLTFShape).visible = true
@@ -260,7 +263,7 @@ export function setBarMusicOn() {
   })
   isInBar = true
   if (barMusicStream) {
-    barMusicStream.volume = 0.4
+    barMusicStream.volume = FullVolume
   }
 
   if (radioIsOn && barCurrentRadio) {
@@ -290,7 +293,7 @@ export function lowerVolume() {
     barMusicStream.playing = true
   }
   if (barMusicStream) {
-    barMusicStream.volume = 0.1
+    barMusicStream.volume = DistantVolume
   }
 
   return
@@ -301,7 +304,7 @@ export function raiseVolume() {
   if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
   }
-  barMusicStream.volume = 0.4
+  barMusicStream.volume = FullVolume
 }
 
 function getRadioName(radio: number) {
