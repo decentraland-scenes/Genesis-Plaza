@@ -17,6 +17,8 @@
     "@dcl/ecs-scene-utils": "^1.6.2-20210408012032.commit-5921be1",
     "@dcl/npc-scene-utils": "^1.3.5-20210421205225.commit-80ef838",
     "@dcl/ui-scene-utils": "^1.7.2-20210421205046.commit-966f879",
+    "@types/cannon": "^0.1.5",
+    "cannon": "github:schteppe/cannon.js",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   },
