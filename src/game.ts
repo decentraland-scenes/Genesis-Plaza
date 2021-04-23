@@ -128,6 +128,7 @@ export function insideBar() {
   addPanels()
   placeJukeBox()
   addArcades()
+  // addBeers()
 }
 
 export function outsideBar() {
