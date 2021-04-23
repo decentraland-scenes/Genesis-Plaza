@@ -17,7 +17,7 @@ const errorSound = new Sound(new AudioClip("sounds/interactiveItems/error.mp3"))
 const input = Input.instance
 
 input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, true, (event) => {
-  log("Hit Point: ", event.hit.hitPoint)
+  // log("Hit Point: ", event.hit.hitPoint)
   if (Player.holdingItem && event.hit) {
     if (event.hit.normal.y > 0.99) {
       for (let i = 0; i < beerGlasses.length; i++) {
@@ -26,15 +26,15 @@ input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, true, (event) => {
           let beerPosition: Vector3
           switch (event.hit.meshName) {
             case "redBase_collider":
-              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(0.368, -0.02, 0.31))
+              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(0.31, -0.02, -0.368))
               beerGlasses[i].putDown(i, beerPosition, (beerGlasses[i].beerBaseState = BeerBaseState.RED_BEER))
               break
             case "yellowBase_collider":
-              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(0, -0.02, 0.31))
+              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(0.31, -0.02, 0))
               beerGlasses[i].putDown(i, beerPosition, (beerGlasses[i].beerBaseState = BeerBaseState.YELLOW_BEER))
               break
             case "greenBase_collider":
-              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(-0.368, -0.02, 0.31))
+              beerPosition = beerDispenser.getComponent(Transform).position.clone().subtract(new Vector3(0.31, -0.02, 0.368))
               beerGlasses[i].putDown(i, beerPosition, (beerGlasses[i].beerBaseState = BeerBaseState.GREEN_BEER))
               break
             default:
