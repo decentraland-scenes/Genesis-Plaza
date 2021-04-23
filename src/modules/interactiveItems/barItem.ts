@@ -3,8 +3,8 @@ import { Player } from "./player"
 import * as utils from "@dcl/ecs-scene-utils"
 import { sceneMessageBus } from "../interactiveItems"
 
-const pickUpSound = new Sound(new AudioClip("sounds/interactiveItems/pickUp.mp3"))
-const putDownSound = new Sound(new AudioClip("sounds/interactiveItems/putDown.mp3"))
+export const pickUpSound = new Sound(new AudioClip("sounds/interactiveItems/pickUp.mp3"))
+export const putDownSound = new Sound(new AudioClip("sounds/interactiveItems/putDown.mp3"))
 
 type ItemPosition = {
   id: number,

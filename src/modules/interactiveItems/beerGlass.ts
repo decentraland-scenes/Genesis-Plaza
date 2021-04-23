@@ -2,6 +2,7 @@ import * as utils from "@dcl/ecs-scene-utils"
 import { Sound } from "./sound"
 import { Player } from "./player"
 import { sceneMessageBus } from "../interactiveItems"
+import { pickUpSound, putDownSound } from "./barItem"
 
 // Track player's state
 export enum BeerBaseState {
@@ -19,8 +20,6 @@ type BeerGlassState = {
 }
 
 // Sound
-const pickUpSound = new Sound(new AudioClip("sounds/interactiveItems/pickUp.mp3"))
-const putDownSound = new Sound(new AudioClip("sounds/interactiveItems/putDown.mp3"))
 const swallowSound = new Sound(new AudioClip("sounds/interactiveItems/swallow.mp3"))
 
 export class BeerGlass extends Entity {
