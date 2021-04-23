@@ -1,6 +1,7 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { addArcades } from './arcades/arcades'
 import { sceneMessageBus } from './serverHandler'
+import { addPunchBag } from "./interactiveItems"
 
 /// Reusable class for all platforms
 export class Platform extends Entity {
@@ -248,4 +249,5 @@ export function upstairsBar(){
   upstairsLoaded = true
 
   addArcades()
+  addPunchBag()
 }
