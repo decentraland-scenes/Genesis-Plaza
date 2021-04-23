@@ -19,9 +19,9 @@ type BeerGlassState = {
 }
 
 // Sound
-const pickUpSound = new Sound(new AudioClip("sounds/pickUp.mp3"))
-const putDownSound = new Sound(new AudioClip("sounds/putDown.mp3"))
-const swallowSound = new Sound(new AudioClip("sounds/swallow.mp3"))
+const pickUpSound = new Sound(new AudioClip("sounds/interactiveItems/pickUp.mp3"))
+const putDownSound = new Sound(new AudioClip("sounds/interactiveItems/putDown.mp3"))
+const swallowSound = new Sound(new AudioClip("sounds/interactiveItems/swallow.mp3"))
 
 export class BeerGlass extends Entity {
   public isFull: boolean = false
@@ -114,7 +114,6 @@ sceneMessageBus.on("BeerGlassPickedUp", (beerGlassState: BeerGlassState) => {
   log(beerGlassState.id)
   beerGlasses[beerGlassState.id].getComponent(Transform).position.set(beerGlassState.position.x, beerGlassState.position.y, beerGlassState.position.z)
   beerGlasses[beerGlassState.id].beerBaseState = BeerBaseState.NONE
-  log("Beer Glass Picked Up!")
 })
 
 sceneMessageBus.on("BeerGlassPutDown", (beerGlassState: BeerGlassState) => {
@@ -122,7 +121,6 @@ sceneMessageBus.on("BeerGlassPutDown", (beerGlassState: BeerGlassState) => {
   beerGlasses[beerGlassState.id].beerBaseState = beerGlassState.beerState
   beerGlasses[beerGlassState.id].getComponent(Transform).rotation.set(0, 0, 0, 1)
   beerGlasses[beerGlassState.id].getComponent(Transform).position.set(beerGlassState.position.x, beerGlassState.position.y, beerGlassState.position.z)
-  log("Beer Glass Put Down!")
 })
 
 sceneMessageBus.on("BeerGlassDrink", (beerGlassState: BeerGlassState) => {
@@ -130,7 +128,6 @@ sceneMessageBus.on("BeerGlassDrink", (beerGlassState: BeerGlassState) => {
   beerGlasses[beerGlassState.id].isFull = false
   beerGlasses[beerGlassState.id].stopAnimations()
   beerGlasses[beerGlassState.id].getComponent(Animator).getClip("Blank").play()
-  log("Beer Glass Drank!")
 })
 
 sceneMessageBus.on("BeerGlassPourAnim", (beerGlassState: BeerGlassState) => {
@@ -147,17 +144,24 @@ sceneMessageBus.on("BeerGlassPourAnim", (beerGlassState: BeerGlassState) => {
 })
 
 // Beer glasses
-const beerGlassShape = new GLTFShape("models/dispenser/beerGlass.gltf")
+const beerGlassShape = new GLTFShape("models/core_building/interactiveItems/dispenser/beerGlass.gltf")
 
-const beerGlass1 = new BeerGlass(0, beerGlassShape, new Vector3(8.3, 1.25, 8), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass2 = new BeerGlass(1, beerGlassShape, new Vector3(7.8, 1.25, 8.3), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass3 = new BeerGlass(2, beerGlassShape, new Vector3(1.86, 0.8, 13.4), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass4 = new BeerGlass(3, beerGlassShape, new Vector3(2.3, 0.8, 14), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass5 = new BeerGlass(4, beerGlassShape, new Vector3(13.7, 0.8, 13.8), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass6 = new BeerGlass(5, beerGlassShape, new Vector3(13.9, 0.8, 14.3), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass7 = new BeerGlass(6, beerGlassShape, new Vector3(14.5, 0.8, 2.5), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass8 = new BeerGlass(7, beerGlassShape, new Vector3(13.7, 0.8, 1.9), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass9 = new BeerGlass(8, beerGlassShape, new Vector3(2.4, 0.8, 1.5), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass10 = new BeerGlass(9, beerGlassShape, new Vector3(1.8, 0.8, 2.3), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass1 = new BeerGlass(0, beerGlassShape, new Vector3(163.77, 1.28, 139.87), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass2 = new BeerGlass(1, beerGlassShape, new Vector3(156.32, 1.28, 140.20), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass3 = new BeerGlass(2, beerGlassShape, new Vector3(149.28, 1.33, 145.76), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass4 = new BeerGlass(3, beerGlassShape, new Vector3(151.10, 1.33, 145.61), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass5 = new BeerGlass(4, beerGlassShape, new Vector3(151.77, 1.33, 160.54), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass6 = new BeerGlass(5, beerGlassShape, new Vector3(153.07, 1.33, 159.20), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass7 = new BeerGlass(6, beerGlassShape, new Vector3(169.91, 1.33, 145.48), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass8 = new BeerGlass(7, beerGlassShape, new Vector3(168.15, 1.33, 145.75), new Vector3(0, -0.4, 0.5), -10)
 
-export const beerGlasses: BeerGlass[] = [beerGlass1, beerGlass2, beerGlass3, beerGlass4, beerGlass5, beerGlass6, beerGlass7, beerGlass8, beerGlass9, beerGlass10]
+export const beerGlasses: BeerGlass[] = [
+  beerGlass1, 
+  beerGlass2, 
+  beerGlass3, 
+  beerGlass4, 
+  beerGlass5, 
+  beerGlass6, 
+  beerGlass7, 
+  beerGlass8, 
+]

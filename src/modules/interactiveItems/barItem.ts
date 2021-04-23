@@ -56,16 +56,12 @@ export class BarItem extends Entity {
 }
 
 sceneMessageBus.on("itemPickedUp", (itemPosition: ItemPosition) => {
-  log(itemPosition.id)
   barItems[itemPosition.id].getComponent(Transform).position.set(itemPosition.position.x, itemPosition.position.y, itemPosition.position.z)
-  log("Item Picked Up!")
 })
 
 sceneMessageBus.on("itemPutDown", (itemPosition: ItemPosition) => {
-  log(itemPosition.id)
   barItems[itemPosition.id].getComponent(Transform).rotation.set(0, 0, 0, 1)
   barItems[itemPosition.id].getComponent(Transform).position.set(itemPosition.position.x, itemPosition.position.y, itemPosition.position.z)
-  log("Item Put Down!")
 })
 
 // Bar items
