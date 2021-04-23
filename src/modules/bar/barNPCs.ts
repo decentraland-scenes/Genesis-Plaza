@@ -126,7 +126,7 @@ export async function addBarNPCs() {
       new Vector3(171.3, 0.24, 163.22),
     ],
     loop: true,
-    curve: true,
+    // curve: true,
   }
 
   doge = new NPC(
