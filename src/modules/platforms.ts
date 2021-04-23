@@ -1,4 +1,5 @@
 import * as utils from '@dcl/ecs-scene-utils'
+import { addArcades } from './arcades/arcades'
 import { sceneMessageBus } from './serverHandler'
 
 /// Reusable class for all platforms
@@ -12,7 +13,8 @@ export class Platform extends Entity {
     triggerPos: TranformConstructorArgs,
     triggerScale: Vector3,
     animation: string,
-    messageBusHandle: string
+    messageBusHandle: string,
+    extraAction?: ()=>void
   ) {
     super()
     engine.addEntity(this)
@@ -35,8 +37,11 @@ export class Platform extends Entity {
         triggerBox, //shape
         {
           onCameraEnter: () => {
-            log('triggered platform')
+            //log('triggered platform')
             sceneMessageBus.emit(messageBusHandle, {})
+            if(extraAction){
+              extraAction()
+            }
           },
         }
       )
@@ -200,6 +205,9 @@ export function placePlatforms() {
   })
 }
 
+
+export let upstairsLoaded:boolean = false
+
 export function barPlatforms() {
   //ARTICHOKE ELEVATOR
 
@@ -209,7 +217,8 @@ export function barPlatforms() {
     { position: new Vector3(146, 2.5, 151) },
     new Vector3(4, 4, 4),
     'Elevator_Left_Up',
-    'elevatorLeft'
+    'elevatorLeft',
+    ()=>{upstairsBar()}
   )
 
   let barElevatorRight = new Platform(
@@ -218,7 +227,8 @@ export function barPlatforms() {
     { position: new Vector3(173, 2.5, 151) },
     new Vector3(4, 4, 4),
     'Elevator_Right_Up',
-    'elevatorRight'
+    'elevatorRight',
+    ()=>{upstairsBar()}
   )
 
   sceneMessageBus.on('elevatorLeft', (e) => {
@@ -228,4 +238,14 @@ export function barPlatforms() {
   sceneMessageBus.on('elevatorRight', (e) => {
     barElevatorRight.activate()
   })
+}
+
+
+export function upstairsBar(){
+
+  if(upstairsLoaded) return
+
+  upstairsLoaded = true
+
+  addArcades()
 }

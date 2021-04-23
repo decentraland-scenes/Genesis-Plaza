@@ -1,4 +1,4 @@
-import { barPlatforms, placePlatforms } from './modules/platforms'
+import { barPlatforms, placePlatforms, upstairsLoaded } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
   placeMuseumPieces,
@@ -33,7 +33,6 @@ import {
   areNPCsAdded,
   endArtistTalk,
 } from './modules/bar/barNPCs'
-import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
 import { addPanels } from './modules/bar/panels'
 
@@ -127,8 +126,10 @@ export function insideBar() {
 
   addPanels()
   placeJukeBox()
-  addArcades()
+
 }
+
+
 
 export function outsideBar() {
   addNPCsOutside()
