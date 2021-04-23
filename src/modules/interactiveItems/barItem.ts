@@ -44,22 +44,22 @@ export class BarItem extends Entity {
         Player.holdingItem = true
       })
     )
-    sceneMessageBus.emit("itemPickedUp", { id: id, position: this.holdPosition })
+    sceneMessageBus.emit("ItemPickedUp", { id: id, position: this.holdPosition })
   }
 
   putDown(id: number, placePosition: Vector3): void {
     this.setParent(null)
     putDownSound.getComponent(AudioSource).playOnce()
     Player.holdingItem = false
-    sceneMessageBus.emit("itemPutDown", { id: id, position: placePosition })
+    sceneMessageBus.emit("ItemPutDown", { id: id, position: placePosition })
   }
 }
 
-sceneMessageBus.on("itemPickedUp", (itemPosition: ItemPosition) => {
+sceneMessageBus.on("ItemPickedUp", (itemPosition: ItemPosition) => {
   barItems[itemPosition.id].getComponent(Transform).position.set(itemPosition.position.x, itemPosition.position.y, itemPosition.position.z)
 })
 
-sceneMessageBus.on("itemPutDown", (itemPosition: ItemPosition) => {
+sceneMessageBus.on("ItemPutDown", (itemPosition: ItemPosition) => {
   barItems[itemPosition.id].getComponent(Transform).rotation.set(0, 0, 0, 1)
   barItems[itemPosition.id].getComponent(Transform).position.set(itemPosition.position.x, itemPosition.position.y, itemPosition.position.z)
 })

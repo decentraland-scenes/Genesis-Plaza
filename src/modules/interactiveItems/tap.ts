@@ -63,14 +63,12 @@ export class Tap extends Entity {
 }
 
 sceneMessageBus.on("TapPourAnim", (tapID: TapID) => {
-  log("Tap ID: ", tapID.id)
   taps[tapID.id].stopAnimations()
   taps[tapID.id].getComponent(Animator).getClip("Pour").play()
   taps[tapID.id].removeComponent(OnPointerDown)
   taps[tapID.id].addComponent(new utils.Delay(2500, () => {
     taps[tapID.id].addPointerDown()
   }))
-  log("Pouring beer!")
 })
 
 // Taps

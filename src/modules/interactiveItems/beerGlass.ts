@@ -111,27 +111,23 @@ export class BeerGlass extends Entity {
 }
 
 sceneMessageBus.on("BeerGlassPickedUp", (beerGlassState: BeerGlassState) => {
-  log(beerGlassState.id)
   beerGlasses[beerGlassState.id].getComponent(Transform).position.set(beerGlassState.position.x, beerGlassState.position.y, beerGlassState.position.z)
   beerGlasses[beerGlassState.id].beerBaseState = BeerBaseState.NONE
 })
 
 sceneMessageBus.on("BeerGlassPutDown", (beerGlassState: BeerGlassState) => {
-  log(beerGlassState.id)
   beerGlasses[beerGlassState.id].beerBaseState = beerGlassState.beerState
   beerGlasses[beerGlassState.id].getComponent(Transform).rotation.set(0, 0, 0, 1)
   beerGlasses[beerGlassState.id].getComponent(Transform).position.set(beerGlassState.position.x, beerGlassState.position.y, beerGlassState.position.z)
 })
 
 sceneMessageBus.on("BeerGlassDrink", (beerGlassState: BeerGlassState) => {
-  log(beerGlassState.id)
   beerGlasses[beerGlassState.id].isFull = false
   beerGlasses[beerGlassState.id].stopAnimations()
   beerGlasses[beerGlassState.id].getComponent(Animator).getClip("Blank").play()
 })
 
 sceneMessageBus.on("BeerGlassPourAnim", (beerGlassState: BeerGlassState) => {
-  log(beerGlassState.id)
   beerGlasses[beerGlassState.id].isFull = true
   beerGlasses[beerGlassState.id].stopAnimations()
   beerGlasses[beerGlassState.id].getComponent(Animator).getClip(beerGlasses[beerGlassState.id].beerBaseState).play()
