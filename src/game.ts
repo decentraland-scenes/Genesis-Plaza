@@ -1,4 +1,4 @@
-import { barPlatforms, placePlatforms } from './modules/platforms'
+import { barPlatforms, placePlatforms, upstairsLoaded } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
   placeMuseumPieces,
@@ -33,22 +33,21 @@ import {
   areNPCsAdded,
   endArtistTalk,
 } from './modules/bar/barNPCs'
-import { addArcades } from './modules/arcades/arcades'
 import { startArtichoke } from './modules/artichoke'
 import { addPanels } from './modules/bar/panels'
 
 //////// LOG PLAYER POSITION
 
-Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
-  log(`pos: `, Camera.instance.position)
-  log(`rot: `, Camera.instance.rotation)
-  // if(e.hit){
-  //   console.log(
-  //     'ENT: ',  engine.entities[e.hit.entityId],
-  //     'POS:', engine.entities[e.hit.entityId].getComponent(Transform)
-  //   )
-  // }
-})
+// Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
+//   log(`pos: `, Camera.instance.position)
+//   log(`rot: `, Camera.instance.rotation)
+//   // if(e.hit){
+//   //   console.log(
+//   //     'ENT: ',  engine.entities[e.hit.entityId],
+//   //     'POS:', engine.entities[e.hit.entityId].getComponent(Transform)
+//   //   )
+//   // }
+// })
 
 //// ADD BUILDINGS
 
@@ -127,8 +126,9 @@ export function insideBar() {
 
   addPanels()
   placeJukeBox()
-  addArcades()
 }
+
+
 
 export function outsideBar() {
   addNPCsOutside()

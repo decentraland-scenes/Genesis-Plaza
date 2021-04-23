@@ -17,7 +17,7 @@ const errorSound = new Sound(new AudioClip("sounds/interactiveItems/error.mp3"))
 const input = Input.instance
 
 input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, true, (event) => {
-  log("Hit Point: ", event.hit.hitPoint)
+  // log("Hit Point: ", event.hit.hitPoint)
   if (Player.holdingItem && event.hit) {
     if (event.hit.normal.y > 0.99) {
       for (let i = 0; i < beerGlasses.length; i++) {
@@ -76,102 +76,109 @@ let noSign = new ui.CenterImage("images/interactiveItems/no-sign.png", 1, true, 
 })
 
 // Punch bag
-const punchSound = new Sound(new AudioClip("sounds/interactiveItems/punch.mp3"))
+export function addPunchBag(): void {
+  const punchSound = new Sound(new AudioClip("sounds/interactiveItems/punch.mp3"))
 
-const punchBag = new Entity()
-punchBag.addComponent(new GLTFShape("models/core_building/interactiveItems/dogePunchBag.glb"))
-punchBag.addComponent(new Transform({ position: new Vector3(149.64, 0.22, 166) }))
-punchBag.getComponent(Transform).scale.setAll(0.5)
-engine.addEntity(punchBag)
+  const punchBag = new Entity()
+  punchBag.addComponent(new GLTFShape("models/core_building/interactiveItems/dogePunchBag.glb"))
+  punchBag.addComponent(new Transform({ position: new Vector3(139.84, 10.69, 147.50) }))
+  punchBag.getComponent(Transform).scale.setAll(0.5)
+  engine.addEntity(punchBag)
 
-// User variables
-let forwardVector: Vector3 = Vector3.Forward().rotate(Camera.instance.rotation) // Camera's forward vector
-let vectorScale: number = 20
+  // User variables
+  let forwardVector: Vector3 = Vector3.Forward().rotate(Camera.instance.rotation) // Camera's forward vector
+  let vectorScale: number = 20
 
-/// --- NEEDS REFACTORING ---
-// Allow the user to interact with the ball
-punchBag.addComponent(
-  new OnPointerDown(
-    (e) => {
-      // Apply impulse based on the direction of the camera
-      targetAnchorBody.applyImpulse(
-        new CANNON.Vec3(forwardVector.x * vectorScale, forwardVector.y * vectorScale, forwardVector.z * vectorScale),
-        new CANNON.Vec3(targetAnchorBody.position.x, targetAnchorBody.position.y, targetAnchorBody.position.z)
-      )
-      punchSound.getComponent(AudioSource).playOnce()
-    },
-    {
-      button: ActionButton.ANY,
-      showFeedback: true,
-      hoverText: "punch",
-      distance: 4,
-    }
+  /// --- NEEDS REFACTORING ---
+  // Allow the user to interact with the ball
+  punchBag.addComponent(
+    new OnPointerDown(
+      (e) => {
+        // Apply impulse based on the direction of the camera
+        targetAnchorBody.wakeUp()
+        targetAnchorBody.applyImpulse(
+          new CANNON.Vec3(forwardVector.x * vectorScale, forwardVector.y * vectorScale, forwardVector.z * vectorScale),
+          new CANNON.Vec3(targetAnchorBody.position.x, targetAnchorBody.position.y, targetAnchorBody.position.z)
+        )
+        punchSound.getComponent(AudioSource).playOnce()
+      },
+      {
+        button: ActionButton.ANY,
+        showFeedback: true,
+        hoverText: "punch",
+        distance: 4,
+      }
+    )
   )
-)
 
-// Setup our world
-const world: CANNON.World = new CANNON.World()
-world.gravity.set(0, 10, 0) // m/s²
-world.broadphase = new CANNON.NaiveBroadphase()
+  // Setup our world
+  const world: CANNON.World = new CANNON.World()
+  world.gravity.set(0, 10, 0) // m/s²
+  world.broadphase = new CANNON.NaiveBroadphase()
 
-// Create a ground plane and apply physics material
-const groundBody: CANNON.Body = new CANNON.Body({
-  mass: 0, // mass == 0 makes the body static
-})
-groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2) // Reorient ground plane to be in the y-axis
+  // Create a ground plane and apply physics material
+  const groundBody: CANNON.Body = new CANNON.Body({
+    mass: 0, // mass == 0 makes the body static
+  })
+  groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2) // Reorient ground plane to be in the y-axis
 
-const physicsMaterial = new CANNON.Material("physicsMaterial")
-const physicsContactMaterial = new CANNON.ContactMaterial(physicsMaterial, physicsMaterial, { friction: 0, restitution: 0.1 })
-world.addContactMaterial(physicsContactMaterial)
+  const physicsMaterial = new CANNON.Material("physicsMaterial")
+  const physicsContactMaterial = new CANNON.ContactMaterial(physicsMaterial, physicsMaterial, { friction: 0, restitution: 0.1 })
+  world.addContactMaterial(physicsContactMaterial)
 
-const groundShape: CANNON.Plane = new CANNON.Plane()
-groundBody.addShape(groundShape)
-groundBody.material = physicsMaterial
-world.addBody(groundBody)
+  const groundShape: CANNON.Plane = new CANNON.Plane()
+  groundBody.addShape(groundShape)
+  groundBody.material = physicsMaterial
+  world.addBody(groundBody)
 
-// Create a static body
-let fixedAnchorBody = new CANNON.Body({ mass: 0 })
-fixedAnchorBody.position.set(149.64, 0.22, 166)
-world.addBody(fixedAnchorBody)
+  // Create a static body
+  let fixedAnchorBody = new CANNON.Body({ mass: 0 })
+  fixedAnchorBody.position.set(139.84, 10.69, 147.50)
+  world.addBody(fixedAnchorBody)
 
-// Create target body
-let sphereShape = new CANNON.Sphere(0.2)
-let targetAnchorBody = new CANNON.Body({ mass: 5 })
-targetAnchorBody.addShape(sphereShape)
-targetAnchorBody.position.set(149.64, 0.22 + 3, 166)
-world.addBody(targetAnchorBody)
+  // Create target body
+  let sphereShape = new CANNON.Sphere(0.2)
+  let targetAnchorBody = new CANNON.Body({ mass: 5 })
+  targetAnchorBody.addShape(sphereShape)
+  targetAnchorBody.position.set(139.84, 10.69 + 3, 147.50)
+  targetAnchorBody.sleep()
+  world.addBody(targetAnchorBody)
 
-targetAnchorBody.linearDamping = 0.4 // Round will keep translating even with friction so you need linearDamping
-targetAnchorBody.angularDamping = 1.0 // Round bodies will keep rotating even with friction so you need angularDamping
+  targetAnchorBody.linearDamping = 0.4 // Round will keep translating even with friction so you need linearDamping
+  targetAnchorBody.angularDamping = 1.0 // Round bodies will keep rotating even with friction so you need angularDamping
 
-var spring = new CANNON.Spring(targetAnchorBody, fixedAnchorBody, {
-  localAnchorA: new CANNON.Vec3(0, 0, 0),
-  localAnchorB: new CANNON.Vec3(0, 0, 0),
-  restLength: 0.0,
-  stiffness: 50,
-  damping: 8,
-})
+  var spring = new CANNON.Spring(targetAnchorBody, fixedAnchorBody, {
+    localAnchorA: new CANNON.Vec3(0, 0, 0),
+    localAnchorB: new CANNON.Vec3(0, 0, 0),
+    restLength: 0.0,
+    stiffness: 50,
+    damping: 8,
+  })
 
-// Compute the force after each step
-world.addEventListener("postStep", function () {
-  spring.applyForce()
-})
+  // Compute the force after each step
+  world.addEventListener("postStep", function () {
+    spring.applyForce()
+  })
 
-const fixedTimeStep: number = 1.0 / 60.0 // seconds
-const maxSubSteps: number = 10
+  const fixedTimeStep: number = 1.0 / 60.0 // seconds
+  const maxSubSteps: number = 10
 
-class UpdateSystem implements ISystem {
-  update(dt: number): void {
-    world.step(fixedTimeStep, dt, maxSubSteps)
+  class UpdateSystem implements ISystem {
+    update(dt: number): void {
+      world.step(fixedTimeStep, dt, maxSubSteps)
 
-    // https://answers.unity.com/questions/24805/preventing-lookat-from-flipping.html
-    let transform = punchBag.getComponent(Transform)
-    let relativePos = targetAnchorBody.position.vsub(new CANNON.Vec3(transform.position.x, transform.position.y, transform.position.z))
-    transform.rotation = Quaternion.LookRotation(new Vector3(relativePos.x, relativePos.y, relativePos.z), Vector3.Forward())
+      // https://answers.unity.com/questions/24805/preventing-lookat-from-flipping.html
+      let transform = punchBag.getComponent(Transform)
+      let relativePos = targetAnchorBody.position.vsub(new CANNON.Vec3(transform.position.x, transform.position.y, transform.position.z))
+      transform.rotation = Quaternion.LookRotation(new Vector3(relativePos.x, relativePos.y, relativePos.z), Vector3.Forward())
 
-    // Update forward vector
-    forwardVector = Vector3.Forward().rotate(Camera.instance.rotation)
+      // Put target anchor to sleep if its velocity is almost zero
+      if (targetAnchorBody.velocity.almostEquals(new CANNON.Vec3(0, 0, 0), 0.02)) targetAnchorBody.sleep()
+
+      // Update forward vector
+      forwardVector = Vector3.Forward().rotate(Camera.instance.rotation)
+    }
   }
-}
 
-engine.addSystem(new UpdateSystem())
+  engine.addSystem(new UpdateSystem())
+}
