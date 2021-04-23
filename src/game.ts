@@ -126,7 +126,7 @@ export function insideBar() {
 
   addPanels()
   placeJukeBox()
-
+  // addBeers()
 }
 
 

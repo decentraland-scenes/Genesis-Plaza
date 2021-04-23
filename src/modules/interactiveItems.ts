@@ -94,6 +94,7 @@ punchBag.addComponent(
   new OnPointerDown(
     (e) => {
       // Apply impulse based on the direction of the camera
+      targetAnchorBody.wakeUp()
       targetAnchorBody.applyImpulse(
         new CANNON.Vec3(forwardVector.x * vectorScale, forwardVector.y * vectorScale, forwardVector.z * vectorScale),
         new CANNON.Vec3(targetAnchorBody.position.x, targetAnchorBody.position.y, targetAnchorBody.position.z)
@@ -139,6 +140,7 @@ let sphereShape = new CANNON.Sphere(0.2)
 let targetAnchorBody = new CANNON.Body({ mass: 5 })
 targetAnchorBody.addShape(sphereShape)
 targetAnchorBody.position.set(149.64, 0.22 + 3, 166)
+targetAnchorBody.sleep()
 world.addBody(targetAnchorBody)
 
 targetAnchorBody.linearDamping = 0.4 // Round will keep translating even with friction so you need linearDamping
@@ -168,6 +170,9 @@ class UpdateSystem implements ISystem {
     let transform = punchBag.getComponent(Transform)
     let relativePos = targetAnchorBody.position.vsub(new CANNON.Vec3(transform.position.x, transform.position.y, transform.position.z))
     transform.rotation = Quaternion.LookRotation(new Vector3(relativePos.x, relativePos.y, relativePos.z), Vector3.Forward())
+
+    // Put target anchor to sleep if its velocity is almost zero
+    if(targetAnchorBody.velocity.almostEquals(new CANNON.Vec3(0, 0, 0), 0.02)) targetAnchorBody.sleep()
 
     // Update forward vector
     forwardVector = Vector3.Forward().rotate(Camera.instance.rotation)
