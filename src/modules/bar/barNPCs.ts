@@ -364,7 +364,7 @@ export function addNPCsOutside() {
       rotation: Quaternion.Euler(0, 290, 0),
     },
 
-    'models/core_building/cat_guySittedV10.glb',
+    'models/core_building/cat_guySittedV12.glb',
     () => {
       catGuy.talk(ILoveCats, 0)
       catGuy.playAnimation(`talk`)
