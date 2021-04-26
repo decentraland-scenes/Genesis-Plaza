@@ -1,5 +1,6 @@
 import { sceneMessageBus } from '../serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
+import { invisibleMaterial } from '../museumItems'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -330,4 +331,43 @@ function getRadioName(radio: number) {
       break
   }
   return radioName
+}
+
+
+
+export function addMicFeedback(){
+
+  let feedback = new AudioClip("sounds/micFeedback.mp3")
+  feedback.loop = false
+  feedback.volume = 1
+
+  let mic = new Entity()
+  mic.addComponent(new BoxShape())
+  mic.addComponent(new Transform({
+    position: new Vector3(160, 2.2, 167.7),
+    scale: new Vector3(0.35, 0.35, 0.35)
+  }))
+  mic.addComponent(new AudioSource(feedback))
+
+  mic.addComponent(new OnPointerDown(
+    ()=>{
+      feedback.volume = 1
+      mic.getComponent(AudioSource).playOnce()
+      sceneMessageBus.emit('micFeedback', {})
+    }, {
+      hoverText: "Use mic"
+    }
+  ))
+  mic.addComponent(invisibleMaterial)
+  engine.addEntity(mic)
+
+  sceneMessageBus.on('micFeedback', (e) => {
+    if (!isInBar) return
+    feedback.volume = 0.2
+    mic.getComponent(AudioSource).playOnce()
+    
+  })
+
+
+
 }

@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@dcl/ecs-scene-utils": "^1.6.2-20210408012032.commit-5921be1",
-    "@dcl/npc-scene-utils": "^1.4.1-20210423211211.commit-93812b4",
+    "@dcl/npc-scene-utils": "^1.4.1-20210426151507.commit-b724163",
     "@dcl/ui-scene-utils": "^1.7.2-20210421205046.commit-966f879",
     "@types/cannon": "^0.1.5",
     "cannon": "github:schteppe/cannon.js",

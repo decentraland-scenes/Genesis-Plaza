@@ -20,6 +20,7 @@ import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/bar/doors'
 import * as utils from '@dcl/ecs-scene-utils'
 import {
+  addMicFeedback,
   lowerVolume,
   outOfBar,
   placeJukeBox,
@@ -38,16 +39,16 @@ import { addPanels } from './modules/bar/panels'
 
 //////// LOG PLAYER POSITION
 
-// Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
-//   log(`pos: `, Camera.instance.position)
-//   log(`rot: `, Camera.instance.rotation)
-//   // if(e.hit){
-//   //   console.log(
-//   //     'ENT: ',  engine.entities[e.hit.entityId],
-//   //     'POS:', engine.entities[e.hit.entityId].getComponent(Transform)
-//   //   )
-//   // }
-// })
+Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
+  log(`pos: `, Camera.instance.position)
+  log(`rot: `, Camera.instance.rotation)
+  // if(e.hit){
+  //   console.log(
+  //     'ENT: ',  engine.entities[e.hit.entityId],
+  //     'POS:', engine.entities[e.hit.entityId].getComponent(Transform)
+  //   )
+  // }
+})
 
 //// ADD BUILDINGS
 
@@ -63,7 +64,6 @@ barPlatforms()
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     addBarNPCs()
-    log('loaing NPCs')
   }
 })
 
@@ -126,6 +126,7 @@ export function insideBar() {
 
   addPanels()
   placeJukeBox()
+  addMicFeedback()
 }
 
 

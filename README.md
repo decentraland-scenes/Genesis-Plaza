@@ -79,6 +79,7 @@ If something doesn’t work, please [file an issue](https://github.com/decentral
 - _pickUp.mp3_ modified from https://freesound.org/people/drummerman/sounds/368130/
 - _putDown.mp3_ modified from https://freesound.org/people/Nightflame/sounds/368614/
 - _swallow.mp3_ modified from https://freesound.org/people/freakinbehemoth/sounds/243635/
+- _micFeedback.mp3_ modified from https://freesound.org/people/chimerical/sounds/105980/
 
 ## Copyright info
 
