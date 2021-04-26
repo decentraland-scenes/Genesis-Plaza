@@ -38,14 +38,12 @@ export async function setUserData() {
 setUserData()
 
 export async function addBarNPCs() {
-  // fetch player name
-  //setUserData()
+  
   areNPCsAdded = true
 
   octopus = new NPC(
     {
       position: new Vector3(160, 0.2, 141.4),
-      //scale: new Vector3(1.2, 1.2, 1.2),
     },
     'models/core_building/BobOctorossV44.glb',
     () => {
@@ -68,17 +66,6 @@ export async function addBarNPCs() {
     }
   )
 
-  // octopus.addComponentOrReplace(new OnPointerDown(
-  //   ()=>{
-  //     if(octopus.inCooldown)return
-  //     octopus.changeIdleAnim('TalkLoop')
-  //     octopus.playAnimation('TalkIntro', true, 0.63)
-  //     octopus.talk(OctoHi)
-  //   }, {
-  //     hoverText: 'Talk'
-  //   , button: ActionButton.PRIMARY
-  //   }
-  // ))
 
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
@@ -90,9 +77,7 @@ export async function addBarNPCs() {
 
   let dogePath: FollowPathData = {
     path: [
-      // new Vector3(169, 0.24, 160),
-      // new Vector3(172, 0.24, 159),
-      // new Vector3(169.2, 0.24, 163.5),
+    
       new Vector3(166.7, 0.24, 163.9),
       new Vector3(161, 0.24, 160),
       new Vector3(157.5, 0.24, 157.4),
@@ -126,7 +111,7 @@ export async function addBarNPCs() {
       new Vector3(171.3, 0.24, 163.22),
     ],
     loop: true,
-    // curve: true,
+   // curve: true,
   }
 
   doge = new NPC(
@@ -215,6 +200,7 @@ export async function addBarNPCs() {
     () => {
       artist1.bubble.closeDialogEndAll()
       artist2.bubble.closeDialogEndAll()
+    //  WorldDialogTypeInSystem._instance.done = true
 
       artist1.talk(artistHints)
 
@@ -237,6 +223,8 @@ export async function addBarNPCs() {
       textBubble: true,
       onWalkAway: () => {
         if (artist1.dialog.container.visible) {
+          artist1.bubble.closeDialogEndAll()
+          artist2.bubble.closeDialogEndAll()
           artist1.playAnimation('TurnOut', true, 0.5)
           artist2.playAnimation('TurnOut', true, 0.5)
 
@@ -256,6 +244,10 @@ export async function addBarNPCs() {
     },
     'models/core_building/ch1_crowdV5.glb',
     () => {
+      // wearablesC.playAnimation('TurnIn', true, 3.13)
+      //   wearablesC.changeIdleAnim('Talk')
+      artist1.bubble.closeDialogWindow()
+      artist2.bubble.closeDialogWindow()
       artist2.endInteraction()
       artist1.talkBubble(artist1Talk, '1st')
     },
@@ -271,6 +263,7 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         artist1.bubble.closeDialogEndAll()
         artist2.bubble.closeDialogEndAll()
+     //   WorldDialogTypeInSystem._instance.done = true
         if (!artist1.getComponent(Animator).getClip('Talk').playing) {
           artist1.playAnimation('Talk')
         }
@@ -411,15 +404,17 @@ export let OctoHi: Dialog[] = [
       'Is this your first time here? Do you want some pointers about how you can get around the place?',
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes', fontSize: 14 },
-      { label: 'NO', goToDialog: 'nope', fontSize: 14 },
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
-    name: 'nope',
+    name: 'end',
     text:
       'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
     triggeredByNext: () => {
+
+      log("ended conversation")
       backToIdle()
     },
     isEndOfDialog: true,
@@ -865,7 +860,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'voltaire',
     text:
-      'Ok, so first there’s <color="red">Voltaire District</color>, at x & x. Lots of big players in the crypto art space have spot there.',
+      'Ok, so first there’s <color="red">Voltaire District</color>, at 55,97. Lots of big players in the crypto art space have spot there.',
     isQuestion: true,
     buttons: [
       {
@@ -874,7 +869,7 @@ export let artistHints: Dialog[] = [
         triggeredActions: () => {
           artist1.endInteraction()
           artistsBackToNormal()
-          teleportTo('50,50')
+          teleportTo('55,97')
         },
       },
       { label: 'More', goToDialog: 'museum' },
@@ -919,7 +914,7 @@ export let artistHints: Dialog[] = [
   {
     name: '100x',
     text:
-      'Also  <color="red">100x Gallery</color>, at X,Y, there’s a whole bunch of things around that area.',
+      'Also  <color="red">100x Gallery</color>, at 86,-24, there’s a whole bunch of things around that area.',
     isQuestion: true,
     buttons: [
       {
@@ -928,7 +923,7 @@ export let artistHints: Dialog[] = [
         triggeredActions: () => {
           artist1.endInteraction()
           artistsBackToNormal()
-          teleportTo('50,50')
+          teleportTo('86,-24')
         },
       },
       { label: 'More', goToDialog: 'momus' },
@@ -955,7 +950,7 @@ export let artistHints: Dialog[] = [
   {
     name: 'vegas',
     text:
-      'Also the <color="red">Vegas Art Village</color> atX,Y includes a whole assortment of very creative small museums from the community.',
+      'Also the <color="red">Vegas Art Village</color> at -125,100 includes a whole assortment of very creative small museums from the community.',
     isQuestion: true,
     buttons: [
       {
@@ -964,7 +959,25 @@ export let artistHints: Dialog[] = [
         triggeredActions: () => {
           artist1.endInteraction()
           artistsBackToNormal()
-          teleportTo('50,50')
+          teleportTo('-125,100')
+        },
+      },
+      { label: 'More', goToDialog: 'skate' },
+    ],
+  },
+  {
+    name: 'skate',
+    text:
+      'If you´re looking for a place with a more edgy underground vibe, check out the <color="red">Vegas City Skatepark Gallery</color> at -100,150.',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'Visit',
+        goToDialog: 'dummy',
+        triggeredActions: () => {
+          artist1.endInteraction()
+          artistsBackToNormal()
+          teleportTo('-100,150')
         },
       },
       { label: 'Done', goToDialog: 'end' },

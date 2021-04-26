@@ -9,7 +9,7 @@ export enum Radios {
   JAZZ = 'https://live.vegascity.fm/radio/8010/the_flamingos.mp3',
 }
 
-let FullVolume = 0.3
+let FullVolume = 0.25
 let DistantVolume = 0.1
 
 export let isInBar: boolean = false
