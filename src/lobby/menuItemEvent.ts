@@ -5,7 +5,7 @@ import * as resource from "./resources/resources"
 import { MenuItem } from "./menuItem"
 import * as sfx from "./resources/sounds"
 import { lobbyCenter } from "./resources/globals"
-import { rsvpToEvent } from "./checkApi"
+import { rsvpToEvent, getCurrentTime, getTimeStamp } from "./checkApi"
 
 
 let dummyLiveBadge = new Entity()
@@ -326,8 +326,8 @@ export class EventMenuItem extends MenuItem {
         else{
             this.jumpButtonTextShape.value = "SIGN UP"
             this.jumpInButton.addComponent(new OnPointerDown( 
-                async function (){
-                    rsvpToEvent(_event.id, new Date("2021-14-16T15:58:59.227Z"))
+                async function (){                    
+                    rsvpToEvent(_event.id, getTimeStamp())
                    // openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
                 },
                 {
@@ -467,7 +467,8 @@ export class EventMenuItem extends MenuItem {
 
             this.jumpInButton.getComponent(OnPointerDown).callback =  
                 async function () {
-                    rsvpToEvent(_event.id, new Date("2021-14-16T15:58:59.227Z"))
+                    
+                    rsvpToEvent(_event.id, getTimeStamp())
                    // openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
                   }
             this.jumpInButton.getComponent(OnPointerDown).hoverText = "CHECK EVENT PAGE"
