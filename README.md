@@ -74,6 +74,12 @@ If something doesn’t work, please [file an issue](https://github.com/decentral
 - _charlie_.mp3_ modified from https://freesound.org/people/Satoration/sounds/57296/ 
 - _marsha.mp3_ modified from https://freesound.org/people/urupin/sounds/199905/
 - _ron.mp3_ modified from https://freesound.org/people/xtrgamr/sounds/257808/
+- _beerPump.mp3_ modified from https://freesound.org/people/RG_Campus/sounds/392893/
+- _error.mp3_ modified from https://freesound.org/people/distillerystudio/sounds/327736/
+- _pickUp.mp3_ modified from https://freesound.org/people/drummerman/sounds/368130/
+- _putDown.mp3_ modified from https://freesound.org/people/Nightflame/sounds/368614/
+- _swallow.mp3_ modified from https://freesound.org/people/freakinbehemoth/sounds/243635/
+- _micFeedback.mp3_ modified from https://freesound.org/people/chimerical/sounds/105980/
 
 ## Copyright info
 

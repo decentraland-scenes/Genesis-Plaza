@@ -1,4 +1,4 @@
-import { barPlatforms, placePlatforms } from './modules/platforms'
+import { barPlatforms, placePlatforms, upstairsLoaded } from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
   placeMuseumPieces,
@@ -20,6 +20,7 @@ import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/bar/doors'
 import * as utils from '@dcl/ecs-scene-utils'
 import {
+  addMicFeedback,
   lowerVolume,
   outOfBar,
   placeJukeBox,
@@ -27,8 +28,12 @@ import {
   setBarMusicOn,
 } from './modules/bar/jukebox'
 
-import { addBarNPCs, addNPCsOutside, areNPCsAdded } from './modules/bar/barNPCs'
-import { addArcades } from './modules/arcades/arcades'
+import {
+  addBarNPCs,
+  addNPCsOutside,
+  areNPCsAdded,
+  endArtistTalk,
+} from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { addPanels } from './modules/bar/panels'
 
@@ -59,7 +64,6 @@ barPlatforms()
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     addBarNPCs()
-    log('loaing NPCs')
   }
 })
 
@@ -91,8 +95,10 @@ addRepeatTrigger(
   false,
   () => {
     outOfBar()
+    endArtistTalk()
     lowerVolume()
     log('mid distance')
+
     //setBarMusicOff()
   }
 )
@@ -120,11 +126,12 @@ export function insideBar() {
 
   addPanels()
   placeJukeBox()
-  addArcades()
+  addMicFeedback()
 }
 
-export function outsideBar() {
 
+
+export function outsideBar() {
   addNPCsOutside()
   /// MOVING PLATFORMS
 
