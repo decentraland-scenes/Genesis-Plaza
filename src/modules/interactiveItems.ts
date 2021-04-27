@@ -86,7 +86,7 @@ export function addPunchBag(): void {
 
   // User variables
   let forwardVector: Vector3 = Vector3.Forward().rotate(Camera.instance.rotation) // Camera's forward vector
-  let vectorScale: number = 20
+  let vectorScale: number = 12.5
 
   /// --- NEEDS REFACTORING ---
   // Allow the user to interact with the ball
