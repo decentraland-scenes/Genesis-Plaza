@@ -143,12 +143,12 @@ const beerGlassShape = new GLTFShape("models/core_building/interactiveItems/beer
 
 const beerGlass1 = new BeerGlass(0, beerGlassShape, new Vector3(163.77, 1.28, 139.87), new Vector3(0, -0.4, 0.5), -10)
 const beerGlass2 = new BeerGlass(1, beerGlassShape, new Vector3(156.32, 1.28, 140.20), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass3 = new BeerGlass(2, beerGlassShape, new Vector3(149.28, 1.33, 145.76), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass4 = new BeerGlass(3, beerGlassShape, new Vector3(151.10, 1.33, 145.61), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass5 = new BeerGlass(4, beerGlassShape, new Vector3(151.77, 1.33, 160.54), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass6 = new BeerGlass(5, beerGlassShape, new Vector3(153.07, 1.33, 159.20), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass7 = new BeerGlass(6, beerGlassShape, new Vector3(169.91, 1.33, 145.48), new Vector3(0, -0.4, 0.5), -10)
-const beerGlass8 = new BeerGlass(7, beerGlassShape, new Vector3(168.15, 1.33, 145.75), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass3 = new BeerGlass(2, beerGlassShape, new Vector3(149.28, 1.27, 145.76), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass4 = new BeerGlass(3, beerGlassShape, new Vector3(151.10, 1.27, 145.61), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass5 = new BeerGlass(4, beerGlassShape, new Vector3(151.77, 1.27, 160.54), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass6 = new BeerGlass(5, beerGlassShape, new Vector3(153.07, 1.27, 159.20), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass7 = new BeerGlass(6, beerGlassShape, new Vector3(169.91, 1.28, 145.48), new Vector3(0, -0.4, 0.5), -10)
+const beerGlass8 = new BeerGlass(7, beerGlassShape, new Vector3(168.15, 1.28, 145.75), new Vector3(0, -0.4, 0.5), -10)
 
 export const beerGlasses: BeerGlass[] = [
   beerGlass1, 

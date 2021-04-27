@@ -16,7 +16,7 @@ const errorSound = new Sound(new AudioClip("sounds/interactiveItems/error.mp3"))
 const input = Input.instance
 
 input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, true, (event) => {
-  // log("Hit Point: ", event.hit.hitPoint)
+  log("Hit Point: ", event.hit.hitPoint)
   if (Player.holdingItem && event.hit) {
     if (event.hit.normal.y > 0.99) {
       for (let i = 0; i < beerGlasses.length; i++) {
