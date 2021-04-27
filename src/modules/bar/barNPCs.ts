@@ -38,7 +38,6 @@ export async function setUserData() {
 setUserData()
 
 export async function addBarNPCs() {
-  
   areNPCsAdded = true
 
   octopus = new NPC(
@@ -66,7 +65,6 @@ export async function addBarNPCs() {
     }
   )
 
-
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
   octopusObjects.addComponent(
@@ -77,7 +75,6 @@ export async function addBarNPCs() {
 
   let dogePath: FollowPathData = {
     path: [
-    
       new Vector3(166.7, 0.24, 163.9),
       new Vector3(161, 0.24, 160),
       new Vector3(157.5, 0.24, 157.4),
@@ -111,7 +108,7 @@ export async function addBarNPCs() {
       new Vector3(171.3, 0.24, 163.22),
     ],
     loop: true,
-   // curve: true,
+    // curve: true,
   }
 
   doge = new NPC(
@@ -200,7 +197,7 @@ export async function addBarNPCs() {
     () => {
       artist1.bubble.closeDialogEndAll()
       artist2.bubble.closeDialogEndAll()
-    //  WorldDialogTypeInSystem._instance.done = true
+      //  WorldDialogTypeInSystem._instance.done = true
 
       artist1.talk(artistHints)
 
@@ -263,7 +260,7 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         artist1.bubble.closeDialogEndAll()
         artist2.bubble.closeDialogEndAll()
-     //   WorldDialogTypeInSystem._instance.done = true
+        //   WorldDialogTypeInSystem._instance.done = true
         if (!artist1.getComponent(Animator).getClip('Talk').playing) {
           artist1.playAnimation('Talk')
         }
@@ -321,7 +318,7 @@ export function addNPCsOutside() {
   }
 
   wenMoon = new NPC(
-    { position: wenPath.path[0] },
+    { position: wenPath.path[0], scale: new Vector3(1.1, 1.1, 1.1) },
     'models/core_building/wenMoonV12.glb',
     () => {
       wenMoon.stopWalking()
@@ -413,8 +410,7 @@ export let OctoHi: Dialog[] = [
     text:
       'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
     triggeredByNext: () => {
-
-      log("ended conversation")
+      log('ended conversation')
       backToIdle()
     },
     isEndOfDialog: true,
@@ -1015,7 +1011,7 @@ export let wenMoonTalk: Dialog[] = [
   },
   {
     text:
-      'For example, my friend was really psyched about Ponzy Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+      'For example, my friend was really psyched about Ponzi Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
     skipable: true,
   },
   {
