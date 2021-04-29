@@ -7,11 +7,14 @@ import { Teleport, teleports } from "./teleports"
 
 import * as resource from "./resources/resources"
 import { eventItemPlaceholder, crowdMenuPlaceholder } from "./menuPlaceholders"
+import { AnimatedItem } from './simpleAnimator'
+import { addPanels } from 'src/modules/bar/panels'
 
 
 
 // EVENTS MENU 
 export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):VerticalScrollMenu {
+
   let menuRoot = new Entity()
   let vertEventMenu = new VerticalScrollMenu({
     position: new Vector3(0, 0, 0 ),
@@ -19,8 +22,9 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
   },
   2,
   5,
-  resource.menuTopEventsShape
-  
+  resource.menuTopEventsShape,
+  resource.menuBaseShape,
+  "Events"
   )  
   menuRoot.addComponent(new Transform({
     position: _transform.position,
@@ -33,29 +37,43 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
   //placeholder menuItems
   for (let i = 0; i < vertEventMenu.visibleItemCount; i++){
     vertEventMenu.addMenuItem(new EventMenuItem({    
-      scale: new Vector3(2,2,2)
-    },        
-    new Texture("images/rounded_alpha.png"),
-    eventItemPlaceholder
-  ))
+        scale: new Vector3(2,2,2)
+      },        
+      new Texture("images/rounded_alpha.png"),
+      eventItemPlaceholder
+    ))
   }
 
-  let menuBase = new Entity()
-  menuBase.addComponent(new Transform({
-    position: new Vector3(0,-0.6,0),
-    scale: new Vector3(4,4,4)
+  let refreshRoot = new Entity()
+  refreshRoot.addComponent(new Transform({
+    position: new Vector3(2.35,-1.15,-0.65),
+    rotation: Quaternion.Euler(27,0,0),
+    scale: new Vector3(0.35, 0.35, 0.35)
   }))
-  menuBase.addComponent(resource.menuBaseShape)
-  menuBase.setParent(menuRoot)
+  refreshRoot.setParent(vertEventMenu)
 
   let refreshButton = new Entity()
   refreshButton.addComponent(new Transform({
-    position: new Vector3(3,1,0)
+    position: new Vector3(0,0,-0.1),
+    
   }))
-  refreshButton.addComponent(new BoxShape())
+
+  refreshButton.addComponent(new AnimatedItem(
+    {
+      position: new Vector3(0,0,-0.1),
+      scale: new Vector3(1,1,1)
+    },
+    {
+      position: new Vector3(0,0,0.0),
+      scale: new Vector3(1,1,1)
+    },
+    2
+  ))
+  refreshButton.addComponent(resource.refreshShape)
   refreshButton.addComponent(
     new OnPointerDown(
-      async function () {
+      async function () { 
+        refreshButton.getComponent(Transform).position.z = 0
         updateEventsMenu(vertEventMenu)
       },
       {
@@ -64,7 +82,8 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
       }
     )
   )
-  refreshButton.setParent(vertEventMenu) 
+ 
+  refreshButton.setParent(refreshRoot) 
 
   return vertEventMenu
 }
@@ -75,9 +94,6 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
   if (events.length <= 0) {
     return
   } 
-
-  log("events list size: " + events.length ) 
-  log("current menu size: " + _menu.items.length) 
 
   for(let i=0; i < events.length; i++){
 
@@ -92,11 +108,39 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
       events[i]
     ))
     }
+
+    
+    
     
   }
+
   if(events.length <= _menu.items.length){
     removeLastXItems(_menu, _menu.items.length - events.length)
   }
+
+  // ADD BAR PANELS
+
+  if(events.length >= 4){
+    addPanels(
+      new Texture( events[0].image ),
+      new Texture( events[1].image ),
+      new Texture( events[2].image ),
+      new Texture( events[3].image ),
+    )
+  }
+  else{
+    addPanels(
+      new Texture( events[0].image ),
+      new Texture( events[0].image ),
+      new Texture( events[0].image ),
+      new Texture( events[0].image ),
+    )
+  }
+  
+
+
+
+  _menu.resetScroll()
 }
 
 export async function fillEventsMenu(_menu:VerticalScrollMenu) {
@@ -127,8 +171,9 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
   },
   2,
   4,
-  resource.menuTopCrowdShape
-  
+  resource.menuTopCrowdShape,
+  resource.menuBaseShape,
+  "Trending Scenes"
   )  
   menuRoot.addComponent(new Transform({
     position: _transform.position,
@@ -148,22 +193,36 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
   ))
   }
 
-  let menuBase = new Entity()
-  menuBase.addComponent(new Transform({
-    position: new Vector3(0,-0.6,0),
-    scale: new Vector3(4,4,4)
+ let refreshRoot = new Entity()
+  refreshRoot.addComponent(new Transform({
+    position: new Vector3(2.35,-1.15,-0.65),
+    rotation: Quaternion.Euler(27,0,0),
+    scale: new Vector3(0.35, 0.35, 0.35)
   }))
-  menuBase.addComponent(resource.menuBaseShape)
-  menuBase.setParent(menuRoot)
+  refreshRoot.setParent(vertCrowdsMenu)
 
   let refreshButton = new Entity()
   refreshButton.addComponent(new Transform({
-    position: new Vector3(3,1,0)
+    position: new Vector3(0,0,-0.1),
+    
   }))
-  refreshButton.addComponent(new BoxShape())
+
+  refreshButton.addComponent(new AnimatedItem(
+    {
+      position: new Vector3(0,0,-0.1),
+      scale: new Vector3(1,1,1)
+    },
+    {
+      position: new Vector3(0,0,0.0),
+      scale: new Vector3(1,1,1)
+    },
+    2
+  ))
+  refreshButton.addComponent(resource.refreshShape)
   refreshButton.addComponent(
     new OnPointerDown(
-      async function () {      
+      async function () { 
+        refreshButton.getComponent(Transform).position.z = 0     
         updateCrowdsMenu(vertCrowdsMenu)        
       },
       {
@@ -172,7 +231,7 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
       }
     )
   )
-  refreshButton.setParent(vertCrowdsMenu) 
+  refreshButton.setParent(refreshRoot) 
 
   return vertCrowdsMenu
 }
@@ -206,6 +265,7 @@ export async function updateCrowdsMenu(_menu:VerticalScrollMenu){
   if(scenes.length <= _menu.items.length){
     removeLastXItems(_menu, _menu.items.length - scenes.length)
   }
+  _menu.resetScroll()
 }
 
 export function removeLastXItems(_menu:VerticalScrollMenu, x:number){
@@ -247,8 +307,9 @@ export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):
   },
   2,
   4,
-  resource.menuTopClassicsShape
-  
+  resource.menuTopClassicsShape,
+  resource.menuBaseShape,
+  "Old Classics"
   )  
   menuRoot.addComponent(new Transform({
     position: _transform.position,
@@ -257,14 +318,6 @@ export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):
   }))    
   vertMenu.setParent(menuRoot)
   engine.addEntity(menuRoot)
-
-  let menuBase = new Entity()
-  menuBase.addComponent(new Transform({
-    position: new Vector3(0,-0.6,0),
-    scale: new Vector3(4,4,4)
-  }))
-  menuBase.addComponent(resource.menuBaseShape)
-  menuBase.setParent(menuRoot)
 
   return vertMenu
 }

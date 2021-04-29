@@ -23,11 +23,11 @@ export class VerticalScroller{
     constructor(){          
     }
 
-    scrollUp(){
-        if(this.currentItem < this.stops - 1){        
+    scrollUp(){ 
+        if(this.currentItem < this.stops - 1){                 
             this.currentItem += 1
-            this.scrollTarget = this.base - this.currentItem * this.scrollStep       
-        }        
+            this.scrollTarget = this.base - this.currentItem * this.scrollStep
+        }
     }
 
     scrollDown(){
@@ -35,6 +35,18 @@ export class VerticalScroller{
             this.currentItem -= 1
             this.scrollTarget = this.base - this.currentItem * this.scrollStep            
         }
+        
+    }
+
+    reset(){
+        this.base = 0
+        this.stops = 0
+        this.currentItem = 0    
+        this.scrollTarget = 0
+        this.scrollStep = 2.2
+        this.scrollFraction =0
+        this.speed = 3
+        this.currentMenuVelocity = 0  
     }
 }
 
@@ -51,18 +63,22 @@ export class VerticalScrollMenu extends Entity {
     menuFrame:Entity
     bg:Entity
     topMesh:Entity
+    baseMesh:Entity
     clickBoxes:Entity[]
     itemRoots:Entity[]
     instructions:Entity
+    baseText:Entity
+    baseTextShape:TextShape
 
     
     selectSound:Entity
     deselectSound:Entity
+    scrollEndSound:Entity
 
 
    
 
-    constructor(_transform:TranformConstructorArgs, _spacing:number, _numOfVisibleItems:number, _topMesh:GLTFShape){
+    constructor(_transform:TranformConstructorArgs, _spacing:number, _numOfVisibleItems:number, _topMesh:GLTFShape, _baseMesh:GLTFShape, _baseTitle:string){
         super()
         this.visibleItemCount = _numOfVisibleItems
 
@@ -75,6 +91,20 @@ export class VerticalScrollMenu extends Entity {
             scale: new Vector3(4,1,4)
         }))
         this.menuFrame.addComponent(resource.menuPillarsShape)
+        this.menuFrame.addComponent(new OnPointerDown( (e) => {             
+                 
+            // 'F' to scroll up
+            if(e.buttonId == 2){
+                this.scrollUp()
+            }
+
+            // 'E' to scroll down
+            if(e.buttonId == 1){   
+                this.scrollDown()
+            }           
+
+        },{distance:40, showFeedback:false} ))  
+
         this.menuFrame.setParent(this)
         this.menuFrame.addComponent(sfx.menuDownSource)
 
@@ -98,6 +128,42 @@ export class VerticalScrollMenu extends Entity {
 
         this.addComponent(new Transform(_transform))
 
+        this.baseMesh = new Entity()
+        this.baseMesh.addComponent(new Transform({
+            position: new Vector3(0,-0.6,0),
+            scale: new Vector3(4,4,4)
+        }))
+        this.baseMesh.addComponent(_baseMesh)
+        this.baseMesh.addComponent(new OnPointerDown( (e) => {                 
+            // 'F' to scroll up
+            if(e.buttonId == 2){
+                this.scrollUp()
+            }
+
+            // 'E' to scroll down
+            if(e.buttonId == 1){   
+                this.scrollDown()
+            }           
+
+        },{distance:40, showFeedback:false} ))  
+        this.baseMesh.setParent(this)
+
+        this.baseText = new Entity
+        this.baseTextShape = new TextShape()
+        this.baseTextShape.value = _baseTitle
+        this.baseTextShape.color = Color3.FromHexString("#111111")
+        this.baseTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+        this.baseTextShape.fontSize = 3
+
+        this.baseText.addComponent(this.baseTextShape)
+        this.baseText.addComponent(new Transform({
+            position: new Vector3(0,-0.15,-0.16),
+            scale: new Vector3(0.25, 0.25, 0.25),
+            rotation: Quaternion.Euler(27,0,0)
+        }))
+        
+        this.baseText.setParent(this.baseMesh)
+
         this.origin = new Vector3(0,0,0)
         this.origin.copyFrom(this.getComponent(Transform).position)
 
@@ -115,32 +181,32 @@ export class VerticalScrollMenu extends Entity {
 
         this.instructions = new Entity()
         this.instructions.addComponent(new Transform({
-            position: new Vector3(-3,0,-0.3),
-            scale: new Vector3(2,2,2)
+            position: new Vector3(-3,0.25,-0.25),
+            scale: new Vector3(1.5,1.5,1.5)
         }))
         this.instructions.addComponent(resource.scrollInstructionShape)
         this.instructions.addComponent(new OnPointerDown( (e) => {    
-            const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)             
+            // const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)             
                   
-            // 'E' to scroll up
-            if(e.buttonId == 1){                         
-                scrollInfo.scrollUp() 
-                this.deselectAll()
-                this.showItem(scrollInfo.currentItem + (this.visibleItemCount -1))
-                this.hideItem(scrollInfo.currentItem - 2)
-            }
-            // 'F' to scroll down
-            if(e.buttonId == 2){                
-                scrollInfo.scrollDown() 
-                this.deselectAll()
-                this.showItem(scrollInfo.currentItem - 1)
-                this.hideItem(scrollInfo.currentItem+this.visibleItemCount)
-            }         
+            // // 'E' to scroll up
+            // if(e.buttonId == 1){                         
+            //     scrollInfo.scrollUp() 
+            //     this.deselectAll()
+            //     this.showItem(scrollInfo.currentItem + (this.visibleItemCount -1))
+            //     this.hideItem(scrollInfo.currentItem - 2)
+            // }
+            // // 'F' to scroll down
+            // if(e.buttonId == 2){                
+            //     scrollInfo.scrollDown() 
+            //     this.deselectAll()
+            //     this.showItem(scrollInfo.currentItem - 1)
+            //     this.hideItem(scrollInfo.currentItem+this.visibleItemCount)
+            // }         
 
         },{distance:40, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
         this.instructions.setParent(this)
         
-        this.maxHeight =this.visibleItemCount * this.verticalSpacing + 1
+        this.maxHeight = this.visibleItemCount * this.verticalSpacing + 1
         this.menuFrame.getComponent(Transform).position.y = this.maxHeight/2 - this.verticalSpacing
         this.menuFrame.getComponent(Transform).scale.y = this.maxHeight
         //this.collider.addComponent()        
@@ -155,6 +221,11 @@ export class VerticalScrollMenu extends Entity {
         this.deselectSound.addComponent(new Transform())
         this.deselectSound.addComponent(sfx.menuDeselectSource)
         this.deselectSound.setParent(this)
+
+        this.scrollEndSound = new Entity()
+        this.scrollEndSound.addComponent(new Transform())
+        this.scrollEndSound.addComponent(sfx.menuScrollEndSource)
+        this.scrollEndSound.setParent(this)
 
     }    
 
@@ -193,22 +264,16 @@ export class VerticalScrollMenu extends Entity {
                     sfx.menuDeselectSource.playOnce()   
                 }                
                           
-            }          
-            // 'E' to scroll up
-            if(e.buttonId == 1){                         
-                scrollInfo.scrollUp() 
-                this.deselectAll()
-                this.showItem(scrollInfo.currentItem + (this.visibleItemCount-1))
-                this.hideItem(scrollInfo.currentItem - 2)
-                sfx.menuUpSource.playOnce()
+            }     
+                 
+            // 'F' to scroll up
+            if(e.buttonId == 2){
+                this.scrollUp()
             }
-            // 'F' to scroll down
-            if(e.buttonId == 2){                
-                scrollInfo.scrollDown() 
-                this.deselectAll()
-                this.showItem(scrollInfo.currentItem - 1)
-                this.hideItem(scrollInfo.currentItem + this.visibleItemCount)
-                sfx.menuDownSource.playOnce()
+
+            // 'E' to scroll down
+            if(e.buttonId == 1){   
+                this.scrollDown()
             }         
 
         },{distance:40, showFeedback:true, hoverText:"SELECT"} ))        
@@ -235,14 +300,68 @@ export class VerticalScrollMenu extends Entity {
         
         if (index > -1) {
             engine.removeEntity(this.items[index])
+            engine.removeEntity(this.itemRoots[index])
             engine.removeEntity(this.clickBoxes[index])
 
             this.items.splice(index, 1)
+            this.itemRoots.splice(index, 1)
             this.clickBoxes.splice(index, 1)
 
             this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length   
             this.currentOffset -= this.verticalSpacing
         }        
+
+    }
+
+    scrollUp(){
+        const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller) 
+        // scrollable
+        if(scrollInfo.currentItem < scrollInfo.stops - 1){                          
+            scrollInfo.scrollUp() 
+            this.deselectAll()
+
+            // show new topmost item
+            this.showItem(scrollInfo.currentItem + (this.visibleItemCount-1))
+
+            // hide bottom item
+            this.hideItem(scrollInfo.currentItem - 2)
+
+            //make the second item from the bottom smaller (avoid clipping through base)
+            this.halveSizeItem(scrollInfo.currentItem -1)   
+
+            sfx.menuUpSource.playOnce()
+        }
+        //reached the end
+        else{
+            this.scrollerRootA.getComponent(Transform).position.y -= 0.3
+            sfx.menuScrollEndSource.playOnce()
+        }
+    }
+
+    scrollDown(){
+        const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller) 
+
+        // scrollable
+        if(scrollInfo.currentItem > 0){             
+            scrollInfo.scrollDown() 
+            this.deselectAll()
+
+            // show new bottom item
+            this.showItem(scrollInfo.currentItem - 1)
+
+            // hide topmost item
+            this.hideItem(scrollInfo.currentItem + this.visibleItemCount)
+
+            // make second item from the bottom full size                    
+            this.fullSizeItem(scrollInfo.currentItem )
+
+            sfx.menuDownSource.playOnce()
+        }
+        //reached the end
+        else{
+            this.scrollerRootA.getComponent(Transform).position.y += 0.3
+            sfx.menuScrollEndSource.playOnce()
+        }
 
     }
 
@@ -296,6 +415,40 @@ export class VerticalScrollMenu extends Entity {
             this.items[_id].getComponent(Transform).position.z  = 2
         }
         
+    }
+    halveSizeItem(_id:number){
+        if(_id < this.items.length && _id >= 0){
+            const originalTransform = this.items[_id].getComponent(AnimatedItem).defaultTransform
+            originalTransform.scale.x = this.items[_id].defaultItemScale.x *0.5 
+            originalTransform.scale.y = this.items[_id].defaultItemScale.y *0.5  
+            originalTransform.scale.z = this.items[_id].defaultItemScale.z *0.5             
+        }
+    }
+    fullSizeItem(_id:number){
+        
+        if(_id < this.items.length && _id >= 0){            
+            this.items[_id].getComponent(AnimatedItem).defaultTransform.scale.copyFrom(this.items[_id].defaultItemScale)
+            
+        }
+    }
+
+    resetScroll(){
+        this.deselectAll()
+        this.scrollerRootA.getComponent(VerticalScroller).reset()
+        //this.scrollerRootA.getComponent(VerticalScroller).base = 0
+        this.scrollerRootA.getComponent(VerticalScroller).scrollStep =  this.verticalSpacing   
+        this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length 
+
+        for (let i=0; i< this.items.length; i++){
+            if(i < this.visibleItemCount){
+                this.showItem(i)
+            }
+            else{
+                this.hideItem(i)
+            }
+            // reset menu item scaling
+            this.items[i].getComponent(AnimatedItem).defaultTransform.scale.copyFrom(this.items[i].defaultItemScale)
+        }
     }
     // showFirstXItems(_count:number){
     //     // only show the first 5 events on init

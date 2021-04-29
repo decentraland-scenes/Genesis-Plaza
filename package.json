@@ -11,20 +11,24 @@
     "ecs:install-next": "npm install --save-dev decentraland-ecs@next"
   },
   "devDependencies": {
-    "decentraland-ecs": "^6.6.5-20210423091651.commit-e5339c0"
+    "decentraland-ecs": "^6.6.5-20210428110245.commit-8eefd48"
   },
   "dependencies": {
+    "@dcl/crypto-scene-utils": "^1.1.1",
     "@dcl/ecs-scene-utils": "^1.6.2-20210408012032.commit-5921be1",
     "@dcl/npc-scene-utils": "^1.4.1-20210426165810.commit-9252b53",
     "@dcl/ui-scene-utils": "^1.7.2-20210421205046.commit-966f879",
     "@types/cannon": "^0.1.5",
     "cannon": "github:schteppe/cannon.js",
     "cors": "^2.8.5",
+    "eth-connect": "^6.0.0",
     "express": "^4.17.1"
   },
   "bundleDependencies": [
     "@dcl/ui-scene-utils",
     "@dcl/npc-scene-utils",
-    "@dcl/ecs-scene-utils"
+    "@dcl/ecs-scene-utils",
+    "@dcl/crypto-scene-utils",
+    "eth-connect"
   ]
 }

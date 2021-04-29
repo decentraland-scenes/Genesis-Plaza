@@ -1,4 +1,26 @@
+import { toHex } from 'eth-connect'
+import * as EthereumController from "@decentraland/EthereumController"
 
+
+let eth = EthereumController
+
+function signMessage(msg: string) {
+
+  executeTask(async () => {
+    const convertedMessage = await eth.convertMessageToObject(msg)
+    const { message, signature } = await eth.signMessage(convertedMessage)
+    log({ message, signature })
+
+    const originalMessageHex = await toHex(msg)
+    const sentMessageHex = await toHex(message)
+    const isEqual = sentMessageHex === originalMessageHex
+    log("Is the message correct?", isEqual)
+    
+  })
+
+}
+
+//signMessage(messageToSign)
 
 export async function getEvents() {
   let events: any[] = []
@@ -24,6 +46,56 @@ export async function getEvents() {
   } catch (e) {
     log('error getting event data ', e)
   }
+}
+
+export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
+  let url = 'https://events.decentraland.org/api/message'
+
+  const messageToSign:EthereumController.MessageDict = {
+    "type": "\"attend\"",
+    "timestamp":"\"" + _timeStamp + "\"",
+    "event":  "\"" + _eventID + "\"" ,
+    "attend": "true"
+  }
+ 
+  
+  log("string message to sign : " + messageToSign)
+
+  //signMessage(messageToSign)
+
+  //const convertedMessage = await eth.convertMessageToObject(messageToSign)
+
+  //log("convertedMessage: " + convertedMessage)
+  const { message, signature } = await eth.signMessage(messageToSign)
+  log("signed message and signature: \n "+ message + "\n"+  signature )
+
+  //const originalMessageHex = await toHex(messageToSign)
+  //const sentMessageHex = await toHex(message)
+  //const isEqual = sentMessageHex === originalMessageHex
+  //log("Is the message correct?", isEqual)
+
+  let body = JSON.stringify({
+    address: "0x7533c4c1d881aaA75d4b039325866b2f8b8C5eC9",
+    message: message,
+    signature: signature
+   
+  })
+
+  log('sending req to: ', url)
+
+  try {
+    let response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: body }),
+    })
+    let data = await response.json()
+   // log(data)
+   
+  }  catch (e) {
+    log('error signing up to event ', e)
+  }
+  
 }
 
 export async function getTrendingScenes(_limit:number) {
@@ -71,5 +143,60 @@ export async function getCurrentTime() {
   } catch (e) {
     log('error getting event data ', e)
   }
+}
+
+export function getTimeStamp():string{
+  var now = new Date()
+  //"2021-04-20T12:07:17.471Z"
+  let year = now.getUTCFullYear()
+  
+  let monthNum = now.getUTCMonth() + 1
+  let month:string = monthNum.toString()
+  if (monthNum < 10){
+    month = ("0" + monthNum) 
+  }
+
+  let dayNum = now.getUTCDate()  
+  let day = dayNum.toString()
+  if (dayNum < 10){
+    day = "0" + dayNum
+  }
+
+  let hourNum = now.getUTCHours()
+  let hour = hourNum.toString()
+  if(hourNum < 10){
+    hour = "0" + hourNum
+  }
+
+  let minuteNum = now.getUTCMinutes()
+  let minute = minuteNum.toString()
+  if(minuteNum < 10){
+    minute = "0" + minuteNum
+  }
+
+  let secondNum = now.getUTCSeconds()
+  let second = secondNum.toString()
+  if(secondNum < 10){
+    second = "0" + secondNum
+  }
+
+  let msNum = now.getUTCSeconds()
+  let milliseconds = secondNum.toString()
+  if(msNum < 100){
+    milliseconds = "0" + msNum
+  }
+  if(msNum < 10){
+    milliseconds = "0" + milliseconds
+  }
+  
+
+
+
+  var utc_timestamp =  year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "." + milliseconds + "Z"
+      
+
+  log("DATE:NOW: " + utc_timestamp)
+
+  return utc_timestamp
 }
 

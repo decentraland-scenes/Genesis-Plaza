@@ -6,11 +6,11 @@ import * as resource from "./resources/resources"
 
 export class MenuItem extends Entity {
     selected:boolean = false
-    
+    defaultItemScale:Vector3
 
     constructor(){
         super()       
-        
+        this.defaultItemScale = new Vector3(2,2,2)
     }
     updateItemInfo(_info:any){
 

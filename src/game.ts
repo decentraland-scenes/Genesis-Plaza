@@ -35,7 +35,7 @@ import {
   endArtistTalk,
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
-import { addPanels } from './modules/bar/panels'
+
 
 //////// LOG PLAYER POSITION
 
@@ -124,7 +124,7 @@ export function insideBar() {
     addBarNPCs()
   }
 
-  addPanels()
+  
   placeJukeBox()
   addMicFeedback()
 }
