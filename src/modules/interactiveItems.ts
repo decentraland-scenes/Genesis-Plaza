@@ -16,7 +16,7 @@ const errorSound = new Sound(new AudioClip("sounds/interactiveItems/error.mp3"))
 const input = Input.instance
 
 input.subscribe("BUTTON_DOWN", ActionButton.PRIMARY, true, (event) => {
-  // log("Hit Point: ", event.hit.hitPoint)
+  log("Hit Point: ", event.hit.hitPoint)
   if (Player.holdingItem && event.hit) {
     if (event.hit.normal.y > 0.99) {
       for (let i = 0; i < beerGlasses.length; i++) {
@@ -86,7 +86,7 @@ export function addPunchBag(): void {
 
   // User variables
   let forwardVector: Vector3 = Vector3.Forward().rotate(Camera.instance.rotation) // Camera's forward vector
-  let vectorScale: number = 20
+  let vectorScale: number = 12.5
 
   /// --- NEEDS REFACTORING ---
   // Allow the user to interact with the ball

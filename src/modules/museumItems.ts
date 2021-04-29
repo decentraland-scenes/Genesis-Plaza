@@ -740,28 +740,6 @@ export function placeGardenPieces() {
     35
   )
 
-  let creatorProgram = new Entity()
-  creatorProgram.addComponent(
-    new Transform({
-      position: new Vector3(126.24, 2, 30.6),
-      rotation: Quaternion.Euler(0, 45 + 270, 0),
-    })
-  )
-  creatorProgram.addComponent(
-    new GLTFShape('models/garden/creator-contest.glb')
-  )
-  engine.addEntity(creatorProgram)
-  creatorProgram.addComponent(
-    new OnPointerDown(
-      (e) => {
-        openExternalURL(
-          'https://decentraland.org/blog/announcements/introducing-the-decentraland-content-creator-program/'
-        )
-      },
-      { hoverText: 'Learn more', button: ActionButton.PRIMARY }
-    )
-  )
-
   let builderLink = new Entity()
   builderLink.addComponent(
     new Transform({
