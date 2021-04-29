@@ -10,13 +10,13 @@ export enum Radios {
   JAZZ = 'https://live.vegascity.fm/radio/8010/the_flamingos.mp3',
 }
 
-let FullVolume = 0.2
-let DistantVolume = 0.07
+let FullVolume = 0.1
+let DistantVolume = 0.03
 
 export let isInBar: boolean = false
 let barCurrentRadio: Radios | null = Radios.RAVE
 let barCurrentRadioIndex: number = 0
-let radioCount = 5
+let radioCount = 4
 let radioIsOn: boolean = true
 
 const barMusicStreamEnt = new Entity()
