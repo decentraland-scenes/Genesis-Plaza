@@ -11,7 +11,7 @@
     "ecs:install-next": "npm install --save-dev decentraland-ecs@next"
   },
   "devDependencies": {
-    "decentraland-ecs": "^6.6.5-20210423091651.commit-e5339c0"
+    "decentraland-ecs": "^6.6.5-20210428110245.commit-8eefd48"
   },
   "dependencies": {
     "@dcl/crypto-scene-utils": "^1.1.1",

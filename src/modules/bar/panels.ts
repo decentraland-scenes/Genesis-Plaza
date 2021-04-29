@@ -1,7 +1,25 @@
-export function addPanels() {
-  let boardMaterial = new Material()
-  boardMaterial.albedoTexture = new Texture('images/tempPlaceholder.png')
-  boardMaterial.roughness = 1
+
+export function addPanels(
+  _tex1:Texture, 
+  _tex2:Texture, 
+  _tex3:Texture, 
+  _tex4:Texture) {
+
+  let boardMaterial1 = new Material()
+  boardMaterial1.albedoTexture = _tex1
+  boardMaterial1.roughness = 1
+  
+  let boardMaterial2 = new Material()
+  boardMaterial2.albedoTexture = _tex2
+  boardMaterial2.roughness = 1
+
+  let boardMaterial3 = new Material()
+  boardMaterial3.albedoTexture = _tex3
+  boardMaterial3.roughness = 1
+
+  let boardMaterial4 = new Material()
+  boardMaterial4.albedoTexture = _tex4
+  boardMaterial4.roughness = 1
 
   //board 1
   let board1 = new Entity()
@@ -13,7 +31,7 @@ export function addPanels() {
       scale: new Vector3(2.8, 1.55, 1.55),
     })
   )
-  board1.addComponent(boardMaterial)
+  board1.addComponent(boardMaterial1)
 
   engine.addEntity(board1)
   board1.getComponent(Transform).rotate(new Vector3(1, 0, 0), 33)
@@ -28,7 +46,7 @@ export function addPanels() {
       scale: new Vector3(2.8, 1.55, 1.55),
     })
   )
-  board2.addComponent(boardMaterial)
+  board2.addComponent(boardMaterial2)
 
   engine.addEntity(board2)
   board2.getComponent(Transform).rotate(new Vector3(1, 0, 0), 33)
@@ -43,7 +61,7 @@ export function addPanels() {
       scale: new Vector3(2.8, 1.55, 1.55),
     })
   )
-  board3.addComponent(boardMaterial)
+  board3.addComponent(boardMaterial3)
 
   engine.addEntity(board3)
   board3.getComponent(Transform).rotate(new Vector3(1, 0, 0), 33)
@@ -58,7 +76,7 @@ export function addPanels() {
       scale: new Vector3(2.8, 1.55, 1.55),
     })
   )
-  board4.addComponent(boardMaterial)
+  board4.addComponent(boardMaterial4)
 
   engine.addEntity(board4)
   board4.getComponent(Transform).rotate(new Vector3(1, 0, 0), 33)

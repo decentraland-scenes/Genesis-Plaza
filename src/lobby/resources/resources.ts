@@ -6,8 +6,12 @@ export let roundedSquareAlpha = new Texture ("images/rounded_alpha_square.png")
 export let dummySceneBG = new Texture ("images/dummy_scene.png")
 export let beamUIBG = new Texture ("images/ui_beam_up_bg.png")
 
+//SOCIAL LINKS
+export let discordShape =           new GLTFShape(modelFolder + "icons/discord.glb")
+export let twitterShape =           new GLTFShape(modelFolder + "icons/twitter.glb")
+
 //BEAM
-export let portalSpiralShape=       new GLTFShape(modelFolder + "portal_lift_spiral.glb")
+export let portalSpiralShape =      new GLTFShape(modelFolder + "portal_lift_spiral.glb")
 export let beamShape =              new GLTFShape(modelFolder + "beam.glb")
 
 //MENU
@@ -29,6 +33,7 @@ export let liveSignShape =          new GLTFShape(modelFolder + "live_bg.glb")
 export let timePanelShape =         new GLTFShape(modelFolder + "time_panel.glb")
 export let scrollInstructionShape = new GLTFShape(modelFolder + "scroll_instructions.glb")
 export let playerCounterBGShape =   new GLTFShape(modelFolder + "player_counter_bg.glb")
+export let refreshShape =           new GLTFShape(modelFolder + "refresh_button.glb")
 
 // CLOUDS
 export let cloudDissolveShape=      new GLTFShape(modelFolder + "cloud_dissolve.glb")
@@ -43,7 +48,7 @@ export let vortex2Shape=            new GLTFShape(modelFolder + "vortex2.glb")
 
 
 export const dateBGColor:Color3 = Color3.FromHexString("#cdcdcd")
-export const dateMonthColor:Color3 = Color3.FromHexString("#333333")
+export const dateMonthColor:Color3 = Color3.FromHexString("#ff3333")
 export const dateDayColor:Color3 = Color3.FromHexString("#000000")
 
 export let dateUIBGMaterial = new Material()

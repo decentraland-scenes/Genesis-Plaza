@@ -6,6 +6,10 @@ const menuDownClip = new AudioClip('sounds/menu_woosh.mp3')
 export const menuDownSource = new AudioSource(menuDownClip)
 menuDownSource.volume = 1
 
+const menuScrollEndClip = new AudioClip('sounds/menu_scroll_end.mp3')
+export const menuScrollEndSource = new AudioSource(menuScrollEndClip)
+menuScrollEndSource.volume = 1
+
 const menuSelectClip = new AudioClip('sounds/menu_select.mp3')
 export const menuSelectSource = new AudioSource(menuSelectClip)
 menuSelectSource.volume = 1

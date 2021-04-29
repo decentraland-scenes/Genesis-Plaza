@@ -52,6 +52,7 @@ export class EventMenuItem extends MenuItem {
     startTimeText:TextShape
     detailTitle:TextShape
     detailTextContent:TextShape
+    
 
     constructor(
         _transform:TranformConstructorArgs,        
@@ -70,6 +71,8 @@ export class EventMenuItem extends MenuItem {
         }))
         this.itemBox.addComponent(resource.menuTitleBGShape)
         this.itemBox.setParent(this)
+        
+        this.defaultItemScale = new Vector3(2,2,2)
 
         this.scale = new Vector3(1,0.5,1)
         this.scaleMultiplier = 1.2
@@ -119,7 +122,7 @@ export class EventMenuItem extends MenuItem {
 
         this.dateMonthRoot = new Entity()
         this.dateMonthRoot.addComponent(new Transform({
-            position: new Vector3(0,0.2,-0.05)
+            position: new Vector3(0,0.25,-0.05)
         }))
         this.dateMonthRoot.setParent(this.dateBG)      
 
@@ -155,7 +158,7 @@ export class EventMenuItem extends MenuItem {
         this.addComponent(new AnimatedItem(
             {
                 position: new Vector3(0,0,0),
-                scale: new Vector3(2,2,2)
+                scale: new Vector3(this.defaultItemScale.x, this.defaultItemScale.y, this.defaultItemScale.z)
             },
             {
                 position: new Vector3(0,0,-0.6),
@@ -171,7 +174,7 @@ export class EventMenuItem extends MenuItem {
         
         this.timePanel = new Entity()
         this.timePanel.addComponent(new Transform({
-            position: new Vector3(-0.4, 0, -0.1),
+            position: new Vector3(-0.4, 0, -0.2),
             rotation: Quaternion.Euler(0,-30,0)
         }))
         this.timePanel.addComponent(resource.timePanelShape)
@@ -183,7 +186,7 @@ export class EventMenuItem extends MenuItem {
                 scale: new Vector3(0,0,0)
             },
             {
-                position: new Vector3(-1.1, 0.25, -0.1),
+                position: new Vector3(-1.1, 0.25, -0.2),
                 scale: new Vector3(1,1,1)
             },
             2
@@ -327,8 +330,8 @@ export class EventMenuItem extends MenuItem {
             this.jumpButtonTextShape.value = "SIGN UP"
             this.jumpInButton.addComponent(new OnPointerDown( 
                 async function (){                    
-                    rsvpToEvent(_event.id, getTimeStamp())
-                   // openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
+                   // rsvpToEvent(_event.id, getTimeStamp())
+                   openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
                 },
                 {
                     button: ActionButton.POINTER,
@@ -394,7 +397,7 @@ export class EventMenuItem extends MenuItem {
         
         this.detailText = new Entity()
         this.detailText.addComponent(new Transform({
-            position: new Vector3(0.1,0.5,0),
+            position: new Vector3(0.1,0.48,0),
             scale: new Vector3(0.4, 0.4, 0.4)
         }))
         this.detailText.addComponent( this.detailTextContent)        
@@ -468,8 +471,8 @@ export class EventMenuItem extends MenuItem {
             this.jumpInButton.getComponent(OnPointerDown).callback =  
                 async function () {
                     
-                    rsvpToEvent(_event.id, getTimeStamp())
-                   // openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
+                   // rsvpToEvent(_event.id, getTimeStamp())
+                    openExternalURL("https://events.decentraland.org/en/?event=" + _event.id)
                   }
             this.jumpInButton.getComponent(OnPointerDown).hoverText = "CHECK EVENT PAGE"
             this.jumpInButton.getComponent(OnPointerDown).button = ActionButton.POINTER

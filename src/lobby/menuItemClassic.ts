@@ -32,6 +32,7 @@ export class ClassicMenuItem extends MenuItem {
         super()
         this.addComponent(new Transform(_transform))        
         
+        this.defaultItemScale = new Vector3(1,1,1)
         // event card root
         this.itemBox = new Entity()
         this.itemBox.addComponent(new Transform({
@@ -52,7 +53,7 @@ export class ClassicMenuItem extends MenuItem {
         this.addComponent(new AnimatedItem(
             {
                 position: new Vector3(0,0,-0.2),
-                scale: new Vector3(1,1,1)
+                scale: new Vector3(this.defaultItemScale.x, this.defaultItemScale.y, this.defaultItemScale.z)
             },
             {
                 position: new Vector3(-0.7,0,-0.2),

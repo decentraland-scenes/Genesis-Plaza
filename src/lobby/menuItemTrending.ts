@@ -47,6 +47,7 @@ export class TrendingMenuItem extends MenuItem {
         super()
         this.addComponent(new Transform(_transform))        
         
+        this.defaultItemScale = new Vector3(2,2,2)
         // event card root
         this.itemBox = new Entity()
         this.itemBox.addComponent(new Transform({
@@ -139,7 +140,7 @@ export class TrendingMenuItem extends MenuItem {
         this.addComponent(new AnimatedItem(
             {
                 position: new Vector3(0,0,0),
-                scale: new Vector3(2,2,2)
+                scale: new Vector3(this.defaultItemScale.x, this.defaultItemScale.y, this.defaultItemScale.z)
             },
             {
                 position: new Vector3(0,0,-0.6),

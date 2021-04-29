@@ -16,9 +16,38 @@ import * as resource from "./resources/resources"
 const portalControl = new TeleportController()
 
 const menuScale = 1.2
-
 const center = new Vector3(lobbyCenter.x, lobbyHeight+1.5, lobbyCenter.z)
 
+// SOCIAL LINKS
+let discordLink = new Entity()
+discordLink.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x-1, lobbyHeight+1, lobbyCenter.z-13.32)
+}))
+discordLink.addComponent(resource.discordShape)
+discordLink.addComponent(
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://discordapp.com/invite/9EcuFgC')
+    },
+    { hoverText: 'Join the Discussion', button: ActionButton.POINTER }
+  )
+)
+engine.addEntity(discordLink)
+
+let twitterLink = new Entity()
+twitterLink.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x+1.38, lobbyHeight+1, lobbyCenter.z-13.3)
+}))
+twitterLink.addComponent(resource.twitterShape)
+twitterLink.addComponent(
+  new OnPointerDown(
+    (e) => {
+      openExternalURL('https://twitter.com/decentraland')
+    },
+    { hoverText: 'Follow Us!', button: ActionButton.POINTER }
+  )
+)
+engine.addEntity(twitterLink)
 
 // WATER VORTEXES
 let vortex1 = new Entity()

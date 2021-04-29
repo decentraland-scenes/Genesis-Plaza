@@ -51,35 +51,28 @@ export async function getEvents() {
 export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
   let url = 'https://events.decentraland.org/api/message'
 
-  // const messageToSign = 
-  //   "{\"type\":\"attend\",\"timestamp\":\""+ _timeStamp + "\",\"event\":\"" + _eventID + "\",\"attend\":true}"
-    
-    // const messageToSign = `# DCL Signed message
-    // Attacker: 10
-    // Defender: 123
-    // Timestamp: 1512345678`
-
-  const messageToSign = `# DCL Signed message
-    type: "attend",
-    timestamp:\"`+  _timeStamp + `\",
-    event: \"` + _eventID +`\",
-    attend: true`
+  const messageToSign:EthereumController.MessageDict = {
+    "type": "\"attend\"",
+    "timestamp":"\"" + _timeStamp + "\"",
+    "event":  "\"" + _eventID + "\"" ,
+    "attend": "true"
+  }
  
   
-  log("string message : " + messageToSign)
+  log("string message to sign : " + messageToSign)
 
   //signMessage(messageToSign)
 
-  const convertedMessage = await eth.convertMessageToObject(messageToSign)
+  //const convertedMessage = await eth.convertMessageToObject(messageToSign)
 
-  log("convertedMessage: " + convertedMessage)
-  const { message, signature } = await eth.signMessage(convertedMessage)
+  //log("convertedMessage: " + convertedMessage)
+  const { message, signature } = await eth.signMessage(messageToSign)
   log("signed message and signature: \n "+ message + "\n"+  signature )
 
-  const originalMessageHex = await toHex(messageToSign)
-  const sentMessageHex = await toHex(message)
-  const isEqual = sentMessageHex === originalMessageHex
-  log("Is the message correct?", isEqual)
+  //const originalMessageHex = await toHex(messageToSign)
+  //const sentMessageHex = await toHex(message)
+  //const isEqual = sentMessageHex === originalMessageHex
+  //log("Is the message correct?", isEqual)
 
   let body = JSON.stringify({
     address: "0x7533c4c1d881aaA75d4b039325866b2f8b8C5eC9",
