@@ -18,18 +18,22 @@
         "node_modules\\@dcl\\ecs-scene-utils\\dist\\index.d.ts"
       ],
       "@dcl/crypto-scene-utils": [
-        "node_modules\\@dcl\\crypto-scene-utils\\dist\\index.d.ts"
+        "node_modules\\@dcl\\crypto-scene-utils\\dist\\index.d.ts",
+        "node_modules/@dcl/crypto-scene-utils/dist/index.d.ts"
       ],
       "eth-connect": [
-        "node_modules\\eth-connect\\eth-connect.d.ts"
+        "node_modules\\eth-connect\\eth-connect.d.ts",
+        "node_modules/eth-connect/eth-connect.d.ts"
       ]
     },
     "baseUrl": "."
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts"
   ],
-  "files": ["node_modules/cannon/build/cannon.min.js"],
+  "files": [
+    "node_modules/cannon/build/cannon.min.js"
+  ],
   "extends": "./node_modules/decentraland-ecs/types/tsconfig.json",
   "compileOnSave": false
 }

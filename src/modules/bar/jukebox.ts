@@ -10,8 +10,8 @@ export enum Radios {
   JAZZ = 'https://live.vegascity.fm/radio/8010/the_flamingos.mp3',
 }
 
-let FullVolume = 0.25
-let DistantVolume = 0.1
+let FullVolume = 0.2
+let DistantVolume = 0.07
 
 export let isInBar: boolean = false
 let barCurrentRadio: Radios | null = Radios.RAVE
@@ -333,31 +333,33 @@ function getRadioName(radio: number) {
   return radioName
 }
 
-
-
-export function addMicFeedback(){
-
-  let feedback = new AudioClip("sounds/micFeedback.mp3")
+export function addMicFeedback() {
+  let feedback = new AudioClip('sounds/micFeedback.mp3')
   feedback.loop = false
   feedback.volume = 1
 
   let mic = new Entity()
   mic.addComponent(new BoxShape())
-  mic.addComponent(new Transform({
-    position: new Vector3(160, 2.2, 167.7),
-    scale: new Vector3(0.35, 0.35, 0.35)
-  }))
+  mic.addComponent(
+    new Transform({
+      position: new Vector3(160, 2.2, 167.7),
+      scale: new Vector3(0.35, 0.35, 0.35),
+    })
+  )
   mic.addComponent(new AudioSource(feedback))
 
-  mic.addComponent(new OnPointerDown(
-    ()=>{
-      feedback.volume = 1
-      mic.getComponent(AudioSource).playOnce()
-      sceneMessageBus.emit('micFeedback', {})
-    }, {
-      hoverText: "Use mic"
-    }
-  ))
+  mic.addComponent(
+    new OnPointerDown(
+      () => {
+        feedback.volume = 1
+        mic.getComponent(AudioSource).playOnce()
+        sceneMessageBus.emit('micFeedback', {})
+      },
+      {
+        hoverText: 'Use mic',
+      }
+    )
+  )
   mic.addComponent(invisibleMaterial)
   engine.addEntity(mic)
 
@@ -365,9 +367,5 @@ export function addMicFeedback(){
     if (!isInBar) return
     feedback.volume = 0.2
     mic.getComponent(AudioSource).playOnce()
-    
   })
-
-
-
 }
