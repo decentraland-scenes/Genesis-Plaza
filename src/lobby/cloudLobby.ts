@@ -66,11 +66,6 @@ vortex1.addComponent(new Transform({
   position: new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
 }))
 vortex1.addComponent(resource.vortex1Shape)
-vortex1.addComponent(sfx.lobbyAmbienceSource)
-
-sfx.lobbyAmbienceSource.loop = true
-sfx.lobbyAmbienceSource.playing = true
-
 engine.addEntity(vortex1)
 
 let vortex2 = new Entity()

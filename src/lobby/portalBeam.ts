@@ -17,7 +17,18 @@ export class DelayedTriggerBox{
     }
 
 }
+// AMBIENT SOUND, WATER + BIRDS
+let ambienceBox = new Entity()
+ambienceBox.addComponent(sfx.lobbyAmbienceSource)
+ambienceBox.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
+}))
+sfx.lobbyAmbienceSource.loop = true
+sfx.lobbyAmbienceSource.playing = true
 
+engine.addEntity(ambienceBox)
+
+// LOBBY MUSIC
 let musicBox = new Entity()
 musicBox.addComponent(new Transform({
   position: new Vector3(lobbyCenter.x, lobbyHeight+2, lobbyCenter.z)
@@ -28,6 +39,7 @@ sfx.lobbyMusicSource.playing = true
 
 engine.addEntity(musicBox)
 
+// BEAM MESH
 let beam = new Entity()
 beam.addComponent(new Transform({
   position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z)
@@ -58,8 +70,10 @@ export class TeleportController {
           () => {
               movePlayerTo({ x: lobbyCenter.x+5, y: 140, z: lobbyCenter.z-10 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
               sfx.lobbyMusicSource.playing = true
+              sfx.lobbyAmbienceSource.playing = true
               //enable fall sound trigger
               this.triggerBoxFallCheck.active = true
+
           }
       )
       this.triggerBoxUp.addComponent(new DelayedTriggerBox(3))
@@ -73,6 +87,7 @@ export class TeleportController {
           () => {
               movePlayerTo({ x: lobbyCenter.x-5, y: 0, z: lobbyCenter.z+2 }, {x:lobbyCenter.x, y:2, z:lobbyCenter.z-12})
               sfx.lobbyMusicSource.playing = false
+              sfx.lobbyAmbienceSource.playing = false
               this.impactSound.getComponent(AudioSource).playOnce()
           }
       )
@@ -84,10 +99,12 @@ export class TeleportController {
           new Vector3(6, 10, 6),
           () => {
               sfx.lobbyMusicSource.playing = false
+              sfx.lobbyAmbienceSource.playing = false
               this.beamFallSound.getComponent(AudioSource).playOnce()
 
               //disable after one fire
               this.triggerBoxFallCheck.active = false
+              
           }
       )
       engine.addEntity(this.triggerBoxFallCheck)
