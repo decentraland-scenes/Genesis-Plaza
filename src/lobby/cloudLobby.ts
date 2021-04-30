@@ -8,7 +8,7 @@ import {
   createClassicsVerticalMenu, 
   fillClassicsMenu, 
   updateCrowdsMenu} 
-  from './eventBoard'
+  from './menuMainFunctions'
   
 import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 import * as resource from "./resources/resources"
@@ -76,7 +76,7 @@ let eventsMenu = createEventsVerticalMenu({
     scale: new Vector3(menuScale,menuScale,menuScale)
     }    
   )
-updateEventsMenu(eventsMenu)
+updateEventsMenu(eventsMenu, 10, true)
 //fillEventsMenu(eventsMenu)    
 
 

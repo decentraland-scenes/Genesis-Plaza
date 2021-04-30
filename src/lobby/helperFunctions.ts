@@ -28,6 +28,16 @@ export function splitTextIntoLines(
   return finalText
 }
 
+export function cleanString(input) {
+  var output = "";
+  for (var i=0; i<input.length; i++) {
+      if (input.charCodeAt(i) <= 127 || input.charCodeAt(i) >= 160 && input.charCodeAt(i) <= 255) {
+          output += input.charAt(i);
+      }
+  }
+  return output;
+}
+
 export function wordWrap(str:string, maxWidth:number, maxLines:number) {
   let newLineStr = "\n"
   let done = false 
