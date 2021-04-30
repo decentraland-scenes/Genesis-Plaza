@@ -100,7 +100,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }           
 
-        },{distance:40, showFeedback:false} ))  
+        },{distance:20, showFeedback:false} ))  
 
         this.menuFrame.setParent(this)
         this.menuFrame.addComponent(sfx.menuDownSource)
@@ -142,7 +142,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }           
 
-        },{distance:40, showFeedback:false} ))  
+        },{distance:20, showFeedback:false} ))  
         this.baseMesh.setParent(this)
 
         this.baseText = new Entity
@@ -178,29 +178,24 @@ export class VerticalScrollMenu extends Entity {
 
         this.instructions = new Entity()
         this.instructions.addComponent(new Transform({
-            position: new Vector3(-3,0.25,-0.25),
-            scale: new Vector3(1.5,1.5,1.5)
+            position: new Vector3(-3,0.25,-0.3),
+            scale: new Vector3(1.5,1.5,1.5),
+            rotation: Quaternion.Euler(0,-10,0)
         }))
         this.instructions.addComponent(resource.scrollInstructionShape)
-        this.instructions.addComponent(new OnPointerDown( (e) => {    
-            // const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)             
+        this.instructions.addComponent(new OnPointerDown( (e) => {  
                   
-            // // 'E' to scroll up
-            // if(e.buttonId == 1){                         
-            //     scrollInfo.scrollUp() 
-            //     this.deselectAll()
-            //     this.showItem(scrollInfo.currentItem + (this.visibleItemCount -1))
-            //     this.hideItem(scrollInfo.currentItem - 2)
-            // }
-            // // 'F' to scroll down
-            // if(e.buttonId == 2){                
-            //     scrollInfo.scrollDown() 
-            //     this.deselectAll()
-            //     this.showItem(scrollInfo.currentItem - 1)
-            //     this.hideItem(scrollInfo.currentItem+this.visibleItemCount)
-            // }         
+            // 'F' to scroll up
+            if(e.buttonId == 2){
+                this.scrollUp()
+            }
 
-        },{distance:40, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
+            // 'E' to scroll down
+            if(e.buttonId == 1){   
+                this.scrollDown()
+            }         
+
+        },{distance:20, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
         this.instructions.setParent(this)
         
         this.maxHeight = this.visibleItemCount * this.verticalSpacing + 1
@@ -273,7 +268,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }         
 
-        },{distance:40, showFeedback:true, hoverText:"SELECT"} ))        
+        },{distance:20, showFeedback:true, hoverText:"SELECT"} ))        
 
         
         this.items.push(_item)

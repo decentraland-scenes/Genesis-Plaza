@@ -18,6 +18,16 @@ export class DelayedTriggerBox{
 
 }
 
+let musicBox = new Entity()
+musicBox.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x, lobbyHeight+2, lobbyCenter.z)
+}))
+musicBox.addComponent(sfx.lobbyMusicSource)
+sfx.lobbyMusicSource.loop = true
+sfx.lobbyMusicSource.playing = true
+
+engine.addEntity(musicBox)
+
 let beam = new Entity()
 beam.addComponent(new Transform({
   position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z)
@@ -47,7 +57,7 @@ export class TeleportController {
           new Vector3(6, 4.5, 6),
           () => {
               movePlayerTo({ x: lobbyCenter.x+5, y: 140, z: lobbyCenter.z-10 }, {x:lobbyCenter.x, y:80, z:lobbyCenter.z} )
-
+              sfx.lobbyMusicSource.playing = true
               //enable fall sound trigger
               this.triggerBoxFallCheck.active = true
           }
@@ -62,6 +72,7 @@ export class TeleportController {
           new Vector3(6, 6, 6),
           () => {
               movePlayerTo({ x: lobbyCenter.x-5, y: 0, z: lobbyCenter.z+2 }, {x:lobbyCenter.x, y:2, z:lobbyCenter.z-12})
+              sfx.lobbyMusicSource.playing = false
               this.impactSound.getComponent(AudioSource).playOnce()
           }
       )
@@ -72,6 +83,7 @@ export class TeleportController {
           new Vector3(lobbyCenter.x, lobbyCenter.y+90, lobbyCenter.z),
           new Vector3(6, 10, 6),
           () => {
+              sfx.lobbyMusicSource.playing = false
               this.beamFallSound.getComponent(AudioSource).playOnce()
 
               //disable after one fire
