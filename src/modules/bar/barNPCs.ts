@@ -469,6 +469,31 @@ export let OctoHi: Dialog[] = [
   },
 ]
 
+export let OctoComments: Dialog[] = [
+  {
+    name: 'firstBeer',
+    text:
+      'Hey you found a mug!\nYou`re welcome to jump behind the bar, put the mug under a tap and and pour yourself one.',
+    // isFixedScreen: true,
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  {
+    name: 'firstServe',
+    text: 'Hit F to drink up.',
+    // isFixedScreen: true,
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  {
+    name: 'thirdBeer',
+    text: 'Wohooo pace your self a little buddy.',
+    // isFixedScreen: true,
+    skipable: true,
+    isEndOfDialog: true,
+  },
+]
+
 export let DogeTalk: Dialog[] = [
   {
     text:
@@ -643,12 +668,12 @@ export let wearabesCTalk: Dialog[] = [
     // had to add a dummy to skip to
     name: 'default',
     text:
-      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others.',
     skipable: true,
   },
   {
     text:
-      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others',
+      'I always say <i>“you are what you wear”</i>. So true.\nDressing up is all about expressing who you want to be in the eyes of others.',
     skipable: true,
   },
   {
@@ -658,7 +683,7 @@ export let wearabesCTalk: Dialog[] = [
   },
   {
     text:
-      'And you, who do your clothes say you are? <i>Have a think about that, hun</i>.',
+      'And you, who do your clothes say you are?\n<i>Have a think about that, hun</i>.',
     skipable: true,
     isEndOfDialog: true,
 
