@@ -170,7 +170,7 @@ export function placeDoors() {
       right_door2.open()
     } else {
       right_door1.close()
-      right_door2.open()
+      right_door2.close()
     }
   })
 
