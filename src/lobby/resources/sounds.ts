@@ -1,3 +1,11 @@
+const lobbyMusicClip = new AudioClip('sounds/lobby_music.mp3')
+export const lobbyMusicSource = new AudioSource(lobbyMusicClip)
+lobbyMusicSource.volume = 1
+
+const lobbyAmbienceClip = new AudioClip('sounds/lobby_ambience.mp3')
+export const lobbyAmbienceSource = new AudioSource(lobbyAmbienceClip)
+lobbyAmbienceSource.volume = 1
+
 const menuUpClip = new AudioClip('sounds/menu_woosh_up.mp3')
 export const menuUpSource = new AudioSource(menuUpClip)
 menuUpSource.volume = 1

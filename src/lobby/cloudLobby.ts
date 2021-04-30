@@ -12,6 +12,7 @@ import {
   
 import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 import * as resource from "./resources/resources"
+import * as sfx from "./resources/sounds"
 
 const portalControl = new TeleportController()
 
@@ -49,12 +50,27 @@ twitterLink.addComponent(
 )
 engine.addEntity(twitterLink)
 
+
+
+//DIVING SIGN
+let divingSign = new Entity()
+divingSign.addComponent(new Transform({
+  position: new Vector3(lobbyCenter.x-1.2, lobbyHeight-0.5, lobbyCenter.z-6.4)
+}))
+divingSign.addComponent(resource.divingSignShape)
+engine.addEntity(divingSign)
+
 // WATER VORTEXES
 let vortex1 = new Entity()
 vortex1.addComponent(new Transform({
   position: new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
 }))
 vortex1.addComponent(resource.vortex1Shape)
+vortex1.addComponent(sfx.lobbyAmbienceSource)
+
+sfx.lobbyAmbienceSource.loop = true
+sfx.lobbyAmbienceSource.playing = true
+
 engine.addEntity(vortex1)
 
 let vortex2 = new Entity()

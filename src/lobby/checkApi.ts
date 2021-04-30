@@ -1,24 +1,21 @@
-import { toHex } from 'eth-connect'
-import * as EthereumController from "@decentraland/EthereumController"
 
 
-let eth = EthereumController
 
-function signMessage(msg: string) {
+// function signMessage(msg: string) {
 
-  executeTask(async () => {
-    const convertedMessage = await eth.convertMessageToObject(msg)
-    const { message, signature } = await eth.signMessage(convertedMessage)
-    log({ message, signature })
+//   executeTask(async () => {
+//     const convertedMessage = await eth.convertMessageToObject(msg)
+//     const { message, signature } = await eth.signMessage(convertedMessage)
+//     log({ message, signature })
 
-    const originalMessageHex = await toHex(msg)
-    const sentMessageHex = await toHex(message)
-    const isEqual = sentMessageHex === originalMessageHex
-    log("Is the message correct?", isEqual)
+//     const originalMessageHex = await toHex(msg)
+//     const sentMessageHex = await toHex(message)
+//     const isEqual = sentMessageHex === originalMessageHex
+//     log("Is the message correct?", isEqual)
     
-  })
+//   })
 
-}
+// }
 
 //signMessage(messageToSign)
 
@@ -48,55 +45,55 @@ export async function getEvents(_count:number) {
   }
 }
 
-export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
-  let url = 'https://events.decentraland.org/api/message'
+// export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
+//   let url = 'https://events.decentraland.org/api/message'
 
-  const messageToSign:EthereumController.MessageDict = {
-    "type": "\"attend\"",
-    "timestamp":"\"" + _timeStamp + "\"",
-    "event":  "\"" + _eventID + "\"" ,
-    "attend": "true"
-  }
+//   const messageToSign:EthereumController.MessageDict = {
+//     "type": "\"attend\"",
+//     "timestamp":"\"" + _timeStamp + "\"",
+//     "event":  "\"" + _eventID + "\"" ,
+//     "attend": "true"
+//   }
  
   
-  log("string message to sign : " + messageToSign)
+//   log("string message to sign : " + messageToSign)
 
-  //signMessage(messageToSign)
+//   //signMessage(messageToSign)
 
-  //const convertedMessage = await eth.convertMessageToObject(messageToSign)
+//   //const convertedMessage = await eth.convertMessageToObject(messageToSign)
 
-  //log("convertedMessage: " + convertedMessage)
-  const { message, signature } = await eth.signMessage(messageToSign)
-  log("signed message and signature: \n "+ message + "\n"+  signature )
+//   //log("convertedMessage: " + convertedMessage)
+//   const { message, signature } = await eth.signMessage(messageToSign)
+//   log("signed message and signature: \n "+ message + "\n"+  signature )
 
-  //const originalMessageHex = await toHex(messageToSign)
-  //const sentMessageHex = await toHex(message)
-  //const isEqual = sentMessageHex === originalMessageHex
-  //log("Is the message correct?", isEqual)
+//   //const originalMessageHex = await toHex(messageToSign)
+//   //const sentMessageHex = await toHex(message)
+//   //const isEqual = sentMessageHex === originalMessageHex
+//   //log("Is the message correct?", isEqual)
 
-  let body = JSON.stringify({
-    address: "0x0000000000000000000000000000000000000000",    
-    message: message,
-    signature: signature
+//   let body = JSON.stringify({
+//     address: "0x0000000000000000000000000000000000000000",    
+//     message: message,
+//     signature: signature
    
-  })
+//   })
 
-  log('sending req to: ', url)
+//   log('sending req to: ', url)
 
-  try {
-    let response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: body }),
-    })
-    let data = await response.json()
-   // log(data)
+//   try {
+//     let response = await fetch(url, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ message: body }),
+//     })
+//     let data = await response.json()
+//    // log(data)
    
-  }  catch (e) {
-    log('error signing up to event ', e)
-  }
+//   }  catch (e) {
+//     log('error signing up to event ', e)
+//   }
   
-}
+// }
 
 export async function getTrendingScenes(_limit:number) {
   let trendingScenes: any[] = []

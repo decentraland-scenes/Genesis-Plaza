@@ -100,7 +100,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }           
 
-        },{distance:40, showFeedback:false} ))  
+        },{distance:20, showFeedback:false} ))  
 
         this.menuFrame.setParent(this)
         this.menuFrame.addComponent(sfx.menuDownSource)
@@ -142,7 +142,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }           
 
-        },{distance:40, showFeedback:false} ))  
+        },{distance:20, showFeedback:false} ))  
         this.baseMesh.setParent(this)
 
         this.baseText = new Entity
@@ -200,7 +200,7 @@ export class VerticalScrollMenu extends Entity {
             //     this.hideItem(scrollInfo.currentItem+this.visibleItemCount)
             // }         
 
-        },{distance:40, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
+        },{distance:20, showFeedback:true, hoverText:"USE E/F TO SCROLL EVENTS"} ))   
         this.instructions.setParent(this)
         
         this.maxHeight = this.visibleItemCount * this.verticalSpacing + 1
@@ -273,7 +273,7 @@ export class VerticalScrollMenu extends Entity {
                 this.scrollDown()
             }         
 
-        },{distance:40, showFeedback:true, hoverText:"SELECT"} ))        
+        },{distance:20, showFeedback:true, hoverText:"SELECT"} ))        
 
         
         this.items.push(_item)

@@ -5,7 +5,7 @@ import * as resource from "./resources/resources"
 import { MenuItem } from "./menuItem"
 import * as sfx from "./resources/sounds"
 import { lobbyCenter } from "./resources/globals"
-import { rsvpToEvent, getCurrentTime, getTimeStamp } from "./checkApi"
+import { getCurrentTime, getTimeStamp } from "./checkApi"
 
 
 let dummyLiveBadge = new Entity()
