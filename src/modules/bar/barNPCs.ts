@@ -151,18 +151,19 @@ export async function addBarNPCs() {
       utils.setTimeout(3130, () => {
         wearablesC.playAnimation('Talk')
       })
+      log(rareItem)
 
       switch (rareItem) {
         case rarityLevel.none:
           wearablesC.talk(wearabesCTalk, 'none')
           break
-        case rarityLevel.common | rarityLevel.uncommon | rarityLevel.rare:
+        case rarityLevel.common || rarityLevel.uncommon || rarityLevel.rare:
           wearablesC.talk(wearabesCTalk, 'common')
           break
-        case rarityLevel.epic | rarityLevel.legendary:
+        case rarityLevel.epic || rarityLevel.legendary:
           wearablesC.talk(wearabesCTalk, 'epic')
           break
-        case rarityLevel.mythic | rarityLevel.unique:
+        case rarityLevel.mythic || rarityLevel.unique:
           wearablesC.talk(wearabesCTalk, 'mythic')
           break
       }
@@ -488,6 +489,14 @@ export let OctoComments: Dialog[] = [
   {
     name: 'thirdBeer',
     text: 'Wohooo pace your self a little buddy.',
+    // isFixedScreen: true,
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  {
+    name: 'mic',
+    text:
+      'Ohh that old thing is broken. But if you want to talk, just keep T pressed. Works anywhere.',
     // isFixedScreen: true,
     skipable: true,
     isEndOfDialog: true,

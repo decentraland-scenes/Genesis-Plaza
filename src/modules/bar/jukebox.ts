@@ -1,6 +1,7 @@
 import { sceneMessageBus } from '../serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
 import { invisibleMaterial } from '../museumItems'
+import { OctoComments, octopus } from './barNPCs'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -333,6 +334,8 @@ function getRadioName(radio: number) {
   return radioName
 }
 
+let firstTimeMic: boolean = false
+
 export function addMicFeedback() {
   let feedback = new AudioClip('sounds/micFeedback.mp3')
   feedback.loop = false
@@ -354,6 +357,14 @@ export function addMicFeedback() {
         feedback.volume = 1
         mic.getComponent(AudioSource).playOnce()
         sceneMessageBus.emit('micFeedback', {})
+
+        if (!firstTimeMic) {
+          firstTimeMic = true
+          octopus.talk(OctoComments, 'mic')
+          utils.setTimeout(6000, () => {
+            octopus.endInteraction()
+          })
+        }
       },
       {
         hoverText: 'Use mic',
