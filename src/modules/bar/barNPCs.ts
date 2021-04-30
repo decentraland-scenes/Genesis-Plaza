@@ -473,7 +473,7 @@ export let OctoComments: Dialog[] = [
   {
     name: 'firstBeer',
     text:
-      'Hey you found a mug!\nYou`re welcome to jump behind the bar, put the mug under a faucet and and pour yourself one.',
+      'Hey you found a mug!\nYou`re welcome to jump behind the bar, put the mug under a tap and and pour yourself one.',
     // isFixedScreen: true,
     skipable: true,
     isEndOfDialog: true,

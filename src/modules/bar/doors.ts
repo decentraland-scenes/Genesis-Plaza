@@ -104,10 +104,6 @@ export class Door extends Entity {
     const source = new AudioSource(close)
     this.addComponentOrReplace(source)
     source.playing = true
-
-    if (!isInBar) {
-      barRadioOff()
-    }
   }
 }
 
@@ -204,7 +200,4 @@ export function placeDoors() {
       left_door2.close()
     }
   })
-}
-function barRadioOff() {
-  throw new Error('Function not implemented.')
 }
