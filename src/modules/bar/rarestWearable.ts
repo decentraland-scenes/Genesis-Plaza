@@ -30,14 +30,15 @@ export async function setRealm() {
   if (realm) {
     log(`You are in the realm: ${JSON.stringify(realm.displayName)}`)
     playerRealm = realm
-    if(realm.domain == 'http://127.0.0.1:8000' ||realm.domain ==  'http://192.168.0.18:8000'){
-      realm.domain ='https://peer.decentraland.org'
-      log('CHANGED REALM TO: ',  realm.domain)
+    if (
+      realm.domain == 'http://127.0.0.1:8000' ||
+      realm.domain == 'http://192.168.0.18:8000'
+    ) {
+      realm.domain = 'https://peer.decentraland.org'
+      log('CHANGED REALM TO: ', realm.domain)
     }
-  
   }
-  }
-
+}
 
 /**
  * Returns profile of an address
@@ -45,17 +46,14 @@ export async function setRealm() {
  * @param address ETH address
  */
 export async function getUserInfo() {
- 
-
   return (await fetch(
     `${playerRealm.domain}/content/entities/profiles?pointer=${userData.userId}`
   )
     .then((res) => res.json())
     .then((res) => {
-    //  log('USERINF:', res)
-    return res.length ? res[0] : res
-  }
-    )) as Profiles
+      //  log('USERINF:', res)
+      return res.length ? res[0] : res
+    })) as Profiles
 }
 
 /**
@@ -64,16 +62,19 @@ export async function getUserInfo() {
  * @param address ETH address
  */
 export async function getUserInventory() {
-
-  log(`${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`)
-  const response = await fetch(`${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`)
+  log(
+    `${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`
+  )
+  const response = await fetch(
+    `${playerRealm.domain}/lambdas/collections/wearables-by-owner/${userData.userId}?includeDefinitions`
+  )
   const inventory = await response.json()
 
   //const response = await fetch(
- //   `https://wearable-api.decentraland.org/v2/addresses/${userData.userId}/wearables`
- // )
+  //   `https://wearable-api.decentraland.org/v2/addresses/${userData.userId}/wearables`
+  // )
   //const inventory: Wearable[] = await response.json()
-  
+
   return inventory
 }
 
@@ -86,21 +87,21 @@ export async function getUserInventory() {
 export async function rarestItem(
   equiped: boolean = false
 ): Promise<rarityLevel> {
-
   if (!userData) await setUserData()
   if (!playerRealm) await setRealm()
-  if(!userData.hasConnectedWeb3) return rarityLevel.none
-
+  if (!userData.hasConnectedWeb3) return rarityLevel.none
 
   const profile = await getUserInfo()
   //log('PROFILE:, ',profile )
   const inventory = await getUserInventory()
   //log('INVENTORY:, ',inventory )
   if (!profile || !inventory) return rarityLevel.none
- // log('PROFILE: ', profile)
+  // log('PROFILE: ', profile)
   //log('INVENTORY :', inventory)
   if (equiped) {
-    const equipedAsUrn = profile.metadata.avatars[0]?.avatar?.wearables?.map(mapToUrn)
+    const equipedAsUrn = profile.metadata.avatars[0]?.avatar?.wearables?.map(
+      mapToUrn
+    )
     for (const item of equipedAsUrn) {
       for (let invItem of inventory) {
         if (item == invItem.definition.id && invItem.definition.rarity) {
@@ -116,7 +117,7 @@ export async function rarestItem(
       }
     }
   }
- // log(rarityLevel[rarestEquippedItem])
+  // log(rarityLevel[rarestEquippedItem])
   return rarestEquippedItem
 }
 
@@ -135,14 +136,17 @@ export function updateRarity(rarity: Rarity) {
     case 'epic':
       rarityNum = 4
       break
-    case 'mythic':
+    case 'legendary':
       rarityNum = 5
       break
-    case 'legendary':
+    case 'mythic':
       rarityNum = 6
       break
     case 'unique':
       rarityNum = 7
+      break
+    default:
+      rarityNum = 0
       break
   }
   if (rarityNum > rarestEquippedItem) {
@@ -174,7 +178,7 @@ export async function getPlayerSnapshots(
   )
     .then((res) => res.json())
     .then((res) => {
-     // log(res)
+      // log(res)
       return res[0].avatars.length
         ? (res[0].avatars[0].avatar.snapshots as Snapshots)
         : null
@@ -183,13 +187,14 @@ export async function getPlayerSnapshots(
   // )
 }
 
-
 function mapToUrn(wearableId: string) {
   if (wearableId.indexOf('dcl://') < 0) {
     // Already urn
     return wearableId
   }
-  const [collectionName, wearableName ] = wearableId.replace('dcl://', '').split('/')
+  const [collectionName, wearableName] = wearableId
+    .replace('dcl://', '')
+    .split('/')
   if (collectionName === 'base-avatars') {
     return `urn:decentraland:off-chain:base-avatars:${wearableName}`
   } else {
@@ -203,8 +208,8 @@ export enum rarityLevel {
   uncommon,
   rare,
   epic,
-  mythic,
   legendary,
+  mythic,
   unique,
 }
 
@@ -316,8 +321,8 @@ export enum Code {
 
 export enum Rarity {
   Unique = 'unique',
-  Legendary = 'legendary',
   Mythic = 'mythic',
+  Legendary = 'legendary',
   Epic = 'epic',
   Rare = 'rare',
   Uncommon = 'uncommon',
