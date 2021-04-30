@@ -503,7 +503,17 @@ export class EventMenuItem extends MenuItem {
 
         //coords
         this.coords.getComponent(TextShape).value = (_event.coordinates[0] + "," + _event.coordinates[1])
-
+        this.coordsPanel.addComponentOrReplace(new OnPointerDown( 
+            async function () {
+                log("teleporting to:" +(_event.coordinates[0] + "," + _event.coordinates[1]) )
+                teleportTo((_event.coordinates[0] + "," + _event.coordinates[1]))
+              },
+              {
+                button: ActionButton.POINTER,
+                hoverText: "GO THERE",
+              }
+            //movePlayerTo({ x: lobbyCenter.x, y: 110, z: lobbyCenter.z-8 } )
+        ))
         //detail text
         //remove non-UTF-8 characters and wrap
         this.detailTitle.value = wordWrap( cleanString(_event.name),45,3)
