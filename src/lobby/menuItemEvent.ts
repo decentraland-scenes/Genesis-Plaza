@@ -505,7 +505,7 @@ export class EventMenuItem extends MenuItem {
         this.coords.getComponent(TextShape).value = (_event.coordinates[0] + "," + _event.coordinates[1])
         this.coordsPanel.addComponentOrReplace(new OnPointerDown( 
             async function () {
-                log("teleporting to:" +(_event.coordinates[0] + "," + _event.coordinates[1]) )
+               // log("teleporting to:" +(_event.coordinates[0] + "," + _event.coordinates[1]) )
                 teleportTo((_event.coordinates[0] + "," + _event.coordinates[1]))
               },
               {
