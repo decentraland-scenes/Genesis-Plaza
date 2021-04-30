@@ -6,9 +6,12 @@ import { VerticalScrollMenu } from "./verticalScrollMenu"
 import { Teleport, teleports } from "./teleports"
 
 import * as resource from "./resources/resources"
+import * as sfx from "./resources/sounds"
 import { eventItemPlaceholder, crowdMenuPlaceholder } from "./menuPlaceholders"
 import { AnimatedItem } from './simpleAnimator'
 import { addPanels } from 'src/modules/bar/panels'
+import { loadMoreMenuItem } from './menuItemLoad'
+import { CooldownActivated } from './cooldown'
 
 
 
@@ -35,7 +38,8 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
   engine.addEntity(menuRoot)
   
   //placeholder menuItems
-  for (let i = 0; i < vertEventMenu.visibleItemCount; i++){
+ // for (let i = 0; i < vertEventMenu.visibleItemCount; i++){
+  for (let i = 0; i < 10; i++){
     vertEventMenu.addMenuItem(new EventMenuItem({    
         scale: new Vector3(2,2,2)
       },        
@@ -50,6 +54,7 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
     rotation: Quaternion.Euler(27,0,0),
     scale: new Vector3(0.35, 0.35, 0.35)
   }))
+  refreshRoot.addComponent(sfx.menuErrorSource)
   refreshRoot.setParent(vertEventMenu)
 
   let refreshButton = new Entity()
@@ -69,12 +74,34 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
     },
     2
   ))
+
+  refreshButton.addComponent(new CooldownActivated(
+    20,
+    "REFRESH",
+    "WAIT FOR COOLDOWN"
+    ))
+  refreshButton.addComponent(sfx.refreshSource)
+
+  let cooldownText = new TextShape()
+  cooldownText.value = "20"
+  cooldownText.fontSize = 4
+
+  refreshButton.addComponent(cooldownText)
+
   refreshButton.addComponent(resource.refreshShape)
   refreshButton.addComponent(
     new OnPointerDown(
-      async function () { 
-        refreshButton.getComponent(Transform).position.z = 0
-        updateEventsMenu(vertEventMenu)
+      async function () {
+        if(refreshButton.getComponent(CooldownActivated).active){
+          refreshButton.getComponent(Transform).position.z = 0
+          updateEventsMenu(vertEventMenu, 30, false)
+          refreshButton.getComponent(CooldownActivated).startCooldown()
+          sfx.refreshSource.playOnce()
+        } 
+        else{
+          sfx.menuErrorSource.playOnce()
+        }
+        
       },
       {
         button: ActionButton.POINTER,
@@ -88,12 +115,18 @@ export function createEventsVerticalMenu(_transform: TranformConstructorArgs ):V
   return vertEventMenu
 }
 
-export async function updateEventsMenu(_menu:VerticalScrollMenu){
+export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, _addLoadMoreButton:boolean){
 
-  let events = await getEvents()
+  let events = await getEvents(_count)
   if (events.length <= 0) {
     return
   } 
+
+  // remove loadmore item
+  if(!_addLoadMoreButton){
+    removeLastXItems(_menu, 1)
+  }
+ 
 
   for(let i=0; i < events.length; i++){
 
@@ -102,21 +135,42 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
     }
     else{
       _menu.addMenuItem(new EventMenuItem({    
-        scale: new Vector3(2,2,2)
-      },        
-      new Texture("images/rounded_alpha.png"),
-      events[i]
-    ))
-    }
-
-    
-    
-    
+          scale: new Vector3(2,2,2)
+        },        
+        new Texture("images/rounded_alpha.png"),
+        events[i]
+      ))
+    }    
   }
+    
 
   if(events.length <= _menu.items.length){
     removeLastXItems(_menu, _menu.items.length - events.length)
+  } 
+
+  if(_addLoadMoreButton){
+    let loadButton = new loadMoreMenuItem({    
+      scale: new Vector3(1,1,1)
+      },
+      _menu
+      )
+    
+    loadButton.addComponent(
+      new OnPointerDown(
+        async function () { 
+          loadButton.getComponent(Transform).position.z = 0
+          updateEventsMenu(_menu, 30, false)
+        },
+        {
+          button: ActionButton.POINTER,
+          hoverText: "LOAD MORE"
+        }
+      )
+    )
+
+    _menu.addMenuItem(loadButton)
   }
+  
 
   // ADD BAR PANELS
 
@@ -145,7 +199,7 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu){
 
 export async function fillEventsMenu(_menu:VerticalScrollMenu) {
 
-  let events = await getEvents()
+  let events = await getEvents(10)
 
   if (events.length <= 0) {
     return
@@ -184,7 +238,7 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
   engine.addEntity(menuRoot)
 
   //placeholder menuItems
-  for (let i = 0; i < vertCrowdsMenu.visibleItemCount; i++){
+  for (let i = 0; i < 10; i++){
     vertCrowdsMenu.addMenuItem(new TrendingMenuItem({    
       scale: new Vector3(2,2,2)
     },        
@@ -193,12 +247,13 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
   ))
   }
 
- let refreshRoot = new Entity()
+  let refreshRoot = new Entity()
   refreshRoot.addComponent(new Transform({
     position: new Vector3(2.35,-1.15,-0.65),
     rotation: Quaternion.Euler(27,0,0),
     scale: new Vector3(0.35, 0.35, 0.35)
   }))
+  refreshRoot.addComponent(sfx.menuErrorSource)
   refreshRoot.setParent(vertCrowdsMenu)
 
   let refreshButton = new Entity()
@@ -218,12 +273,34 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
     },
     2
   ))
+
+  refreshButton.addComponent(new CooldownActivated(
+    20,
+    "REFRESH",
+    "WAIT FOR COOLDOWN"
+    ))
+  refreshButton.addComponent(sfx.refreshSource)
+
+  let cooldownText = new TextShape()
+  cooldownText.value = "20"
+  cooldownText.fontSize = 4
+
+  refreshButton.addComponent(cooldownText)
+
   refreshButton.addComponent(resource.refreshShape)
   refreshButton.addComponent(
     new OnPointerDown(
-      async function () { 
-        refreshButton.getComponent(Transform).position.z = 0     
-        updateCrowdsMenu(vertCrowdsMenu)        
+      async function () {
+        if(refreshButton.getComponent(CooldownActivated).active){
+          refreshButton.getComponent(Transform).position.z = 0
+          updateCrowdsMenu(vertCrowdsMenu)
+          refreshButton.getComponent(CooldownActivated).startCooldown()
+          sfx.refreshSource.playOnce()
+        } 
+        else{
+          sfx.menuErrorSource.playOnce()
+        }
+        
       },
       {
         button: ActionButton.POINTER,
@@ -231,6 +308,7 @@ export function createCrowdVerticalMenu(_transform: TranformConstructorArgs):Ver
       }
     )
   )
+ 
   refreshButton.setParent(refreshRoot) 
 
   return vertCrowdsMenu

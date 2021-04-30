@@ -22,15 +22,15 @@ function signMessage(msg: string) {
 
 //signMessage(messageToSign)
 
-export async function getEvents() {
+export async function getEvents(_count:number) {
   let events: any[] = []
-  let url = 'https://events.decentraland.org/api/events/?limit=30'
+  let url = 'https://events.decentraland.org/api/events/?limit=' + _count.toString() 
 
   try {
     let response = await fetch(url)
     let json = await response.json()
 
-    log(json)
+   // log(json)
 
     for (let event of json.data) {
      
@@ -41,7 +41,7 @@ export async function getEvents() {
       // }
     }
 
-    log(events)
+   // log(events)
     return events
   } catch (e) {
     log('error getting event data ', e)
@@ -75,7 +75,7 @@ export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
   //log("Is the message correct?", isEqual)
 
   let body = JSON.stringify({
-    address: "0x7533c4c1d881aaA75d4b039325866b2f8b8C5eC9",
+    address: "0x0000000000000000000000000000000000000000",    
     message: message,
     signature: signature
    
@@ -109,7 +109,7 @@ export async function getTrendingScenes(_limit:number) {
     for (let scene of json) {
       //only save scenes with 2+ users
       if(scene.usersTotalCount.toFixed() > 1){
-        log(scene.name + " : " + scene.usersTotalCount)
+        //log(scene.name + " : " + scene.usersTotalCount)
         if(trendingScenes.length < _limit ){
           trendingScenes.push(scene)
         }

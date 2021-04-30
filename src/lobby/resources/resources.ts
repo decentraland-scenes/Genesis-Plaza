@@ -34,6 +34,7 @@ export let timePanelShape =         new GLTFShape(modelFolder + "time_panel.glb"
 export let scrollInstructionShape = new GLTFShape(modelFolder + "scroll_instructions.glb")
 export let playerCounterBGShape =   new GLTFShape(modelFolder + "player_counter_bg.glb")
 export let refreshShape =           new GLTFShape(modelFolder + "refresh_button.glb")
+export let loadMoreShape =          new GLTFShape(modelFolder + "load_more_btn.glb")
 
 // CLOUDS
 export let cloudDissolveShape=      new GLTFShape(modelFolder + "cloud_dissolve.glb")

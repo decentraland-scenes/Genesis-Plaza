@@ -73,10 +73,7 @@ export class VerticalScrollMenu extends Entity {
     
     selectSound:Entity
     deselectSound:Entity
-    scrollEndSound:Entity
-
-
-   
+    scrollEndSound:Entity   
 
     constructor(_transform:TranformConstructorArgs, _spacing:number, _numOfVisibleItems:number, _topMesh:GLTFShape, _baseMesh:GLTFShape, _baseTitle:string){
         super()
@@ -295,6 +292,7 @@ export class VerticalScrollMenu extends Entity {
         this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length        
         
     }
+    
 
     removeMenuItem(index:number){
         

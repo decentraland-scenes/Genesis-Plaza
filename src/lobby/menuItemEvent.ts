@@ -1,5 +1,5 @@
 import { ThumbnailPlane } from "./thumbnail"
-import { monthToString, wordWrap } from "./helperFunctions"
+import { cleanString, monthToString, wordWrap } from "./helperFunctions"
 import { AnimatedItem } from "./simpleAnimator"
 import * as resource from "./resources/resources"
 import { MenuItem } from "./menuItem"
@@ -209,7 +209,10 @@ export class EventMenuItem extends MenuItem {
         // TITLE
         this.titleText = new TextShape()
         this.title = new Entity()
-        let rawText:string = _event.name       
+        let rawText:string = _event.name 
+
+        //  remove non-UTF-8 characters   
+        rawText = cleanString(rawText)
 
         rawText = wordWrap(rawText,36,3)
         this.titleText.value = rawText
@@ -365,7 +368,10 @@ export class EventMenuItem extends MenuItem {
         ))
 
         this.detailTitle = new TextShape()
-        this.detailTitle.value = wordWrap(_event.name,45,3)
+
+        //  remove non-UTF-8 characters and wrap       
+        this.detailTitle.value = wordWrap(cleanString(_event.name),45,3)
+
         this.detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
         this.detailTitle.height = 20
         this.detailTitle.width = 2
@@ -384,7 +390,7 @@ export class EventMenuItem extends MenuItem {
         this.detailEventTitle.setParent(this.detailTextPanel)       
 
         this.detailTextContent = new TextShape()
-        this.detailTextContent.value = ("\n\n" + wordWrap(_event.description, 75, 11) + "</cspace>")
+        this.detailTextContent.value = ("\n\n" + wordWrap( cleanString(_event.description), 75, 11) + "</cspace>")
         this.detailTextContent.font = new Font(Fonts.SanFrancisco_Semibold)
         this.detailTextContent.height = 20
         this.detailTextContent.width = 2
@@ -490,6 +496,8 @@ export class EventMenuItem extends MenuItem {
 
         //title
         let rawText:string = _event.name
+        //  remove non-UTF-8 characters
+        rawText = cleanString(rawText)
         rawText = wordWrap(rawText,36,3)
         this.title.getComponent(TextShape).value = rawText
 
@@ -497,8 +505,11 @@ export class EventMenuItem extends MenuItem {
         this.coords.getComponent(TextShape).value = (_event.coordinates[0] + "," + _event.coordinates[1])
 
         //detail text
-        this.detailTitle.value = wordWrap(_event.name,45,3)
-        this.detailTextContent.value = ("\n\n" + wordWrap(_event.description, 75, 11) + "</cspace>")
+        //remove non-UTF-8 characters and wrap
+        this.detailTitle.value = wordWrap( cleanString(_event.name),45,3)
+
+        //remove non-UTF-8 characters and wrap
+        this.detailTextContent.value = ("\n\n" + wordWrap(cleanString(_event.description), 75, 11) + "</cspace>")
 
         //details website button (read more)
         this.readMoreButton.getComponent(OnPointerDown).callback = () => {
