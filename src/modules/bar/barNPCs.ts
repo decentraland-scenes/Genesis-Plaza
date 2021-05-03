@@ -157,13 +157,25 @@ export async function addBarNPCs() {
         case rarityLevel.none:
           wearablesC.talk(wearabesCTalk, 'none')
           break
-        case rarityLevel.common || rarityLevel.uncommon || rarityLevel.rare:
+        case rarityLevel.common:
           wearablesC.talk(wearabesCTalk, 'common')
           break
-        case rarityLevel.epic || rarityLevel.legendary:
+        case rarityLevel.uncommon:
+          wearablesC.talk(wearabesCTalk, 'common')
+          break
+        case rarityLevel.rare:
+          wearablesC.talk(wearabesCTalk, 'common')
+          break
+        case rarityLevel.epic:
           wearablesC.talk(wearabesCTalk, 'epic')
           break
-        case rarityLevel.mythic || rarityLevel.unique:
+        case rarityLevel.legendary:
+          wearablesC.talk(wearabesCTalk, 'epic')
+          break
+        case rarityLevel.mythic:
+          wearablesC.talk(wearabesCTalk, 'mythic')
+          break
+        case rarityLevel.unique:
           wearablesC.talk(wearabesCTalk, 'mythic')
           break
       }
@@ -667,7 +679,7 @@ export let wearabesCTalk: Dialog[] = [
   {
     name: 'mythic',
     text:
-      'Oh well _finally_ someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
+      'Oh well <i>finally</i> someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
