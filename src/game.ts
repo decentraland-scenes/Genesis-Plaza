@@ -1,4 +1,8 @@
-import { barPlatforms, placePlatforms, upstairsLoaded } from './modules/platforms'
+import {
+  barPlatforms,
+  placePlatforms,
+  upstairsLoaded,
+} from './modules/platforms'
 import { addWearables } from './modules/wearables'
 import {
   placeMuseumPieces,
@@ -35,7 +39,6 @@ import {
   endArtistTalk,
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
-
 
 //////// LOG PLAYER POSITION
 
@@ -124,12 +127,9 @@ export function insideBar() {
     addBarNPCs()
   }
 
-  
   placeJukeBox()
   addMicFeedback()
 }
-
-
 
 export function outsideBar() {
   addNPCsOutside()
@@ -144,13 +144,6 @@ export function outsideBar() {
   /// VIDEO SCEREEN
 
   addScreen()
-
-  /// EVENTS BOARD
-
-  // createEventsBoard({
-  //   position: new Vector3(175.8, 3.5, 168),
-  //   rotation: Quaternion.Euler(0, 225, 0),
-  // })
 
   startArtichoke()
 
@@ -171,11 +164,15 @@ export function outsideBar() {
   /// WEARABLES
 
   utils.addOneTimeTrigger(
-    new utils.TriggerBoxShape(new Vector3(50, 50, 50), new Vector3(269, 5, 37)),
+    new utils.TriggerBoxShape(
+      new Vector3(50, 50, 50),
+      new Vector3(275, 5, 130)
+    ),
     {
       onCameraEnter: () => {
         addWearables()
         placeWearablePieces()
+        log('loading wearables')
       },
     }
   )

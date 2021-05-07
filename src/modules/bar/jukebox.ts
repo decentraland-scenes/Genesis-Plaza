@@ -2,6 +2,7 @@ import { sceneMessageBus } from '../serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
 import { invisibleMaterial } from '../museumItems'
 import { OctoComments, octopus } from './barNPCs'
+import { tutorialRunning } from 'src/lobby/portalBeam'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -182,7 +183,7 @@ export function placeJukeBox() {
   })
 
   sceneMessageBus.on('enteredRadioRange', (e) => {
-    if (!isInBar || barCurrentRadio == null) return
+    if (!isInBar || barCurrentRadio == null || tutorialRunning) return
     if (e.radio == barCurrentRadioIndex) return
     sceneMessageBus.emit('setBarRadio', {
       index: barCurrentRadioIndex,
@@ -232,6 +233,7 @@ export class JukeboxButton extends Entity {
 }
 
 function barRadioOn(station?) {
+  if (tutorialRunning) return
   if (isInBar) {
     barMusicStreamEnt.addComponent(
       new utils.Delay(100, () => {
@@ -260,6 +262,7 @@ function barRadioOff() {
 }
 
 export function setBarMusicOn() {
+  if (tutorialRunning) return
   sceneMessageBus.emit('enteredRadioRange', {
     radio: barCurrentRadioIndex,
   })
@@ -289,7 +292,7 @@ export function setBarMusicOff() {
 }
 
 export function lowerVolume() {
-  if (isInBar) return
+  if (isInBar || tutorialRunning) return
 
   if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
@@ -302,6 +305,7 @@ export function lowerVolume() {
 }
 
 export function raiseVolume() {
+  if (tutorialRunning) return
   isInBar = true
   if (radioIsOn && barMusicStream && !barMusicStream.playing) {
     barMusicStream.playing = true
