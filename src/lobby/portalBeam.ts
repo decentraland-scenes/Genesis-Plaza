@@ -39,7 +39,7 @@ musicBox.addComponent(
 )
 musicBox.addComponent(sfx.lobbyMusicSource)
 sfx.lobbyMusicSource.loop = true
-// sfx.lobbyMusicSource.playing = true
+sfx.lobbyMusicSource.playing = true
 
 engine.addEntity(musicBox)
 
