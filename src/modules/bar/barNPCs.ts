@@ -7,6 +7,9 @@ import {
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
+import { client, handleQuests, questProg, taskIds } from 'src/quest'
+import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
+import { query } from '@dcl/quests-query'
 export let octopus: NPC
 export let doge: NPC
 export let catGuy: NPC
@@ -39,6 +42,8 @@ setUserData()
 
 export async function addBarNPCs() {
   areNPCsAdded = true
+
+  handleQuests()
 
   octopus = new NPC(
     {
@@ -152,32 +157,45 @@ export async function addBarNPCs() {
         wearablesC.playAnimation('Talk')
       })
       log(rareItem)
+      log('QUEST ', questProg)
 
-      switch (rareItem) {
-        case rarityLevel.none:
-          wearablesC.talk(wearabesCTalk, 'none')
-          break
-        case rarityLevel.common:
-          wearablesC.talk(wearabesCTalk, 'common')
-          break
-        case rarityLevel.uncommon:
-          wearablesC.talk(wearabesCTalk, 'common')
-          break
-        case rarityLevel.rare:
-          wearablesC.talk(wearabesCTalk, 'common')
-          break
-        case rarityLevel.epic:
-          wearablesC.talk(wearabesCTalk, 'epic')
-          break
-        case rarityLevel.legendary:
-          wearablesC.talk(wearabesCTalk, 'epic')
-          break
-        case rarityLevel.mythic:
-          wearablesC.talk(wearabesCTalk, 'mythic')
-          break
-        case rarityLevel.unique:
-          wearablesC.talk(wearabesCTalk, 'mythic')
-          break
+      if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        !query(questProg).isTaskCompleted(taskIds.wearables)
+      ) {
+        wearablesC.talk(wearabesCQuest, 0)
+      } else if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        !query(questProg).isTaskCompleted(taskIds.findWearable)
+      ) {
+        wearablesC.talk(wearabesCQuest, 'ongoing')
+      } else {
+        switch (rareItem) {
+          case rarityLevel.none:
+            wearablesC.talk(wearabesCTalk, 'none')
+            break
+          case rarityLevel.common:
+            wearablesC.talk(wearabesCTalk, 'common')
+            break
+          case rarityLevel.uncommon:
+            wearablesC.talk(wearabesCTalk, 'common')
+            break
+          case rarityLevel.rare:
+            wearablesC.talk(wearabesCTalk, 'common')
+            break
+          case rarityLevel.epic:
+            wearablesC.talk(wearabesCTalk, 'epic')
+            break
+          case rarityLevel.legendary:
+            wearablesC.talk(wearabesCTalk, 'epic')
+            break
+          case rarityLevel.mythic:
+            wearablesC.talk(wearabesCTalk, 'mythic')
+            break
+          case rarityLevel.unique:
+            wearablesC.talk(wearabesCTalk, 'mythic')
+            break
+        }
       }
     },
     {
@@ -254,8 +272,6 @@ export async function addBarNPCs() {
     },
     'models/core_building/ch1_crowdV5.glb',
     () => {
-      // wearablesC.playAnimation('TurnIn', true, 3.13)
-      //   wearablesC.changeIdleAnim('Talk')
       artist1.bubble.closeDialogWindow()
       artist2.bubble.closeDialogWindow()
       artist2.endInteraction()
@@ -335,8 +351,28 @@ export function addNPCsOutside() {
     'models/core_building/wenMoonV12.glb',
     () => {
       wenMoon.stopWalking()
-      wenMoon.talk(wenMoonTalk, 0)
       wenMoon.playAnimation(`TurnIn`, true, 5.77)
+      if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        !query(questProg).isTaskCompleted(taskIds.wenMoon)
+      ) {
+        wenMoon.talk(wenMoonQuest, 0)
+      } else if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        query(questProg).isTaskCompleted(taskIds.wenMoon) &&
+        !query(questProg).isTaskCompleted(taskIds.coins)
+      ) {
+        wenMoon.talk(wenMoonQuest, 'ongoing')
+      } else if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        query(questProg).isTaskCompleted(taskIds.wenMoon) &&
+        query(questProg).isTaskCompleted(taskIds.coins) &&
+        !query(questProg).isTaskCompleted(taskIds.outro)
+      ) {
+        wenMoon.talk(wenMoonQuest, 'done')
+      } else {
+        wenMoon.talk(wenMoonTalk, 0)
+      }
     },
     {
       portrait: 'images/portraits/wenmoon.png',
@@ -369,8 +405,27 @@ export function addNPCsOutside() {
 
     'models/core_building/cat_guySittedV12.glb',
     () => {
-      catGuy.talk(ILoveCats, 0)
       catGuy.playAnimation(`talk`)
+      if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        !query(questProg).isTaskCompleted(taskIds.catGuy)
+      ) {
+        catGuy.talk(CatGuyQuest, 0)
+      } else if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        query(questProg).isTaskCompleted(taskIds.catGuy) &&
+        !query(questProg).isTaskCompleted(taskIds.findCat)
+      ) {
+        catGuy.talk(CatGuyQuest, 'ongoing')
+      } else if (
+        query(questProg).isTaskCompleted(taskIds.intro) &&
+        query(questProg).isTaskCompleted(taskIds.findCat) &&
+        !query(questProg).isTaskCompleted(taskIds.catGuyEnd)
+      ) {
+        catGuy.talk(CatGuyQuest, 'done')
+      } else {
+        catGuy.talk(ILoveCats, 0)
+      }
     },
     {
       portrait: 'images/portraits/catguy.png',
@@ -405,23 +460,81 @@ export let OctoHi: Dialog[] = [
     skipable: true,
   },
   {
-    text:
-      'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
+    text: 'I may look quite busy, but worry not, I still have like 2 free hands and/or tentacles to spare.',
     skipable: true,
   },
   {
-    text:
-      'Is this your first time here? Do you want some pointers about how you can get around the place?',
+    text: 'Is this your first time here? Do you want some pointers about how you can get around the place?',
     isQuestion: true,
     buttons: [
       { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'questQ' },
+    ],
+  },
+  {
+    name: 'yes',
+    text: 'Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.',
+    skipable: true,
+  },
+  {
+    text: 'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
+
+    skipable: true,
+  },
+  {
+    text: 'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
+
+    skipable: true,
+  },
+  {
+    text: 'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
+
+    skipable: true,
+  },
+  {
+    text: 'Or you can just walk out the door and keep walking, and see what you run into.',
+
+    skipable: true,
+  },
+  {
+    text: 'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
+
+    skipable: true,
+  },
+  {
+    text: 'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
+
+    skipable: true,
+    triggeredByNext: () => {
+      if (!query(questProg).isTaskCompleted(taskIds.intro)) {
+        octopus.talk(OctoHi, 'questQ')
+      } else {
+        octopus.talk(OctoHi, 'normalEnd')
+      }
+    },
+  },
+  {
+    name: 'normalEnd',
+    text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
+
+    skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'questQ',
+    text: 'Do you want to start a quest?',
+    isQuestion: true,
+    buttons: [
+      { label: 'YES', goToDialog: 'quest' },
       { label: 'NO', goToDialog: 'end' },
     ],
   },
   {
     name: 'end',
-    text:
-      'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
+    text: 'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
     triggeredByNext: () => {
       log('ended conversation')
       backToIdle()
@@ -429,55 +542,34 @@ export let OctoHi: Dialog[] = [
     isEndOfDialog: true,
   },
   {
-    name: 'yes',
-    text:
-      'Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.',
+    name: 'quest',
+    text: 'I have a few errands for you to run.',
+    triggeredByNext: () => {
+      client.startQuest()
+    },
     skipable: true,
   },
   {
-    text:
-      'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
-
+    text: 'See that lady sitting on the bar? I noticed she`s been feeling quite down, she just sits there looking at her drink, hasn`t yelled at anyone all day. See if ther`s something you can do to cheer her up.',
     skipable: true,
   },
   {
-    text:
-      'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
-
+    text: 'My buddy the Cat Guy went out looking for a cat, and no one has seen him for a while now. Could you make sure he`s ok?',
     skipable: true,
   },
   {
-    text:
-      'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
-
-    skipable: true,
-  },
-  {
-    text:
-      'Or you can just walk out the door and keep walking, and see what you run into.',
-
-    skipable: true,
-  },
-  {
-    text:
-      'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
-
-    skipable: true,
-  },
-  {
-    text:
-      'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
-
-    skipable: true,
-  },
-  {
-    text:
-      'Well that´s it from me. So what are you waiting for? Go and explore the world!',
-
+    text: 'Look for Wen Moon, he`s always walking around the plaza, and they say he knows stuff',
     skipable: true,
     triggeredByNext: () => {
-      backToIdle()
+      client.makeProgress(taskIds.intro, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
     },
+  },
+  {
+    text: 'That`s all, go find them and then come back to me, I may have something for you.',
+    skipable: true,
     isEndOfDialog: true,
   },
 ]
@@ -485,8 +577,7 @@ export let OctoHi: Dialog[] = [
 export let OctoComments: Dialog[] = [
   {
     name: 'firstBeer',
-    text:
-      'Hey you found a mug!\nYou`re welcome to jump behind the bar, put the mug under a tap and and pour yourself one.',
+    text: 'Hey you found a mug!\nYou`re welcome to jump behind the bar, put the mug under a tap and and pour yourself one.',
     // isFixedScreen: true,
     skipable: true,
     isEndOfDialog: true,
@@ -507,8 +598,7 @@ export let OctoComments: Dialog[] = [
   },
   {
     name: 'mic',
-    text:
-      'Ohh that old thing is broken. But if you want to talk, just keep T pressed. Works anywhere.',
+    text: 'Ohh that old thing is broken. But if you want to talk, just keep T pressed. Works anywhere.',
     // isFixedScreen: true,
     skipable: true,
     isEndOfDialog: true,
@@ -517,8 +607,7 @@ export let OctoComments: Dialog[] = [
 
 export let DogeTalk: Dialog[] = [
   {
-    text:
-      'Wow, so very game changing revolutionary use case of blockchain technology',
+    text: 'Wow, so very game changing revolutionary use case of blockchain technology',
     triggeredByNext: () => {
       doge.followPath()
     },
@@ -542,8 +631,7 @@ export let DogeTalk: Dialog[] = [
     isEndOfDialog: true,
   },
   {
-    text:
-      'Very potential to become the so awaited true incarnation of the metaverse',
+    text: 'Very potential to become the so awaited true incarnation of the metaverse',
     triggeredByNext: () => {
       doge.followPath()
     },
@@ -600,6 +688,45 @@ export let DogeTalk: Dialog[] = [
   },
 ]
 
+export let CatGuyQuest: Dialog[] = [
+  {
+    text: 'I lost my cat, well one of them. Dr Whiskers MD,',
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.catGuy, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+    },
+  },
+  {
+    text: 'He`s quite a diva, if you find him, he only responds to clapping. If you don`t clap he won`t come with you',
+    skipable: true,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      // cat appears
+    },
+  },
+  {
+    name: 'ongoing',
+    text: 'Did you find him? That diva of a cat.. always running away',
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  {
+    name: 'done',
+    text: 'Nice! Thank you so much. Dr Whiskers MD, you rascal... don`t you run away again',
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.catGuyEnd, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+    },
+    isEndOfDialog: true,
+  },
+]
+
 export let ILoveCats: Dialog[] = [
   {
     text: `Hey there! Let me introduce myself. I’m the cat guy`,
@@ -633,21 +760,39 @@ export let ILoveCats: Dialog[] = [
   },
 ]
 
+export let wearabesCQuest: Dialog[] = [
+  {
+    text: 'I feel incomplete. Today I woke up and looked at myself in the mirror. After only 10 minutes I was no longer feeling it.',
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.wearables, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+    },
+  },
+  {
+    text: 'I need the most expensive wearable. What was the most expensive thing sold this month? Tell me, it needs to be MINE.',
+    skipable: true,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      // enable wearable event
+    },
+  },
+]
+
 export let wearabesCTalk: Dialog[] = [
   {
     name: 'none',
-    text:
-      'Why? … Umm, what would someone <i>dressed like you</i> have to say to me?',
+    text: 'Why? … Umm, what would someone <i>dressed like you</i> have to say to me?',
     skipable: true,
   },
   {
-    text:
-      'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
+    text: 'Clearly you just put on whatever rags you slept in and think that’s an outfit, let me tell you something: you don’t cause a good impression on me like that.',
     skipable: true,
   },
   {
-    text:
-      'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
+    text: 'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -655,13 +800,11 @@ export let wearabesCTalk: Dialog[] = [
   },
   {
     name: 'common',
-    text:
-      'Well look at you, <i>all dressed up</i> with outlet-grade clothes that you probably bought at a gas station.',
+    text: 'Well look at you, <i>all dressed up</i> with outlet-grade clothes that you probably bought at a gas station.',
     skipable: true,
   },
   {
-    text:
-      'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
+    text: 'I guess you’re fine, I mean <i>we’re not going to be friends</i>, but I’m feeling generous today and will acknowledge that you exist.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -669,8 +812,7 @@ export let wearabesCTalk: Dialog[] = [
   },
   {
     name: 'epic',
-    text:
-      'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. <i>Not that it’s a very high bar</i>, but it would be quite an improvement.',
+    text: 'I see that you know how to present yourself. If only everyone had a baseline of taste like yours. <i>Not that it’s a very high bar</i>, but it would be quite an improvement.',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -678,8 +820,7 @@ export let wearabesCTalk: Dialog[] = [
   },
   {
     name: 'mythic',
-    text:
-      'Oh well <i>finally</i> someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
+    text: 'Oh well <i>finally</i> someone I can talk to here without feeling embarrassed to be seen. You sir know how to dress, well done!',
     skipable: true,
     triggeredByNext: () => {
       wearablesC.talk(wearabesCTalk, 'default')
@@ -688,23 +829,19 @@ export let wearabesCTalk: Dialog[] = [
   {
     // had to add a dummy to skip to
     name: 'default',
-    text:
-      'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others.',
+    text: 'I always say <i>“you are what you wear”</i>. So true. Dressing up is all about expressing who you want to be in the eyes of others.',
     skipable: true,
   },
   {
-    text:
-      'I always say <i>“you are what you wear”</i>. So true.\nDressing up is all about expressing who you want to be in the eyes of others.',
+    text: 'I always say <i>“you are what you wear”</i>. So true.\nDressing up is all about expressing who you want to be in the eyes of others.',
     skipable: true,
   },
   {
-    text:
-      'Me, as you can tell, I’m <i>one of a kind</i>. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
+    text: 'Me, as you can tell, I’m <i>one of a kind</i>. Dressed in the finest Non-Fungible Tokens in the marketplace. Worthy of a queen!',
     skipable: true,
   },
   {
-    text:
-      'And you, who do your clothes say you are?\n<i>Have a think about that, hun</i>.',
+    text: 'And you, who do your clothes say you are?\n<i>Have a think about that, hun</i>.',
     skipable: true,
     isEndOfDialog: true,
 
@@ -725,12 +862,10 @@ export let wearabesCTalk: Dialog[] = [
 export let artist1Talk: Dialog[] = [
   {
     name: '1st',
-    text:
-      'So there I was, questioning what my work really meant to me as an artist, after having spent <b>so much</b> time on it and put <b>so much</b> of myself into it.',
+    text: 'So there I was, questioning what my work really meant to me as an artist, after having spent <b>so much</b> time on it and put <b>so much</b> of myself into it.',
   },
   {
-    text:
-      'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some <i>flamboyant scandalous way</i>.',
+    text: 'Now locked up in a container where no one can see my work, where it would hopefully gain value with time or if I die in some <i>flamboyant scandalous way</i>.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -739,8 +874,7 @@ export let artist1Talk: Dialog[] = [
   },
   {
     name: '2nd',
-    text:
-      'Well yeah, but back then there wasn’t much of a market for NFTs, <i>or I didn’t know about it at least</i>. I was just trying to make a living by selling canvases, like everyone else.',
+    text: 'Well yeah, but back then there wasn’t much of a market for NFTs, <i>or I didn’t know about it at least</i>. I was just trying to make a living by selling canvases, like everyone else.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -749,12 +883,10 @@ export let artist1Talk: Dialog[] = [
   },
   {
     name: '3rd',
-    text:
-      ' The thing is <b>I would still be removing my work from the public view</b>, the form of payment doesn’t change that.',
+    text: ' The thing is <b>I would still be removing my work from the public view</b>, the form of payment doesn’t change that.',
   },
   {
-    text:
-      'My audience suddenly got reduced to some rich guy and <i>maybe</i> his occasional dinner guests. That’s the part that upset me.',
+    text: 'My audience suddenly got reduced to some rich guy and <i>maybe</i> his occasional dinner guests. That’s the part that upset me.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -763,8 +895,7 @@ export let artist1Talk: Dialog[] = [
   },
   {
     name: '4th',
-    text:
-      'Kinda… <i>yes and no</i>. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
+    text: 'Kinda… <i>yes and no</i>. The owner of the work might be just one person, but it’s still available for any curious eyes out there.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -778,8 +909,7 @@ export let artist1Talk: Dialog[] = [
   },
   {
     name: '5th',
-    text:
-      'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, <i>you’re in for a treat!</i>',
+    text: 'Yeah, otherwise our rambling would have bored you to death by now. If all of this space is new to you, <i>you’re in for a treat!</i>',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -811,8 +941,7 @@ export let artist1Talk: Dialog[] = [
 export let artist2Talk: Dialog[] = [
   {
     name: '1st',
-    text:
-      'And that was <i>such a good time</i> to get into ether, so cheap back then. Imagine if you sold those for eth then?',
+    text: 'And that was <i>such a good time</i> to get into ether, so cheap back then. Imagine if you sold those for eth then?',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -821,8 +950,7 @@ export let artist2Talk: Dialog[] = [
   },
   {
     name: '2nd',
-    text:
-      ' Just imagine if you sold a painting for 200 eth, it was <b>nothing</b> back then.',
+    text: ' Just imagine if you sold a painting for 200 eth, it was <b>nothing</b> back then.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -831,8 +959,7 @@ export let artist2Talk: Dialog[] = [
   },
   {
     name: '3rd',
-    text:
-      'But your NFTs also end up going to the wallet of some rich whale just the same.',
+    text: 'But your NFTs also end up going to the wallet of some rich whale just the same.',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -841,8 +968,7 @@ export let artist2Talk: Dialog[] = [
   },
   {
     name: '4th',
-    text:
-      'Speaking of audiences, looks like we have one here. Hey! I take it that you have an interest in art',
+    text: 'Speaking of audiences, looks like we have one here. Hey! I take it that you have an interest in art',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -856,8 +982,7 @@ export let artist2Talk: Dialog[] = [
   },
   {
     name: '5th',
-    text:
-      'A ton of places you can check out. With <b>crazy expensive</b> virtual art on display. You can’t imagine what some of these cost!',
+    text: 'A ton of places you can check out. With <b>crazy expensive</b> virtual art on display. You can’t imagine what some of these cost!',
     isEndOfDialog: true,
 
     triggeredByNext: () => {
@@ -901,8 +1026,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'voltaire',
-    text:
-      'Ok, so first there’s <color="red">Voltaire District</color>, at 55,97. Lots of big players in the crypto art space have spot there.',
+    text: 'Ok, so first there’s <color="red">Voltaire District</color>, at 55,97. Lots of big players in the crypto art space have spot there.',
     isQuestion: true,
     buttons: [
       {
@@ -919,8 +1043,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'museum',
-    text:
-      'There’s the <color="red"> Museum District</color> at 20,80, quite a pioneer of the metaverse.',
+    text: 'There’s the <color="red"> Museum District</color> at 20,80, quite a pioneer of the metaverse.',
     isQuestion: true,
     buttons: [
       {
@@ -937,8 +1060,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'rapture',
-    text:
-      'The  <color="red">Rapture Gallery</color> at -88,-65 is also a really hip spot worth visiting',
+    text: 'The  <color="red">Rapture Gallery</color> at -88,-65 is also a really hip spot worth visiting',
     isQuestion: true,
     buttons: [
       {
@@ -955,8 +1077,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: '100x',
-    text:
-      'Also  <color="red">100x Gallery</color>, at 86,-24, there’s a whole bunch of things around that area.',
+    text: 'Also  <color="red">100x Gallery</color>, at 86,-24, there’s a whole bunch of things around that area.',
     isQuestion: true,
     buttons: [
       {
@@ -973,8 +1094,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'momus',
-    text:
-      ' <color="red">Momus Park</color> covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at 8,43.',
+    text: ' <color="red">Momus Park</color> covers a huge area made up of passages, it’s quite a scenic route. You could start your visti at 8,43.',
     isQuestion: true,
     buttons: [
       {
@@ -991,8 +1111,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'vegas',
-    text:
-      'Also the <color="red">Vegas Art Village</color> at -125,100 includes a whole assortment of very creative small museums from the community.',
+    text: 'Also the <color="red">Vegas Art Village</color> at -125,100 includes a whole assortment of very creative small museums from the community.',
     isQuestion: true,
     buttons: [
       {
@@ -1009,8 +1128,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'skate',
-    text:
-      'If you´re looking for a place with a more edgy underground vibe, check out the <color="red">Vegas City Skatepark Gallery</color> at -100,150.',
+    text: 'If you´re looking for a place with a more edgy underground vibe, check out the <color="red">Vegas City Skatepark Gallery</color> at -100,150.',
     isQuestion: true,
     buttons: [
       {
@@ -1027,8 +1145,7 @@ export let artistHints: Dialog[] = [
   },
   {
     name: 'end',
-    text:
-      'Those are the ones that come to mind to me right now. But there´s a LOT more to explore too.',
+    text: 'Those are the ones that come to mind to me right now. But there´s a LOT more to explore too.',
   },
   {
     isEndOfDialog: true,
@@ -1039,30 +1156,65 @@ export let artistHints: Dialog[] = [
   },
 ]
 
+export let wenMoonQuest: Dialog[] = [
+  {
+    text: 'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the <i>right place</i> at the <i>right time</i>..',
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.wenMoon, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+    },
+  },
+  {
+    text: 'Run around the scene and find me at least 10 promissing coins. Hurry up, you don`t want to get left out of the FOMO',
+    skipable: true,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      // start coins
+    },
+  },
+  {
+    name: 'ongoing',
+    text: 'Come on, you`re going to miss out!!',
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  ,
+  {
+    name: 'done',
+    text: 'Ohh well... thanks for finding them. But looks like in the time since we spoke, they kind of lost all their value. Oh well, that`s how it goes. Thanks anyway.',
+    skipable: true,
+    isEndOfDialog: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.wenMoonEnd, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+    },
+  },
+]
+
 export let wenMoonTalk: Dialog[] = [
   {
-    text:
-      'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the <i>right place</i> at the <i>right time</i>..',
+    text: 'Hey there! Seen any promising new coins? It’s full of them, all over the place. You just need to be at the <i>right place</i> at the <i>right time</i>..',
     skipable: true,
   },
   {
-    text:
-      'I’m  <color="red">Wen Moon </color>, a future millionaire, you’ll see. Any minute now!',
+    text: 'I’m  <color="red">Wen Moon </color>, a future millionaire, you’ll see. Any minute now!',
     skipable: true,
   },
   {
-    text:
-      'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
+    text: 'Everyone gets a break except me. But it’s a matter of time now, I got a bit of everything, you never know what’s the next big thing.',
     skipable: true,
   },
   {
-    text:
-      'For example, my friend was really psyched about Ponzi Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
+    text: 'For example, my friend was really psyched about Ponzi Coin, you heard of it? He says it’s going to be huge, and he’ll even cut me a special deal if I buy it from him.',
     skipable: true,
   },
   {
-    text:
-      'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? <i>Go tweet about it haha</i>',
+    text: 'Then there’s Bad Press Coin: its value is directly tied to how many negative mentions it gets on twitter. You think it’s a bad idea? <i>Go tweet about it haha</i>',
     skipable: true,
   },
   {
@@ -1070,18 +1222,15 @@ export let wenMoonTalk: Dialog[] = [
     skipable: true,
   },
   {
-    text:
-      '<i>Gotta get them all!</i> Haha You know, just like that yellow cat says..',
+    text: '<i>Gotta get them all!</i> Haha You know, just like that yellow cat says..',
     skipable: true,
   },
   {
-    text:
-      'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
+    text: 'You know the one… The one from that famous comic book kids read today, Poker Nom ...or something',
     skipable: true,
   },
   {
-    text:
-      'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
+    text: 'Anyway, I’ll keep looking. I’m gonna miss my big break if I stay chatting here. See you around!',
     skipable: true,
     isEndOfDialog: true,
 

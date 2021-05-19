@@ -24,7 +24,14 @@
       "eth-connect": [
         "node_modules\\eth-connect\\eth-connect.d.ts",
         "node_modules/eth-connect/eth-connect.d.ts"
-      ]
+      ],
+      "dcl-quests-client/quests-client-amd": [
+        "./node_modules/dcl-quests-client/quests-client-amd"
+      ],
+      "@dcl/ecs-quests": [
+        "node_modules/@dcl/ecs-quests/dist/dcl-ecs-quests.d.ts",
+        "node_modules/@dcl/ecs-quests/dist/@dcl/dcl-ecs-quests.d.ts"
+      ],
     },
     "baseUrl": "."
   },

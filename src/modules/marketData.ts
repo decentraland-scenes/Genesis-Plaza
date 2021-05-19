@@ -1,6 +1,9 @@
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
 import { shortenText } from './helperFunctions'
+import { questProg, taskIds } from 'src/quest'
+import { wearabesCQuest, wearablesC } from './bar/barNPCs'
+import { query } from '@dcl/quests-query'
 
 /////// GET DATA FROM SERVER
 
@@ -2488,6 +2491,17 @@ export function updateTradeCentrer(data: MarketData) {
       position: new Vector3(0, 0.1, -0.2),
     },
     mythicBoard2
+  )
+
+  expensiveMythicPreview.addComponentOrReplace(
+    new OnPointerDown(() => {
+      if (
+        query(questProg).isTaskCompleted(taskIds.wearables) &&
+        !query(questProg).isTaskCompleted(taskIds.findWearable)
+      ) {
+        wearablesC.talk(wearabesCQuest, 'done')
+      }
+    })
   )
 }
 ////// ROOFTOP MUSIC

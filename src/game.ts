@@ -39,6 +39,7 @@ import {
   endArtistTalk,
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
+import { handleQuests } from './quest'
 
 //////// LOG PLAYER POSITION
 
