@@ -8,7 +8,7 @@ export class Sound extends Entity {
     if (transform) {
       this.getComponent(Transform).position = transform
     } else {
-      this.getComponent(Transform).position = Camera.instance.position
+      this.setParent(Attachable.AVATAR)
     }
   }
 
