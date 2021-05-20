@@ -1,6 +1,6 @@
 const lobbyMusicClip = new AudioClip('sounds/lobby_music.mp3')
 export const lobbyMusicSource = new AudioSource(lobbyMusicClip)
-lobbyMusicSource.volume = 1
+lobbyMusicSource.volume = 0.2
 
 const lobbyAmbienceClip = new AudioClip('sounds/lobby_ambience.mp3')
 export const lobbyAmbienceSource = new AudioSource(lobbyAmbienceClip)
@@ -36,11 +36,11 @@ menuErrorSource.volume = 0.8
 
 const beamChargeClip = new AudioClip('sounds/beam_charge.mp3')
 export const beamChargeSource = new AudioSource(beamChargeClip)
-beamChargeSource.volume = 0.8
+beamChargeSource.volume = 0.5
 
 const beamFireClip = new AudioClip('sounds/beam_fire.mp3')
 export const beamFireSource = new AudioSource(beamFireClip)
-beamFireSource.volume = 0.8
+beamFireSource.volume = 0.5
 
 const beamFallClip = new AudioClip('sounds/beam_fall.mp3')
 export const beamFallSource = new AudioSource(beamFallClip)

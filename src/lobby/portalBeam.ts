@@ -34,14 +34,16 @@ engine.addEntity(ambienceBox)
 let musicBox = new Entity()
 musicBox.addComponent(
   new Transform({
-    position: new Vector3(lobbyCenter.x, lobbyHeight + 2, lobbyCenter.z),
+    position: new Vector3(0,2,0),
   })
 )
 musicBox.addComponent(sfx.lobbyMusicSource)
 sfx.lobbyMusicSource.loop = true
 sfx.lobbyMusicSource.playing = true
 
+
 engine.addEntity(musicBox)
+musicBox.setParent(Attachable.AVATAR)
 
 tutorialEnableObservable.add((tutorialEnabled) => {
   if (tutorialEnabled) {
