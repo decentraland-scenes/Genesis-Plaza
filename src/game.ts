@@ -23,6 +23,7 @@ import { addRepeatTrigger } from './modules/Utils'
 import { startMessageBoards } from './modules/messageboard'
 import { placeDoors } from './modules/bar/doors'
 import * as utils from '@dcl/ecs-scene-utils'
+import * as sfx from 'lobby/resources/sounds'
 import {
   addMicFeedback,
   lowerVolume,
@@ -73,7 +74,7 @@ utils.setTimeout(20000, () => {
 /// TRIGGER FOR STUFF OUTSIDE BAR
 
 utils.addOneTimeTrigger(
-  new utils.TriggerBoxShape(new Vector3(50, 30, 50), new Vector3(160, 10, 155)),
+  new utils.TriggerBoxShape(new Vector3(50, 25, 50), new Vector3(160, 10, 155)),
   {
     onCameraEnter: () => {
       insideBar()
@@ -108,8 +109,8 @@ addRepeatTrigger(
 
 //outer perimeter
 addRepeatTrigger(
-  new Vector3(160, 50, 155),
-  new Vector3(75, 103, 75),
+  new Vector3(160, 30, 155),
+  new Vector3(75, 60, 75),
   () => {
     lowerVolume()
     log('got closer')
@@ -122,6 +123,49 @@ addRepeatTrigger(
   }
 )
 
+/// TRIGGERS AROUND PLAZA
+
+utils.addOneTimeTrigger(
+  new utils.TriggerBoxShape(new Vector3(2, 5, 305), new Vector3(0, 2, 160)),
+  {
+    onCameraEnter: () => {
+      log('WEST BORDER')
+      outsideBar()
+    },
+  }
+)
+
+utils.addOneTimeTrigger(
+  new utils.TriggerBoxShape(new Vector3(2, 5, 320), new Vector3(320, 2, 155)),
+  {
+    onCameraEnter: () => {
+      log('EAST BORDER')
+      outsideBar()
+    },
+  }
+)
+
+utils.addOneTimeTrigger(
+  new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(165, 2, 0)),
+  {
+    onCameraEnter: () => {
+      log('SOUTH BORDER')
+      outsideBar()
+    },
+  }
+)
+
+utils.addOneTimeTrigger(
+  new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(155, 2, 300)),
+  {
+    onCameraEnter: () => {
+      log('NORTH BORDER')
+
+      outsideBar()
+    },
+  }
+)
+
 export function insideBar() {
   if (!areNPCsAdded) {
     addBarNPCs()
@@ -131,7 +175,17 @@ export function insideBar() {
   addMicFeedback()
 }
 
+export let isOutsideLoaded: boolean = false
+
 export function outsideBar() {
+  log('CALLING OUTSIDE BAR')
+
+  if (isOutsideLoaded) return
+
+  isOutsideLoaded = true
+
+  sfx.lobbyMusicSource.playing = false
+
   addNPCsOutside()
   /// MOVING PLATFORMS
 

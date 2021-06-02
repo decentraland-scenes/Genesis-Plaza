@@ -34,13 +34,12 @@ engine.addEntity(ambienceBox)
 let musicBox = new Entity()
 musicBox.addComponent(
   new Transform({
-    position: new Vector3(0,2,0),
+    position: new Vector3(0, 2, 0),
   })
 )
 musicBox.addComponent(sfx.lobbyMusicSource)
 sfx.lobbyMusicSource.loop = true
 sfx.lobbyMusicSource.playing = true
-
 
 engine.addEntity(musicBox)
 musicBox.setParent(Attachable.AVATAR)
@@ -215,9 +214,8 @@ export class TeleportController {
 
     for (let i = 0; i < this.delayedTriggers.length; i++) {
       if (this.delayedTriggers[i].collide(player.feetPos, true)) {
-        const delayInfo = this.delayedTriggers[i].getComponent(
-          DelayedTriggerBox
-        )
+        const delayInfo =
+          this.delayedTriggers[i].getComponent(DelayedTriggerBox)
         delayInfo.elapsed += dt
         showTeleportUI(true)
         let countDownNum = delayInfo.delay - delayInfo.elapsed + 1
