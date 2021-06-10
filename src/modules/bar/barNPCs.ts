@@ -7,6 +7,11 @@ import {
 import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
+
+import { client, questProg, taskIds, updateQuests } from 'src/quests'
+import { query } from '@dcl/quests-query'
+import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
+
 export let octopus: NPC
 export let doge: NPC
 export let catGuy: NPC
@@ -49,9 +54,30 @@ export async function addBarNPCs() {
       if (octopus.getComponent(NPCTriggerComponent).onCameraEnter) {
         octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
       }
+      if (
+        questProg.progressStatus != ProgressStatus.COMPLETED &&
+        query(questProg).isTaskCompleted(taskIds.intro)
+      ) {
+        if (
+          !query(questProg).isTaskCompleted(taskIds.asianHerb) ||
+          !query(questProg).isTaskCompleted(taskIds.forestHerb) ||
+          !query(questProg).isTaskCompleted(taskIds.medievalHerb)
+        ) {
+          octopus.talk(OctoQuest, 'noHerbs')
+        } else if (!query(questProg).isTaskCompleted(taskIds.catHair)) {
+          octopus.talk(OctoQuest, 'noHairs')
+        } else if (!query(questProg).isTaskCompleted(taskIds.caliz)) {
+          octopus.talk(OctoQuest, 'noCalis')
+        } else {
+          // has all ingredients
+          octopus.talk(OctoQuest, 'makeDrink')
+        }
+      } else {
+        // quest not started or ended
+        octopus.talk(OctoHi)
+      }
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
-      octopus.talk(OctoHi)
     },
     {
       portrait: `images/portraits/bartender.png`,
@@ -369,13 +395,20 @@ export function addNPCsOutside() {
 
     'models/core_building/cat_guySittedV12.glb',
     () => {
-      catGuy.talk(ILoveCats, 0)
+      if (
+        questProg.progressStatus == ProgressStatus.ON_GOING &&
+        !query(questProg).isTaskCompleted(taskIds.catHair)
+      ) {
+        catGuy.talk(catQuest)
+      } else {
+        catGuy.talk(ILoveCats, 0)
+      }
+
       catGuy.playAnimation(`talk`)
     },
     {
       portrait: 'images/portraits/catguy.png',
-      turningSpeed: 0.8,
-      reactDistance: 4,
+      reactDistance: 9,
       idleAnim: `idle`,
       onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
@@ -422,7 +455,101 @@ export let OctoHi: Dialog[] = [
     text: 'Is this your first time here? Do you want some pointers about how you can get around the place?',
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes' },
+      {
+        label: 'YES',
+        goToDialog: 'yes',
+      },
+      { label: 'NO', goToDialog: 'end' },
+    ],
+  },
+  {
+    name: 'end',
+    text: 'Oh well, if for any reason you need a hand and/or tentacle, I’ll be here!',
+    triggeredByNext: () => {
+      if (!query(questProg).isTaskCompleted(taskIds.intro)) {
+        octopus.talk(OctoQuest, 'questQ')
+      } else {
+        octopus.endInteraction()
+        log('ended conversation')
+        backToIdle()
+      }
+    },
+  },
+  {
+    name: 'yes',
+    text: 'Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.',
+    skipable: true,
+  },
+  {
+    text: 'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
+
+    skipable: true,
+  },
+  {
+    text: 'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including <color="red">live events</color> and other highlights.',
+
+    skipable: true,
+  },
+  {
+    text: 'You can also open up the map and <color="red">fast travel</color> anywhere! Just press <color="red">M</color> on your keyboard and explore it. You’ll see it’s pretty damn big!',
+
+    skipable: true,
+  },
+  {
+    text: 'Or you can just walk out the door and keep walking, and see what you run into.',
+
+    skipable: true,
+  },
+  {
+    text: 'Right now we’re in the center of the <color="red">Genesis Plaza</color>, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
+
+    skipable: true,
+  },
+  {
+    text: 'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
+
+    skipable: true,
+    triggeredByNext: () => {
+      if (!query(questProg).isTaskCompleted(taskIds.intro)) {
+        octopus.talk(OctoQuest, 'questQ')
+      } else {
+        octopus.talk(OctoHi, 'normalEnd')
+      }
+    },
+  },
+  {
+    name: 'normalEnd',
+    text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
+
+    skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+]
+
+export let OctoQuest: Dialog[] = [
+  {
+    name: 'questQ',
+    text: '',
+    skipable: true,
+  },
+  {
+    text: "There's an item that's not on our menu, but if you're willing to fetch the ingredients I can make it for you",
+    skipable: true,
+  },
+  {
+    text: `A drink so amazing, it's been called <color="red">The drink of the gods</color> by... well by some drunk that tried it. Do you want me to make it for you?`,
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'YES',
+        goToDialog: 'quest',
+        triggeredActions: () => {
+          client.startQuest()
+        },
+      },
       { label: 'NO', goToDialog: 'end' },
     ],
   },
@@ -436,45 +563,109 @@ export let OctoHi: Dialog[] = [
     isEndOfDialog: true,
   },
   {
-    name: 'yes',
-    text: 'Here you can also find funky characters like myself. Don’t be shy, chat them up, everyone has a story to tell.',
-    skipable: true,
-  },
-  {
-    text: 'You can also take that glowing beam of light back up to the happy place up in the clouds where you started out.',
+    name: 'quest',
+    text: "Alright! This is a rich herbal concoction, so I'm going to need some exotic spices from a few places.",
 
     skipable: true,
   },
   {
-    text: 'There you can find a whole bunch of suggestions of places inside Decentraland you can visit, including live events and other highlights.',
-
+    text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>, -60, -60.',
     skipable: true,
   },
   {
-    text: 'You can also open up the map and fast travel anywhere! Just press M on your keyboard and explore it. You’ll see it’s pretty damn big!',
-
+    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>, -60, -60.',
     skipable: true,
   },
   {
-    text: 'Or you can just walk out the door and keep walking, and see what you run into.',
-
+    text: 'And finally add some smoky notes from a <color="red">dried leather vine</color>, you can find that growing in the <color="red">Medieval Plaza</color>, -60, -60.',
     skipable: true,
   },
   {
-    text: 'Right now we’re in the center of the Genesis Plaza, a community-owned space that´s open to everyone. The roads fan out in all directions from here.',
-
+    text: "The last ingredient is controversial, but essential. We need to infuse it with just a few <color='red'>cat hairs</color>. Sounds weird, right? But it gives it that extra oomph. If you're allergic, even better!",
     skipable: true,
   },
   {
-    text: 'If you venture out into the world beyond the plaza, you’ll see that the content is created by our growing community. Randomly bumping into things you didn’t expect is half the fun here.',
-
+    text: `I'm sure you can get some cat hairs from the <color="red">Cat Guy</color>. He's somewhere here in Genesis Plaza.`,
     skipable: true,
   },
+  {
+    text: `We can't just serve that in any regular glass. I'm going to need a special <color="red">Calis</color> for that. Look for the chaman in <color="red">Gamer Plaza</color>, -60,-60, he'll know.`,
+    skipable: true,
+  },
+  {
+    text: "When you have all that ready, come back to me and I'll make you the drink. It's going to be worth it, I promise!",
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.intro, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+      updateQuests()
+    },
+    skipable: true,
+  },
+
   {
     text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
 
     skipable: true,
     triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'noHerbs',
+    text: "Looks like we're still missing some ingredients. If you bring them all, I can make you the drink!",
+    skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'noHairs',
+    text: "We're still missing a key ingredient, the cat hairs! I refuse to do this without following the recipe to the letter. Look for the cat guy, he's sitting somewhere south of here in this same plaza.",
+    skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'noCalis',
+    text: "We have all the ingredients, but we wouldn't do the drink justice if we just served it in a regular glass. Go to the Chaman on Gamer Plaza, he'll know where you can get something worthy of it.",
+    skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'makeDrink',
+    text: 'Amazing, you found everything! Time to do my magic',
+    skipable: true,
+    triggeredByNext: () => {
+      octopus.playAnimation('makeDrink', true, 2)
+      utils.setTimeout(2000, () => {
+        octopus.talk(OctoQuest, 'serveDrink')
+        // drink in hand
+        // sound
+        // special music (?)
+        // press F to sip little amounts
+      })
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'serveDrink',
+    text: "Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir.",
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.outro, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+      updateQuests()
       backToIdle()
     },
     isEndOfDialog: true,
@@ -625,6 +816,39 @@ export let ILoveCats: Dialog[] = [
     triggeredByNext: () => {
       catGuy.playAnimation('idle')
     },
+  },
+]
+
+export let catQuest: Dialog[] = [
+  {
+    text: `Hey there! Let me introduce myself. I’m the cat guy`,
+    skipable: true,
+  },
+  {
+    text: `That’s what everyone calls me. Or well, my cats don’t call me anything really, I wish they did. But if people other than my cats were to hang out with me, that’s what they’d call me for sure.`,
+    skipable: true,
+  },
+  {
+    text: "Oh so you're also into that weird fad of drinking cat hairs, huh?",
+    skipable: true,
+  },
+  {
+    text: "Pretty strange if you ask me. Then they say I'm the freak just because I eat cat food.",
+    skipable: true,
+    triggeredByNext: () => {
+      releaseCat()
+    },
+  },
+  {
+    text: "Well, if you really want to go forward with that... here's whiskers. You can pinch some of his hairs and be done with it.",
+    skipable: true,
+    isEndOfDialog: true,
+  },
+  {
+    name: 'collect',
+    text: 'Be gentle, you weirdo!',
+    skipable: true,
+    isEndOfDialog: true,
   },
 ]
 
@@ -1054,4 +1278,61 @@ export let wenMoonTalk: Dialog[] = [
 export function endArtistTalk() {
   artist1.bubble.closeDialogEndAll()
   artist2.bubble.closeDialogEndAll()
+}
+
+function releaseCat() {
+  let cat = new Entity()
+  cat.addComponent(new GLTFShape('models/core_building/cat_orange.glb'))
+  cat.addComponent(
+    new Transform({
+      position: new Vector3(191.9, 0.225, 68.2),
+      scale: new Vector3(0.5, 0.5, 0.5),
+    })
+  )
+  cat.addComponent(new Animator())
+
+  let walkAnim = new AnimationState('WalkCycle')
+  let idleAnim = new AnimationState('IdleNorm')
+  let swooshAnim = new AnimationState('IdleTailSwoosh')
+
+  cat.getComponent(Animator).addClip(idleAnim)
+  cat.getComponent(Animator).addClip(swooshAnim)
+  cat.getComponent(Animator).addClip(walkAnim)
+
+  engine.addEntity(cat)
+
+  utils.setTimeout(4000, () => {
+    walkAnim.play()
+    cat.addComponent(
+      new utils.MoveTransformComponent(
+        cat.getComponent(Transform).position,
+        cat.getComponent(Transform).position.add(new Vector3(-0.05, 0, 1)),
+        4,
+        () => {
+          idleAnim.play()
+        }
+      )
+    )
+  })
+
+  cat.addComponent(
+    new OnPointerDown(
+      () => {
+        swooshAnim.play()
+        // sound
+        // back to idle
+
+        catGuy.talk(catQuest, 'collect')
+        client.makeProgress(taskIds.catHair, {
+          type: 'single',
+          status: ProgressStatus.COMPLETED,
+        })
+        updateQuests()
+      },
+      {
+        button: ActionButton.PRIMARY,
+        hoverText: 'Pick hair',
+      }
+    )
+  )
 }
