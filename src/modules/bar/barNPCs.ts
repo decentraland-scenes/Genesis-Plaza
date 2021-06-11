@@ -11,6 +11,7 @@ import { rarestItem, rarityLevel } from './rarestWearable'
 import { client, questProg, taskIds, updateQuests } from 'src/quests'
 import { query } from '@dcl/quests-query'
 import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
+import { Calis1 } from '../interactiveItems/calis'
 
 export let octopus: NPC
 export let doge: NPC
@@ -76,6 +77,8 @@ export async function addBarNPCs() {
         // quest not started or ended
         octopus.talk(OctoHi)
       }
+
+      //octopus.talk(OctoQuest, 'makeDrink')
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
     },
@@ -648,6 +651,7 @@ export let OctoQuest: Dialog[] = [
       octopus.playAnimation('makeDrink', true, 2)
       utils.setTimeout(2000, () => {
         octopus.talk(OctoQuest, 'serveDrink')
+        Calis1.pickup()
         // drink in hand
         // sound
         // special music (?)
