@@ -1,9 +1,12 @@
 import * as utils from '@dcl/ecs-scene-utils'
+import * as ui from '@dcl/ui-scene-utils'
 import { Sound } from './sound'
 import { Player } from './player'
 import { sceneMessageBus } from '../interactiveItems'
 import { pickUpSound, putDownSound } from './barItem'
 import { OctoComments, octopus } from '../bar/barNPCs'
+import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
+import { signMessage } from '@decentraland/EthereumController'
 
 // Track player's state
 export enum CalisBaseState {
@@ -26,6 +29,7 @@ const swallowSound = new Sound(
 export class Calis extends Entity {
   public isFull: boolean = false
   public calisBaseState: CalisBaseState = CalisBaseState.FULL
+  public danceSystem: Danceystem
 
   constructor(
     public id: number,
@@ -82,6 +86,17 @@ export class Calis extends Entity {
       this.holdPosition.z
     )
 
+    if (!this.danceSystem) {
+      Input.instance.subscribe(
+        'BUTTON_DOWN',
+        ActionButton.SECONDARY,
+        false,
+        (e) => {
+          this.drink()
+        }
+      )
+    }
+
     // sceneMessageBus.emit('CalisPickedUp', {
     //   id: id,
     //   position: this.holdPosition,
@@ -111,6 +126,11 @@ export class Calis extends Entity {
     this.isFull = false
     this.stopAnimations()
     this.getComponent(Animator).getClip('Drink').play()
+
+    if (!this.danceSystem) {
+      this.danceSystem = new Danceystem()
+      engine.addSystem(this.danceSystem)
+    }
   }
 
   addPointerDown() {
@@ -174,3 +194,43 @@ export const Calis1 = new Calis(
   new Vector3(0, -0.4, 0.5),
   -10
 )
+
+// Wait System
+export class Danceystem implements ISystem {
+  timer: number = 0
+  sintime: number = 0
+  interval: number = 8
+  pink: UIImage
+  pinkYpos: number = 0
+  update(dt: number) {
+    this.timer += dt
+    this.sintime += dt
+    this.pinkYpos = 150 - Math.sin(this.sintime) * 100
+
+    this.pink.positionY = this.pinkYpos
+    if (this.timer >= this.interval) {
+      this.timer = 0
+      triggerEmote({ predefined: 'hammer' })
+    }
+  }
+  activate() {
+    let canvas = ui.canvas
+    canvas.visible = true
+    let pinkTexture = new Texture('images/ui/pink4.png', {
+      hasAlpha: true,
+    })
+
+    this.pink = new UIImage(canvas, pinkTexture)
+
+    this.pink.width = '100%'
+    this.pink.height = 800
+    this.pink.positionY = 100
+    this.pink.hAlign = 'center'
+    this.pink.vAlign = 'center'
+    this.pink.sourceWidth = 32
+    this.pink.sourceHeight = 800
+    triggerEmote({ predefined: 'hammer' })
+  }
+}
+
+//engine.addSystem(new Danceystem())

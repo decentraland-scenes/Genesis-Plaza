@@ -78,7 +78,7 @@ export async function addBarNPCs() {
         octopus.talk(OctoHi)
       }
 
-      //octopus.talk(OctoQuest, 'makeDrink')
+      //   octopus.talk(OctoQuest, 'makeDrink')
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
     },
@@ -662,7 +662,7 @@ export let OctoQuest: Dialog[] = [
   },
   {
     name: 'serveDrink',
-    text: "Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir.",
+    text: `Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir. Hit <color="red">F</color> to drink up!`,
     skipable: true,
     triggeredByNext: () => {
       client.makeProgress(taskIds.outro, {
