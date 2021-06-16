@@ -213,6 +213,7 @@ export async function addBarNPCs() {
       portrait: `images/portraits/WearableConnoisseur.png`,
       faceUser: true,
       darkUI: true,
+      dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Talk',
       turningSpeed: 0.35,
       onlyETrigger: true,
@@ -257,6 +258,7 @@ export async function addBarNPCs() {
       idleAnim: 'Talk',
       darkUI: true,
       faceUser: false,
+      dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Art Recommendations',
       onlyETrigger: true,
       textBubble: true,
@@ -406,6 +408,8 @@ export function addNPCsOutside() {
       } else {
         catGuy.talk(ILoveCats, 0)
       }
+
+      catGuy.talk(catQuest)
 
       catGuy.playAnimation(`talk`)
     },
@@ -1290,29 +1294,26 @@ function releaseCat() {
   cat.addComponent(
     new Transform({
       position: new Vector3(191.9, 0.225, 68.2),
-      scale: new Vector3(0.5, 0.5, 0.5),
+      scale: new Vector3(0.45, 0.45, 0.45),
+      rotation: Quaternion.Euler(0, -10, 0),
     })
   )
   cat.addComponent(new Animator())
 
   let walkAnim = new AnimationState('WalkCycle')
-  let idleAnim = new AnimationState('IdleNorm')
-  let swooshAnim = new AnimationState('IdleTailSwoosh')
 
-  cat.getComponent(Animator).addClip(idleAnim)
-  cat.getComponent(Animator).addClip(swooshAnim)
   cat.getComponent(Animator).addClip(walkAnim)
-
-  engine.addEntity(cat)
 
   utils.setTimeout(4000, () => {
     walkAnim.play()
     cat.addComponent(
       new utils.MoveTransformComponent(
         cat.getComponent(Transform).position,
-        cat.getComponent(Transform).position.add(new Vector3(-0.05, 0, 1)),
+        cat.getComponent(Transform).position.add(new Vector3(-0.15, 0, 1)),
         4,
         () => {
+          let idleAnim = new AnimationState('IdleNorm')
+          cat.getComponent(Animator).addClip(idleAnim)
           idleAnim.play()
         }
       )
@@ -1322,6 +1323,8 @@ function releaseCat() {
   cat.addComponent(
     new OnPointerDown(
       () => {
+        let swooshAnim = new AnimationState('IdleTailSwoosh')
+        cat.getComponent(Animator).addClip(swooshAnim)
         swooshAnim.play()
         // sound
         // back to idle
@@ -1339,4 +1342,5 @@ function releaseCat() {
       }
     )
   )
+  engine.addEntity(cat)
 }
