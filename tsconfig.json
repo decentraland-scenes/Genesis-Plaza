@@ -24,6 +24,9 @@
       "eth-connect": [
         "node_modules\\eth-connect\\eth-connect.d.ts",
         "node_modules/eth-connect/eth-connect.d.ts"
+      ],
+      "decentraland-transactions": [
+        "node_modules/decentraland-transactions/decentraland-transactions.d.ts"
       ]
     },
     "baseUrl": "."

@@ -21,7 +21,7 @@ export class CooldownActivated {
   }
 }
 
-class CooldownSystem {
+export class CooldownSystem {
   group = engine.getComponentGroup(CooldownActivated, Transform)
 
   update(dt: number) {

@@ -1,6 +1,6 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { Sound } from './sound'
-import { Player } from './player'
+import { player } from 'src/modules/player'
 import { sceneMessageBus } from '../interactiveItems'
 import { pickUpSound, putDownSound } from './barItem'
 import { OctoComments, octopus } from '../bar/barNPCs'
@@ -61,7 +61,7 @@ export class BeerGlass extends Entity {
     this.addComponent(
       new OnPointerDown(
         () => {
-          if (!Player.holdingItem) {
+          if (!player.holdingItem) {
             this.pickup(this.id)
           }
         },
@@ -95,7 +95,7 @@ export class BeerGlass extends Entity {
     this.getComponent(Transform).rotate(Vector3.Right(), this.rotatePosition)
     this.addComponentOrReplace(
       new utils.Delay(100, () => {
-        Player.holdingItem = true
+        player.holdingItem = true
       })
     )
 
@@ -124,7 +124,7 @@ export class BeerGlass extends Entity {
   ): void {
     this.setParent(null)
     putDownSound.getComponent(AudioSource).playOnce()
-    Player.holdingItem = false
+    player.holdingItem = false
     sceneMessageBus.emit('BeerGlassPutDown', {
       id: id,
       position: placePosition,
@@ -148,7 +148,7 @@ export class BeerGlass extends Entity {
     this.addComponent(
       new OnPointerDown(
         () => {
-          if (!Player.holdingItem) {
+          if (!player.holdingItem) {
             this.pickup(this.id)
           }
         },

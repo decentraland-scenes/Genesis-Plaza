@@ -1,10 +1,12 @@
+import { WearableMenuItem } from './menuItemWearable'
 import { AnimatedItem } from './simpleAnimator'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import { MenuItem } from './menuItem'
+import { wordWrap } from './helperFunctions'
 
-@Component('VerticalScroller')
-export class VerticalScroller {
+@Component('HorizontalScroller')
+export class HorizontalScroller {
   base: number = 0
   stops: number = 0
   currentItem: number = 0
@@ -42,24 +44,22 @@ export class VerticalScroller {
   }
 }
 
-export class VerticalScrollMenu extends Entity {
+export class HorizontalScrollMenu extends Entity {
   items: MenuItem[]
   visibleItemCount: number = 5
-  verticalSpacing: number = 1.2
+  spacing: number = 1.2
   currentOffset: number = 0
-  maxHeight: number = 1
+  maxwidth: number = 1
   origin: Vector3
   scrollerRootA: Entity
-  scrollerRootB: Entity
-  menuFrame: Entity
-  bg: Entity
+  //menuFrame:Entity
   topMesh: Entity
   baseMesh: Entity
   clickBoxes: Entity[]
   itemRoots: Entity[]
   instructions: Entity
-  baseText: Entity
-  baseTextShape: TextShape
+  topText: Entity
+  topTextShape: TextShape
 
   selectSound: Entity
   deselectSound: Entity
@@ -74,38 +74,35 @@ export class VerticalScrollMenu extends Entity {
     _baseTitle: string
   ) {
     super()
+
+    const verticalOffset = 2.15
     this.visibleItemCount = _numOfVisibleItems
 
     this.items = []
     this.clickBoxes = []
     this.itemRoots = []
-    this.menuFrame = new Entity()
-    this.menuFrame.addComponent(
-      new Transform({
-        position: new Vector3(0, 0, 0.05),
-        scale: new Vector3(4, 1, 4),
-      })
-    )
-    this.menuFrame.addComponent(resource.menuPillarsShape)
-    this.menuFrame.addComponent(
-      new OnPointerDown(
-        (e) => {
-          // 'F' to scroll up
-          if (e.buttonId == 2) {
-            this.scrollUp()
-          }
+    // this.menuFrame = new Entity()
+    // this.menuFrame.addComponent(new Transform({
+    //     position: new Vector3(0,0,0.05),
+    //     scale: new Vector3(1,1,1)
+    // }))
+    // this.menuFrame.addComponent(resource.menuPillarsShape)
+    // this.menuFrame.addComponent(new OnPointerDown( (e) => {
 
-          // 'E' to scroll down
-          if (e.buttonId == 1) {
-            this.scrollDown()
-          }
-        },
-        { distance: 20, showFeedback: false }
-      )
-    )
+    //     // 'F' to scroll up
+    //     if(e.buttonId == 2){
+    //         this.scrollUp()
+    //     }
 
-    this.menuFrame.setParent(this)
-    this.menuFrame.addComponent(sfx.menuDownSource)
+    //     // 'E' to scroll down
+    //     if(e.buttonId == 1){
+    //         this.scrollDown()
+    //     }
+
+    // },{distance:20, showFeedback:false} ))
+
+    // this.menuFrame.setParent(this)
+    // this.menuFrame.addComponent(sfx.menuDownSource)
 
     this.topMesh = new Entity()
     this.topMesh.addComponent(
@@ -119,21 +116,13 @@ export class VerticalScrollMenu extends Entity {
 
     this.addComponent(sfx.menuUpSource)
 
-    // this.bg = new Entity()
-    // this.bg.addComponent(new Transform({
-    //     position: new Vector3(-0.4,0,0.1),
-    //     scale: new Vector3(4,1,1)
-    // }))
-    // this.bg.addComponent(new GLTFShape("models/lobby/menu_bg.glb"))
-    // this.bg.setParent(this)
-
     this.addComponent(new Transform(_transform))
 
     this.baseMesh = new Entity()
     this.baseMesh.addComponent(
       new Transform({
-        position: new Vector3(0, -0.6, 0),
-        scale: new Vector3(4, 4, 4),
+        position: new Vector3(0, 0, -0.4),
+        scale: new Vector3(1, 1, 1),
       })
     )
     this.baseMesh.addComponent(_baseMesh)
@@ -154,38 +143,43 @@ export class VerticalScrollMenu extends Entity {
       )
     )
     this.baseMesh.setParent(this)
+    this.baseMesh.addComponent(sfx.menuDownSource)
 
-    this.baseText = new Entity()
-    this.baseTextShape = new TextShape()
-    this.baseTextShape.value = _baseTitle
-    this.baseTextShape.color = Color3.FromHexString('#111111')
-    this.baseTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
-    this.baseTextShape.fontSize = 3
+    this.topText = new Entity()
+    this.topTextShape = new TextShape()
+    this.topTextShape.value = _baseTitle
+    this.topTextShape.color = Color3.FromHexString('#000000')
+    this.topTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.topTextShape.fontSize = 3
 
-    this.baseText.addComponent(this.baseTextShape)
-    this.baseText.addComponent(
+    this.topText.addComponent(this.topTextShape)
+    this.topText.addComponent(
       new Transform({
-        position: new Vector3(0, -0.15, -0.16),
-        scale: new Vector3(0.25, 0.25, 0.25),
-        rotation: Quaternion.Euler(27, 0, 0),
+        position: new Vector3(0, 2.85, -0.2),
+        scale: new Vector3(0.4, 0.4, 0.4),
+        rotation: Quaternion.Euler(0, 0, 0),
       })
     )
 
-    this.baseText.setParent(this.baseMesh)
+    this.topText.setParent(this.baseMesh)
 
     this.origin = new Vector3(0, 0, 0)
     this.origin.copyFrom(this.getComponent(Transform).position)
 
-    this.verticalSpacing = _spacing
+    this.spacing = _spacing
 
     this.scrollerRootA = new Entity()
-    this.scrollerRootA.addComponent(new Transform())
+    this.scrollerRootA.addComponent(
+      new Transform({
+        position: new Vector3(0, verticalOffset, 0),
+      })
+    )
 
-    this.scrollerRootA.addComponent(new VerticalScroller())
-    this.scrollerRootA.getComponent(VerticalScroller).base =
-      this.scrollerRootA.getComponent(Transform).position.y
-    this.scrollerRootA.getComponent(VerticalScroller).scrollStep =
-      this.verticalSpacing
+    this.scrollerRootA.addComponent(new HorizontalScroller())
+    this.scrollerRootA.getComponent(HorizontalScroller).base =
+      this.scrollerRootA.getComponent(Transform).position.x
+    this.scrollerRootA.getComponent(HorizontalScroller).scrollStep =
+      this.spacing
     this.scrollerRootA.setParent(this)
 
     engine.addEntity(this)
@@ -221,10 +215,9 @@ export class VerticalScrollMenu extends Entity {
     )
     this.instructions.setParent(this)
 
-    this.maxHeight = this.visibleItemCount * this.verticalSpacing + 1
-    this.menuFrame.getComponent(Transform).position.y =
-      this.maxHeight / 2 - this.verticalSpacing
-    this.menuFrame.getComponent(Transform).scale.y = this.maxHeight
+    this.maxwidth = this.visibleItemCount * this.spacing + 1
+    //this.menuFrame.getComponent(Transform).position.x = this.maxwidth/2 - this.spacing
+    //this.menuFrame.getComponent(Transform).scale.x = this.maxwidth
     //this.collider.addComponent()
 
     //sounds
@@ -248,7 +241,7 @@ export class VerticalScrollMenu extends Entity {
     let itemRoot = new Entity()
     itemRoot.addComponent(
       new Transform({
-        position: new Vector3(0, this.currentOffset, 0),
+        position: new Vector3(this.currentOffset, 0, 0),
       })
     )
 
@@ -262,12 +255,12 @@ export class VerticalScrollMenu extends Entity {
         // position: new Vector3(1, this.currentOffset, 0)
       })
     )
-    clickBox.addComponent(resource.shelfShape)
+    clickBox.addComponent(resource.hangerShape)
     clickBox.setParent(itemRoot)
     clickBox.addComponent(
       new OnPointerDown(
         (e) => {
-          const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)
+          const scrollInfo = this.scrollerRootA.getComponent(HorizontalScroller)
 
           // click to select
           if (e.buttonId == 0) {
@@ -305,30 +298,31 @@ export class VerticalScrollMenu extends Entity {
     }
 
     // _item.getComponent(Transform).position.y = this.currentOffset
-    this.currentOffset += this.verticalSpacing
+    this.currentOffset += this.spacing
     // this.maxHeight = this.items.length * this.verticalSpacing + 1
 
-    this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length
+    this.scrollerRootA.getComponent(HorizontalScroller).stops =
+      this.items.length
   }
 
   removeMenuItem(index: number) {
     if (index > -1) {
-      engine.removeEntity(this.items[index])
+      // engine.removeEntity(this.items[index])
       engine.removeEntity(this.itemRoots[index])
-      engine.removeEntity(this.clickBoxes[index])
+      // engine.removeEntity(this.clickBoxes[index])
 
       this.items.splice(index, 1)
       this.itemRoots.splice(index, 1)
       this.clickBoxes.splice(index, 1)
 
-      this.scrollerRootA.getComponent(VerticalScroller).stops =
+      this.scrollerRootA.getComponent(HorizontalScroller).stops =
         this.items.length
-      this.currentOffset -= this.verticalSpacing
+      this.currentOffset -= this.spacing
     }
   }
 
   scrollUp() {
-    const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)
+    const scrollInfo = this.scrollerRootA.getComponent(HorizontalScroller)
     // scrollable
     if (scrollInfo.currentItem < scrollInfo.stops - 1) {
       scrollInfo.scrollUp()
@@ -343,17 +337,22 @@ export class VerticalScrollMenu extends Entity {
       //make the second item from the bottom smaller (avoid clipping through base)
       this.halveSizeItem(scrollInfo.currentItem - 1)
 
+      // make second item from the bottom full size
+      this.fullSizeItem(scrollInfo.currentItem + this.visibleItemCount - 2)
+
+      this.halveSizeAllExcept(scrollInfo.currentItem)
+      //this.rotateAll(scrollInfo.currentItem)
       sfx.menuUpSource.playOnce()
     }
     //reached the end
     else {
-      this.scrollerRootA.getComponent(Transform).position.y -= 0.3
+      this.scrollerRootA.getComponent(Transform).position.x -= 0.3
       sfx.menuScrollEndSource.playOnce()
     }
   }
 
   scrollDown() {
-    const scrollInfo = this.scrollerRootA.getComponent(VerticalScroller)
+    const scrollInfo = this.scrollerRootA.getComponent(HorizontalScroller)
 
     // scrollable
     if (scrollInfo.currentItem > 0) {
@@ -366,15 +365,37 @@ export class VerticalScrollMenu extends Entity {
       // hide topmost item
       this.hideItem(scrollInfo.currentItem + this.visibleItemCount)
 
+      //make the second item from the bottom smaller (avoid clipping through base)
+      this.halveSizeItem(scrollInfo.currentItem + this.visibleItemCount - 1)
       // make second item from the bottom full size
       this.fullSizeItem(scrollInfo.currentItem)
+
+      this.halveSizeAllExcept(scrollInfo.currentItem)
+      //this.rotateAll(scrollInfo.currentItem)
 
       sfx.menuDownSource.playOnce()
     }
     //reached the end
     else {
-      this.scrollerRootA.getComponent(Transform).position.y += 0.3
+      this.scrollerRootA.getComponent(Transform).position.x += 0.3
       sfx.menuScrollEndSource.playOnce()
+    }
+  }
+
+  rotateAll(currentItem: number) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (i < currentItem) {
+        this.items[i].getComponent(AnimatedItem).defaultTransform.rotation =
+          Quaternion.Euler(0, -45, 0)
+      }
+      if (i == currentItem) {
+        this.items[i].getComponent(AnimatedItem).defaultTransform.rotation =
+          Quaternion.Euler(0, 0, 0)
+      }
+      if (i > currentItem) {
+        this.items[i].getComponent(AnimatedItem).defaultTransform.rotation =
+          Quaternion.Euler(0, 45, 0)
+      }
     }
   }
 
@@ -415,20 +436,24 @@ export class VerticalScrollMenu extends Entity {
   }
   showItem(_id: number) {
     if (_id < this.itemRoots.length && _id >= 0) {
-      engine.addEntity(this.itemRoots[_id])
       this.itemRoots[_id].setParent(this.scrollerRootA)
       this.items[_id].setParent(this.itemRoots[_id])
-      this.items[_id].getComponent(Transform).scale.setAll(0)
-      this.items[_id].getComponent(Transform).position.z = 2
+      engine.addEntity(this.itemRoots[_id])
+      // this.items[_id].getComponent(Transform).scale.setAll(0)
+      // this.items[_id].getComponent(Transform).position.z  = 2
     }
   }
   halveSizeItem(_id: number) {
     if (_id < this.items.length && _id >= 0) {
-      const originalTransform =
-        this.items[_id].getComponent(AnimatedItem).defaultTransform
-      originalTransform.scale.x = this.items[_id].defaultItemScale.x * 0.5
-      originalTransform.scale.y = this.items[_id].defaultItemScale.y * 0.5
-      originalTransform.scale.z = this.items[_id].defaultItemScale.z * 0.5
+      if (this.items[_id].hasComponent(AnimatedItem)) {
+        const originalTransform =
+          this.items[_id].getComponent(AnimatedItem).defaultTransform
+        originalTransform.scale.x = this.items[_id].defaultItemScale.x * 0.5
+        originalTransform.scale.y = this.items[_id].defaultItemScale.y * 0.5
+        originalTransform.scale.z = this.items[_id].defaultItemScale.z * 0.5
+
+        // this.items[_id].getComponent(AnimatedItem).animFraction = 1
+      }
     }
   }
   fullSizeItem(_id: number) {
@@ -436,16 +461,27 @@ export class VerticalScrollMenu extends Entity {
       this.items[_id]
         .getComponent(AnimatedItem)
         .defaultTransform.scale.copyFrom(this.items[_id].defaultItemScale)
+      //this.items[_id].getComponent(AnimatedItem).animFraction = 1
     }
+  }
+
+  halveSizeAllExcept(_id: number) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (i != _id) {
+        this.halveSizeItem(i)
+      }
+    }
+    this.fullSizeItem(_id)
   }
 
   resetScroll() {
     this.deselectAll()
-    this.scrollerRootA.getComponent(VerticalScroller).reset()
+    this.scrollerRootA.getComponent(HorizontalScroller).reset()
     //this.scrollerRootA.getComponent(VerticalScroller).base = 0
-    this.scrollerRootA.getComponent(VerticalScroller).scrollStep =
-      this.verticalSpacing
-    this.scrollerRootA.getComponent(VerticalScroller).stops = this.items.length
+    this.scrollerRootA.getComponent(HorizontalScroller).scrollStep =
+      this.spacing
+    this.scrollerRootA.getComponent(HorizontalScroller).stops =
+      this.items.length
 
     for (let i = 0; i < this.items.length; i++) {
       if (i < this.visibleItemCount) {
@@ -458,6 +494,11 @@ export class VerticalScrollMenu extends Entity {
         .getComponent(AnimatedItem)
         .defaultTransform.scale.copyFrom(this.items[i].defaultItemScale)
     }
+
+    this.scrollerRootA.getComponent(Transform).position.x = 0
+  }
+  updateTitle(_title: string) {
+    this.topTextShape.value = wordWrap(_title, 40, 2)
   }
   // showFirstXItems(_count:number){
   //     // only show the first 5 events on init
@@ -473,16 +514,16 @@ export class VerticalScrollMenu extends Entity {
 }
 
 export class clickScrollSystem {
-  group = engine.getComponentGroup(VerticalScroller, Transform)
+  group = engine.getComponentGroup(HorizontalScroller, Transform)
 
   update(dt: number) {
     for (let entity of this.group.entities) {
-      const scrollInfo = entity.getComponent(VerticalScroller)
+      const scrollInfo = entity.getComponent(HorizontalScroller)
       const scrollTransform = entity.getComponent(Transform)
 
-      scrollTransform.position.y = this.springPos(
+      scrollTransform.position.x = this.springPos(
         scrollInfo.scrollTarget,
-        scrollTransform.position.y,
+        scrollTransform.position.x,
         scrollInfo.currentMenuVelocity,
         dt
       )
@@ -506,4 +547,3 @@ export class clickScrollSystem {
     return a_Current + displacement
   }
 }
-engine.addSystem(new clickScrollSystem())
