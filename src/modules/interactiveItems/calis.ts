@@ -2,11 +2,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 import * as ui from '@dcl/ui-scene-utils'
 import { Sound } from './sound'
 import { Player } from './player'
-import { sceneMessageBus } from '../interactiveItems'
 import { pickUpSound, putDownSound } from './barItem'
-import { OctoComments, octopus } from '../bar/barNPCs'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
-import { signMessage } from '@decentraland/EthereumController'
 
 // Track player's state
 export enum CalisBaseState {
