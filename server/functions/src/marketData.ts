@@ -132,7 +132,11 @@ export async function updateMarketData() {
   /// LAND YESTERDAY
 
   for (let i = 0; i < yesterdayLandSales.length; i++) {
-    if (yesterdayLandSales[i].payment_token.symbol != 'MANA') {
+    if (
+      yesterdayLandSales[i] &&
+      yesterdayLandSales[i].payment_token &&
+      yesterdayLandSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
     if (!yesterdayLandSales[i].asset) {
@@ -178,7 +182,11 @@ export async function updateMarketData() {
 
   // LAND WEEK
   for (let i = 0; i < weekLandSales.length; i++) {
-    if (weekLandSales[i].payment_token.symbol != 'MANA') {
+    if (
+      weekLandSales[i] &&
+      weekLandSales[i].payment_token &&
+      weekLandSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
     if (!weekLandSales[i].asset) {
@@ -214,7 +222,11 @@ export async function updateMarketData() {
   /// LAND MONTH
 
   for (let i = 0; i < monthLandSales.length; i++) {
-    if (monthLandSales[i].payment_token.symbol != 'MANA') {
+    if (
+      monthLandSales[i] &&
+      monthLandSales[i].payment_token &&
+      monthLandSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
     if (!monthLandSales[i].asset) {
@@ -252,7 +264,11 @@ export async function updateMarketData() {
   //// WEARABLES YESTERDAY
 
   for (let i = 0; i < yesterdayWearablesSales.length; i++) {
-    if (yesterdayWearablesSales[i].payment_token.symbol != 'MANA') {
+    if (
+      yesterdayWearablesSales[i] &&
+      yesterdayWearablesSales[i].payment_token &&
+      yesterdayWearablesSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
 
@@ -278,11 +294,15 @@ export async function updateMarketData() {
 
   //// WEARABLES WEEK
   for (let i = 0; i < weekWearablesSales.length; i++) {
-    if (weekWearablesSales[i].payment_token.symbol != 'MANA') {
+    if (
+      weekWearablesSales[i] &&
+      weekWearablesSales[i].payment_token &&
+      weekWearablesSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
 
-    if (weekWearablesSales[i].asset) {
+    if (weekWearablesSales[i] && weekWearablesSales[i].asset) {
       if (
         toMana(weekWearablesSales[i].total_price) >
           dataToSend.expensiveWearableWeek ||
@@ -304,7 +324,11 @@ export async function updateMarketData() {
   //// WEARABLES MONTH
 
   for (let i = 0; i < monthWearablesSales.length; i++) {
-    if (monthWearablesSales[i].payment_token.symbol != 'MANA') {
+    if (
+      monthWearablesSales[i] &&
+      monthWearablesSales[i].payment_token &&
+      monthWearablesSales[i].payment_token.symbol != 'MANA'
+    ) {
       continue
     }
 
