@@ -588,7 +588,7 @@ export let OctoQuest: Dialog[] = [
     skipable: true,
   },
   {
-    text: "The last ingredient is controversial, but essential. We need to infuse it with just a few <color='red'>cat hairs</color>. Sounds weird, right? But it gives it that extra oomph. If you're allergic, even better!",
+    text: `The last ingredient is controversial, but essential. We need to infuse it with just a few <color="red">cat hairs</color>. Sounds weird, right? But it gives it that extra oomph. If you're allergic, even better!`,
     skipable: true,
   },
   {
@@ -627,8 +627,19 @@ export let OctoQuest: Dialog[] = [
     triggeredByNext: () => {
       backToIdle()
     },
-    isEndOfDialog: true,
   },
+  {
+    text: 'Do you want me to go over the list of ingredients again?',
+    isQuestion: true,
+    buttons: [
+      {
+        label: 'YES',
+        goToDialog: 'quest',
+      },
+      { label: 'NO', goToDialog: 'end' },
+    ],
+  },
+
   {
     name: 'noHairs',
     text: "We're still missing a key ingredient, the cat hairs! I refuse to do this without following the recipe to the letter. Look for the cat guy, he's sitting somewhere south of here in this same plaza.",
@@ -1326,7 +1337,10 @@ function releaseCat() {
         let swooshAnim = new AnimationState('IdleTailSwoosh')
         cat.getComponent(Animator).addClip(swooshAnim)
         swooshAnim.play()
-        // sound
+
+        cat.addComponent(new AudioSource(new AudioClip('sounds/cat.mp3')))
+        cat.getComponent(AudioSource).playOnce()
+
         // back to idle
 
         catGuy.talk(catQuest, 'collect')
