@@ -219,6 +219,7 @@ export class Danceystem implements ISystem {
 
     this.pink = new UIImage(canvas, pinkTexture)
 
+    this.pink.isPointerBlocker = false
     this.pink.width = '100%'
     this.pink.height = 800
     this.pink.positionY = 100

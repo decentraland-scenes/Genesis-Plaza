@@ -677,7 +677,7 @@ export let OctoQuest: Dialog[] = [
   },
   {
     name: 'serveDrink',
-    text: `Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir. Hit <color="red">F</color> to drink up!`,
+    text: `Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir. \nHit <color="red">F</color> to drink up!`,
     skipable: true,
     triggeredByNext: () => {
       client.makeProgress(taskIds.outro, {
