@@ -4,6 +4,7 @@ import { Sound } from './sound'
 import { Player } from './player'
 import { pickUpSound, putDownSound } from './barItem'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
+import { setStreamVolume } from '../bar/jukebox'
 
 // Track player's state
 export enum CalisBaseState {
@@ -39,7 +40,6 @@ export class Calis extends Entity {
     engine.addEntity(this)
     this.addComponent(model)
     this.addComponent(new Transform({ position: position }))
-    this.addComponent(swallowSound)
 
     this.addComponent(new Animator())
     this.getComponent(Animator).addClip(
@@ -68,7 +68,7 @@ export class Calis extends Entity {
     this.getComponent(Animator).getClip('Drink').stop()
   }
 
-  pickup(): void {
+  pickup(extraFunction?: () => void): void {
     this.setParent(null)
     pickUpSound.getComponent(AudioSource).playOnce()
     this.setParent(Attachable.FIRST_PERSON_CAMERA)
@@ -91,6 +91,7 @@ export class Calis extends Entity {
         false,
         (e) => {
           this.drink()
+          extraFunction()
         }
       )
     }
@@ -119,7 +120,7 @@ export class Calis extends Entity {
   }
 
   drink(): void {
-    swallowSound.getComponent(AudioSource).playOnce()
+    swallowSound.playAudioOnceAtPosition(this.getComponent(Transform).position)
     //sceneMessageBus.emit('CalisDrink', { id: id })
     // this.isFull = false
     this.stopAnimations()
@@ -213,10 +214,13 @@ export class Danceystem implements ISystem {
   }
   activate() {
     let canvas = ui.canvas
-    canvas.visible = true
+    canvas.visible = false
     let pinkTexture = new Texture('images/ui/pink4.png', {
       hasAlpha: true,
     })
+
+    // THIS LINE BREAKS WHOLE SCENE!
+    // setStreamVolume(0.5)
 
     this.pink = new UIImage(canvas, pinkTexture)
 
@@ -228,6 +232,7 @@ export class Danceystem implements ISystem {
     this.pink.vAlign = 'center'
     this.pink.sourceWidth = 32
     this.pink.sourceHeight = 800
+    canvas.visible = true
     triggerEmote({ predefined: 'hammer' })
   }
 }

@@ -313,6 +313,13 @@ export function raiseVolume() {
   barMusicStream.volume = FullVolume
 }
 
+export function setStreamVolume(vol: number) {
+  if (!isInBar) return
+
+  barMusicStream.playing = true
+  barMusicStream.volume = vol
+}
+
 function getRadioName(radio: number) {
   let radioName: string = ''
   switch (radio) {

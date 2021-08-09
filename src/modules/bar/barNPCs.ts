@@ -12,6 +12,7 @@ import { client, questProg, taskIds, updateQuests } from 'src/quests'
 import { query } from '@dcl/quests-query'
 import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
 import { Calis1 } from '../interactiveItems/calis'
+import { setStreamVolume } from './jukebox'
 
 export let octopus: NPC
 export let doge: NPC
@@ -666,11 +667,9 @@ export let OctoQuest: Dialog[] = [
       octopus.playAnimation('makeDrink', true, 2)
       utils.setTimeout(2000, () => {
         octopus.talk(OctoQuest, 'serveDrink')
-        Calis1.pickup()
-        // drink in hand
-        // sound
-        // special music (?)
-        // press F to sip little amounts
+        Calis1.pickup(() => {
+          setStreamVolume(0.5)
+        })
       })
     },
     isEndOfDialog: true,
@@ -1360,3 +1359,7 @@ function releaseCat() {
   )
   engine.addEntity(cat)
 }
+
+// Calis1.pickup(() => {
+//   setStreamVolume(0.5)
+// })
