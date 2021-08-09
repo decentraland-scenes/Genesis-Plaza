@@ -24,7 +24,7 @@ const swallowSound = new Sound(
 )
 
 export class Calis extends Entity {
-  public isFull: boolean = false
+  //   public isFull: boolean = false
   public calisBaseState: CalisBaseState = CalisBaseState.FULL
   public danceSystem: Danceystem
 
@@ -39,26 +39,27 @@ export class Calis extends Entity {
     engine.addEntity(this)
     this.addComponent(model)
     this.addComponent(new Transform({ position: position }))
+    this.addComponent(swallowSound)
 
     this.addComponent(new Animator())
     this.getComponent(Animator).addClip(
       new AnimationState('Drink', { looping: false })
     )
 
-    this.addComponent(
-      new OnPointerDown(
-        () => {
-          if (!Player.holdingItem) {
-            this.pickup()
-          }
-        },
-        {
-          button: ActionButton.PRIMARY,
-          showFeedback: true,
-          hoverText: 'pick up',
-        }
-      )
-    )
+    // this.addComponent(
+    //   new OnPointerDown(
+    //     () => {
+    //       if (!Player.holdingItem) {
+    //         this.pickup()
+    //       }
+    //     },
+    //     {
+    //       button: ActionButton.PRIMARY,
+    //       showFeedback: true,
+    //       hoverText: 'pick up',
+    //     }
+    //   )
+    // )
 
     // this.pickup()
   }
@@ -120,7 +121,7 @@ export class Calis extends Entity {
   drink(): void {
     swallowSound.getComponent(AudioSource).playOnce()
     //sceneMessageBus.emit('CalisDrink', { id: id })
-    this.isFull = false
+    // this.isFull = false
     this.stopAnimations()
     this.getComponent(Animator).getClip('Drink').play()
 
@@ -130,22 +131,22 @@ export class Calis extends Entity {
     }
   }
 
-  addPointerDown() {
-    this.addComponent(
-      new OnPointerDown(
-        () => {
-          if (!Player.holdingItem) {
-            this.pickup()
-          }
-        },
-        {
-          button: ActionButton.PRIMARY,
-          showFeedback: true,
-          hoverText: 'pick up',
-        }
-      )
-    )
-  }
+  //   addPointerDown() {
+  //     this.addComponent(
+  //       new OnPointerDown(
+  //         () => {
+  //           if (!Player.holdingItem) {
+  //             this.pickup()
+  //           }
+  //         },
+  //         {
+  //           button: ActionButton.PRIMARY,
+  //           showFeedback: true,
+  //           hoverText: 'pick up',
+  //         }
+  //       )
+  //     )
+  //   }
 }
 
 // sceneMessageBus.on('CalisPickedUp', (beerGlassState: BeerGlassState) => {
@@ -196,7 +197,7 @@ export const Calis1 = new Calis(
 export class Danceystem implements ISystem {
   timer: number = 0
   sintime: number = 0
-  interval: number = 8
+  interval: number = 11
   pink: UIImage
   pinkYpos: number = 0
   update(dt: number) {

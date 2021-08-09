@@ -1343,12 +1343,14 @@ function releaseCat() {
 
         // back to idle
 
-        catGuy.talk(catQuest, 'collect')
-        client.makeProgress(taskIds.catHair, {
-          type: 'single',
-          status: ProgressStatus.COMPLETED,
+        utils.setTimeout(1000, () => {
+          catGuy.talk(catQuest, 'collect')
+          client.makeProgress(taskIds.catHair, {
+            type: 'single',
+            status: ProgressStatus.COMPLETED,
+          })
+          updateQuests()
         })
-        updateQuests()
       },
       {
         button: ActionButton.PRIMARY,
