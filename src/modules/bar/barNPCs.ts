@@ -577,11 +577,11 @@ export let OctoQuest: Dialog[] = [
     skipable: true,
   },
   {
-    text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>, -60, -60.',
+    text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>, 0, 80.',
     skipable: true,
   },
   {
-    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>, -60, -60.',
+    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>, 60, -60.',
     skipable: true,
   },
   {
@@ -597,7 +597,7 @@ export let OctoQuest: Dialog[] = [
     skipable: true,
   },
   {
-    text: `We can't just serve that in any regular glass. I'm going to need a special <color="red">Calis</color> for that. Look for the chaman in <color="red">Gamer Plaza</color>, -60,-60, he'll know.`,
+    text: `We can't just serve that in any regular glass. I'm going to need a special <color="red">Chalice</color> for that. Look for the chaman in <color="red">Gamer Plaza</color>, 80,0, he'll know.`,
     skipable: true,
   },
   {
@@ -1360,6 +1360,6 @@ function releaseCat() {
   engine.addEntity(cat)
 }
 
-// Calis1.pickup(() => {
-//   setStreamVolume(0.5)
-// })
+Calis1.pickup(() => {
+  setStreamVolume(0.5)
+})

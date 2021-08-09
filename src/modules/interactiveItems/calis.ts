@@ -19,11 +19,6 @@ type CalisGlassState = {
   calisState: CalisBaseState
 }
 
-// Sound
-const swallowSound = new Sound(
-  new AudioClip('sounds/interactiveItems/swallow.mp3')
-)
-
 export class Calis extends Entity {
   //   public isFull: boolean = false
   public calisBaseState: CalisBaseState = CalisBaseState.FULL
@@ -41,10 +36,11 @@ export class Calis extends Entity {
     this.addComponent(model)
     this.addComponent(new Transform({ position: position }))
 
-    this.addComponent(new Animator())
-    this.getComponent(Animator).addClip(
-      new AnimationState('Drink', { looping: false })
-    )
+    this.addComponent(new AudioSource(new AudioClip('sounds/drink.mp3')))
+    // this.addComponent(new Animator())
+    // this.getComponent(Animator).addClip(
+    //   new AnimationState('Drink', { looping: false })
+    // )
 
     // this.addComponent(
     //   new OnPointerDown(
@@ -64,13 +60,14 @@ export class Calis extends Entity {
     // this.pickup()
   }
 
-  stopAnimations() {
-    this.getComponent(Animator).getClip('Drink').stop()
-  }
+  //   stopAnimations() {
+  //     this.getComponent(Animator).getClip('Drink').stop()
+  //   }
 
   pickup(extraFunction?: () => void): void {
     this.setParent(null)
     pickUpSound.getComponent(AudioSource).playOnce()
+
     this.setParent(Attachable.FIRST_PERSON_CAMERA)
     this.getComponent(Transform).rotate(Vector3.Right(), this.rotatePosition)
     this.addComponentOrReplace(
@@ -120,15 +117,18 @@ export class Calis extends Entity {
   }
 
   drink(): void {
-    swallowSound.playAudioOnceAtPosition(this.getComponent(Transform).position)
+    // swallowSound.playAudioOnceAtPosition(Camera.instance.position.clone())
+    this.getComponent(AudioSource).playOnce()
     //sceneMessageBus.emit('CalisDrink', { id: id })
     // this.isFull = false
-    this.stopAnimations()
-    this.getComponent(Animator).getClip('Drink').play()
+    // this.stopAnimations()
+    // this.getComponent(Animator).getClip('Drink').play()
 
     if (!this.danceSystem) {
-      this.danceSystem = new Danceystem()
-      engine.addSystem(this.danceSystem)
+      utils.setTimeout(1000, () => {
+        this.danceSystem = new Danceystem()
+        engine.addSystem(this.danceSystem)
+      })
     }
   }
 
@@ -183,14 +183,14 @@ export class Calis extends Entity {
 
 // Beer glasses
 const calisShape = new GLTFShape(
-  'models/core_building/interactiveItems/Chalice_01.glb'
+  'models/core_building/interactiveItems/calisFull.glb'
 )
 
 export const Calis1 = new Calis(
   0,
   calisShape,
   new Vector3(163, -8, 139),
-  new Vector3(0, -0.4, 0.5),
+  new Vector3(0, -0.5, 0.65),
   -10
 )
 
