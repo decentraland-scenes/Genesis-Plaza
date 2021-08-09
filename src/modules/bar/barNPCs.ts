@@ -1360,6 +1360,6 @@ function releaseCat() {
   engine.addEntity(cat)
 }
 
-Calis1.pickup(() => {
-  setStreamVolume(0.5)
-})
+// Calis1.pickup(() => {
+//   setStreamVolume(0.5)
+// })
