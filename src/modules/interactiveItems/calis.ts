@@ -4,6 +4,7 @@ import { Sound } from './sound'
 import { Player } from './player'
 import { pickUpSound, putDownSound } from './barItem'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
+import { setStreamVolume } from '../bar/jukebox'
 
 // Track player's state
 export enum CalisBaseState {
@@ -17,11 +18,6 @@ type CalisGlassState = {
   position: Vector3
   calisState: CalisBaseState
 }
-
-// Sound
-const swallowSound = new Sound(
-  new AudioClip('sounds/interactiveItems/swallow.mp3')
-)
 
 export class Calis extends Entity {
   //   public isFull: boolean = false
@@ -39,12 +35,12 @@ export class Calis extends Entity {
     engine.addEntity(this)
     this.addComponent(model)
     this.addComponent(new Transform({ position: position }))
-    this.addComponent(swallowSound)
 
-    this.addComponent(new Animator())
-    this.getComponent(Animator).addClip(
-      new AnimationState('Drink', { looping: false })
-    )
+    this.addComponent(new AudioSource(new AudioClip('sounds/drink.mp3')))
+    // this.addComponent(new Animator())
+    // this.getComponent(Animator).addClip(
+    //   new AnimationState('Drink', { looping: false })
+    // )
 
     // this.addComponent(
     //   new OnPointerDown(
@@ -64,13 +60,14 @@ export class Calis extends Entity {
     // this.pickup()
   }
 
-  stopAnimations() {
-    this.getComponent(Animator).getClip('Drink').stop()
-  }
+  //   stopAnimations() {
+  //     this.getComponent(Animator).getClip('Drink').stop()
+  //   }
 
-  pickup(): void {
+  pickup(extraFunction?: () => void): void {
     this.setParent(null)
     pickUpSound.getComponent(AudioSource).playOnce()
+
     this.setParent(Attachable.FIRST_PERSON_CAMERA)
     this.getComponent(Transform).rotate(Vector3.Right(), this.rotatePosition)
     this.addComponentOrReplace(
@@ -91,6 +88,7 @@ export class Calis extends Entity {
         false,
         (e) => {
           this.drink()
+          extraFunction()
         }
       )
     }
@@ -119,15 +117,18 @@ export class Calis extends Entity {
   }
 
   drink(): void {
-    swallowSound.getComponent(AudioSource).playOnce()
+    // swallowSound.playAudioOnceAtPosition(Camera.instance.position.clone())
+    this.getComponent(AudioSource).playOnce()
     //sceneMessageBus.emit('CalisDrink', { id: id })
     // this.isFull = false
-    this.stopAnimations()
-    this.getComponent(Animator).getClip('Drink').play()
+    // this.stopAnimations()
+    // this.getComponent(Animator).getClip('Drink').play()
 
     if (!this.danceSystem) {
-      this.danceSystem = new Danceystem()
-      engine.addSystem(this.danceSystem)
+      utils.setTimeout(1000, () => {
+        this.danceSystem = new Danceystem()
+        engine.addSystem(this.danceSystem)
+      })
     }
   }
 
@@ -182,14 +183,14 @@ export class Calis extends Entity {
 
 // Beer glasses
 const calisShape = new GLTFShape(
-  'models/core_building/interactiveItems/Chalice_01.glb'
+  'models/core_building/interactiveItems/calisFull.glb'
 )
 
 export const Calis1 = new Calis(
   0,
   calisShape,
   new Vector3(163, -8, 139),
-  new Vector3(0, -0.4, 0.5),
+  new Vector3(0, -0.5, 0.65),
   -10
 )
 
@@ -213,10 +214,13 @@ export class Danceystem implements ISystem {
   }
   activate() {
     let canvas = ui.canvas
-    canvas.visible = true
+    canvas.visible = false
     let pinkTexture = new Texture('images/ui/pink4.png', {
       hasAlpha: true,
     })
+
+    // THIS LINE BREAKS WHOLE SCENE!
+    // setStreamVolume(0.5)
 
     this.pink = new UIImage(canvas, pinkTexture)
 
@@ -228,6 +232,7 @@ export class Danceystem implements ISystem {
     this.pink.vAlign = 'center'
     this.pink.sourceWidth = 32
     this.pink.sourceHeight = 800
+    canvas.visible = true
     triggerEmote({ predefined: 'hammer' })
   }
 }
