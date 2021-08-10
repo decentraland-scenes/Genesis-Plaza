@@ -51,7 +51,7 @@ export async function addBarNPCs() {
     {
       position: new Vector3(160, 0.2, 141.4),
     },
-    'models/core_building/BobOctorossV44.glb',
+    'models/core_building/BobOctorossV45.glb',
     () => {
       if (octopus.getComponent(NPCTriggerComponent).onCameraEnter) {
         octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
@@ -664,8 +664,8 @@ export let OctoQuest: Dialog[] = [
     text: 'Amazing, you found everything! Time to do my magic',
     skipable: true,
     triggeredByNext: () => {
-      octopus.playAnimation('makeDrink', true, 2)
-      utils.setTimeout(2000, () => {
+      octopus.playAnimation('CalisPrep', true, 7.17)
+      utils.setTimeout(7250, () => {
         octopus.talk(OctoQuest, 'serveDrink')
         Calis1.pickup(() => {
           setStreamVolume(0.5)
