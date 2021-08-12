@@ -1,13 +1,11 @@
 {
     "id": "18d80de8-9367-4cf1-9eda-de3513dc316d",
-    "name": "The drink of the gods",
+    "name": "The drink of the gods.",
     "description": "Find the ingredients to formulate the most amazing drink that anyone's ever tried.",
-    "thumbnailEntry": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Jack-o%27-Lantern_2003-10-31.jpg",
-    "thumbnailBanner": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Jack-o%27-Lantern_2003-10-31.jpg",
-    "requirements": [],
+    "thumbnailEntry": "https://decentraland.org/images/poap/icon-122x122.png",
+    "thumbnailBanner": "https://decentraland.org/images/poap/header-390x170.png",
     "active": true,
-    "visibility": "secret",
-    "deletedAt": null,
+    "visibility": "visible",
     "tasks": [
         {
             "id": "e173239d-13dd-48bb-9332-b30472e7941a",
@@ -17,13 +15,107 @@
             "section": null,
             "progressMode": {
                 "type": "single"
+            }
+        },
+        {
+            "id": "812b968f-806d-4194-86ef-35edbd6d7712",
+            "description": "Get cat hair",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
             },
-            "requirements": [],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask": null,
-            "rewards": [],
-            "steps": []
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "e173239d-13dd-48bb-9332-b30472e7941a"
+        },
+
+         {
+            "id": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d",
+            "description": "Bring hairs to the bartender",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+           "previousTask": "812b968f-806d-4194-86ef-35edbd6d7712"
+        },
+        {
+            "id": "8c2c4f32-590c-43ca-ba9c-03768065461a",
+            "description": "Collect Kim Kim",
+            "coordinates": "60,-60",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+        {
+            "id": "bee981f6-53b9-4f60-b7c7-3578a325f4fb",
+            "description": "Collect Leather Vine",
+            "coordinates": "-60,-60",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+        {
+            "id": "fca9b784-bfd7-453c-b51e-34dbb36415e7",
+            "description": "Collect Sugar Berries",
+            "coordinates": "0,80",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask":  "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+
+   {
+            "id": "e24cee0f-def6-4952-afbd-b14ed8b2facf",
+            "description": "Bring ingredients to the bartender",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+           "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
         },
         {
             "id": "285c92a6-84b8-4a68-a083-c8737c89d17a",
@@ -39,121 +131,7 @@
                     "type": "completedPrevious"
                 }
             ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask":  "e173239d-13dd-48bb-9332-b30472e7941a"
-        },
-        {
-            "id": "fca9b784-bfd7-453c-b51e-34dbb36415e7",
-            "description": "Collect forest herb",
-            "coordinates": "0,-80",
-            "required": true,
-            "section": null,
-			"progressMode": {
-                "type": "step-based",
-                "unit": "herbs"
-            },
-            "requirements": [
-                {
-                    "type": "completedPrevious"
-                }
-            ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask":  "e173239d-13dd-48bb-9332-b30472e7941a",
-            "rewards": [],
-            "steps": [
-                {
-                    "id": "2ba283ea-244b-4b59-9e9b-ae873a2b19e8"
-                },
-                {
-                    "id": "2678960d-f64e-4b8d-9eeb-2a5eedf58c2f"
-                },
-                {
-                    "id": "bac43e62-00d1-491e-bc6a-0859827ea466"
-                }
-            ]
-        },
-        {
-            "id": "bee981f6-53b9-4f60-b7c7-3578a325f4fb",
-            "description": "Collect medieval herb",
-            "coordinates": "-60,-60",
-            "required": true,
-            "section": null,
-			"progressMode": {
-                "type": "step-based",
-                "unit": "herbs"
-            },
-            "requirements": [
-                {
-                    "type": "completedPrevious"
-                }
-            ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask":  "e173239d-13dd-48bb-9332-b30472e7941a",
-            "rewards": [],
-			"steps": [
-                {
-                    "id": "be070e38-3533-4e10-b587-9ee3636314e9"
-                },
-                {
-                    "id": "eab99eec-b774-49ec-beb9-27f17369078b"
-                },
-                {
-                    "id": "20e294a2-f33d-42ed-9986-0d227fe36e35"
-                }
-            ]
-        },
-		{
-            "id": "812b968f-806d-4194-86ef-35edbd6d7712",
-            "description": "Get cat hair",
-            "coordinates": "-60,-60",
-            "required": true,
-            "section": null,
-			"progressMode": {
-                "type": "single"
-            },
-            "requirements": [
-                {
-                    "type": "completedPrevious"
-                }
-            ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask":  "e173239d-13dd-48bb-9332-b30472e7941a",
-            "rewards": []
-        },
-		{
-            "id": "8c2c4f32-590c-43ca-ba9c-03768065461a",
-            "description": "Collect asian herb",
-            "coordinates": "60,-60",
-            "required": true,
-            "section": null,
-			"progressMode": {
-                "type": "step-based",
-                "unit": "herbs"
-            },
-            "requirements": [
-                {
-                    "type": "completedPrevious"
-                }
-            ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask":  "e173239d-13dd-48bb-9332-b30472e7941a",
-            "rewards": [],
-			"steps": [
-                {
-                    "id": "8a55e6db-62e5-4fd4-84dd-49acbc8b5c27"
-                },
-                {
-                    "id": "fdc54c32-0642-48fa-91ac-fa58e3de9b52"
-                },
-                {
-                    "id": "dba1df81-cb7b-4fa9-9689-3ba24f28689f"
-                }
-            ]
+            "previousTask": "e24cee0f-def6-4952-afbd-b14ed8b2facf"
         },
         {
             "id": "58e29d3b-bf6e-416b-bb77-35756120ab9c",
@@ -173,15 +151,11 @@
                     "type": "completedPrevious"
                 }
             ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask": "285c92a6-84b8-4a68-a083-c8737c89d17a",
-            "rewards": [],
-            "steps": []
+            "previousTask": "285c92a6-84b8-4a68-a083-c8737c89d17a"
         },
         {
             "id": "ae33a6b2-f4d2-48f6-bed6-406a8873b556",
-            "description": "Bring the gems back to the chaman",
+            "description": "Bring the gems to Chaman",
             "coordinates": "74,-7",
             "required": true,
             "section": null,
@@ -193,15 +167,11 @@
                     "type": "completedPrevious"
                 }
             ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask": "58e29d3b-bf6e-416b-bb77-35756120ab9c",
-            "rewards": [],
-            "steps": []
+            "previousTask": "58e29d3b-bf6e-416b-bb77-35756120ab9c"
         },
         {
             "id": "d142506e-84da-4955-8e56-a3e0fa5ae4b5",
-            "description": "Pick the Calis",
+            "description": "Find the Chalice",
             "coordinates": "74,-7",
             "required": true,
             "section": null,
@@ -213,15 +183,11 @@
                     "type": "completedPrevious"
                 }
             ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask": "ae33a6b2-f4d2-48f6-bed6-406a8873b556",
-            "rewards": [],
-            "steps": []
+            "previousTask": "ae33a6b2-f4d2-48f6-bed6-406a8873b556"
         },
         {
             "id": "cb67b6df-990c-4bcf-82b9-175126f7a302",
-            "description": "Return to barman",
+            "description": "Order the drink",
             "coordinates": "0,0",
             "required": true,
             "section": null,
@@ -233,13 +199,21 @@
                     "type": "completedPrevious"
                 }
             ],
-            "validations": [],
-            "deletedAt": null,
-            "previousTask": "d142506e-84da-4955-8e56-a3e0fa5ae4b5",
-            "rewards": [],
-            "steps": []
+            "previousTask": "d142506e-84da-4955-8e56-a3e0fa5ae4b5"
         }
     ],
-    "rewards": [],
-    "creator": null
+    "rewards": [
+		{
+            "id": "aa61fab5-4a82-4379-9596-c029fb8b53b6",
+            "type": "poap",
+            "name": "gods-test",
+            "imageUrl": "https://decentraland.org/images/poap/test-poap.png",
+            "flow": {
+                "type": "poap",
+                "event": "5107"
+            }
+        }
+    ]
 }
+
+
