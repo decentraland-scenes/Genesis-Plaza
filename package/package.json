@@ -1,0 +1,38 @@
+{
+  "name": "decentraland-ecs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/src/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "npm run build && tsc -p tsconfig.json --watch"
+  },
+  "keywords": [],
+  "tsdoc": {
+    "tsdocFlavor": "AEDoc"
+  },
+  "author": "Decentraland",
+  "license": "Apache 2.0",
+  "files": [
+    "dist",
+    "types",
+    "docs",
+    "LICENSE",
+    "docs-yaml",
+    "artifacts",
+    "src/setupProxy.js",
+    "src/setupExport.js",
+    "local-dcl-amd.tgz",
+    "local-dcl-build-ecs.tgz"
+  ],
+  "dependencies": {
+    "@dcl/amd": "file:./local-dcl-amd.tgz",
+    "@dcl/build-ecs": "file:./local-dcl-build-ecs.tgz",
+    "@dcl/kernel": "1.0.0-1103242784.commit-c1c0d95",
+    "@dcl/posix": "^1.0.0-20210529225617.commit-f7f0ee9",
+    "@dcl/unity-renderer": "latest",
+    "glob": "^7.1.7",
+    "http-proxy-middleware": "^2.0.1"
+  }
+}
