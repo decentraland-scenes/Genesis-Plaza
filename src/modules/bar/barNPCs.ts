@@ -614,15 +614,15 @@ export let OctoQuest: Dialog[] = [
   },
   {
     name: 'ingredients',
-    text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>, 0, 80.',
+    text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>: 0, 80.',
     skipable: true,
   },
   {
-    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>, 60, -60.',
+    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>: 60, -60.',
     skipable: true,
   },
   {
-    text: 'And finally add some smoky notes from a <color="red">dried leather vine</color>, you can find that growing in the <color="red">Medieval Plaza</color>, -60, -60.',
+    text: 'And finally add some smoky notes from a <color="red">dried leather vine</color>, you can find that growing in the <color="red">Medieval Plaza</color>: -60, -60.',
     skipable: true,
   },
   {
@@ -642,7 +642,7 @@ export let OctoQuest: Dialog[] = [
   },
 
   {
-    name: 'ques3',
+    name: 'quest3',
     text: `Super, all of these ingredients you collected smell super fresh.`,
     skipable: true,
   },
@@ -706,9 +706,9 @@ export let OctoQuest: Dialog[] = [
   {
     name: 'makeDrink',
     text: 'Amazing, you found everything! Time to do my magic',
-    skipable: true,
     triggeredByNext: () => {
       octopus.playAnimation('CalisPrep', true, 7.17)
+      octopus.getComponent(NPCTriggerComponent).onCameraExit = () => {}
       utils.setTimeout(7250, () => {
         octopus.talk(OctoQuest, 'serveDrink')
         Calis1.pickup(() => {
@@ -721,7 +721,6 @@ export let OctoQuest: Dialog[] = [
   {
     name: 'serveDrink',
     text: `Here you go. Enjoy it, it's not every day that you can get to taste of such a rare elixir. \nHit <color="red">F</color> to drink up!`,
-    skipable: true,
     triggeredByNext: () => {
       client.makeProgress(taskIds.outro, {
         type: 'single',
