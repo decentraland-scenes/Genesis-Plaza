@@ -60,14 +60,18 @@ export async function addBarNPCs() {
         questProg.progressStatus != ProgressStatus.COMPLETED &&
         query(questProg).isTaskCompleted(taskIds.intro)
       ) {
-        if (
+        if (!query(questProg).isTaskCompleted(taskIds.catHair)) {
+          octopus.talk(OctoQuest, 'noHairs')
+        } else if (!query(questProg).isTaskCompleted(taskIds.bringHair)) {
+          octopus.talk(OctoQuest, 'quest2')
+        } else if (
           !query(questProg).isTaskCompleted(taskIds.asianHerb) ||
           !query(questProg).isTaskCompleted(taskIds.forestHerb) ||
           !query(questProg).isTaskCompleted(taskIds.medievalHerb)
         ) {
           octopus.talk(OctoQuest, 'noHerbs')
-        } else if (!query(questProg).isTaskCompleted(taskIds.catHair)) {
-          octopus.talk(OctoQuest, 'noHairs')
+        } else if (!query(questProg).isTaskCompleted(taskIds.bringHerbs)) {
+          octopus.talk(OctoQuest, 'quest3')
         } else if (!query(questProg).isTaskCompleted(taskIds.caliz)) {
           octopus.talk(OctoQuest, 'noCalis')
         } else {
@@ -553,7 +557,7 @@ export let OctoQuest: Dialog[] = [
     buttons: [
       {
         label: 'YES',
-        goToDialog: 'quest',
+        goToDialog: 'quest1',
         triggeredActions: () => {
           client.startQuest()
         },
@@ -571,12 +575,45 @@ export let OctoQuest: Dialog[] = [
     isEndOfDialog: true,
   },
   {
-    name: 'quest',
+    name: 'quest1',
     text: "Alright! This is a rich herbal concoction, so I'm going to need some exotic spices from a few places.",
 
     skipable: true,
   },
   {
+    text: `But let's start with the most unusual and controversial ingredient in the list, this one really puts the drink together, you'll see!`,
+    skipable: true,
+  },
+  {
+    text: `We need to make an infusion with just a few <color="red">cat hairs</color>. Sounds weird, right? But it gives it that extra oomph. If you're allergic, even better!`,
+    skipable: true,
+  },
+  {
+    text: `I'm sure you can get some cat hairs from the <color="red">Cat Guy</color>. He's somewhere here in Genesis Plaza. Last time I saw him he was South of here.`,
+    skipable: true,
+  },
+  {
+    text: `Let's start with that. Bring me some cat hairs first so I can get that infusion going, and then I'll tell you what I need next.`,
+
+    skipable: true,
+    triggeredByNext: () => {
+      client.makeProgress(taskIds.intro, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+      updateQuests()
+      backToIdle()
+    },
+    isEndOfDialog: true,
+  },
+
+  {
+    name: 'quest2',
+    text: `Great! Those hairs are nice and scruffy, you'll taste them for sure! Let's get down to the rest of the ingredients.`,
+    skipable: true,
+  },
+  {
+    name: 'ingredients',
     text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>, 0, 80.',
     skipable: true,
   },
@@ -589,11 +626,24 @@ export let OctoQuest: Dialog[] = [
     skipable: true,
   },
   {
-    text: `The last ingredient is controversial, but essential. We need to infuse it with just a few <color="red">cat hairs</color>. Sounds weird, right? But it gives it that extra oomph. If you're allergic, even better!`,
+    text: `Bring me those and then I'll tell you what's next in the list.`,
+
     skipable: true,
+    triggeredByNext: () => {
+      backToIdle()
+
+      client.makeProgress(taskIds.bringHair, {
+        type: 'single',
+        status: ProgressStatus.COMPLETED,
+      })
+      updateQuests()
+    },
+    isEndOfDialog: true,
   },
+
   {
-    text: `I'm sure you can get some cat hairs from the <color="red">Cat Guy</color>. He's somewhere here in Genesis Plaza.`,
+    name: 'ques3',
+    text: `Super, all of these ingredients you collected smell super fresh.`,
     skipable: true,
   },
   {
@@ -601,26 +651,20 @@ export let OctoQuest: Dialog[] = [
     skipable: true,
   },
   {
-    text: "When you have all that ready, come back to me and I'll make you the drink. It's going to be worth it, I promise!",
+    text: "When you have that ready, come back to me and I'll make you the drink. It's going to be worth it, I promise!",
     triggeredByNext: () => {
-      client.makeProgress(taskIds.intro, {
+      client.makeProgress(taskIds.bringHerbs, {
         type: 'single',
         status: ProgressStatus.COMPLETED,
       })
       updateQuests()
-    },
-    skipable: true,
-  },
 
-  {
-    text: 'Well that´s it from me. So what are you waiting for? Go and explore the world!',
-
-    skipable: true,
-    triggeredByNext: () => {
       backToIdle()
     },
+
     isEndOfDialog: true,
   },
+
   {
     name: 'noHerbs',
     text: "Looks like we're still missing some ingredients. If you bring them all, I can make you the drink!",
@@ -635,7 +679,7 @@ export let OctoQuest: Dialog[] = [
     buttons: [
       {
         label: 'YES',
-        goToDialog: 'quest',
+        goToDialog: 'ingredients',
       },
       { label: 'NO', goToDialog: 'end' },
     ],
@@ -643,7 +687,7 @@ export let OctoQuest: Dialog[] = [
 
   {
     name: 'noHairs',
-    text: "We're still missing a key ingredient, the cat hairs! I refuse to do this without following the recipe to the letter. Look for the cat guy, he's sitting somewhere south of here in this same plaza.",
+    text: "We're still missing the key ingredient, the cat hairs! I refuse to do this without following the recipe to the letter. Look for the cat guy, he's sitting somewhere south of here in this same plaza.",
     skipable: true,
     triggeredByNext: () => {
       backToIdle()
