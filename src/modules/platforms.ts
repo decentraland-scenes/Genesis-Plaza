@@ -1,7 +1,7 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { addArcades } from './arcades/arcades'
 import { sceneMessageBus } from './serverHandler'
-import { addPunchBag } from "./interactiveItems"
+import { addPunchBag } from './interactiveItems'
 
 /// Reusable class for all platforms
 export class Platform extends Entity {
@@ -15,7 +15,7 @@ export class Platform extends Entity {
     triggerScale: Vector3,
     animation: string,
     messageBusHandle: string,
-    extraAction?: ()=>void
+    extraAction?: () => void
   ) {
     super()
     engine.addEntity(this)
@@ -40,7 +40,7 @@ export class Platform extends Entity {
           onCameraEnter: () => {
             //log('triggered platform')
             sceneMessageBus.emit(messageBusHandle, {})
-            if(extraAction){
+            if (extraAction) {
               extraAction()
             }
           },
@@ -51,7 +51,6 @@ export class Platform extends Entity {
   }
 
   public activate(): void {
-    this.animation.stop()
     this.animation.play()
   }
 }
@@ -206,8 +205,7 @@ export function placePlatforms() {
   })
 }
 
-
-export let upstairsLoaded:boolean = false
+export let upstairsLoaded: boolean = false
 
 export function barPlatforms() {
   //ARTICHOKE ELEVATOR
@@ -219,7 +217,9 @@ export function barPlatforms() {
     new Vector3(4, 4, 4),
     'Elevator_Left_Up',
     'elevatorLeft',
-    ()=>{upstairsBar()}
+    () => {
+      upstairsBar()
+    }
   )
 
   let barElevatorRight = new Platform(
@@ -229,7 +229,9 @@ export function barPlatforms() {
     new Vector3(4, 4, 4),
     'Elevator_Right_Up',
     'elevatorRight',
-    ()=>{upstairsBar()}
+    () => {
+      upstairsBar()
+    }
   )
 
   sceneMessageBus.on('elevatorLeft', (e) => {
@@ -241,10 +243,8 @@ export function barPlatforms() {
   })
 }
 
-
-export function upstairsBar(){
-
-  if(upstairsLoaded) return
+export function upstairsBar() {
+  if (upstairsLoaded) return
 
   upstairsLoaded = true
 
