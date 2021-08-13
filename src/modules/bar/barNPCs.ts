@@ -407,14 +407,13 @@ export function addNPCsOutside() {
     () => {
       if (
         questProg.progressStatus == ProgressStatus.ON_GOING &&
-        !query(questProg).isTaskCompleted(taskIds.catHair)
+        !query(questProg).isTaskCompleted(taskIds.catHair) &&
+        query(questProg).isTaskCompleted(taskIds.intro)
       ) {
         catGuy.talk(catQuest)
       } else {
         catGuy.talk(ILoveCats, 0)
       }
-
-      catGuy.talk(catQuest)
 
       catGuy.playAnimation(`talk`)
     },
