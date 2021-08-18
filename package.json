@@ -19,7 +19,7 @@
     "@types/cannon": "^0.1.5",
     "cannon": "github:schteppe/cannon.js",
     "cors": "^2.8.5",
-    "decentraland-ecs": "file:package",
+    "decentraland-ecs": "^6.6.6-1139790543.commit-2d2ddef",
     "express": "^4.17.1"
   },
   "bundleDependencies": [
