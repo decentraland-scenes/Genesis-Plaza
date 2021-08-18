@@ -51,7 +51,7 @@ export async function addBarNPCs() {
     {
       position: new Vector3(160, 0.2, 141.4),
     },
-    'models/core_building/BobOctorossV45.glb',
+    'models/core_building/BobOctorossV46.glb',
     () => {
       if (octopus.getComponent(NPCTriggerComponent).onCameraEnter) {
         octopus.getComponent(NPCTriggerComponent).onCameraEnter = undefined
@@ -83,7 +83,7 @@ export async function addBarNPCs() {
         octopus.talk(OctoHi)
       }
 
-      //   octopus.talk(OctoQuest, 'makeDrink')
+      octopus.talk(OctoQuest, 'quest2')
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
     },
@@ -615,14 +615,32 @@ export let OctoQuest: Dialog[] = [
     name: 'ingredients',
     text: 'We start with some sweet <color="red">sugar berries</color>, you can find those in the <color="red">Forest Plaza</color>: 0, 80.',
     skipable: true,
+    image: {
+      path: 'images/quest/berryThumb.png',
+      offsetY: 20,
+      offsetX: -20,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
   },
   {
     text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>: 60, -60.',
     skipable: true,
+    image: {
+      path: 'images/quest/kimkimThumb.png',
+      offsetY: 10,
+      offsetX: -25,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
   },
   {
     text: 'And finally add some smoky notes from a <color="red">dried leather vine</color>, you can find that growing in the <color="red">Medieval Plaza</color>: -60, -60.',
     skipable: true,
+    image: {
+      path: 'images/quest/vineThumb.png',
+      offsetY: 15,
+      offsetX: -20,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
   },
   {
     text: `Bring me those and then I'll tell you what's next in the list.`,
