@@ -83,6 +83,10 @@ export async function addBarNPCs() {
         octopus.talk(OctoHi)
       }
 
+      if (arrow && arrow.getParent() == octopus) {
+        arrow.hide()
+      }
+
       //   octopus.talk(OctoQuest, 'quest2')
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
@@ -559,7 +563,7 @@ export let OctoQuest: Dialog[] = [
         goToDialog: 'quest1',
         triggeredActions: () => {
           client.startQuest()
-          arrow.move(catGuy, new Vector3(0, 0, 0), new Vector3(-0.5, 1.5, -0.3))
+          arrow.move(catGuy, new Vector3(0, 0, 0), new Vector3(0, 1.5, 0))
         },
       },
       { label: 'NO', goToDialog: 'end' },
@@ -1454,13 +1458,14 @@ function releaseCat() {
             status: ProgressStatus.COMPLETED,
           })
           updateQuests()
-          arrow.move(
-            octopus,
-            new Vector3(0, 0, 0),
-            new Vector3(-0.5, 2.5, -0.3),
-            new Vector3(1.5, 1.5, 1.5)
-          )
         })
+
+        arrow.move(
+          octopus,
+          new Vector3(0, 0, 0),
+          new Vector3(-0.5, 2.5, -0.3),
+          new Vector3(1.5, 1.5, 1.5)
+        )
       },
       {
         button: ActionButton.PRIMARY,

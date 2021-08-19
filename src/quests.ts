@@ -57,7 +57,7 @@ export async function handleQuests() {
     ) {
       arrow = new PointerArrow(
         {
-          position: new Vector3(-0.5, 1.5, -0.3),
+          position: new Vector3(0, 1.5, 0),
           scale: new Vector3(1.5, 1.5, 1.5),
         },
         catGuy
