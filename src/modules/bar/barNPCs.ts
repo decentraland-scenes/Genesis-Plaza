@@ -623,7 +623,27 @@ export let OctoQuest: Dialog[] = [
     },
   },
   {
-    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that growing high up in the <color="red">Asian Plaza</color>: 60, -60.',
+    text: 'This plant tends to grow near water, so look out for the shores of lakes and ponds in that plaza.',
+    skipable: true,
+    image: {
+      path: 'images/quest/berryThumb.png',
+      offsetY: 20,
+      offsetX: -20,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
+  },
+  {
+    text: 'We balance that out with some acidity from some <color="red">kim-kim</color>, you can find that in the <color="red">Asian Plaza</color>: 60, -60.',
+    skipable: true,
+    image: {
+      path: 'images/quest/kimkimThumb.png',
+      offsetY: 10,
+      offsetX: -25,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
+  },
+  {
+    text: 'This plant only grows at some altitude, so make sure you check out the higher spots on Asian Plaza.',
     skipable: true,
     image: {
       path: 'images/quest/kimkimThumb.png',
@@ -634,6 +654,16 @@ export let OctoQuest: Dialog[] = [
   },
   {
     text: 'And finally add some smoky notes from a <color="red">dried leather vine</color>, you can find that growing in the <color="red">Medieval Plaza</color>: -60, -60.',
+    skipable: true,
+    image: {
+      path: 'images/quest/vineThumb.png',
+      offsetY: 15,
+      offsetX: -20,
+      section: { sourceHeight: 512, sourceWidth: 512 },
+    },
+  },
+  {
+    text: 'This plant grows best near human settlements. It probably has to do with the manure from the farm animals... the less you know the better, really.',
     skipable: true,
     image: {
       path: 'images/quest/vineThumb.png',
