@@ -8,7 +8,7 @@ import { getUserData, UserData } from '@decentraland/Identity'
 import * as utils from '@dcl/ecs-scene-utils'
 import { rarestItem, rarityLevel } from './rarestWearable'
 
-import { client, questProg, taskIds, updateQuests } from 'src/quests'
+import { arrow, client, questProg, taskIds, updateQuests } from 'src/quests'
 import { query } from '@dcl/quests-query'
 import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
 import { Calis1 } from '../interactiveItems/calis'
@@ -83,7 +83,7 @@ export async function addBarNPCs() {
         octopus.talk(OctoHi)
       }
 
-      octopus.talk(OctoQuest, 'quest2')
+      //   octopus.talk(OctoQuest, 'quest2')
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
     },
@@ -559,6 +559,7 @@ export let OctoQuest: Dialog[] = [
         goToDialog: 'quest1',
         triggeredActions: () => {
           client.startQuest()
+          arrow.move(catGuy, new Vector3(0, 0, 0), new Vector3(-0.5, 1.5, -0.3))
         },
       },
       { label: 'NO', goToDialog: 'end' },
@@ -610,6 +611,9 @@ export let OctoQuest: Dialog[] = [
     name: 'quest2',
     text: `Great! Those hairs are nice and scruffy, you'll taste them for sure! Let's get down to the rest of the ingredients.`,
     skipable: true,
+    triggeredByNext: () => {
+      arrow.hide()
+    },
   },
   {
     name: 'ingredients',
@@ -691,6 +695,9 @@ export let OctoQuest: Dialog[] = [
   {
     name: 'quest3',
     text: `Super, all of these ingredients you collected smell super fresh.`,
+    triggeredByNext: () => {
+      arrow.hide()
+    },
     skipable: true,
   },
   {
@@ -754,6 +761,7 @@ export let OctoQuest: Dialog[] = [
     name: 'makeDrink',
     text: 'Amazing, you found everything! Time to do my magic',
     triggeredByNext: () => {
+      arrow.hide()
       octopus.playAnimation('CalisPrep', true, 7.17)
       octopus.getComponent(NPCTriggerComponent).onCameraExit = () => {}
       utils.setTimeout(7250, () => {
@@ -927,6 +935,8 @@ export let ILoveCats: Dialog[] = [
   },
 ]
 
+let catIsOut: boolean = false
+
 export let catQuest: Dialog[] = [
   {
     text: `Hey there! Let me introduce myself. I’m the cat guy`,
@@ -944,7 +954,10 @@ export let catQuest: Dialog[] = [
     text: "Pretty strange if you ask me. Then they say I'm the freak just because I eat cat food.",
     skipable: true,
     triggeredByNext: () => {
-      releaseCat()
+      if (!catIsOut) {
+        catIsOut = true
+        releaseCat()
+      }
     },
   },
   {
@@ -1420,6 +1433,8 @@ function releaseCat() {
     )
   })
 
+  arrow.move(cat)
+
   cat.addComponent(
     new OnPointerDown(
       () => {
@@ -1439,6 +1454,12 @@ function releaseCat() {
             status: ProgressStatus.COMPLETED,
           })
           updateQuests()
+          arrow.move(
+            octopus,
+            new Vector3(0, 0, 0),
+            new Vector3(-0.5, 2.5, -0.3),
+            new Vector3(1.5, 1.5, 1.5)
+          )
         })
       },
       {

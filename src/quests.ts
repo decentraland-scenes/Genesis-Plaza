@@ -1,5 +1,8 @@
 import { RemoteQuestTracker } from '@dcl/ecs-quests'
+import { query } from '@dcl/quests-query'
 import { ProgressStatus, QuestState } from 'dcl-quests-client/quests-client-amd'
+import { catGuy, octopus } from './modules/bar/barNPCs'
+import { PointerArrow } from './modules/pointerArrow'
 //import { query } from '@dcl/quests-query'
 
 export enum taskIds {
@@ -21,6 +24,8 @@ export let client: RemoteQuestTracker
 
 export let questProg: QuestState
 
+export let arrow: PointerArrow
+
 export async function handleQuests() {
   if (client) return
   client = await new RemoteQuestTracker('18d80de8-9367-4cf1-9eda-de3513dc316d')
@@ -28,8 +33,36 @@ export async function handleQuests() {
 
   log('QUEST ', questProg)
   if (questProg.progressStatus != ProgressStatus.COMPLETED) {
-    // if (query(q).isTaskCompleted(taskIds.intro)) {
-    // }
+    if (
+      !query(questProg).isTaskCompleted(taskIds.intro) ||
+      (!query(questProg).isTaskCompleted(taskIds.bringHair) &&
+        query(questProg).isTaskCompleted(taskIds.catHair)) ||
+      (!query(questProg).isTaskCompleted(taskIds.bringHerbs) &&
+        query(questProg).isTaskCompleted(taskIds.asianHerb) &&
+        query(questProg).isTaskCompleted(taskIds.forestHerb) &&
+        query(questProg).isTaskCompleted(taskIds.medievalHerb)) ||
+      (query(questProg).isTaskCompleted(taskIds.caliz) &&
+        !query(questProg).isTaskCompleted(taskIds.outro))
+    ) {
+      arrow = new PointerArrow(
+        {
+          position: new Vector3(-0.5, 2.5, -0.3),
+          scale: new Vector3(1.5, 1.5, 1.5),
+        },
+        octopus
+      )
+    } else if (
+      query(questProg).isTaskCompleted(taskIds.intro) &&
+      !query(questProg).isTaskCompleted(taskIds.bringHair)
+    ) {
+      arrow = new PointerArrow(
+        {
+          position: new Vector3(-0.5, 1.5, -0.3),
+          scale: new Vector3(1.5, 1.5, 1.5),
+        },
+        catGuy
+      )
+    }
   }
 }
 

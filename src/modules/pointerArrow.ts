@@ -5,7 +5,7 @@ export class PointerArrow extends Entity {
   constructor(position: TransformConstructorArgs, parent: Entity) {
     super()
 
-    this.addComponent(new GLTFShape('models/game/Arrow.glb'))
+    this.addComponent(new GLTFShape('models/Arrow.glb'))
     this.addComponent(new Transform(position))
     engine.addEntity(this)
     this.setParent(parent)
