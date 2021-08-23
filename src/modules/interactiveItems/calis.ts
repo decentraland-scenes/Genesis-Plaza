@@ -5,6 +5,7 @@ import { Player } from './player'
 import { pickUpSound, putDownSound } from './barItem'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
 import { setStreamVolume } from '../bar/jukebox'
+import { octoTrip } from '../bar/barNPCs'
 
 // Track player's state
 export enum CalisBaseState {
@@ -123,6 +124,8 @@ export class Calis extends Entity {
     // this.isFull = false
     // this.stopAnimations()
     // this.getComponent(Animator).getClip('Drink').play()
+
+    octoTrip()
 
     if (!this.danceSystem) {
       utils.setTimeout(1000, () => {

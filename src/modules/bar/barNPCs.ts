@@ -87,7 +87,9 @@ export async function addBarNPCs() {
         arrow.hide()
       }
 
-      //   octopus.talk(OctoQuest, 'quest2')
+      // DEBUG
+      octopus.talk(OctoQuest, 'makeDrink')
+
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
     },
@@ -456,11 +458,6 @@ onIdleStateChangedObservable.add(({ isIdle }) => {
 
 /// OCTO
 
-export function backToIdle() {
-  octopus.changeIdleAnim('Idle')
-  octopus.playAnimation('TalkOutro', true, 0.63)
-}
-
 export let OctoHi: Dialog[] = [
   {
     text: 'Welcome traveler, how can I help you!',
@@ -773,6 +770,7 @@ export let OctoQuest: Dialog[] = [
       arrow.hide()
       octopus.playAnimation('CalisPrep', true, 7.17)
       octopus.getComponent(NPCTriggerComponent).onCameraExit = () => {}
+      prepareOctoTrip()
       utils.setTimeout(7250, () => {
         octopus.talk(OctoQuest, 'serveDrink')
         Calis1.pickup(() => {
@@ -791,7 +789,7 @@ export let OctoQuest: Dialog[] = [
         status: ProgressStatus.COMPLETED,
       })
       updateQuests()
-      backToIdle()
+      octoTrip()
     },
     isEndOfDialog: true,
   },
@@ -1483,3 +1481,45 @@ function releaseCat() {
 // Calis1.pickup(() => {
 //   setStreamVolume(0.5)
 // })
+
+export function backToIdle() {
+  octopus.changeIdleAnim('Idle')
+  octopus.playAnimation('TalkOutro', true, 0.63)
+}
+
+let tripOcto = new Entity()
+tripOcto.addComponent(
+  new Transform({
+    position: new Vector3(160, -4, 141.4),
+  })
+)
+engine.addEntity(tripOcto)
+
+function prepareOctoTrip() {
+  if (!tripOcto.hasComponent(GLTFShape)) {
+    tripOcto.addComponent(
+      new GLTFShape('models/core_building/BobOctorossTripOnly.glb')
+    )
+    tripOcto.getComponent(GLTFShape).visible = false
+    tripOcto
+      .addComponent(new Animator())
+      .addClip(new AnimationState('Trip', { looping: false }))
+  }
+}
+
+export function octoTrip() {
+  if (tripOcto.hasComponent(GLTFShape)) {
+    octopus.getComponent(GLTFShape).visible = false
+
+    tripOcto.getComponent(GLTFShape).visible = true
+    tripOcto.getComponent(Transform).position = new Vector3(160, 0.2, 141.4)
+    tripOcto.getComponent(Animator).getClip('Trip').play()
+
+    utils.setTimeout(7330, () => {
+      tripOcto.getComponent(GLTFShape).visible = false
+
+      octopus.getComponent(GLTFShape).visible = true
+      octopus.playAnimation('Idle')
+    })
+  }
+}
