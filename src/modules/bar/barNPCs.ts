@@ -419,6 +419,10 @@ export function addNPCsOutside() {
         catGuy.talk(ILoveCats, 0)
       }
 
+      if (arrow && arrow.getParent() == catGuy) {
+        arrow.hide()
+      }
+
       catGuy.playAnimation(`talk`)
     },
     {
@@ -564,6 +568,7 @@ export let OctoQuest: Dialog[] = [
         triggeredActions: () => {
           client.startQuest()
           arrow.move(catGuy, new Vector3(0, 0, 0), new Vector3(0, 1.5, 0))
+          arrow.show()
         },
       },
       { label: 'NO', goToDialog: 'end' },
@@ -681,7 +686,7 @@ export let OctoQuest: Dialog[] = [
     },
   },
   {
-    text: `Bring me those and then I'll tell you what's next in the list.`,
+    text: `Bring me those and then I'll tell you what's next in the list. You can ask me to go over those ingredients again any time.`,
 
     skipable: true,
     triggeredByNext: () => {
@@ -1432,12 +1437,11 @@ function releaseCat() {
           let idleAnim = new AnimationState('IdleNorm')
           cat.getComponent(Animator).addClip(idleAnim)
           idleAnim.play()
+          arrow.move(cat, new Vector3(0, 0, 0), new Vector3(0, 1, 0))
         }
       )
     )
   })
-
-  arrow.move(cat)
 
   cat.addComponent(
     new OnPointerDown(
