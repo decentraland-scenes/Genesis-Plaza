@@ -4,7 +4,6 @@ import { Sound } from './sound'
 import { Player } from './player'
 import { pickUpSound, putDownSound } from './barItem'
 import { PredefinedEmote, triggerEmote } from '@decentraland/RestrictedActions'
-import { setStreamVolume } from '../bar/jukebox'
 import { octoTrip } from '../bar/barNPCs'
 
 // Track player's state
@@ -212,7 +211,7 @@ export class Danceystem implements ISystem {
     this.pink.positionY = this.pinkYpos
     if (this.timer >= this.interval) {
       this.timer = 0
-      triggerEmote({ predefined: 'hammer' })
+      triggerEmote({ predefined: PredefinedEmote.HAMMER })
     }
   }
   activate() {
@@ -236,7 +235,7 @@ export class Danceystem implements ISystem {
     this.pink.sourceWidth = 32
     this.pink.sourceHeight = 800
     canvas.visible = true
-    triggerEmote({ predefined: 'hammer' })
+    triggerEmote({ predefined: PredefinedEmote.HAMMER })
   }
 }
 
