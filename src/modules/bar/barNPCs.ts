@@ -88,7 +88,7 @@ export async function addBarNPCs() {
       }
 
       // DEBUG
-      octopus.talk(OctoQuest, 'makeDrink')
+      //   octopus.talk(OctoQuest, 'makeDrink')
 
       octopus.changeIdleAnim('TalkLoop')
       octopus.playAnimation('TalkIntro', true, 0.63)
