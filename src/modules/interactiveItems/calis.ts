@@ -211,7 +211,7 @@ export class Danceystem implements ISystem {
     this.pink.positionY = this.pinkYpos
     if (this.timer >= this.interval) {
       this.timer = 0
-      triggerEmote({ predefined: PredefinedEmote.HAMMER })
+      triggerEmote({ predefined: 'hammer' })
     }
   }
   activate() {
@@ -235,7 +235,7 @@ export class Danceystem implements ISystem {
     this.pink.sourceWidth = 32
     this.pink.sourceHeight = 800
     canvas.visible = true
-    triggerEmote({ predefined: PredefinedEmote.HAMMER })
+    triggerEmote({ predefined: 'hammer' })
   }
 }
 
