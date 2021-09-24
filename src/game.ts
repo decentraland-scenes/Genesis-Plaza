@@ -40,6 +40,7 @@ import {
   endArtistTalk,
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
+import { Teleport } from './lobby/teleports'
 
 //////// LOG PLAYER POSITION
 
@@ -70,6 +71,24 @@ utils.setTimeout(20000, () => {
     addBarNPCs()
   }
 })
+
+/// TELEPORT TO FESTIVAL
+
+let sign = new Teleport(
+  new GLTFShape('models/fest/metaverse_logo.glb'),
+  { position: new Vector3(149, 105.6, 154) },
+  '-67,90',
+  'Metaverse Festival',
+  'Jump into the first ever Metaverse Festival',
+  true
+)
+sign.addComponent(new Billboard(false, true, false))
+
+let floor = new Entity()
+floor.addComponent(new Transform({ position: new Vector3(149, 104.3, 154) }))
+floor.addComponent(new GLTFShape('models/fest/teleporter.glb'))
+
+engine.addEntity(floor)
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 

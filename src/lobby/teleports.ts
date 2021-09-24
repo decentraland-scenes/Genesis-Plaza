@@ -1,5 +1,5 @@
 import {} from '../modules/ui' // prevents package not found bug
-import {lobbyCenter, lobbyHeight} from "./resources/globals"
+import { lobbyCenter, lobbyHeight } from './resources/globals'
 
 export enum Locations {
   CROWD = 'crowd',
@@ -21,15 +21,16 @@ export enum Locations {
 
 export class Teleport extends Entity {
   model: GLTFShape
-  location: Locations
+  location: Locations | string
   name: string
   description?: string
   constructor(
     model: GLTFShape,
     transform: TranformConstructorArgs,
-    location: Locations,
+    location: Locations | string,
     name: string,
-    description: string
+    description: string,
+    noFloor?: boolean
   ) {
     super()
     engine.addEntity(this)
@@ -58,10 +59,14 @@ export class Teleport extends Entity {
     Particles.addComponent(new GLTFShape('models/particles.glb'))
     Particles.setParent(this)
 
-    let teleportFloor = new Entity()
-    teleportFloor.addComponent(new GLTFShape('models/teleports/teleport.glb'))
-    teleportFloor.addComponent(new Transform({}))
-    teleportFloor.setParent(this)
+    if (!noFloor) {
+      let teleportFloor = new Entity()
+      teleportFloor.addComponent(new GLTFShape('models/teleports/teleport.glb'))
+      teleportFloor.addComponent(new Transform({}))
+      teleportFloor.setParent(this)
+    }
+
+    return this
   }
 }
 
@@ -289,114 +294,118 @@ export class Teleport extends Entity {
 //   }
 // }
 
+let count = 14
+let startAngle = 70
+let rangeAngle = 230
+let radius = 18
+let center = new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
+let pos = []
+let rot = []
+for (let i = 0; i < count; i++) {
+  let posVec = center.add(
+    Vector3.Forward()
+      .rotate(Quaternion.Euler(0, startAngle + (i * rangeAngle) / count, 0))
+      .multiplyByFloats(radius, radius, radius)
+  )
+  pos.push(posVec)
 
-  let count = 14
-  let startAngle = 70
-  let rangeAngle = 230
-  let radius = 18
-  let center = new Vector3(lobbyCenter.x, lobbyHeight, lobbyCenter.z)
-  let pos = []
-  let rot = []
-  for(let i=0; i<count; i++){
-    let posVec = center.add(Vector3.Forward().rotate(Quaternion.Euler(0, startAngle + i*rangeAngle/count, 0)).multiplyByFloats(radius,radius,radius))
-    pos.push(posVec)
+  let rotation = Quaternion.Euler(
+    0,
+    startAngle + 180 + (i * rangeAngle) / count,
+    0
+  )
+  rot.push(rotation)
+}
 
-    let rotation = Quaternion.Euler(0,startAngle + 180 + (i*rangeAngle/count), 0)
-    rot.push(rotation)
+// artichoke & garden
+let teleportPos1 = new Transform({
+  position: pos[0],
+  rotation: rot[0],
+})
 
-  }
- 
+// garden & hallway
+let teleportPos2 = new Transform({
+  position: pos[1],
+  rotation: rot[1],
+})
 
+// garden & market
+let teleportPos3 = new Transform({
+  position: pos[2],
+  rotation: rot[2],
+})
 
-  // artichoke & garden
-  let teleportPos1 = new Transform({
-    position: pos[0],
-    rotation: rot[0],
-  })
+// garden & rock
+let teleportPos4 = new Transform({
+  position: pos[3],
+  rotation: rot[3],
+})
 
-  // garden & hallway
-  let teleportPos2 = new Transform({
-    position: pos[1],
-    rotation: rot[1],
-  })
+// rock & market
+let teleportPos5 = new Transform({
+  position: pos[4],
+  rotation: rot[4],
+})
 
-  // garden & market
-  let teleportPos3 = new Transform({
-    position: pos[2],
-    rotation: rot[2],
-  })
+// sculpture & wearables
+let teleportPos6 = new Transform({
+  position: pos[5],
+  rotation: rot[5],
+})
 
-  // garden & rock
-  let teleportPos4 = new Transform({
-    position: pos[3],
-    rotation: rot[3],
-  })
+// wearables - west
+let teleportPos7 = new Transform({
+  position: pos[6],
+  rotation: rot[6],
+})
 
-  // rock & market
-  let teleportPos5 = new Transform({
-    position: pos[4],
-    rotation: rot[4],
-  })
+// wearables - NW
+let teleportPos8 = new Transform({
+  position: pos[7],
+  rotation: rot[7],
+})
 
-  // sculpture & wearables
-  let teleportPos6 = new Transform({
-    position: pos[5],
-    rotation: rot[5],
-  })
+// wearables - N
+let teleportPos9 = new Transform({
+  position: pos[8],
+  rotation: rot[8],
+})
 
-  // wearables - west
-  let teleportPos7 = new Transform({
-    position: pos[6],
-    rotation: rot[6],
-  })
+// whale - S
+let teleportPos10 = new Transform({
+  position: pos[9],
+  rotation: rot[9],
+})
 
-  // wearables - NW
-  let teleportPos8 = new Transform({
-    position: pos[7],
-    rotation: rot[7],
-  })
+// center - N
+let teleportPos11 = new Transform({
+  position: pos[10],
+  rotation: rot[10],
+})
 
-  // wearables - N
-  let teleportPos9 = new Transform({
-    position: pos[8],
-    rotation: rot[8],
-  })
+// whale & mountains
+let teleportPos12 = new Transform({
+  position: pos[11],
+  rotation: rot[11],
+})
 
-  // whale - S
-  let teleportPos10 = new Transform({
-    position: pos[9],
-    rotation: rot[9],
-  })
+// tower- east
+let teleportPos13 = new Transform({
+  position: pos[12],
+  rotation: rot[12],
+})
 
-  // center - N
-  let teleportPos11 = new Transform({
-    position: pos[10],
-    rotation: rot[10],
-  })
+// tower- south
+let teleportPos14 = new Transform({
+  position: pos[13],
+  rotation: rot[13],
+})
 
-  // whale & mountains
-  let teleportPos12 = new Transform({
-    position: pos[11],
-    rotation: rot[11],
-  })
-
-  // tower- east
-  let teleportPos13 = new Transform({
-    position: pos[12],
-    rotation: rot[12],
-  })
-
-  // tower- south
-  let teleportPos14 = new Transform({
-    position: pos[13],
-    rotation: rot[13],
-  })
-
-  // center - N2
-  let teleportPos15 = new Transform({
-    position: pos[14],
-    rotation: rot[14],
-  })
+// center - N2
+let teleportPos15 = new Transform({
+  position: pos[14],
+  rotation: rot[14],
+})
 
 export let teleports = [
   {
@@ -529,4 +538,3 @@ export let teleports = [
 //     i.description
 //   )
 // }
-
