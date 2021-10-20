@@ -14,16 +14,16 @@ jobs:
           node-version: 14.x
 
       - name: npm install
-        run:  npm install
+        run: npm install
 
       - name: install decentraland
-        run:  npm install -g decentraland
+        run: npm install -g decentraland
 
       - name: dcl build
-        run:  dcl build
-        
-      - name: dcl pack
-        run:  dcl pack
+        run: dcl build
+
+      - name: dcl export
+        run: dcl export
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2

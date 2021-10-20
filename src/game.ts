@@ -41,6 +41,7 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { Teleport } from './lobby/teleports'
+import { handleQuests } from './quests'
 
 //////// LOG PLAYER POSITION
 
@@ -68,6 +69,7 @@ barPlatforms()
 
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
+    handleQuests()
     addBarNPCs()
   }
 })
@@ -187,6 +189,7 @@ utils.addOneTimeTrigger(
 
 export function insideBar() {
   if (!areNPCsAdded) {
+    handleQuests()
     addBarNPCs()
   }
 

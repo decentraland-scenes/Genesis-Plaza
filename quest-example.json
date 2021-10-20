@@ -1,0 +1,219 @@
+{
+    "id": "18d80de8-9367-4cf1-9eda-de3513dc316d",
+    "name": "The drink of the gods.",
+    "description": "Find the ingredients to formulate the most amazing drink that anyone's ever tried.",
+    "thumbnailEntry": "https://decentraland.org/images/poap/icon-122x122.png",
+    "thumbnailBanner": "https://decentraland.org/images/poap/header-390x170.png",
+    "active": true,
+    "visibility": "visible",
+    "tasks": [
+        {
+            "id": "e173239d-13dd-48bb-9332-b30472e7941a",
+            "description": "Talk to the bar tender",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            }
+        },
+        {
+            "id": "812b968f-806d-4194-86ef-35edbd6d7712",
+            "description": "Get cat hair",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "e173239d-13dd-48bb-9332-b30472e7941a"
+        },
+
+         {
+            "id": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d",
+            "description": "Bring hairs to the bartender",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+           "previousTask": "812b968f-806d-4194-86ef-35edbd6d7712"
+        },
+        {
+            "id": "8c2c4f32-590c-43ca-ba9c-03768065461a",
+            "description": "Collect Kim Kim",
+            "coordinates": "60,-60",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+        {
+            "id": "bee981f6-53b9-4f60-b7c7-3578a325f4fb",
+            "description": "Collect Leather Vine",
+            "coordinates": "-60,-60",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+        {
+            "id": "fca9b784-bfd7-453c-b51e-34dbb36415e7",
+            "description": "Collect Sugar Berries",
+            "coordinates": "0,80",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 3,
+                "direction": "up",
+                "unit": "herbs"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask":  "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+
+   {
+            "id": "e24cee0f-def6-4952-afbd-b14ed8b2facf",
+            "description": "Bring ingredients to the bartender",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+           "previousTask": "5bd92fc0-2c7b-47b1-95ef-66dd34b3b52d"
+        },
+        {
+            "id": "285c92a6-84b8-4a68-a083-c8737c89d17a",
+            "description": "Talk to the Chaman",
+            "coordinates": "74,-7",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "e24cee0f-def6-4952-afbd-b14ed8b2facf"
+        },
+        {
+            "id": "58e29d3b-bf6e-416b-bb77-35756120ab9c",
+            "description": "Find 10 crystals",
+            "coordinates": "74,-7",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "numeric",
+                "start": 0,
+                "end": 10,
+                "direction": "up",
+                "unit": "gems"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "285c92a6-84b8-4a68-a083-c8737c89d17a"
+        },
+        {
+            "id": "ae33a6b2-f4d2-48f6-bed6-406a8873b556",
+            "description": "Bring the gems to Chaman",
+            "coordinates": "74,-7",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "58e29d3b-bf6e-416b-bb77-35756120ab9c"
+        },
+        {
+            "id": "d142506e-84da-4955-8e56-a3e0fa5ae4b5",
+            "description": "Find the Chalice",
+            "coordinates": "74,-7",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "ae33a6b2-f4d2-48f6-bed6-406a8873b556"
+        },
+        {
+            "id": "cb67b6df-990c-4bcf-82b9-175126f7a302",
+            "description": "Order the drink",
+            "coordinates": "0,0",
+            "required": true,
+            "section": null,
+            "progressMode": {
+                "type": "single"
+            },
+            "requirements": [
+                {
+                    "type": "completedPrevious"
+                }
+            ],
+            "previousTask": "d142506e-84da-4955-8e56-a3e0fa5ae4b5"
+        }
+    ],
+    "rewards": [
+		{
+            "id": "aa61fab5-4a82-4379-9596-c029fb8b53b6",
+            "type": "poap",
+            "name": "gods-test",
+            "imageUrl": "https://decentraland.org/images/poap/test-poap.png",
+            "flow": {
+                "type": "poap",
+                "event": "5107"
+            }
+        }
+    ]
+}
+
+
