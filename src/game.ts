@@ -78,8 +78,8 @@ utils.setTimeout(20000, () => {
 
 let sign = new Teleport(
   new GLTFShape('models/fest/metaverse_logo.glb'),
-  { position: new Vector3(149, 105.6, 154) },
-  '-67,90',
+  { position: new Vector3(165, 106.8, 160), scale: new Vector3(1.5, 1.5, 1.5) },
+  '-64,88',
   'Metaverse Festival',
   'Jump into the first ever Metaverse Festival',
   true
@@ -87,7 +87,12 @@ let sign = new Teleport(
 sign.addComponent(new Billboard(false, true, false))
 
 let floor = new Entity()
-floor.addComponent(new Transform({ position: new Vector3(149, 104.3, 154) }))
+floor.addComponent(
+  new Transform({
+    position: new Vector3(165, 104.3, 160),
+    scale: new Vector3(1.5, 1.5, 1.5),
+  })
+)
 floor.addComponent(new GLTFShape('models/fest/teleporter.glb'))
 
 engine.addEntity(floor)
