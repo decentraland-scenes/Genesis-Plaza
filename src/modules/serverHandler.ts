@@ -11,6 +11,7 @@ export const sceneMessageBus = new MessageBus()
 export let awsServer = 'https://genesis-plaza.s3.us-east-2.amazonaws.com/'
 export let fireBaseServer =
   'https://us-central1-genesis-plaza.cloudfunctions.net/app/'
+//'http://localhost:5001/genesis-plaza/us-central1/app'
 
 // check server for new messageboard messages
 export class CheckServer implements ISystem {
@@ -104,8 +105,6 @@ export async function updateMessageBoards() {
 }
 
 ///// HANDLE MESSAGEBUS UPDATES
-
-
 
 ///// EVENTS BOARD
 

@@ -9,6 +9,9 @@ import {
   updateMessageJSON,
 } from './awsUpload'
 
+var Filter = require('bad-words')
+const filter = new Filter()
+
 const express = require('express')
 const cors = require('cors')
 const app = express()
@@ -40,9 +43,11 @@ app.post('/addmessage', (req: any, res: any) => {
   let location: string = String(req.query.location)
   let message: string = String(req.query.message)
 
+  let cleanMessage = filter.clean(message)
+
   let url = awsBaseURL + '/messageboards/' + location + '.json'
 
-  updateMessageJSON(url, message, location)
+  updateMessageJSON(url, cleanMessage, location)
 
   return res.status(200).send('updated message board')
 })
@@ -53,9 +58,11 @@ app.post('/adddetailedmessage', async (req: any, res: any) => {
   let author: string = String(req.body.author)
   let portrait: string = String(req.body.portrait)
 
+  let cleanMessage = filter.clean(message)
+
   let url = awsBaseURL + '/messageboards/' + location + '.json'
 
-  await updateMessageJSON(url, message, location, author, portrait)
+  await updateMessageJSON(url, cleanMessage, location, author, portrait)
 
   return res.status(200).send('updated message board')
 })
