@@ -1,5 +1,10 @@
 import { openMessageBoardUI } from './ui'
-import { CheckServer, sceneMessageBus } from './serverHandler'
+import {
+  CheckServer,
+  sceneMessageBus,
+  updateMessageBoards,
+} from './serverHandler'
+import * as utils from '@dcl/ecs-scene-utils'
 
 let SFHeavyFont = new Font(Fonts.SanFrancisco_Heavy)
 
@@ -11,21 +16,14 @@ export enum MessageBoards {
 /// ARTICHOKE
 export let ArtichokeFloatingTextShape = new TextShape('Write something')
 
-
-
 // TOWER
-
-
-
 
 let towerLetters: Entity[] = []
 let distanceMultiplier = 9
 let maxCharacters = 40
 
-
-
 export function setTowerText(text: string) {
-  if(towerLetters.length<1) return
+  if (towerLetters.length < 1) return
   for (let i = 0; i <= maxCharacters - 1; i++) {
     let letter = towerLetters[i]
     let textShape = letter.getComponent(TextShape)
@@ -38,8 +36,6 @@ export function setTowerText(text: string) {
   }
 }
 
-
-
 //// FETCH CURRENT MESSAGES EN MESSAGE BOARDS
 // how often to refresh scene, in seconds
 const messageRefreshInterval: number = 30
@@ -47,8 +43,6 @@ const messageRefreshInterval: number = 30
 export let serverChecker = new CheckServer(messageRefreshInterval)
 
 export function startMessageBoards() {
-
-
   let ArtichokeUIOpener = new Entity()
   ArtichokeUIOpener.addComponent(new GLTFShape('models/artichoke_message.glb')) // GLTFShape('models/Message.glb'))
   ArtichokeUIOpener.addComponent(
@@ -91,20 +85,15 @@ export function startMessageBoards() {
   )
   engine.addEntity(TowerUIOpener)
 
-
-
-  
-    const TowerFloatingText = new Entity()
-    TowerFloatingText.addComponent(
-      new Transform({
-        position: new Vector3(48.6, 21, 116.6),
-        scale: new Vector3(1, 1, 1),
-        rotation: Quaternion.Euler(0, 0, 0),
-      })
-    )
-    engine.addEntity(TowerFloatingText)
-
-
+  const TowerFloatingText = new Entity()
+  TowerFloatingText.addComponent(
+    new Transform({
+      position: new Vector3(48.6, 21, 116.6),
+      scale: new Vector3(1, 1, 1),
+      rotation: Quaternion.Euler(0, 0, 0),
+    })
+  )
+  engine.addEntity(TowerFloatingText)
 
   for (let i = 0; i < maxCharacters; i++) {
     let angle = 360 - (i * 360) / maxCharacters
@@ -130,16 +119,13 @@ export function startMessageBoards() {
     towerLetters.push(letter)
   }
 
-
   const bkgModel = new Entity()
 
   bkgModel.addComponent(new GLTFShape('models/screen-moon.glb'))
   bkgModel.setParent(TowerFloatingText)
   engine.addEntity(bkgModel)
 
-
-
-/// ARTICHOKE
+  /// ARTICHOKE
   const ArtichokeFloatingText = new Entity()
   ArtichokeFloatingTextShape.color = Color3.FromHexString('#8040E2')
   ArtichokeFloatingTextShape.font = SFHeavyFont
@@ -153,8 +139,10 @@ export function startMessageBoards() {
   )
   engine.addEntity(ArtichokeFloatingText)
 
-  ArtichokeFloatingText.getComponent(Transform).rotate(new Vector3(1, 0, 0), -15)
-
+  ArtichokeFloatingText.getComponent(Transform).rotate(
+    new Vector3(1, 0, 0),
+    -15
+  )
 
   class SpinTextSystem implements ISystem {
     update(dt: number) {
@@ -165,13 +153,19 @@ export function startMessageBoards() {
   }
 
   sceneMessageBus.on('towerMessage', (e) => {
-    setTowerText(e.text)
-  })
-  
-  sceneMessageBus.on('artichokeMessage', (e) => {
-    ArtichokeFloatingTextShape.value = e.text
+    utils.setTimeout(500, () => {
+      updateMessageBoards()
+    })
+
+    // setTowerText(e.text)
   })
 
+  sceneMessageBus.on('artichokeMessage', (e) => {
+    utils.setTimeout(500, () => {
+      updateMessageBoards()
+    })
+    // ArtichokeFloatingTextShape.value = e.text
+  })
 
   engine.addSystem(new SpinTextSystem())
 
