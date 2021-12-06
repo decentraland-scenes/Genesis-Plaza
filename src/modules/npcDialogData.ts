@@ -6,8 +6,7 @@ import {
   betty,
   charlie,
   marsha,
-  bob,
-  grumpyElf
+  bob
 } from './npcRobotBuilder'
 
 // --- Main Dialog (Alice) ---
@@ -1321,35 +1320,3 @@ export let BobDialog: Dialog[] = [
 
 
 //--- Whale Dialog (Bob) ---
-export let GrumpyElfDialog: Dialog[] = [
-  {
-    text:
-      "Hey we need you help?",
-    offsetY: 24,
-    isQuestion: true,
-    buttons: [
-      { label: 'YES', goToDialog: 'yes' },
-      { label: 'NO', goToDialog: 'no' },
-    ],
-  },
-  {
-    name: 'yes',
-    text: "Great. Hop over here ",
-    offsetY: 18,
-    triggeredByNext: () => {
-      grumpyElf.playAnimation('Waving_bell', true, 4)//Greet_Bell
-      grumpyElf.endInteraction()
-    },
-    isEndOfDialog: true,
-  },
-  {
-    name: 'no',
-    text: "Bummer",
-    offsetY: 18,
-    triggeredByNext: () => {
-      grumpyElf.playAnimation('Worried_Bell', true, 4)
-      grumpyElf.endInteraction()
-    },
-    isEndOfDialog: true,
-  },
-]

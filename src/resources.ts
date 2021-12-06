@@ -73,7 +73,6 @@ export default {
       marsha: "models/robots/marsha.glb",
       ron: "models/robots/ron.glb",
       rings: new GLTFShape("models/robots/rings.glb"),
-      xmasElf:'models/xmas/ElfGrumpy.glb',
     },
   },
   textures: {

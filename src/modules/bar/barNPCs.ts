@@ -13,6 +13,8 @@ import { query } from '@dcl/quests-query'
 import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
 import { Calis1 } from '../interactiveItems/calis'
 import { setStreamVolume } from './jukebox'
+import { lobbyCenter, lobbyHeight } from 'src/lobby/resources/globals'
+import resources from 'src/resources'
 
 export let octopus: NPC
 export let doge: NPC
@@ -21,6 +23,7 @@ export let wearablesC: NPC
 export let artist1: NPC
 export let artist2: NPC
 export let wenMoon: NPC
+export let grumpyElf: NPC
 
 export let areNPCsAdded: boolean = false
 
@@ -349,6 +352,7 @@ export async function addBarNPCs() {
   )
 }
 
+
 export function addNPCsOutside() {
   let wenPath: FollowPathData = {
     path: [
@@ -452,6 +456,135 @@ onIdleStateChangedObservable.add(({ isIdle }) => {
     artist2.playAnimation('Talk')
   }
 })
+
+export function addXmasNpc(){
+  log("XXXX addXmasNpc grumpy computed pos ")
+
+  log("grumpy computed pos " 
+    ,new Vector3(lobbyCenter.x-1.2, lobbyHeight+3, lobbyCenter.z-6.4)
+    ,new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594))
+    
+    grumpyElf = new NPC(
+      { 
+        //position: new Vector3(69.5, 0.5, 7.2) 
+        position: new Vector3(lobbyCenter.x-2, lobbyHeight+1, lobbyCenter.z-3), //1.1 was eye level but too high?
+        rotation: Quaternion.Euler(0,180,0) //start him facing diving board/spawn point
+        //position: new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594)
+      }, 
+      //{ position: new Vector3(0,.15,0) },
+      'models/xmas/ElfGrumpy.glb',
+      () => {
+        // animations
+        grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
+
+        /*
+        let dummyent = new Entity()
+        dummyent.addComponent(
+          new NPCDelay(2, () => {
+            bela.playAnimation('Talk')
+          })
+        )
+        engine.addEntity(dummyent)*/
+
+        // sound
+        /*
+        betty.addComponentOrReplace(
+          new AudioSource(resources.sounds.robots.betty)
+        )
+        betty.getComponent(AudioSource).playOnce()*/
+
+        // dialog UI
+        grumpyElf.talk(GrumpyElfDialog)
+      },
+      {
+        idleAnim: `Idle_Bell_02`,
+        faceUser: true,
+        portrait: {
+          path: 'images/portraits/xmas/elf_03.png',
+          height: 256,
+          width: 256,
+          section: {
+            sourceHeight: 256,
+            sourceWidth: 256,
+          },
+        },
+        onlyETrigger: false,
+        reactDistance: 6,
+        onWalkAway: () => {
+          grumpyElf.playAnimation('Worried_Bell', true, 4)
+        },
+      }
+    )
+
+
+    
+    const xmasDroneHost = new Entity('xmasDroneHost-xmas')
+    engine.addEntity(xmasDroneHost)
+    xmasDroneHost.setParent(grumpyElf)
+    xmasDroneHost.addComponent(new Transform({
+        position: new Vector3(0, -0.15, .1),
+        scale: new Vector3(1, 1, 1) ,
+        rotation: Quaternion.Euler(0, 20, 0)
+      }))
+
+    const xmasDroneHostShape = new GLTFShape('models/xmas/Drone-propellers-anim.glb')
+    xmasDroneHostShape.withCollisions = true
+    xmasDroneHostShape.isPointerBlocker = true
+    //shape.visible = false
+
+    const droneShape = new Entity('xmasDroneHost-shape' )
+    droneShape.setParent(xmasDroneHost)
+    droneShape.addComponent(new Transform( { 
+      scale: new Vector3(.15,.15,.15) } ))
+    droneShape.addComponent(xmasDroneHostShape)
+
+    const startingY = grumpyElf.getComponent(Transform).position.y//transform5TestxmasDroneHost.position.y
+    const bounceAmount = .06
+    const startVector = grumpyElf.getComponent(Transform).position.clone()
+    const endVector= grumpyElf.getComponent(Transform).position.clone()
+    endVector.y=startingY+bounceAmount//new Vector3(69.5, startingY+bounceAmount, 7.2) 
+    grumpyElf.addComponent(
+      new utils.Interval(1000, () => {
+        const tr = grumpyElf.getComponent(Transform)
+        if(tr.position.y - startingY < .05){
+          grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(startVector, endVector, 1))
+        }else{
+          grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(endVector, startVector, 1))
+        }
+      })
+    )
+
+
+
+    /*
+
+      {
+        idleAnim: `Idle_Bell_01`,
+        faceUser: true,
+        darkUI: true,
+      }*/
+
+    /*
+    grumpyElf.dialog = new DialogWindow(
+      {
+        path: 'images/elf_03.png',
+        offsetX: 50,
+        offsetY: 30,
+        width: 256,
+        height: 256,
+        section: { sourceWidth: 256, sourceHeight: 256 },
+      },
+      false,
+      null,
+      xmasTheme
+    )
+    grumpyElf.dialog.panel.positionY = 20
+    grumpyElf.dialog.leftClickIcon.positionX = 340 - 40
+    grumpyElf.dialog.leftClickIcon.positionY = -80 + 40
+    grumpyElf.dialog.text.fontSize = 18
+    grumpyElf.dialog.text.color = Color4.Black()*/
+
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1479,6 +1612,7 @@ function releaseCat() {
   engine.addEntity(cat)
 }
 
+
 // Calis1.pickup(() => {
 //   setStreamVolume(0.5)
 // })
@@ -1524,3 +1658,37 @@ export function octoTrip() {
     })
   }
 }
+
+
+export let GrumpyElfDialog: Dialog[] = [
+  {
+    text:
+      "Hey we need you help?",
+    offsetY: 24,
+    isQuestion: true,
+    buttons: [
+      { label: 'YES', goToDialog: 'yes' },
+      { label: 'NO', goToDialog: 'no' },
+    ],
+  },
+  {
+    name: 'yes',
+    text: "Great. Hop over here ",
+    offsetY: 18,
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Waving_bell', true, 4)//Greet_Bell
+      grumpyElf.endInteraction()
+    },
+    isEndOfDialog: true,
+  },
+  {
+    name: 'no',
+    text: "Bummer",
+    offsetY: 18,
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Worried_Bell', true, 4)
+      grumpyElf.endInteraction()
+    },
+    isEndOfDialog: true,
+  },
+]

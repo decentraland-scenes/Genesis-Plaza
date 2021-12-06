@@ -13,6 +13,7 @@ import {
 import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 import * as resource from "./resources/resources"
 import * as sfx from "./resources/sounds"
+import { addXmasNpc } from 'src/modules/bar/barNPCs'
 
 const portalControl = new TeleportController()
 
@@ -116,3 +117,5 @@ let classicsMenu = createClassicsVerticalMenu({
     
   )
 fillClassicsMenu(classicsMenu)
+
+addXmasNpc()
