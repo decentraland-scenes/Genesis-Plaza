@@ -45,6 +45,7 @@ export async function setUserData() {
 setUserData()
 
 export async function addBarNPCs() {
+  log("XXXX calling add robots bar")
   areNPCsAdded = true
 
   octopus = new NPC(
