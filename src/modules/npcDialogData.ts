@@ -1209,7 +1209,7 @@ export let BobDialog: Dialog[] = [
   // Museum District
   {
     text:
-      'The museum district is a great example of a Distict. This one focuses on providing artists a place to display their work.',
+      'The museum district is a great example of a District. This one focuses on providing artists a place to display their work.',
     offsetY: 6,
   },
   {
