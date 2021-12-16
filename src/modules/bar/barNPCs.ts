@@ -1655,6 +1655,7 @@ export function octoTrip() {
 
 
 export let GrumpyElfDialog: Dialog[] = [
+  //START after save xmas and get vision glasses
   {
     name: 'xmasplaza-quest',
     text: `Hey friend!  We need your help!   A big storm hit Xmas Plaza last night and caused all sorts of problems`,
@@ -1697,7 +1698,8 @@ export let GrumpyElfDialog: Dialog[] = [
     },
     isEndOfDialog: true,
   },
-  //after got wearable
+  //END after save xmas and get vision glasses
+  //START after got the vision glasses wearable
   {
     name: 'xmasplaza-done',
     text:
