@@ -41,6 +41,8 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
+import { checkProgression } from './xmas/quests/progression'
+import { getUserDataFromLocal, setUserData } from './xmas/claiming/userData'
 
 //////// LOG PLAYER POSITION
 
@@ -291,3 +293,19 @@ export function outsideBar() {
     0.6
   )
 }
+
+//XMAS
+
+export async function setUpScene() {
+  await checkProgression() //will setup state
+
+  //make sure this was called so that elf dialog can warn user early
+  if (!getUserDataFromLocal()) {
+    await setUserData()
+  }
+
+  log('setUpScene initialQuestUI')
+  //initialQuestUI(progression.data, progression.day)
+}
+
+setUpScene();
