@@ -15,6 +15,8 @@ import { Calis1 } from '../interactiveItems/calis'
 import { setStreamVolume } from './jukebox'
 import { lobbyCenter, lobbyHeight } from 'src/lobby/resources/globals'
 import resources from 'src/resources'
+import { CoordsEnum } from 'src/xmas/config'
+import { progression } from 'src/xmas/quests/progression'
 
 export let octopus: NPC
 export let doge: NPC
@@ -474,27 +476,19 @@ export function addXmasNpc(){
       //{ position: new Vector3(0,.15,0) },
       'models/xmas/ElfGrumpy.glb',
       () => {
-        // animations
-        grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
+        if(!progression.data.intro){
+          // animations
+          grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
 
-        /*
-        let dummyent = new Entity()
-        dummyent.addComponent(
-          new NPCDelay(2, () => {
-            bela.playAnimation('Talk')
-          })
-        )
-        engine.addEntity(dummyent)*/
+          // dialog UI
+          grumpyElf.talk(GrumpyElfDialog,'xmasplaza-quest')
+        }else{
+          // animations
+          grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
 
-        // sound
-        /*
-        betty.addComponentOrReplace(
-          new AudioSource(resources.sounds.robots.betty)
-        )
-        betty.getComponent(AudioSource).playOnce()*/
-
-        // dialog UI
-        grumpyElf.talk(GrumpyElfDialog)
+          // dialog UI
+          grumpyElf.talk(GrumpyElfDialog,'xmasplaza-done')
+        }
       },
       {
         idleAnim: `Idle_Bell_02`,
@@ -1662,28 +1656,40 @@ export function octoTrip() {
 
 export let GrumpyElfDialog: Dialog[] = [
   {
-    text:
-      "Hey we need you help?",
+    name: 'xmasplaza-quest',
+    text: `Hey friend!  We need your help!   A big storm hit Xmas Plaza last night and caused all sorts of problems`,
+    offsetY: 24,
+  },
+  {
+    text: `It is a logistics nightmare over there.  We need your help to get back on schedule for Christmas.`,//to meet our deadline.
+    triggeredByNext: () => {
+      grumpyElf.playAnimation(`Worried_Bell  `, true, 4)
+    },
+  },
+  { 
+    text: `Will you help?  I can send you there now.`,
     offsetY: 24,
     isQuestion: true,
     buttons: [
-      { label: 'YES', goToDialog: 'yes' },
-      { label: 'NO', goToDialog: 'no' },
+      { label: 'YES', goToDialog: 'yes-xplaza' },
+      { label: 'NO', goToDialog: 'no-xplaza' },
     ],
   },
   {
-    name: 'yes',
-    text: "Great. Hop over here ",
+    name: 'yes-xplaza',
+    text: "Great! I am sending you there now.  When you get there talk to the elf in charge.",
     offsetY: 18,
     triggeredByNext: () => {
       grumpyElf.playAnimation('Waving_bell', true, 4)//Greet_Bell
       grumpyElf.endInteraction()
+
+      teleportTo(CoordsEnum.XmasPlazaCoords)
     },
     isEndOfDialog: true,
   },
   {
-    name: 'no',
-    text: "Bummer",
+    name: 'no-xplaza',
+    text: "Alright then, all good! If you change your mind, head to Xmas Plaza and talk to the elf in charge.",
     offsetY: 18,
     triggeredByNext: () => {
       grumpyElf.playAnimation('Worried_Bell', true, 4)
@@ -1691,4 +1697,57 @@ export let GrumpyElfDialog: Dialog[] = [
     },
     isEndOfDialog: true,
   },
+  //after got wearable
+  {
+    name: 'xmasplaza-done',
+    text:
+      "Hey friend!  I heard you were a big help at Xmas Plaza and we are back on schedule. ",
+    offsetY: 24,
+  },
+  {
+    text: `I hope you like the gift we gave you. You earned it.  I would be happy to explain what makes them so special in case you have not figured it out yet.`,
+    isQuestion: true,
+    buttons: [
+      { label: 'YES', goToDialog: 'yes-info' },
+      { label: 'NO', goToDialog: 'no-info' },
+    ],
+  },
+  //START YES INFO on vision glasses dialog
+  {
+    name: 'yes-info',
+    text: `The vision glasses are a special kind of wearable called a portable experience.  `,
+  },
+  //IS explaining portable experience THIS TOO MUCH?
+  {
+    text: `A portable experience is gameplay that is not restricted to one specific scene but stays with you as you explore the metaverse.`,
+  },
+  {
+    text: `These vision glasses when equipped let you see anything imbued with Christmas Magic that normal people cannot see`,
+    //text: `Anyone who wears these vision glasses around Christmas time may catch glimples of Santa in action`,
+  },
+  {
+    text: `There are some exciting events planned for those who earned those glasses.`,
+  },
+  {
+    text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
+  },
+  {
+    text: `You may even catch a glimpse of the big man himself. Good luck!`,
+    isEndOfDialog: true,
+  },
+  //START NO INFO on vision glasses dialog
+  {
+    name: 'no-info',
+    text: `Alright then, all good!  Your are a smart one and probably already figured it out.`,
+  },
+  {
+    text: `I heard there may be other some exciting events planned for those who earned those glasses.`,
+  },
+  {
+    text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
+  },
+  {
+    text: `You may even catch a glimpse of the big man himself. Good luck!`,
+    isEndOfDialog: true,
+  }
 ]
