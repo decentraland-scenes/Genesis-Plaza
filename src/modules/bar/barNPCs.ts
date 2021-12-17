@@ -1690,7 +1690,7 @@ export let GrumpyElfDialog: Dialog[] = [
   },
   {
     name: 'no-xplaza',
-    text: "Alright then, all good! If you change your mind, head to Xmas Plaza and talk to the elf in charge.",
+    text: "Alright then, all good! If you change your mind, head to Xmas Plaza ("+CoordsEnum.XmasPlazaCoords+") and talk to the elf in charge.",
     offsetY: 18,
     triggeredByNext: () => {
       grumpyElf.playAnimation('Worried_Bell', true, 4)
@@ -1717,11 +1717,11 @@ export let GrumpyElfDialog: Dialog[] = [
   //START YES INFO on vision glasses dialog
   {
     name: 'yes-info',
-    text: `The vision glasses are a special kind of wearable called a portable experience.  `,
+    text: `The vision glasses are a special kind of wearable called a smart wearable.  `,
   },
   //IS explaining portable experience THIS TOO MUCH?
   {
-    text: `A portable experience is gameplay that is not restricted to one specific scene but stays with you as you explore the metaverse.`,
+    text: `A smart wearable is gameplay that is not restricted to one specific scene but stays with you as you explore the metaverse.`,
   },
   {
     text: `These vision glasses when equipped let you see anything imbued with Christmas Magic that normal people cannot see`,
