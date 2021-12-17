@@ -5,7 +5,7 @@ export let IN_PREVIEW: boolean = false
 
 export enum CoordsEnum {
   GenesisCoords = `0,0`,
-  XmasPlazaCoords = '-22,78',//`-20,80`,
+  XmasPlazaCoords = `-20,80`,
   SledgeCoords = `47,67`,
   Secret = `0,0`,
 }
