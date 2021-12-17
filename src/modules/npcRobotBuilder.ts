@@ -30,7 +30,6 @@ export let marsha: NPC
 export let bob: NPC
 
 export function addRobots() {
-  log("XXXX add robots called")
   const ringShape = resources.models.robots.rings
 
   //   alice = new NPC(
