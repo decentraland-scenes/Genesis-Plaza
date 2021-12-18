@@ -1,6 +1,6 @@
 import {   QuestState } from './quests/quest'
 
-export const TESTDATA_ENABLED = true
+export const TESTDATA_ENABLED = false
 export let IN_PREVIEW: boolean = false
 
 export enum CoordsEnum {
