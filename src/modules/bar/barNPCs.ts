@@ -462,14 +462,11 @@ onIdleStateChangedObservable.add(({ isIdle }) => {
 export function addXmasNpc(){
   log("XXXX addXmasNpc grumpy computed pos ")
 
-  log("grumpy computed pos " 
-    ,new Vector3(lobbyCenter.x-1.2, lobbyHeight+3, lobbyCenter.z-6.4)
-    ,new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594))
-    
     grumpyElf = new NPC(
       { 
         //position: new Vector3(69.5, 0.5, 7.2) 
         position: new Vector3(lobbyCenter.x-2, lobbyHeight+1, lobbyCenter.z-3), //1.1 was eye level but too high?
+        //position: new Vector3(lobbyCenter.x-2, 1, lobbyCenter.z-3), //1.1 was eye level but too high?
         rotation: Quaternion.Euler(0,180,0) //start him facing diving board/spawn point
         //position: new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594)
       }, 
@@ -1658,14 +1655,12 @@ export let GrumpyElfDialog: Dialog[] = [
   //START after save xmas and get vision glasses
   {
     name: 'xmasplaza-quest',
-    text: `Hey friend!  We need your help!   A big storm hit Xmas Plaza last night and caused all sorts of problems`,
-    offsetY: 24,
+    text: `Hey friend!  We need your help!   A big storm hit Xmas Plaza last night and caused all sorts of problems.`,
+    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
   },
   {
     text: `It is a logistics nightmare over there.  We need your help to get back on schedule for Christmas.`,//to meet our deadline.
-    triggeredByNext: () => {
-      grumpyElf.playAnimation(`Worried_Bell  `, true, 4)
-    },
+    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
   },
   { 
     text: `Will you help?  I can send you there now.`,
@@ -1675,11 +1670,11 @@ export let GrumpyElfDialog: Dialog[] = [
       { label: 'YES', goToDialog: 'yes-xplaza' },
       { label: 'NO', goToDialog: 'no-xplaza' },
     ],
+    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
   },
   {
     name: 'yes-xplaza',
     text: "Great! I am sending you there now.  When you get there talk to the elf in charge.",
-    offsetY: 18,
     triggeredByNext: () => {
       grumpyElf.playAnimation('Waving_bell', true, 4)//Greet_Bell
       grumpyElf.endInteraction()
@@ -1691,7 +1686,6 @@ export let GrumpyElfDialog: Dialog[] = [
   {
     name: 'no-xplaza',
     text: "Alright then, all good! If you change your mind, head to Xmas Plaza ("+CoordsEnum.XmasPlazaCoords+") and talk to the elf in charge.",
-    offsetY: 18,
     triggeredByNext: () => {
       grumpyElf.playAnimation('Worried_Bell', true, 4)
       grumpyElf.endInteraction()
@@ -1704,7 +1698,6 @@ export let GrumpyElfDialog: Dialog[] = [
     name: 'xmasplaza-done',
     text:
       "Hey friend!  I heard you were a big help at Xmas Plaza and we are back on schedule. ",
-    offsetY: 24,
   },
   {
     text: `I hope you like the gift we gave you. You earned it.  I would be happy to explain what makes them so special in case you have not figured it out yet.`,
@@ -1713,6 +1706,7 @@ export let GrumpyElfDialog: Dialog[] = [
       { label: 'YES', goToDialog: 'yes-info' },
       { label: 'NO', goToDialog: 'no-info' },
     ],
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   //START YES INFO on vision glasses dialog
   {
@@ -1722,34 +1716,43 @@ export let GrumpyElfDialog: Dialog[] = [
   //IS explaining portable experience THIS TOO MUCH?
   {
     text: `A smart wearable is gameplay that is not restricted to one specific scene but stays with you as you explore the metaverse.`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
-    text: `These vision glasses when equipped let you see anything imbued with Christmas Magic that normal people cannot see`,
+    text: `These vision glasses when equipped let you see anything imbued with Christmas Magic that normal people cannot see.`,
     //text: `Anyone who wears these vision glasses around Christmas time may catch glimples of Santa in action`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `There are some exciting events planned for those who earned those glasses.`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `You may even catch a glimpse of the big man himself. Good luck!`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
     isEndOfDialog: true,
   },
   //START NO INFO on vision glasses dialog
   {
     name: 'no-info',
     text: `Alright then, all good!  Your are a smart one and probably already figured it out.`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `I heard there may be other some exciting events planned for those who earned those glasses.`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
   },
   {
     text: `You may even catch a glimpse of the big man himself. Good luck!`,
+    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
     isEndOfDialog: true,
   }
 ]
