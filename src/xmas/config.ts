@@ -10,6 +10,22 @@ export enum CoordsEnum {
   Secret = `0,0`,
 }
 
+
+export enum WearableEnum {
+  STANTA_WEARABLE_URN = 
+  //'urn:decentraland:matic:collections-v2:0x7e553ede9b6ad437262d28d4fe9ab77e63089b8a:1' //text: "Festival Glasses"
+  "urn:decentraland:matic:collections-v2:0xf1483f042614105cb943d3dd67157256cd003028:2" //real santa wearable
+  ,
+  KRUMPUS_WEARABLE_URN = 
+  //'urn:decentraland:matic:collections-v2:0x7e553ede9b6ad437262d28d4fe9ab77e63089b8a:1' //text: "Festival Glasses"
+  "urn:decentraland:matic:collections-v2:0xf1483f042614105cb943d3dd67157256cd003028:0" //real krumpus wearable
+}
+
+export const WEARABLES_TO_CHECK = [
+  WearableEnum.STANTA_WEARABLE_URN,
+  WearableEnum.KRUMPUS_WEARABLE_URN
+]
+
 const QUEST_TITLE = 'Save X-mas';
  
 export const COORDS = CoordsEnum.XmasPlazaCoords

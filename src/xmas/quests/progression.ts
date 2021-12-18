@@ -13,6 +13,8 @@ import {
   FAIL_TO_FETCH_QUEST_STATE,
   COMPLETED_QUEST_STATE,
   START_QUEST_STATE,
+  WearableEnum,
+  WEARABLES_TO_CHECK,
 } from '../config'
 import { QuestState } from './quest'
 import * as ui from '@dcl/ui-scene-utils'
@@ -75,15 +77,14 @@ export async function checkProgression() {
     let response = await fetch(url)
     let json = await response.json()
     log('checkProgression Player progression: ', response.status, userData)
-    const wearableUrn =
-      'urn:decentraland:matic:collections-v2:0x7e553ede9b6ad437262d28d4fe9ab77e63089b8a:1' //text: "Festival Glasses"
-    const wearableUrn2 =
-      'urn:decentraland:matic:collections-v2:0x7e553ede9b6ad437262d28d4fe9ab77e63089b8a:1' //text: "Festival Other Wearable"
+
     let hasWearable = false
     for (const p in json) {
-      if (json[p].urn == wearableUrn || json[p].urn == wearableUrn2) {
-        hasWearable = true
-        break
+      for(const q in WEARABLES_TO_CHECK){
+        if( json[p].urn == WEARABLES_TO_CHECK[q]){
+          hasWearable = true
+          break
+        }
       }
     }
     if (hasWearable) {
