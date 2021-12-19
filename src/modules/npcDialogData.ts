@@ -6,7 +6,7 @@ import {
   betty,
   charlie,
   marsha,
-  bob,
+  bob
 } from './npcRobotBuilder'
 
 // --- Main Dialog (Alice) ---
@@ -1316,3 +1316,7 @@ export let BobDialog: Dialog[] = [
     isEndOfDialog: true,
   },
 ]
+
+
+
+//--- Whale Dialog (Bob) ---

@@ -8,7 +8,7 @@ import {
   BobDialog,
   CharlieDialog,
   MarshaDialog,
-  RonDialog,
+  RonDialog
 } from './npcDialogData'
 
 /*
@@ -406,4 +406,5 @@ export function addRobots() {
     })
   )
   bobRings.setParent(bob)
+
 }
