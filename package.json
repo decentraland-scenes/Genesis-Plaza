@@ -25,5 +25,11 @@
     "@dcl/npc-scene-utils",
     "@dcl/ecs-scene-utils",
     "@dcl/ecs-quests"
+  ],
+  "bundleDependencies": [
+    "@dcl/ecs-quests",
+    "@dcl/ecs-scene-utils",
+    "@dcl/npc-scene-utils",
+    "@dcl/ui-scene-utils"
   ]
 }

@@ -322,15 +322,6 @@ export function addBuildings() {
   engine.addEntity(street)
 }
 
-//add zepellin
-let zepellin = new Entity()
-zepellin.addComponent(new GLTFShape('models/zepellin.glb'))
-zepellin.addComponent(
-  new Transform({
-    rotation: Quaternion.Euler(0, 180, 0),
-  })
-)
-engine.addEntity(zepellin)
 
 //add eth logos in bar
 let ethLogos = new Entity()
@@ -350,3 +341,14 @@ ethLogos_02.addComponent(
   })
 )
 engine.addEntity(ethLogos_02)
+
+
+//add xmas_assets
+let xmas_assets = new Entity()
+xmas_assets.addComponent(new GLTFShape('models/xmas_assets.glb'))
+xmas_assets.addComponent(
+  new Transform({
+    rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+engine.addEntity(xmas_assets)
