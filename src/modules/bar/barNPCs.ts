@@ -23,7 +23,7 @@ export let doge: NPC
 export let catGuy: NPC
 export let wearablesC: NPC
 export let artist1: NPC
-export let artist2: NPC
+export let artist2: NPC 
 export let wenMoon: NPC
 export let grumpyElf: NPC
 
@@ -1685,7 +1685,7 @@ export let GrumpyElfDialog: Dialog[] = [
   },
   {
     name: 'no-xplaza',
-    text: "Alright then, all good! If you change your mind, head to Xmas Plaza ("+CoordsEnum.XmasPlazaCoords+") and talk to the elf in charge.",
+    text: "Alright then, all good! If you change your mind, head to Xmas Plaza located at ("+CoordsEnum.XmasPlazaCoords+") and talk to the elf in charge.",
     triggeredByNext: () => {
       grumpyElf.playAnimation('Worried_Bell', true, 4)
       grumpyElf.endInteraction()
