@@ -41,8 +41,8 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
-import { checkProgression } from './xmas/quests/progression'
-import { getUserDataFromLocal, setUserData } from './xmas/claiming/userData'
+// import { checkProgression } from './xmas/quests/progression'
+// import { getUserDataFromLocal, setUserData } from './xmas/claiming/userData'
 
 //////// LOG PLAYER POSITION
 
