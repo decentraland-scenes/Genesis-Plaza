@@ -296,16 +296,16 @@ export function outsideBar() {
 
 //XMAS
 
-export async function setUpScene() {
-  await checkProgression() //will setup state
+// export async function setUpScene() {
+//   await checkProgression() //will setup state
 
-  //make sure this was called so that elf dialog can warn user early
-  if (!getUserDataFromLocal()) {
-    await setUserData()
-  }
+//   //make sure this was called so that elf dialog can warn user early
+//   if (!getUserDataFromLocal()) {
+//     await setUserData()
+//   }
 
-  log('setUpScene initialQuestUI')
-  //initialQuestUI(progression.data, progression.day)
-}
+//   log('setUpScene initialQuestUI')
+//   //initialQuestUI(progression.data, progression.day)
+// }
 
-setUpScene();
+// setUpScene();

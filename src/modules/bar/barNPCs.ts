@@ -23,7 +23,7 @@ export let doge: NPC
 export let catGuy: NPC
 export let wearablesC: NPC
 export let artist1: NPC
-export let artist2: NPC 
+export let artist2: NPC
 export let wenMoon: NPC
 export let grumpyElf: NPC
 
@@ -52,7 +52,7 @@ export async function setUserData() {
 setUserData()
 
 export async function addBarNPCs() {
-  log("XXXX calling add robots bar")
+  log('XXXX calling add robots bar')
   areNPCsAdded = true
 
   octopus = new NPC(
@@ -356,7 +356,6 @@ export async function addBarNPCs() {
   )
 }
 
-
 export function addNPCsOutside() {
   let wenPath: FollowPathData = {
     path: [
@@ -461,123 +460,119 @@ onIdleStateChangedObservable.add(({ isIdle }) => {
   }
 })
 
-export function addXmasNpc(){
-  log("XXXX addXmasNpc grumpy computed pos ")
+// export function addXmasNpc(){
+//   log("XXXX addXmasNpc grumpy computed pos ")
 
-    grumpyElf = new NPC(
-      { 
-        //position: new Vector3(69.5, 0.5, 7.2) 
-        position: new Vector3(lobbyCenter.x-2, lobbyHeight+1, lobbyCenter.z-3), //1.1 was eye level but too high?
-        //position: new Vector3(lobbyCenter.x-2, 1, lobbyCenter.z-3), //1.1 was eye level but too high?
-        rotation: Quaternion.Euler(0,180,0) //start him facing diving board/spawn point
-        //position: new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594)
-      }, 
-      //{ position: new Vector3(0,.15,0) },
-      'models/xmas/ElfGrumpy.glb',
-      () => {
-        if(!progression.data.intro){
-          // animations
-          grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
+//     grumpyElf = new NPC(
+//       {
+//         //position: new Vector3(69.5, 0.5, 7.2)
+//         position: new Vector3(lobbyCenter.x-2, lobbyHeight+1, lobbyCenter.z-3), //1.1 was eye level but too high?
+//         //position: new Vector3(lobbyCenter.x-2, 1, lobbyCenter.z-3), //1.1 was eye level but too high?
+//         rotation: Quaternion.Euler(0,180,0) //start him facing diving board/spawn point
+//         //position: new Vector3( 159.90313720703125,  105.0605697631836,  145.15061950683594)
+//       },
+//       //{ position: new Vector3(0,.15,0) },
+//       'models/xmas/ElfGrumpy.glb',
+//       () => {
+//         if(!progression.data.intro){
+//           // animations
+//           grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
 
-          // dialog UI
-          grumpyElf.talk(GrumpyElfDialog,'xmasplaza-quest')
-        }else{
-          // animations
-          grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
+//           // dialog UI
+//           grumpyElf.talk(GrumpyElfDialog,'xmasplaza-quest')
+//         }else{
+//           // animations
+//           grumpyElf.playAnimation('Greet_Bell', true, 4)//Worried_Bell,Greet_Bell
 
-          // dialog UI
-          grumpyElf.talk(GrumpyElfDialog,'xmasplaza-done')
-        }
-      },
-      {
-        idleAnim: `Idle_Bell_02`,
-        faceUser: true,
-        portrait: {
-          path: 'images/portraits/xmas/elf_03.png',
-          height: 256,
-          width: 256,
-          section: {
-            sourceHeight: 256,
-            sourceWidth: 256,
-          },
-        },
-        onlyETrigger: false,
-        reactDistance: 6,
-        onWalkAway: () => {
-          grumpyElf.playAnimation('Worried_Bell', true, 4)
-        },
-      }
-    )
+//           // dialog UI
+//           grumpyElf.talk(GrumpyElfDialog,'xmasplaza-done')
+//         }
+//       },
+//       {
+//         idleAnim: `Idle_Bell_02`,
+//         faceUser: true,
+//         portrait: {
+//           path: 'images/portraits/xmas/elf_03.png',
+//           height: 256,
+//           width: 256,
+//           section: {
+//             sourceHeight: 256,
+//             sourceWidth: 256,
+//           },
+//         },
+//         onlyETrigger: false,
+//         reactDistance: 6,
+//         onWalkAway: () => {
+//           grumpyElf.playAnimation('Worried_Bell', true, 4)
+//         },
+//       }
+//     )
 
+//     const xmasDroneHost = new Entity('xmasDroneHost-xmas')
+//     engine.addEntity(xmasDroneHost)
+//     xmasDroneHost.setParent(grumpyElf)
+//     xmasDroneHost.addComponent(new Transform({
+//         position: new Vector3(0, -0.15, .1),
+//         scale: new Vector3(1, 1, 1) ,
+//         rotation: Quaternion.Euler(0, 20, 0)
+//       }))
 
-    
-    const xmasDroneHost = new Entity('xmasDroneHost-xmas')
-    engine.addEntity(xmasDroneHost)
-    xmasDroneHost.setParent(grumpyElf)
-    xmasDroneHost.addComponent(new Transform({
-        position: new Vector3(0, -0.15, .1),
-        scale: new Vector3(1, 1, 1) ,
-        rotation: Quaternion.Euler(0, 20, 0)
-      }))
+//     const xmasDroneHostShape = new GLTFShape('models/xmas/Drone-propellers-anim.glb')
+//     xmasDroneHostShape.withCollisions = true
+//     xmasDroneHostShape.isPointerBlocker = true
+//     //shape.visible = false
 
-    const xmasDroneHostShape = new GLTFShape('models/xmas/Drone-propellers-anim.glb')
-    xmasDroneHostShape.withCollisions = true
-    xmasDroneHostShape.isPointerBlocker = true
-    //shape.visible = false
+//     const droneShape = new Entity('xmasDroneHost-shape' )
+//     droneShape.setParent(xmasDroneHost)
+//     droneShape.addComponent(new Transform( {
+//       scale: new Vector3(.15,.15,.15) } ))
+//     droneShape.addComponent(xmasDroneHostShape)
 
-    const droneShape = new Entity('xmasDroneHost-shape' )
-    droneShape.setParent(xmasDroneHost)
-    droneShape.addComponent(new Transform( { 
-      scale: new Vector3(.15,.15,.15) } ))
-    droneShape.addComponent(xmasDroneHostShape)
+//     const startingY = grumpyElf.getComponent(Transform).position.y//transform5TestxmasDroneHost.position.y
+//     const bounceAmount = .06
+//     const startVector = grumpyElf.getComponent(Transform).position.clone()
+//     const endVector= grumpyElf.getComponent(Transform).position.clone()
+//     endVector.y=startingY+bounceAmount//new Vector3(69.5, startingY+bounceAmount, 7.2)
+//     grumpyElf.addComponent(
+//       new utils.Interval(1000, () => {
+//         const tr = grumpyElf.getComponent(Transform)
+//         if(tr.position.y - startingY < .05){
+//           grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(startVector, endVector, 1))
+//         }else{
+//           grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(endVector, startVector, 1))
+//         }
+//       })
+//     )
 
-    const startingY = grumpyElf.getComponent(Transform).position.y//transform5TestxmasDroneHost.position.y
-    const bounceAmount = .06
-    const startVector = grumpyElf.getComponent(Transform).position.clone()
-    const endVector= grumpyElf.getComponent(Transform).position.clone()
-    endVector.y=startingY+bounceAmount//new Vector3(69.5, startingY+bounceAmount, 7.2) 
-    grumpyElf.addComponent(
-      new utils.Interval(1000, () => {
-        const tr = grumpyElf.getComponent(Transform)
-        if(tr.position.y - startingY < .05){
-          grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(startVector, endVector, 1))
-        }else{
-          grumpyElf.addComponentOrReplace(new utils.MoveTransformComponent(endVector, startVector, 1))
-        }
-      })
-    )
+//     /*
 
+//       {
+//         idleAnim: `Idle_Bell_01`,
+//         faceUser: true,
+//         darkUI: true,
+//       }*/
 
+//     /*
+//     grumpyElf.dialog = new DialogWindow(
+//       {
+//         path: 'images/elf_03.png',
+//         offsetX: 50,
+//         offsetY: 30,
+//         width: 256,
+//         height: 256,
+//         section: { sourceWidth: 256, sourceHeight: 256 },
+//       },
+//       false,
+//       null,
+//       xmasTheme
+//     )
+//     grumpyElf.dialog.panel.positionY = 20
+//     grumpyElf.dialog.leftClickIcon.positionX = 340 - 40
+//     grumpyElf.dialog.leftClickIcon.positionY = -80 + 40
+//     grumpyElf.dialog.text.fontSize = 18
+//     grumpyElf.dialog.text.color = Color4.Black()*/
 
-    /*
-
-      {
-        idleAnim: `Idle_Bell_01`,
-        faceUser: true,
-        darkUI: true,
-      }*/
-
-    /*
-    grumpyElf.dialog = new DialogWindow(
-      {
-        path: 'images/elf_03.png',
-        offsetX: 50,
-        offsetY: 30,
-        width: 256,
-        height: 256,
-        section: { sourceWidth: 256, sourceHeight: 256 },
-      },
-      false,
-      null,
-      xmasTheme
-    )
-    grumpyElf.dialog.panel.positionY = 20
-    grumpyElf.dialog.leftClickIcon.positionX = 340 - 40
-    grumpyElf.dialog.leftClickIcon.positionY = -80 + 40
-    grumpyElf.dialog.text.fontSize = 18
-    grumpyElf.dialog.text.color = Color4.Black()*/
-
-}
+// }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1605,7 +1600,6 @@ function releaseCat() {
   engine.addEntity(cat)
 }
 
-
 // Calis1.pickup(() => {
 //   setStreamVolume(0.5)
 // })
@@ -1652,19 +1646,22 @@ export function octoTrip() {
   }
 }
 
-
 export let GrumpyElfDialog: Dialog[] = [
   //START after save xmas and get vision glasses
   {
     name: 'xmasplaza-quest',
     text: `Hey friend!  We need your help!   A big storm hit Xmas Plaza last night and caused all sorts of problems.`,
-    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation(`Worried_Bell`, true, 4)
+    },
   },
   {
-    text: `It is a logistics nightmare over there.  We need your help to get back on schedule for Christmas.`,//to meet our deadline.
-    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
+    text: `It is a logistics nightmare over there.  We need your help to get back on schedule for Christmas.`, //to meet our deadline.
+    triggeredByNext: () => {
+      grumpyElf.playAnimation(`Worried_Bell`, true, 4)
+    },
   },
-  { 
+  {
     text: `Will you help?  I can send you there now.`,
     offsetY: 24,
     isQuestion: true,
@@ -1672,13 +1669,15 @@ export let GrumpyElfDialog: Dialog[] = [
       { label: 'YES', goToDialog: 'yes-xplaza' },
       { label: 'NO', goToDialog: 'no-xplaza' },
     ],
-    triggeredByNext: () => { grumpyElf.playAnimation(`Worried_Bell`, true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation(`Worried_Bell`, true, 4)
+    },
   },
   {
     name: 'yes-xplaza',
-    text: "Great! I am sending you there now.  When you get there talk to the elf in charge.",
+    text: 'Great! I am sending you there now.  When you get there talk to the elf in charge.',
     triggeredByNext: () => {
-      grumpyElf.playAnimation('Waving_bell', true, 4)//Greet_Bell
+      grumpyElf.playAnimation('Waving_bell', true, 4) //Greet_Bell
       grumpyElf.endInteraction()
 
       teleportTo(CoordsEnum.XmasPlazaCoords)
@@ -1687,7 +1686,10 @@ export let GrumpyElfDialog: Dialog[] = [
   },
   {
     name: 'no-xplaza',
-    text: "Alright then, all good! If you change your mind, head to Xmas Plaza located at ("+CoordsEnum.XmasPlazaCoords+") and talk to the elf in charge.",
+    text:
+      'Alright then, all good! If you change your mind, head to Xmas Plaza located at (' +
+      CoordsEnum.XmasPlazaCoords +
+      ') and talk to the elf in charge.',
     triggeredByNext: () => {
       grumpyElf.playAnimation('Worried_Bell', true, 4)
       grumpyElf.endInteraction()
@@ -1698,8 +1700,7 @@ export let GrumpyElfDialog: Dialog[] = [
   //START after got the vision glasses wearable
   {
     name: 'xmasplaza-done',
-    text:
-      "Hey friend!  I heard you were a big help at Xmas Plaza and we are back on schedule. ",
+    text: 'Hey friend!  I heard you were a big help at Xmas Plaza and we are back on schedule. ',
   },
   {
     text: `I hope you like the gift we gave you. You earned it.  I would be happy to explain what makes them so special in case you have not figured it out yet.`,
@@ -1708,7 +1709,9 @@ export let GrumpyElfDialog: Dialog[] = [
       { label: 'YES', goToDialog: 'yes-info' },
       { label: 'NO', goToDialog: 'no-info' },
     ],
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   //START YES INFO on vision glasses dialog
   {
@@ -1718,43 +1721,61 @@ export let GrumpyElfDialog: Dialog[] = [
   //IS explaining portable experience THIS TOO MUCH?
   {
     text: `A smart wearable is gameplay that is not restricted to one specific scene but stays with you as you explore the metaverse.`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `These vision glasses when equipped let you see anything imbued with Christmas Magic that normal people cannot see.`,
     //text: `Anyone who wears these vision glasses around Christmas time may catch glimples of Santa in action`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `There are some exciting events planned for those who earned those glasses.`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `You may even catch a glimpse of the big man himself. Good luck!`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
     isEndOfDialog: true,
   },
   //START NO INFO on vision glasses dialog
   {
     name: 'no-info',
     text: `Alright then, all good!  Your are a smart one and probably already figured it out.`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `I heard there may be other some exciting events planned for those who earned those glasses.`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `Wear the glasses, visit events and crowded places to increase your chances seeing some Christmas Magic`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
   },
   {
     text: `You may even catch a glimpse of the big man himself. Good luck!`,
-    triggeredByNext: () => {grumpyElf.playAnimation('Talk_Bell  ', true, 4)},
+    triggeredByNext: () => {
+      grumpyElf.playAnimation('Talk_Bell  ', true, 4)
+    },
     isEndOfDialog: true,
-  }
+  },
 ]
