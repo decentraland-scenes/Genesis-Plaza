@@ -394,23 +394,11 @@
     ],
     "base": "-9,-9"
   },
-  "communications": {
-    "type": "webrtc",
-    "signalling": "https://signalling-01.decentraland.org"
-  },
-  "policy": {
-    "contentRating": "E",
-    "fly": true,
-    "voiceEnabled": true,
-    "blacklist": [],
-    "teleportPosition": ""
-  },
   "requiredPermissions": [
     "ALLOW_TO_MOVE_PLAYER_INSIDE_SCENE",
 	"ALLOW_TO_TRIGGER_AVATAR_EMOTE"
   ],
   "main": "bin/game.js",
-  "tags": [],
   "spawnPoints": [
     {
       "name": "center",
