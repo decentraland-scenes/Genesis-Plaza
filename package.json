@@ -18,7 +18,7 @@
     "@dcl/ui-scene-utils": "^1.7.2-20210421205046.commit-966f879",
     "@types/cannon": "^0.1.7",
     "cannon": "^0.6.2",
-    "decentraland-ecs": "^6.6.9"
+    "decentraland-ecs": "^6.8.1"
   },
   "bundledDependencies": [
     "@dcl/ui-scene-utils",
