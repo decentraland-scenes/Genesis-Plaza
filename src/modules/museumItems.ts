@@ -792,7 +792,7 @@ export function placeGardenPieces() {
   discordLink.addComponent(
     new OnPointerDown(
       (e) => {
-        openExternalURL('https://discordapp.com/invite/9EcuFgC')
+        openExternalURL('https://dcl.gg/discord')
       },
       { hoverText: 'Join the Discussion', button: ActionButton.PRIMARY }
     )
