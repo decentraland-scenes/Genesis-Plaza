@@ -19,10 +19,10 @@
     "cannon": "^0.6.2",
     "decentraland-ecs": "^6.9.1"
   },
-  "bundledDependencies": [
-    "@dcl/ui-scene-utils",
-    "@dcl/npc-scene-utils",
+  "bundleDependencies": [
+    "@dcl/ecs-quests",
     "@dcl/ecs-scene-utils",
-    "@dcl/ecs-quests"
+    "@dcl/npc-scene-utils",
+    "@dcl/ui-scene-utils"
   ]
 }
