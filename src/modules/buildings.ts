@@ -350,3 +350,13 @@ ethLogos_02.addComponent(
   })
 )
 engine.addEntity(ethLogos_02)
+
+ //add vogu_pod
+ let vogu_pod = new Entity()
+ vogu_pod.addComponent(new GLTFShape('models/vogu_pod.glb'))
+ vogu_pod.addComponent(
+   new Transform({
+     rotation: Quaternion.Euler(0, 180, 0),
+   })
+ )
+ engine.addEntity(vogu_pod)

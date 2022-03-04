@@ -10,7 +10,6 @@
     "ecs:install": "npm install --save-dev decentraland-ecs@latest",
     "ecs:install-next": "npm install --save-dev decentraland-ecs@next"
   },
-  "devDependencies": {},
   "dependencies": {
     "@dcl/ecs-quests": "^1.3.1",
     "@dcl/ecs-scene-utils": "^1.6.2-20210408012032.commit-5921be1",
@@ -18,12 +17,18 @@
     "@dcl/ui-scene-utils": "^1.7.2-20210421205046.commit-966f879",
     "@types/cannon": "^0.1.7",
     "cannon": "^0.6.2",
-    "decentraland-ecs": "^6.8.1"
+    "decentraland-ecs": "^6.9.1"
   },
   "bundledDependencies": [
     "@dcl/ui-scene-utils",
     "@dcl/npc-scene-utils",
     "@dcl/ecs-scene-utils",
     "@dcl/ecs-quests"
+  ],
+  "bundleDependencies": [
+    "@dcl/ecs-quests",
+    "@dcl/ecs-scene-utils",
+    "@dcl/npc-scene-utils",
+    "@dcl/ui-scene-utils"
   ]
 }
