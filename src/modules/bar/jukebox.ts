@@ -183,7 +183,7 @@ export function placeJukeBox() {
 
     JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
 
-    barRadioOn(barCurrentRadio) === 
+    barRadioOn(barCurrentRadio)
   })
 
   sceneMessageBus.on('enteredRadioRange', (e) => {
