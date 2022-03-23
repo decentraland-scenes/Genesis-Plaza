@@ -52,8 +52,6 @@ export class MusicalDrop extends Entity {
   }
 }
 
-
-
 // system to play the loop continuously
 export class PlaySequence implements ISystem {
   playingMode: number // 0 = off, 1 = loop, 2 = random
@@ -92,7 +90,7 @@ export class PlaySequence implements ISystem {
 
         log('new loop')
       }
-      if (this.playingMode == 1) {
+      if (this.playingMode === 1) {
         // sequence mode
         for (let i = 0; i < 7; i++) {
           if (seqNumbers[this.currentBeat][i]) {

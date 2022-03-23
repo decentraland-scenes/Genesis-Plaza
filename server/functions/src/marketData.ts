@@ -147,7 +147,7 @@ export async function updateMarketData() {
       yesterdayLandSales[i].total_price
     )
 
-    if (yesterdayLandSales[i].asset.asset_contract.address == landContract) {
+    if (yesterdayLandSales[i].asset.asset_contract.address === landContract) {
       if (
         toMana(yesterdayLandSales[i].total_price) >
         dataToSend.expensiveLandYesterday
@@ -159,14 +159,14 @@ export async function updateMarketData() {
       if (
         toMana(yesterdayLandSales[i].total_price) <
           dataToSend.cheapestLandYesterday ||
-        dataToSend.cheapestLandYesterday == 0
+        dataToSend.cheapestLandYesterday === 0
       ) {
         dataToSend.cheapestLandYesterday = toMana(
           yesterdayLandSales[i].total_price
         )
       }
     } else if (
-      yesterdayLandSales[i].asset.asset_contract.address == estateContract
+      yesterdayLandSales[i].asset.asset_contract.address === estateContract
     ) {
       if (
         toMana(yesterdayLandSales[i].total_price) >
@@ -197,18 +197,18 @@ export async function updateMarketData() {
       weekLandSales[i].total_price
     )
 
-    if (weekLandSales[i].asset.asset_contract.address == landContract) {
+    if (weekLandSales[i].asset.asset_contract.address === landContract) {
       if (toMana(weekLandSales[i].total_price) > dataToSend.expensiveLandWeek) {
         dataToSend.expensiveLandWeek = toMana(weekLandSales[i].total_price)
       }
       if (
         toMana(weekLandSales[i].total_price) < dataToSend.cheapestLandWeek ||
-        dataToSend.cheapestLandWeek == 0
+        dataToSend.cheapestLandWeek === 0
       ) {
         dataToSend.cheapestLandWeek = toMana(weekLandSales[i].total_price)
       }
     } else if (
-      weekLandSales[i].asset.asset_contract.address == estateContract
+      weekLandSales[i].asset.asset_contract.address === estateContract
     ) {
       if (
         toMana(weekLandSales[i].total_price) > dataToSend.expensiveEstateWeek
@@ -237,7 +237,7 @@ export async function updateMarketData() {
       monthLandSales[i].total_price
     )
 
-    if (monthLandSales[i].asset.asset_contract.address == landContract) {
+    if (monthLandSales[i].asset.asset_contract.address === landContract) {
       if (
         toMana(monthLandSales[i].total_price) > dataToSend.expensiveLandMonth
       ) {
@@ -245,12 +245,12 @@ export async function updateMarketData() {
       }
       if (
         toMana(monthLandSales[i].total_price) < dataToSend.cheapestLandMonth ||
-        dataToSend.cheapestLandMonth == 0
+        dataToSend.cheapestLandMonth === 0
       ) {
         dataToSend.cheapestLandMonth = toMana(monthLandSales[i].total_price)
       }
     } else if (
-      monthLandSales[i].asset.asset_contract.address == estateContract
+      monthLandSales[i].asset.asset_contract.address === estateContract
     ) {
       if (
         toMana(monthLandSales[i].total_price) > dataToSend.expensiveEstateMonth
@@ -276,7 +276,7 @@ export async function updateMarketData() {
       if (
         toMana(yesterdayWearablesSales[i].total_price) >
           dataToSend.expensiveWearableYesterday ||
-        dataToSend.expensiveWearableYesterday == 0
+        dataToSend.expensiveWearableYesterday === 0
       ) {
         dataToSend.expensiveWearableYesterday = toMana(
           yesterdayWearablesSales[i].total_price
@@ -306,7 +306,7 @@ export async function updateMarketData() {
       if (
         toMana(weekWearablesSales[i].total_price) >
           dataToSend.expensiveWearableWeek ||
-        dataToSend.expensiveWearableWeek == 0
+        dataToSend.expensiveWearableWeek === 0
       ) {
         dataToSend.expensiveWearableWeek = toMana(
           weekWearablesSales[i].total_price
@@ -336,7 +336,7 @@ export async function updateMarketData() {
       if (
         toMana(monthWearablesSales[i].total_price) >
           dataToSend.expensiveWearableMonth ||
-        dataToSend.expensiveWearableMonth == 0
+        dataToSend.expensiveWearableMonth === 0
       ) {
         dataToSend.expensiveWearableNameMonth =
           monthWearablesSales[i].asset.name

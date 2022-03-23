@@ -49,7 +49,7 @@ export async function setNewMessage(location: MessageBoards, message: string) {
     let trimmedMessage: string
     log('location: ', location, 'message: ', message)
 
-    if (location == MessageBoards.ARTICHOKE) {
+    if (location === MessageBoards.ARTICHOKE) {
       trimmedMessage = message.substr(0, 20)
       sceneMessageBus.emit('artichokeMessage', { text: trimmedMessage })
     } else if (location === MessageBoards.TOWER) {
@@ -232,7 +232,7 @@ let marketData: MarketData | null = null
 
 export async function updateMarketData() {
   let newMarketData = await getMarketData()
-  if (newMarketData == marketData) {
+  if (newMarketData === marketData) {
     return
   } else {
     marketData = newMarketData

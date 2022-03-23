@@ -2,17 +2,15 @@ import { sceneMessageBus } from './serverHandler'
 import * as utils from '@dcl/ecs-scene-utils'
 import { Radios } from './bar/jukebox'
 
-
-export function startArtichoke(){
-
+export function startArtichoke() {
   let isInRadioRange: boolean = false
   let currentRadio: Radios | null = null
-  
+
   const musicStreamEnt = new Entity()
   engine.addEntity(musicStreamEnt)
-  
+
   let musicStream: AudioStream | null = null
-  
+
   let baseConsole = new Entity()
   baseConsole.addComponent(
     new GLTFShape('models/console-artichoke/base_console.glb')
@@ -24,23 +22,23 @@ export function startArtichoke(){
     })
   )
   engine.addEntity(baseConsole)
-  
+
   class ConsoleButton extends Entity {
     clickAnim: AnimationState
     constructor(model: GLTFShape, parent: Entity, animationName: string) {
       super()
       engine.addEntity(this)
-  
+
       this.addComponent(model)
       this.setParent(parent)
-  
+
       this.addComponent(new AudioSource(new AudioClip('sounds/click.mp3')))
-  
+
       this.addComponent(new Animator())
       this.clickAnim = new AnimationState(animationName, { looping: false })
       this.getComponent(Animator).addClip(this.clickAnim)
     }
-  
+
     /**
      * A button can be pressed.  At the moment this just plays a sound effect
      * but maybe an animation will be added in the future as well.
@@ -51,13 +49,13 @@ export function startArtichoke(){
       this.getComponent(AudioSource).playOnce()
     }
   }
-  
+
   let blueButton = new ConsoleButton(
     new GLTFShape('models/console-artichoke/blue_button.glb'),
     baseConsole,
     'Blue_ButtonAction'
   )
-  
+
   blueButton.addComponent(
     new OnPointerDown(
       () => {
@@ -72,13 +70,13 @@ export function startArtichoke(){
       }
     )
   )
-  
+
   let greenButton = new ConsoleButton(
     new GLTFShape('models/console-artichoke/green_button.glb'),
     baseConsole,
     'Green_ButtonAction'
   )
-  
+
   greenButton.addComponent(
     new OnPointerDown(
       () => {
@@ -93,13 +91,13 @@ export function startArtichoke(){
       }
     )
   )
-  
+
   let lightBlueButton = new ConsoleButton(
     new GLTFShape('models/console-artichoke/lightblue_button.glb'),
     baseConsole,
     'Lightblue_ButtonAction'
   )
-  
+
   lightBlueButton.addComponent(
     new OnPointerDown(
       () => {
@@ -114,13 +112,13 @@ export function startArtichoke(){
       }
     )
   )
-  
+
   let redButton = new ConsoleButton(
     new GLTFShape('models/console-artichoke/red_button.glb'),
     baseConsole,
     'Red_ButtonAction'
   )
-  
+
   redButton.addComponent(
     new OnPointerDown(
       () => {
@@ -135,13 +133,13 @@ export function startArtichoke(){
       }
     )
   )
-  
+
   let yellowButton = new ConsoleButton(
     new GLTFShape('models/console-artichoke/yellow_button.glb'),
     baseConsole,
     'Yellow_ButtonAction'
   )
-  
+
   yellowButton.addComponent(
     new OnPointerDown(
       () => {
@@ -156,7 +154,7 @@ export function startArtichoke(){
       }
     )
   )
-  
+
   sceneMessageBus.on('setRadio', (e) => {
     //  if()  if close
     if (musicStream) {
@@ -166,7 +164,7 @@ export function startArtichoke(){
     currentRadio = e.station
     radioOn(e.station)
   })
-  
+
   function radioOn(station) {
     LightsA.play()
     LightsB.play()
@@ -180,7 +178,7 @@ export function startArtichoke(){
       )
     }
   }
-  
+
   function radioOff() {
     LightsA.stop()
     LightsB.stop()
@@ -189,13 +187,13 @@ export function startArtichoke(){
       musicStream.playing = false
     }
   }
-  
+
   ///// LIGTHS
-  
+
   let LightsA = new AnimationState('Lights_Anim')
   let LightsB = new AnimationState('LightsB_Artichoke')
   let LightsC = new AnimationState('LightsC_Artichoke')
-  
+
   let artichokeLightsA = new Entity()
   artichokeLightsA.addComponent(new GLTFShape('models/LightsA_Artichoke.glb'))
   artichokeLightsA.addComponent(
@@ -205,7 +203,7 @@ export function startArtichoke(){
   )
   artichokeLightsA.addComponent(new Animator()).addClip(LightsA)
   engine.addEntity(artichokeLightsA)
-  
+
   let artichokeLightsB = new Entity()
   artichokeLightsB.addComponent(new GLTFShape('models/LightsB_Artichoke.glb'))
   artichokeLightsB.addComponent(
@@ -215,7 +213,7 @@ export function startArtichoke(){
   )
   artichokeLightsB.addComponent(new Animator()).addClip(LightsB)
   engine.addEntity(artichokeLightsB)
-  
+
   let artichokeLightsC = new Entity()
   artichokeLightsC.addComponent(new GLTFShape('models/LightsC_Artichoke.glb'))
   artichokeLightsC.addComponent(
@@ -228,12 +226,12 @@ export function startArtichoke(){
   LightsA.stop()
   LightsB.stop()
   LightsC.stop()
-  
+
   const artichokeTrigger = new Entity()
   artichokeTrigger.addComponent(
     new Transform({ position: new Vector3(47, 6, 46) })
   )
-  
+
   let artichokeTriggerBox = new utils.TriggerBoxShape(
     new Vector3(90, 14, 90),
     Vector3.Zero()
@@ -248,7 +246,7 @@ export function startArtichoke(){
           if (currentRadio) {
             radioOn(currentRadio)
           }
-  
+
           log('triggered!')
         },
         onCameraExit: () => {
@@ -259,13 +257,11 @@ export function startArtichoke(){
     )
   )
   engine.addEntity(artichokeTrigger)
-  
+
   sceneMessageBus.on('enteredRadioRange', (e) => {
-    if (!isInRadioRange || currentRadio == null) return
+    if (!isInRadioRange || currentRadio === null) return
     sceneMessageBus.emit('setRadio', {
       station: currentRadio,
     })
   })
 }
-
-

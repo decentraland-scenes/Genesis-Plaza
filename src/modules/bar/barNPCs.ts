@@ -85,7 +85,7 @@ export async function addBarNPCs() {
       octopus.talk(OctoHi)
       //   }
 
-      if (arrow && arrow.getParent() == octopus) {
+      if (arrow && arrow.getParent() === octopus) {
         arrow.hide()
       }
 
@@ -414,7 +414,7 @@ export function addNPCsOutside() {
     'models/core_building/cat_guySittedV12.glb',
     () => {
       if (
-        questProg.progressStatus == ProgressStatus.ON_GOING &&
+        questProg.progressStatus === ProgressStatus.ON_GOING &&
         !query(questProg).isTaskCompleted(taskIds.catHair) &&
         query(questProg).isTaskCompleted(taskIds.intro)
       ) {
@@ -423,7 +423,7 @@ export function addNPCsOutside() {
         catGuy.talk(ILoveCats, 0)
       }
 
-      if (arrow && arrow.getParent() == catGuy) {
+      if (arrow && arrow.getParent() === catGuy) {
         arrow.hide()
       }
 

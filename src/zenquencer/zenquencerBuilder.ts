@@ -319,7 +319,7 @@ export function addZenquencer(): void {
       for (let note = 0; note < currentStones[beat].length; note++) {
         seqNumbers[beat][note] = currentStones[beat][note]
         let currentStone = stones[beat * 7 + note]
-        if (currentStones[beat][note] == 0) {
+        if (currentStones[beat][note] === 0) {
           currentStone.stoneOn = false
 
           currentStone.drop.removeComponent(GLTFShape)

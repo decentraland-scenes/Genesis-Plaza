@@ -99,12 +99,12 @@ export class BeerGlass extends Entity {
       })
     )
 
-    if (beerCount == 0 && !this.isFull) {
+    if (beerCount === 0 && !this.isFull) {
       octopus.talk(OctoComments, 'firstBeer')
       utils.setTimeout(6000, () => {
         octopus.endInteraction()
       })
-    } else if (beerCount == 0 && this.isFull) {
+    } else if (beerCount === 0 && this.isFull) {
       octopus.talk(OctoComments, 'firstServe')
       utils.setTimeout(4000, () => {
         octopus.endInteraction()
@@ -136,7 +136,7 @@ export class BeerGlass extends Entity {
     swallowSound.getComponent(AudioSource).playOnce()
     sceneMessageBus.emit('BeerGlassDrink', { id: id })
     beerCount += 1
-    if (beerCount == 3) {
+    if (beerCount === 3) {
       octopus.talk(OctoComments, 'thirdBeer')
       utils.setTimeout(3000, () => {
         octopus.endInteraction()

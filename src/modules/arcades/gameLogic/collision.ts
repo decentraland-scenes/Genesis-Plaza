@@ -1,14 +1,14 @@
-import { Ball, BallFlag } from "../gameObjects/ball"
-import { BrickFlag } from "../gameObjects/brick"
-import { PaddleFlag } from "../gameObjects/paddle"
-import { Sound } from "../gameObjects/sound"
-import * as utils from "@dcl/ecs-scene-utils"
-import { Wall, WallFlag } from "../gameObjects/wall"
+import { Ball, BallFlag } from '../gameObjects/ball'
+import { BrickFlag } from '../gameObjects/brick'
+import { PaddleFlag } from '../gameObjects/paddle'
+import { Sound } from '../gameObjects/sound'
+import * as utils from '@dcl/ecs-scene-utils'
+import { Wall, WallFlag } from '../gameObjects/wall'
 
-@Component("collisionFlag")
+@Component('collisionFlag')
 export class CollisionFlag {}
 
-const hitSound = new Sound(new AudioClip("sounds/hit.mp3"))
+const hitSound = new Sound(new AudioClip('sounds/hit.mp3'))
 
 // Collision detection
 class CollisionDetection {
@@ -45,11 +45,21 @@ class CollisionDetection {
 
           let isPaddle = hitEntity.hasComponent(PaddleFlag)
           let isWall = hitEntity.hasComponent(WallFlag)
-          isWall ? (collisionNorm = hitEntity.normal) : (collisionNorm = collisionNormal(ballEntity, hitEntity))
-          ballEntity.direction = reflectVector(ballEntity.direction, collisionNorm, isPaddle, isWall)
+          isWall
+            ? (collisionNorm = hitEntity.normal)
+            : (collisionNorm = collisionNormal(ballEntity, hitEntity))
+          ballEntity.direction = reflectVector(
+            ballEntity.direction,
+            collisionNorm,
+            isPaddle,
+            isWall
+          )
 
           // If it's a brick then remove it
-          if (hitEntity.hasComponent(BrickFlag) && !hitEntity.hasComponent(utils.ExpireIn)) {
+          if (
+            hitEntity.hasComponent(BrickFlag) &&
+            !hitEntity.hasComponent(utils.ExpireIn)
+          ) {
             hitEntity.addComponent(new utils.ExpireIn(100))
           }
         }
@@ -59,16 +69,21 @@ class CollisionDetection {
 }
 engine.addSystem(new CollisionDetection())
 
-function reflectVector(incident: Vector3, normal: Vector3, isPaddle: boolean, isWall: boolean): Vector3 {
+function reflectVector(
+  incident: Vector3,
+  normal: Vector3,
+  isPaddle: boolean,
+  isWall: boolean
+): Vector3 {
   let dot = 2 * Vector3.Dot(incident, normal)
   let reflected = incident.subtract(normal.multiplyByFloats(dot, dot, dot))
 
   // HACKS: Collision issues
   if (isWall) {
-    if (normal.x == 1 && reflected.x < 0) reflected.x *= -1
-    if (normal.x == -1 && reflected.x > 0) reflected.x *= -1
-    if (normal.z == 1 && reflected.z < 0) reflected.z *= -1
-    if (normal.z == -1 && reflected.z > 0) reflected.z *= -1
+    if (normal.x === 1 && reflected.x < 0) reflected.x *= -1
+    if (normal.x === -1 && reflected.x > 0) reflected.x *= -1
+    if (normal.z === 1 && reflected.z < 0) reflected.z *= -1
+    if (normal.z === -1 && reflected.z > 0) reflected.z *= -1
   }
   if (isPaddle && reflected.z <= 0) reflected.z *= -1
 
@@ -92,19 +107,25 @@ function collisionNormal(ballEntity: Ball, hitEntity: IEntity): Vector3 {
     normal.x = delta.x / 2
 
     // If ball hits the side of the paddle
-    if (delta.x <= -hitEntityWidth / 2 || delta.x >= hitEntityWidth / 2) normal.set(1, 0, 0)
+    if (delta.x <= -hitEntityWidth / 2 || delta.x >= hitEntityWidth / 2)
+      normal.set(1, 0, 0)
 
     // Corner cases
-    if (delta.x <= -hitEntityWidth / 2 && ballEntity.direction.x < 0) normal.set(-1, 0, 1)
-    if (delta.x >= hitEntityWidth / 2 && ballEntity.direction.x > 0) normal.set(1, 0, 1)
+    if (delta.x <= -hitEntityWidth / 2 && ballEntity.direction.x < 0)
+      normal.set(-1, 0, 1)
+    if (delta.x >= hitEntityWidth / 2 && ballEntity.direction.x > 0)
+      normal.set(1, 0, 1)
 
     return Vector3.Normalize(normal) // Normalize the vector first to maintain constant ball speed
   } else {
-    if (delta.x <= -hitEntityWidth / 2 || delta.x >= hitEntityWidth / 2) normal.set(1, 0, 0)
+    if (delta.x <= -hitEntityWidth / 2 || delta.x >= hitEntityWidth / 2)
+      normal.set(1, 0, 0)
 
     // Corner cases
-    if (delta.x <= -hitEntityWidth / 2 && ballEntity.direction.x < 0) normal.set(0, 0, 1)
-    if (delta.x >= hitEntityWidth / 2 && ballEntity.direction.x > 0) normal.set(0, 0, 1)
+    if (delta.x <= -hitEntityWidth / 2 && ballEntity.direction.x < 0)
+      normal.set(0, 0, 1)
+    if (delta.x >= hitEntityWidth / 2 && ballEntity.direction.x > 0)
+      normal.set(0, 0, 1)
   }
   return Vector3.Normalize(normal)
 }

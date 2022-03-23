@@ -133,7 +133,7 @@ export function placeJukeBox() {
   )
 
   sceneMessageBus.on('BarRadioToggle', (e) => {
-    if (barMusicStream && e.state == barMusicStream.playing) return
+    if (barMusicStream && e.state === barMusicStream.playing) return
     if (e.state) {
       barRadioOn()
       radioIsOn = true
@@ -168,7 +168,11 @@ export function placeJukeBox() {
         break
     }
 
-    if (barCurrentRadio == newRadio && barMusicStream && barMusicStream.playing)
+    if (
+      barCurrentRadio === newRadio &&
+      barMusicStream &&
+      barMusicStream.playing
+    )
       return
     if (barMusicStream) {
       barMusicStream.playing = false
@@ -179,12 +183,12 @@ export function placeJukeBox() {
 
     JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
 
-    barRadioOn(barCurrentRadio)
+    barRadioOn(barCurrentRadio) === 
   })
 
   sceneMessageBus.on('enteredRadioRange', (e) => {
-    if (!isInBar || barCurrentRadio == null || tutorialRunning) return
-    if (e.radio == barCurrentRadioIndex) return
+    if (!isInBar || barCurrentRadio === null || tutorialRunning) return
+    if (e.radio === barCurrentRadioIndex) return
     sceneMessageBus.emit('setBarRadio', {
       index: barCurrentRadioIndex,
     })

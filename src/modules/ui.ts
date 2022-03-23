@@ -384,10 +384,10 @@ export function openWearableUI(wearable: Entity, wearableData: WearableData) {
   category.font = SFFont
 
   let genderString: string
-  if (wearableData.wearable.bodyShapes.length == 2) {
+  if (wearableData.wearable.bodyShapes.length === 2) {
     genderString = 'Unisex'
   } else {
-    if (wearableData.wearable.bodyShapes[0] == 'BaseMale') {
+    if (wearableData.wearable.bodyShapes[0] === 'BaseMale') {
       genderString = 'Male'
     } else {
       genderString = 'Female'
@@ -448,7 +448,7 @@ function roundNumber(num, dec) {
 }
 
 // TELEPORT BEAM UI
-const beamUIBGTexture = new Texture ("images/ui_beam_up_bg.png")
+const beamUIBGTexture = new Texture('images/ui_beam_up_bg.png')
 
 let teleportUIContainer = new UIContainerRect(screenSpaceUI)
 teleportUIContainer.width = '40%'
@@ -456,7 +456,7 @@ teleportUIContainer.vAlign = 'top'
 teleportUIContainer.height = '20%'
 teleportUIContainer.isPointerBlocker = false
 
-let teleportUIBG = new UIImage(teleportUIContainer,beamUIBGTexture )
+let teleportUIBG = new UIImage(teleportUIContainer, beamUIBGTexture)
 teleportUIBG.sourceLeft = 0
 teleportUIBG.sourceTop = 0
 teleportUIBG.sourceWidth = 512
@@ -465,14 +465,14 @@ teleportUIBG.width = '256px'
 teleportUIBG.height = '128px'
 
 let teleportCountdownText = new UIText(teleportUIContainer)
-teleportCountdownText.value = "3"
+teleportCountdownText.value = '3'
 teleportCountdownText.fontSize = 32
 teleportCountdownText.color = Color4.Black()
 teleportCountdownText.font = new Font(Fonts.SanFrancisco_Heavy)
-teleportCountdownText.hAlign = "center"
-teleportCountdownText.hTextAlign = "center"
-teleportCountdownText.vAlign = "bottom"
-teleportCountdownText.vTextAlign = "bottom"
+teleportCountdownText.hAlign = 'center'
+teleportCountdownText.hTextAlign = 'center'
+teleportCountdownText.vAlign = 'bottom'
+teleportCountdownText.vTextAlign = 'bottom'
 teleportCountdownText.positionY = 16
 teleportCountdownText.isPointerBlocker = false
 
@@ -485,10 +485,10 @@ teleportCountdownText.isPointerBlocker = false
 // teleportBeamMessage.vTextAlign = "bottom"
 // teleportBeamMessage.isPointerBlocker = false
 
-export function showTeleportUI(_visible:boolean){
+export function showTeleportUI(_visible: boolean) {
   teleportUIContainer.visible = _visible
 }
-export function setTeleportCountdown(_numberString:string){
+export function setTeleportCountdown(_numberString: string) {
   teleportCountdownText.value = _numberString
 }
 
@@ -538,4 +538,3 @@ function distance(pos1: Vector3, pos2: Vector3): number {
   const b = pos1.z - pos2.z
   return a * a + b * b
 }
-

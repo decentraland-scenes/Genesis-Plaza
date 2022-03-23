@@ -31,8 +31,8 @@ export async function setRealm() {
     log(`You are in the realm: ${JSON.stringify(realm.displayName)}`)
     playerRealm = realm
     if (
-      realm.domain == 'http://127.0.0.1:8000' ||
-      realm.domain == 'http://192.168.0.18:8000'
+      realm.domain === 'http://127.0.0.1:8000' ||
+      realm.domain === 'http://192.168.0.18:8000'
     ) {
       realm.domain = 'https://peer.decentraland.org'
       log('CHANGED REALM TO: ', realm.domain)
@@ -99,12 +99,11 @@ export async function rarestItem(
   // log('PROFILE: ', profile)
   //log('INVENTORY :', inventory)
   if (equiped) {
-    const equipedAsUrn = profile.metadata.avatars[0]?.avatar?.wearables?.map(
-      mapToUrn
-    )
+    const equipedAsUrn =
+      profile.metadata.avatars[0]?.avatar?.wearables?.map(mapToUrn)
     for (const item of equipedAsUrn) {
       for (let invItem of inventory) {
-        if (item == invItem.definition.id && invItem.definition.rarity) {
+        if (item === invItem.definition.id && invItem.definition.rarity) {
           updateRarity(invItem.definition.rarity)
           log('ONE ITEM OF RARITY ', invItem.definition.rarity)
         }
