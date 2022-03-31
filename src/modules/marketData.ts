@@ -1400,7 +1400,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    firstNonBlank([shortenText(data.cheapRareNow.name, 24),DATA_NOT_AVAILABLE),
+    firstNonBlank([shortenText(data.cheapRareNow.name, 24)],DATA_NOT_AVAILABLE),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -1504,7 +1504,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    firstNonBlank([shortenText(data.rareWearableMonthExpensive.name, 24),DATA_NOT_AVAILABLE),
+    firstNonBlank([shortenText(data.rareWearableMonthExpensive.name, 24)],DATA_NOT_AVAILABLE),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
