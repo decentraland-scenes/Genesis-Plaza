@@ -40,3 +40,13 @@ export function shortenText(text: string, maxLenght: number) {
 
   return finalText
 }
+
+export function firstNonBlank(valArr:string[],theDefault?:string){
+  for(const p in valArr){
+    const v = valArr[p]
+    if(v !== undefined && v.length > 0 ){
+      return v;
+    }
+  }
+  return theDefault
+}

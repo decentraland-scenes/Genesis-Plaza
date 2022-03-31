@@ -1,7 +1,8 @@
 import { MarketData } from './serverHandler'
 import { invisibleMaterial } from './museumItems'
-import { shortenText } from './helperFunctions'
+import { firstNonBlank, shortenText } from './helperFunctions'
 
+const DATA_NOT_AVAILABLE="data not available"
 /////// GET DATA FROM SERVER
 
 ////// POSITION ALL PANELS
@@ -443,6 +444,14 @@ engine.addEntity(rareBoard2)
 
 ////// UPDATE BOARDS
 
+
+
+
+export enum StockDataRowTypes {
+  LABEL_VALUE_UNIT = 'label-value-unit',
+  LABEL_VALUE = 'label-value'
+}
+
 export enum StockDataTypes {
   BIGTITLE = 'bigtitle',
   BIGVALUE = 'bigvalue',
@@ -451,12 +460,14 @@ export enum StockDataTypes {
   VALUE = 'value',
   UNIT = 'unit',
   TINYVALUE = 'tinyvalue',
-  TINYTITLE = 'tinytitle',
+  TINYTITLE = 'tinytitle'
 }
 
 let SFFont = new Font(Fonts.SanFrancisco)
 
 export class StockData extends Entity {
+  textShape:TextShape
+
   constructor(
     type: StockDataTypes,
     text: string,
@@ -469,8 +480,8 @@ export class StockData extends Entity {
     this.addComponent(new Transform(transform))
     this.setParent(parent)
 
-    let shape = new TextShape(text)
-
+    let shape = this.textShape = new TextShape(text)
+  
     shape.font = SFFont
     shape.width = 10
 
@@ -660,7 +671,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel5Value = new StockData(
     StockDataTypes.BIGVALUE,
-    totalTokenSalesWeek.toString() + ' tokens',
+    (totalTokenSalesWeek != 0 ) ? totalTokenSalesWeek.toString() + ' tokens' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -692,7 +703,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel6Value = new StockData(
     StockDataTypes.BIGVALUE,
-    roundedTotalTokenManaWeek.toString() + ' USD',
+    (roundedTotalTokenManaWeek != 0 ) ? roundedTotalTokenManaWeek.toString() + ' USD' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -712,54 +723,32 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel1
   )
 
-  let midPanel1Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let midPanel1Value1 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Yesterday',data.landSalesYesterday.toString()],
     {
       position: new Vector3(-0.7, 0.9, 0),
     },
     midShiftPanel1
   )
-  let midPanel1Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
+
+  let midPanel1Value2 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE,
+    ['7 Days',data.landSalesWeek.toString()],
     {
       position: new Vector3(-0.7, 0.4, 0),
     },
     midShiftPanel1
   )
-  let midPanel1Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
+
+  let midPanel1Value3 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE,
+    ['30 Days',data.landSalesMonth.toString()],
     {
       position: new Vector3(-0.7, -0.1, 0),
-    },
-    midShiftPanel1
-  )
-
-  let midPanel1Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.landSalesYesterday.toString(),
-    {
-      position: new Vector3(0.7, 0.9, 0),
-    },
-    midShiftPanel1
-  )
-
-  let midPanel1Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.landSalesWeek.toString(),
-    {
-      position: new Vector3(0.7, 0.4, 0),
-    },
-    midShiftPanel1
-  )
-
-  let midPanel1Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.landSalesMonth.toString(),
-    {
-      position: new Vector3(0.7, -0.1, 0),
     },
     midShiftPanel1
   )
@@ -775,81 +764,32 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel2
   )
 
-  let midPanel2Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let midPanel2Value1 = createStockPanelRow(
+    2,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',data.cheapestLandYesterday.toString(),'MANA'],
     {
-      position: new Vector3(-1, 0.9, 0),
+      position: new Vector3(-1, 0.9, 0),//position: new Vector3(0.7, 0.9, 0),
     },
     midShiftPanel2
   )
-  let midPanel2Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
+
+  let midPanel2Value2 = createStockPanelRow(
+    2,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days',data.cheapestLandWeek.toString(),'MANA'],
     {
-      position: new Vector3(-1, 0.4, 0),
+      position: new Vector3(-1, 0.4, 0),//position: new Vector3(0.7, 0.4, 0),
     },
     midShiftPanel2
   )
-  let midPanel2Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
+
+  let midPanel2Value3 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',data.cheapestLandMonth.toString(),'MANA'],
     {
       position: new Vector3(-1, -0.1, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.cheapestLandYesterday.toString(),
-    {
-      position: new Vector3(0.7, 0.9, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.cheapestLandWeek.toString(),
-    {
-      position: new Vector3(0.7, 0.4, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.cheapestLandMonth.toString(),
-    {
-      position: new Vector3(0.7, -0.1, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.9, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.4, 0),
-    },
-    midShiftPanel2
-  )
-
-  let midPanel2Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -0.1, 0),
     },
     midShiftPanel2
   )
@@ -865,84 +805,36 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel3
   )
 
-  let midPanel3Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let midPanel3Value1 = createStockPanelRow(
+    2,3, 
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',data.expensiveLandYesterday.toString(),'MANA'],
     {
-      position: new Vector3(-1, 0.9, 0),
-    },
-    midShiftPanel3
-  )
-  let midPanel3Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
-    {
-      position: new Vector3(-1, 0.4, 0),
-    },
-    midShiftPanel3
-  )
-  let midPanel3Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
-    {
-      position: new Vector3(-1, -0.1, 0),
+      position: new Vector3(-1, 0.9, 0),//position: new Vector3(0.7, 0.9, 0),
     },
     midShiftPanel3
   )
 
-  let midPanel3Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveLandYesterday.toString(),
+  let midPanel3Value2 = createStockPanelRow(
+    2,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days',data.expensiveLandWeek.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.9, 0),
+      position: new Vector3(-1, 0.4, 0),//position: new Vector3(0.7, 0.4, 0),
     },
     midShiftPanel3
   )
 
-  let midPanel3Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveLandWeek.toString(),
+  let midPanel3Value3 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',data.expensiveLandMonth.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.4, 0),
+      position: new Vector3(-1, -0.1, 0),//position: new Vector3(0.7, -0.1, 0),
     },
     midShiftPanel3
   )
 
-  let midPanel3Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveLandMonth.toString(),
-    {
-      position: new Vector3(0.7, -0.1, 0),
-    },
-    midShiftPanel3
-  )
-
-  let midPanel3Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.9, 0),
-    },
-    midShiftPanel3
-  )
-
-  let midPanel3Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.4, 0),
-    },
-    midShiftPanel3
-  )
-
-  let midPanel3Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -0.1, 0),
-    },
-    midShiftPanel3
-  )
 
   //4
 
@@ -955,84 +847,36 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel4
   )
 
-  let midPanel4Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let midPanel4Value1 = createStockPanelRow(
+    2,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',data.expensiveEstateYesterday.toString(),'MANA'],
     {
-      position: new Vector3(-1, 0.9, 0),
-    },
-    midShiftPanel4
-  )
-  let midPanel4Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
-    {
-      position: new Vector3(-1, 0.4, 0),
-    },
-    midShiftPanel4
-  )
-  let midPanel4Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
-    {
-      position: new Vector3(-1, -0.1, 0),
+      position: new Vector3(-1, 0.9, 0),//position: new Vector3(0.7, 0.9, 0),
     },
     midShiftPanel4
   )
 
-  let midPanel4Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveEstateYesterday.toString(),
+  let midPanel4Value2 = createStockPanelRow(
+    2,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days', data.expensiveEstateWeek.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.9, 0),
+      position: new Vector3(-1, 0.4, 0),//position: new Vector3(0.7, 0.4, 0),
     },
     midShiftPanel4
   )
 
-  let midPanel4Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveEstateWeek.toString(),
+  let midPanel4Value3 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',data.expensiveEstateMonth.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.4, 0),
+      position: new Vector3(-1, -0.1, 0),//position: new Vector3(0.7, -0.1, 0),
     },
     midShiftPanel4
   )
 
-  let midPanel4Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.expensiveEstateMonth.toString(),
-    {
-      position: new Vector3(0.7, -0.1, 0),
-    },
-    midShiftPanel4
-  )
-
-  let midPanel4Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.9, 0),
-    },
-    midShiftPanel4
-  )
-
-  let midPanel4Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.4, 0),
-    },
-    midShiftPanel4
-  )
-
-  let midPanel4Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -0.1, 0),
-    },
-    midShiftPanel4
-  )
   //5
 
   let midPanel5Title = new StockData(
@@ -1044,84 +888,36 @@ export function updateTradeCentrer(data: MarketData) {
     midShiftPanel5
   )
 
-  let midPanel5Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let midPanel5Value1 = createStockPanelRow(
+    2,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',data.totalMANALandAndEstateYesterday.toString(),'MANA'],
     {
-      position: new Vector3(-1, 0.9, 0),
-    },
-    midShiftPanel5
-  )
-  let midPanel5Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
-    {
-      position: new Vector3(-1, 0.4, 0),
-    },
-    midShiftPanel5
-  )
-  let midPanel5Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
-    {
-      position: new Vector3(-1, -0.1, 0),
+      position: new Vector3(-1, 0.9, 0),//position: new Vector3(0.7, 0.9, 0),
     },
     midShiftPanel5
   )
 
-  let midPanel5Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.totalMANALandAndEstateYesterday.toString(),
+  let midPanel5Value2 = createStockPanelRow(
+    2,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days',data.totalMANALandAndEstateWeek.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.9, 0),
+      position: new Vector3(-1, 0.4, 0),//position: new Vector3(0.7, 0.4, 0),
     },
     midShiftPanel5
   )
 
-  let midPanel5Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.totalMANALandAndEstateWeek.toString(),
+  let midPanel5Value3 = createStockPanelRow(
+    2,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',data.totalMANALandAndEstateMonth.toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0.4, 0),
+      position: new Vector3(-1, -0.1, 0),//position: new Vector3(0.7, -0.1, 0),
     },
     midShiftPanel5
   )
 
-  let midPanel5Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.totalMANALandAndEstateMonth.toString(),
-    {
-      position: new Vector3(0.7, -0.1, 0),
-    },
-    midShiftPanel5
-  )
-
-  let midPanel5Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.9, 0),
-    },
-    midShiftPanel5
-  )
-
-  let midPanel5Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0.4, 0),
-    },
-    midShiftPanel5
-  )
-
-  let midPanel5Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -0.1, 0),
-    },
-    midShiftPanel5
-  )
 
   //6
   // link to parcel on market
@@ -1241,54 +1037,33 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel1
   )
 
-  let topPanel1Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+
+  let topPanel1Value1 = createStockPanelRow(
+    3,1,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Yesterday',data.wearableSalesYesterday.toString()],
     {
       position: new Vector3(-0.7, 0, 0),
     },
     topShiftPanel1
   )
-  let topPanel1Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
+
+  let topPanel1Value2 = createStockPanelRow(
+    3,2,
+    StockDataRowTypes.LABEL_VALUE,
+    ['7 Days',data.wearableSalesWeek.toString()],
     {
       position: new Vector3(-0.7, -0.5, 0),
     },
     topShiftPanel1
   )
-  let topPanel1Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
+
+  let topPanel1Value3 = createStockPanelRow(
+    3,3,
+    StockDataRowTypes.LABEL_VALUE,
+    ['30 Days',data.wearableSalesMonth.toString()],
     {
       position: new Vector3(-0.7, -1, 0),
-    },
-    topShiftPanel1
-  )
-
-  let topPanel1Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.wearableSalesYesterday.toString(),
-    {
-      position: new Vector3(0.7, 0, 0),
-    },
-    topShiftPanel1
-  )
-
-  let topPanel1Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.wearableSalesWeek.toString(),
-    {
-      position: new Vector3(0.7, -0.5, 0),
-    },
-    topShiftPanel1
-  )
-
-  let topPanel1Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.wearableSalesMonth.toString(),
-    {
-      position: new Vector3(0.7, -1, 0),
     },
     topShiftPanel1
   )
@@ -1304,81 +1079,32 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel2
   )
 
-  let topPanel2Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let topPanel2Value1 = createStockPanelRow(
+    3,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',shortenText(data.expensiveWearableYesterday.toString(), 24),'MANA'],
     {
-      position: new Vector3(-1, 0, 0),
-    },
+      position: new Vector3(-1, 0, 0),//position: new Vector3(0.7, 0, 0),
+    }, 
     topShiftPanel2
   )
-  let topPanel2Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
+ 
+  let topPanel2Value2 = createStockPanelRow(
+    3,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days',shortenText(data.expensiveWearableWeek.toString(), 24),'MANA'],
     {
-      position: new Vector3(-1, -0.5, 0),
-    },
-    topShiftPanel2
-  )
-  let topPanel2Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
-    {
-      position: new Vector3(-1, -1, 0),
+      position: new Vector3(-1, -0.5, 0),//position: new Vector3(0.7, -0.5, 0),
     },
     topShiftPanel2
   )
 
-  let topPanel2Value1 = new StockData(
-    StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableYesterday.toString(), 24),
+  let topPanel2Value3 = createStockPanelRow(
+    3,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',shortenText(data.expensiveWearableMonth.toString(), 24),'MANA'],
     {
-      position: new Vector3(0.7, 0, 0),
-    },
-    topShiftPanel2
-  )
-
-  let topPanel2Value2 = new StockData(
-    StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableWeek.toString(), 24),
-    {
-      position: new Vector3(0.7, -0.5, 0),
-    },
-    topShiftPanel2
-  )
-
-  let topPanel2Value3 = new StockData(
-    StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableMonth.toString(), 24),
-    {
-      position: new Vector3(0.7, -1, 0),
-    },
-    topShiftPanel2
-  )
-
-  let topPanel2Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, 0, 0),
-    },
-    topShiftPanel2
-  )
-
-  let topPanel2Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -0.5, 0),
-    },
-    topShiftPanel2
-  )
-
-  let topPanel2Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.7, -1, 0),
+      position: new Vector3(-1, -1, 0),//position: new Vector3(0.7, -1, 0),
     },
     topShiftPanel2
   )
@@ -1421,7 +1147,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value1 = new StockData(
     StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableNameYesterday, 24),
+    firstNonBlank([shortenText(data.expensiveWearableNameYesterday, 24)],DATA_NOT_AVAILABLE),
     {
       position: new Vector3(1.2, 0, 0),
     },
@@ -1430,7 +1156,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value2 = new StockData(
     StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableNameWeek, 24),
+    firstNonBlank( [shortenText(data.expensiveWearableNameWeek, 24)],DATA_NOT_AVAILABLE),
     {
       position: new Vector3(1.2, -0.5, 0),
     },
@@ -1439,7 +1165,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let topPanel3Value3 = new StockData(
     StockDataTypes.VALUE,
-    shortenText(data.expensiveWearableNameMonth, 24),
+    firstNonBlank([shortenText(data.expensiveWearableNameMonth, 24)],DATA_NOT_AVAILABLE),
     {
       position: new Vector3(1.2, -1, 0),
     },
@@ -1457,84 +1183,36 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel4
   )
 
-  let topPanel4Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Yesterday',
+  let topPanel4Value1 = createStockPanelRow(
+    3,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Yesterday',Math.floor(data.totalMANAWearablesYesterday).toString(),'MANA'],
     {
-      position: new Vector3(-1.3, 0, 0),
-    },
-    topShiftPanel4
-  )
-  let topPanel4Label2 = new StockData(
-    StockDataTypes.LABEL,
-    '7 days',
-    {
-      position: new Vector3(-1.3, -0.5, 0),
-    },
-    topShiftPanel4
-  )
-  let topPanel4Label3 = new StockData(
-    StockDataTypes.LABEL,
-    '30 days',
-    {
-      position: new Vector3(-1.3, -1, 0),
+      position: new Vector3(-1.3, 0, 0),//position: new Vector3(0.7, 0, 0),
     },
     topShiftPanel4
   )
 
-  let topPanel4Value1 = new StockData(
-    StockDataTypes.VALUE,
-    Math.floor(data.totalMANAWearablesYesterday).toString(),
+  let topPanel4Value2 = createStockPanelRow(
+    3,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['7 Days',Math.floor(data.totalMANAWearablesWeek).toString(),'MANA'],
     {
-      position: new Vector3(0.7, 0, 0),
+      position: new Vector3(-1.3, -0.5, 0),//position: new Vector3(0.7, -0.5, 0),
     },
     topShiftPanel4
   )
 
-  let topPanel4Value2 = new StockData(
-    StockDataTypes.VALUE,
-    Math.floor(data.totalMANAWearablesWeek).toString(),
+  let topPanel4Value3 = createStockPanelRow(
+    3,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['30 Days',Math.floor(data.totalMANAWearablesMonth).toString(),'MANA'],
     {
-      position: new Vector3(0.7, -0.5, 0),
+      position: new Vector3(-1.3, -1, 0),//position: new Vector3(0.7, -1, 0),
     },
     topShiftPanel4
   )
 
-  let topPanel4Value3 = new StockData(
-    StockDataTypes.VALUE,
-    Math.floor(data.totalMANAWearablesMonth).toString(),
-    {
-      position: new Vector3(0.7, -1, 0),
-    },
-    topShiftPanel4
-  )
-
-  let topPanel4Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(2.2, 0, 0),
-    },
-    topShiftPanel4
-  )
-
-  let topPanel4Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(2.2, -0.5, 0),
-    },
-    topShiftPanel4
-  )
-
-  let topPanel4Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(2.2, -1, 0),
-    },
-    topShiftPanel4
-  )
   //5
 
   let topPanel5Title = new StockData(
@@ -1555,90 +1233,53 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel5
   )
 
-  let topPanel5Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Uncommon',
+
+  let topPanel5Value1 = createStockPanelRow(
+    3,1,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Uncommon',data.uncommonWearableMonthSales.toString()],
     {
       position: new Vector3(-1.3, 0.2, 0),
     },
     topShiftPanel5
   )
-  let topPanel5Label2 = new StockData(
-    StockDataTypes.LABEL,
-    'Rare',
+
+  let topPanel5Value2 = createStockPanelRow(
+    3,2,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Rare',data.rareWearableMonthSales.toString()],
     {
       position: new Vector3(-1.3, -0.3, 0),
     },
     topShiftPanel5
   )
-  let topPanel5Label3 = new StockData(
-    StockDataTypes.LABEL,
-    'Epic',
+
+  let topPanel5Value3 = createStockPanelRow(
+    3,3,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Epic',data.epicWearableMonthSales.toString()],
     {
       position: new Vector3(-1.3, -0.8, 0),
     },
     topShiftPanel5
   )
 
-  let topPanel5Label4 = new StockData(
-    StockDataTypes.LABEL,
-    'Legendary',
+  let topPanel5Value4 = createStockPanelRow(
+    3,4,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Legendary',data.legendaryWearableMonthSales.toString()],
     {
       position: new Vector3(-1.3, -1.3, 0),
     },
     topShiftPanel5
   )
-
-  let topPanel5Label5 = new StockData(
-    StockDataTypes.LABEL,
-    'Mythic',
+ 
+  let topPanel5Value5 = createStockPanelRow(
+    3,5,
+    StockDataRowTypes.LABEL_VALUE,
+    ['Mythic',data.mythicWearableMonthSales.toString()],
     {
       position: new Vector3(-1.3, -1.8, 0),
-    },
-    topShiftPanel5
-  )
-
-  let topPanel5Value1 = new StockData(
-    StockDataTypes.VALUE,
-    data.uncommonWearableMonthSales.toString(),
-    {
-      position: new Vector3(0.7, 0.2, 0),
-    },
-    topShiftPanel5
-  )
-
-  let topPanel5Value2 = new StockData(
-    StockDataTypes.VALUE,
-    data.rareWearableMonthSales.toString(),
-    {
-      position: new Vector3(0.7, -0.3, 0),
-    },
-    topShiftPanel5
-  )
-
-  let topPanel5Value3 = new StockData(
-    StockDataTypes.VALUE,
-    data.epicWearableMonthSales.toString(),
-    {
-      position: new Vector3(0.7, -0.8, 0),
-    },
-    topShiftPanel5
-  )
-
-  let topPanel5Value4 = new StockData(
-    StockDataTypes.VALUE,
-    data.legendaryWearableMonthSales.toString(),
-    {
-      position: new Vector3(0.7, -1.3, 0),
-    },
-    topShiftPanel5
-  )
-
-  let topPanel5Value5 = new StockData(
-    StockDataTypes.VALUE,
-    data.mythicWearableMonthSales.toString(),
-    {
-      position: new Vector3(0.7, -1.8, 0),
     },
     topShiftPanel5
   )
@@ -1663,163 +1304,77 @@ export function updateTradeCentrer(data: MarketData) {
     topShiftPanel6
   )
 
-  let topPanel6Label1 = new StockData(
-    StockDataTypes.LABEL,
-    'Uncommon',
+  let avUncommonPrice =
+    avgPrice(
+      data.uncommonWearableMonthMANA , data.uncommonWearableMonthSales )
+
+  let topPanel6Value1 = createStockPanelRow(
+    3,1,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Uncommon',avUncommonPrice.toString(),'MANA'],
     {
       position: new Vector3(-1.3, 0.2, 0),
     },
     topShiftPanel6
   )
-  let topPanel6Label2 = new StockData(
-    StockDataTypes.LABEL,
-    'Rare',
+
+  let avRarePrice =
+    avgPrice(
+      data.rareWearableMonthMANA , data.rareWearableMonthSales)
+
+  let topPanel6Value2 = createStockPanelRow(
+    3,2,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Rare',avRarePrice.toString(),'MANA'],
     {
       position: new Vector3(-1.3, -0.3, 0),
     },
     topShiftPanel6
   )
-  let topPanel6Label3 = new StockData(
-    StockDataTypes.LABEL,
-    'Epic',
+
+  let avEpicPrice =
+    avgPrice(
+      data.epicWearableMonthMANA , data.epicWearableMonthSales)
+
+  let topPanel6Value3 = createStockPanelRow(
+    3,3,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Epic',avEpicPrice.toString(),'MANA'],
     {
       position: new Vector3(-1.3, -0.8, 0),
     },
     topShiftPanel6
   )
 
-  let topPanel6Label4 = new StockData(
-    StockDataTypes.LABEL,
-    'Legendary',
+  let avLegendaryPrice =
+    avgPrice(
+      data.legendaryWearableMonthMANA , data.legendaryWearableMonthSales)
+
+  let topPanel6Value4 = createStockPanelRow(
+    3,4,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Legendary',avLegendaryPrice.toString(),'MANA'],
     {
       position: new Vector3(-1.3, -1.3, 0),
     },
     topShiftPanel6
   )
 
-  let topPanel6Label5 = new StockData(
-    StockDataTypes.LABEL,
-    'Mythic',
+  let avMythicPrice =
+    avgPrice(
+      data.mythicWearableMonthMANA , data.mythicWearableMonthSales)
+    
+
+  let topPanel6Value5 = createStockPanelRow(
+    3,5,
+    StockDataRowTypes.LABEL_VALUE_UNIT,
+    ['Mythic',avMythicPrice.toString(),'MANA'],
     {
       position: new Vector3(-1.3, -1.8, 0),
     },
     topShiftPanel6
   )
 
-  let avUncommonPrice =
-    Math.floor(
-      (data.uncommonWearableMonthMANA / data.uncommonWearableMonthSales) * 100
-    ) / 100
-
-  let topPanel6Value1 = new StockData(
-    StockDataTypes.VALUE,
-    avUncommonPrice.toString(),
-    {
-      position: new Vector3(0.7, 0.2, 0),
-    },
-    topShiftPanel6
-  )
-
-  let avRarePrice =
-    Math.floor(
-      (data.rareWearableMonthMANA / data.rareWearableMonthSales) * 100
-    ) / 100
-
-  let topPanel6Value2 = new StockData(
-    StockDataTypes.VALUE,
-    avRarePrice.toString(),
-    {
-      position: new Vector3(0.7, -0.3, 0),
-    },
-    topShiftPanel6
-  )
-
-  let avEpicPrice =
-    Math.floor(
-      (data.epicWearableMonthMANA / data.epicWearableMonthSales) * 100
-    ) / 100
-
-  let topPanel6Value3 = new StockData(
-    StockDataTypes.VALUE,
-    avEpicPrice.toString(),
-    {
-      position: new Vector3(0.7, -0.8, 0),
-    },
-    topShiftPanel6
-  )
-
-  let avLegendaryPrice =
-    Math.floor(
-      (data.legendaryWearableMonthMANA / data.legendaryWearableMonthSales) * 100
-    ) / 100
-
-  let topPanel6Value4 = new StockData(
-    StockDataTypes.VALUE,
-    avLegendaryPrice.toString(),
-    {
-      position: new Vector3(0.7, -1.3, 0),
-    },
-    topShiftPanel6
-  )
-
-  let avMythicPrice =
-    Math.floor(
-      (data.mythicWearableMonthMANA / data.mythicWearableMonthSales) * 100
-    ) / 100
-
-  let topPanel6Value5 = new StockData(
-    StockDataTypes.VALUE,
-    avMythicPrice.toString(),
-    {
-      position: new Vector3(0.7, -1.8, 0),
-    },
-    topShiftPanel6
-  )
-
-  let topPanel6Unit1 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.8, 0.2, 0),
-    },
-    topShiftPanel6
-  )
-
-  let topPanel6Unit2 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.8, -0.3, 0),
-    },
-    topShiftPanel6
-  )
-
-  let topPanel6Unit3 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.8, -0.8, 0),
-    },
-    topShiftPanel6
-  )
-
-  let topPanel6Unit4 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.8, -1.3, 0),
-    },
-    topShiftPanel6
-  )
-
-  let topPanel6Unit5 = new StockData(
-    StockDataTypes.UNIT,
-    'MANA',
-    {
-      position: new Vector3(1.8, -1.8, 0),
-    },
-    topShiftPanel6
-  )
 
   /////// FLAT SCREENS
 
@@ -1845,7 +1400,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let cheapRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    shortenText(data.cheapRareNow.name, 24),
+    firstNonBlank([shortenText(data.cheapRareNow.name, 24),DATA_NOT_AVAILABLE),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -1949,7 +1504,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let expensiveRareTitle3 = new StockData(
     StockDataTypes.TINYVALUE,
-    shortenText(data.rareWearableMonthExpensive.name, 24),
+    firstNonBlank([shortenText(data.rareWearableMonthExpensive.name, 24),DATA_NOT_AVAILABLE),
     {
       position: new Vector3(0, 2.9, -0.2),
     },
@@ -2489,6 +2044,77 @@ export function updateTradeCentrer(data: MarketData) {
     },
     mythicBoard2
   )
+}
+
+function createStockPanelRow(floor: number, row: number, type: StockDataRowTypes, text: string[], position:TranformConstructorArgs, parent: Entity) {
+  let midPanel5LabelPos:TranformConstructorArgs 
+  let midPanel5TextPos:TranformConstructorArgs 
+  let midPanel5UnitPos:TranformConstructorArgs 
+
+  let positionVec =  position.position.clone()
+
+  midPanel5LabelPos = {
+    position: new Vector3(-1, positionVec.y, 0),
+  }
+  midPanel5TextPos = {
+    position: new Vector3(0.7, positionVec.y, 0),
+  }
+  midPanel5UnitPos = {
+    position: new Vector3(1.7, positionVec.y, 0),
+  }
+
+  let textVal = text[1]
+  const hasNoData = textVal === undefined || textVal === 'NaN' || textVal ==='0'
+  if(hasNoData){
+    textVal = DATA_NOT_AVAILABLE 
+  } 
+
+  let midPanel5Label1 = new StockData(
+    StockDataTypes.LABEL,
+    text[0],
+    midPanel5LabelPos,
+    parent
+  )
+ 
+  let midPanel5Value1 = new StockData(
+    StockDataTypes.VALUE,
+    textVal,
+    midPanel5TextPos,
+    parent
+  )
+
+  let midPanel5Unit1:StockData|undefined
+  if(type == StockDataRowTypes.LABEL_VALUE_UNIT){
+    midPanel5Unit1 = new StockData(
+      StockDataTypes.UNIT,
+      text[2],
+      midPanel5UnitPos,
+      parent
+    )
+  }
+
+
+  if(hasNoData){
+    //stockData.textShape.width = 30
+    midPanel5Value1.textShape.fontSize = midPanel5Value1.textShape.fontSize -1 
+    midPanel5Value1.textShape.hTextAlign = 'center' 
+
+    if(midPanel5Unit1 && midPanel5Unit1.hasComponent(TextShape)){
+      midPanel5Unit1.getComponent(TextShape).visible=false
+    } else{
+      log("tried to remove but has TextShape shape??" ,midPanel5Unit1)
+    }
+  }
+
+}
+
+function avgPrice(arg0: number,arg1: number) {
+  if(arg0 === undefined || arg1 === undefined || arg1 == 0){
+    return 0
+  }
+  return Math.floor(
+    (arg0 / arg1) * 100
+  ) / 100
 }
 ////// ROOFTOP MUSIC
 
