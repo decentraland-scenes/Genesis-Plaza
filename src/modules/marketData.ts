@@ -585,7 +585,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel1Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.BTCUSDT.toString() + ' USD',
+    (data.coins && data.coins.BTCUSDT) ? data.coins.BTCUSDT.toString() + ' USD' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -604,7 +604,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel2Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.ETHUSDT.toString() + ' USD',
+    (data.coins && data.coins.ETHUSDT) ? data.coins.ETHUSDT.toString() + ' USD' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -623,7 +623,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel3Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.MANAETH.toString().slice(0, 10) + ' ETH',
+    (data.coins && data.coins.MANAETH) ? data.coins.MANAETH.toString().slice(0, 10) + ' ETH' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
@@ -642,7 +642,7 @@ export function updateTradeCentrer(data: MarketData) {
 
   let lowerPanel4Value = new StockData(
     StockDataTypes.BIGVALUE,
-    data.coins.MANAUSD.toString().slice(0, 8) + ' USD',
+    (data.coins && data.coins.MANAUSD) ? data.coins.MANAUSD.toString().slice(0, 8) + ' USD' : DATA_NOT_AVAILABLE,
     {
       position: new Vector3(0, -0.3, 0),
     },
