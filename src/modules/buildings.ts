@@ -360,3 +360,11 @@ engine.addEntity(ethLogos_02)
    })
  )
  engine.addEntity(vogu_pod)
+
+ vogu_pod.addComponent(new OnPointerDown(
+	 ()=>{
+		 openExternalURL("https://assembly.thevogu.io/ ")
+	 },{
+		 hoverText: "Visit VOGU site", button: ActionButton.PRIMARY
+	 }
+ ))
