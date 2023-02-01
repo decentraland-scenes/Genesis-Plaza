@@ -1,6 +1,5 @@
 import { ThumbnailPlane } from "./thumbnail"
 import { monthToString, wordWrap } from "./helperFunctions"
-import { AnimatedItem } from "./simpleAnimator"
 import * as resource from "./resources/resources"
 
 
