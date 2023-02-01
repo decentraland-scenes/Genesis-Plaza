@@ -343,7 +343,7 @@ export class VerticalScrollMenu extends Entity {
       this.hideItem(scrollInfo.currentItem - 2)
 
       //make the second item from the bottom smaller (avoid clipping through base)
-      this.halveSizeItem(scrollInfo.currentItem - 1)
+      //this.halveSizeItem(scrollInfo.currentItem - 1)
 
       sfx.menuUpSource.playOnce()
     }

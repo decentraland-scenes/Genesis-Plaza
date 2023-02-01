@@ -135,7 +135,7 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
     }
     else{
       _menu.addMenuItem(new EventMenuItem({    
-          scale: new Vector3(1,1,1)
+          scale: new Vector3(2,2,2)
         },        
         new Texture("images/rounded_alpha.png"),
         events[i]
