@@ -343,7 +343,7 @@ export class VerticalScrollMenu extends Entity {
       this.hideItem(scrollInfo.currentItem - 2)
 
       //make the second item from the bottom smaller (avoid clipping through base)
-      this.halveSizeItem(scrollInfo.currentItem - 1)
+      //this.halveSizeItem(scrollInfo.currentItem - 1)
 
       sfx.menuUpSource.playOnce()
     }
@@ -386,7 +386,7 @@ export class VerticalScrollMenu extends Entity {
     if (_item.hasComponent(AnimatedItem)) {
       if (!_item.selected) {
         this.deselectAll()
-        _item.getComponent(AnimatedItem).isHighlighted = true
+        _item.getComponent(AnimatedItem).activate()
         _item.select()
       }
     } else {
@@ -396,7 +396,7 @@ export class VerticalScrollMenu extends Entity {
   deselectItem(_item: MenuItem, _silent: boolean) {
     if (_item.hasComponent(AnimatedItem)) {
       if (_item.selected) {
-        _item.getComponent(AnimatedItem).isHighlighted = false
+        _item.getComponent(AnimatedItem).deactivate()
         _item.deselect(_silent)
       }
     } else {
@@ -405,7 +405,7 @@ export class VerticalScrollMenu extends Entity {
   }
   deselectAll() {
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].getComponent(AnimatedItem).isHighlighted = false
+      this.items[i].getComponent(AnimatedItem).deactivate()
       this.deselectItem(this.items[i], true)
       this.clickBoxes[i].getComponent(OnPointerDown).hoverText = 'SELECT'
     }
@@ -456,9 +456,11 @@ export class VerticalScrollMenu extends Entity {
         this.hideItem(i)
       }
       // reset menu item scaling
-      this.items[i]
-        .getComponent(AnimatedItem)
-        .defaultTransform.scale.copyFrom(this.items[i].defaultItemScale)
+      // this.items[i]
+      //   .getComponent(AnimatedItem)
+      //   .defaultTransform.scale.copyFrom(this.items[i].defaultItemScale)
+
+      this.items[i].getComponent(Transform).scale.copyFrom(this.items[i].getComponent(AnimatedItem).defaultTransform.scale)
     }
   }
   // showFirstXItems(_count:number){
@@ -482,12 +484,16 @@ export class clickScrollSystem {
       const scrollInfo = entity.getComponent(VerticalScroller)
       const scrollTransform = entity.getComponent(Transform)
 
-      scrollTransform.position.y = this.springPos(
-        scrollInfo.scrollTarget,
-        scrollTransform.position.y,
-        scrollInfo.currentMenuVelocity,
-        dt
-      )
+      if( Math.abs(scrollTransform.position.y - scrollInfo.scrollTarget) > 0.03){
+        scrollTransform.position.y = this.moveTowards(
+          scrollInfo.scrollTarget,
+          scrollTransform.position.y          
+        )
+      }
+      else{
+        scrollTransform.position.y = scrollInfo.scrollTarget
+      }
+        
     }
   }
 
@@ -506,6 +512,14 @@ export class clickScrollSystem {
     let displacement = a_currentVelocity * a_TimeStep
 
     return a_Current + displacement
+  }
+
+  moveTowards(
+    a_Target: number,
+    a_Current: number
+    ):number{
+
+      return a_Current * (1.0 - 0.5) + (a_Target * 0.5);
   }
 }
 engine.addSystem(new clickScrollSystem())

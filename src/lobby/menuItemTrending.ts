@@ -409,21 +409,21 @@ export class TrendingMenuItem extends MenuItem {
   select() {
     if (!this.selected) {
       this.selected = true
-      this.jumpInButton.getComponent(AnimatedItem).isHighlighted = true
-      // this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = true
-      this.highlightRays.getComponent(AnimatedItem).isHighlighted = true
-      this.coordsPanel.getComponent(AnimatedItem).isHighlighted = true
-      //this.timePanel.getComponent(AnimatedItem).isHighlighted = true
+      this.jumpInButton.getComponent(AnimatedItem).activate()
+      // this.detailTextPanel.getComponent(AnimatedItem).activate()
+      this.highlightRays.getComponent(AnimatedItem).activate()
+      this.coordsPanel.getComponent(AnimatedItem).activate()
+      //this.timePanel.getComponent(AnimatedItem).activate()
     }
   }
   deselect() {
     this.selected = false
 
-    this.jumpInButton.getComponent(AnimatedItem).isHighlighted = false
-    // this.detailTextPanel.getComponent(AnimatedItem).isHighlighted = false
-    this.highlightRays.getComponent(AnimatedItem).isHighlighted = false
-    this.coordsPanel.getComponent(AnimatedItem).isHighlighted = false
-    // this.timePanel.getComponent(AnimatedItem).isHighlighted = false
+    this.jumpInButton.getComponent(AnimatedItem).deactivate()
+    // this.detailTextPanel.getComponent(AnimatedItem).deactivate()
+    this.highlightRays.getComponent(AnimatedItem).deactivate()
+    this.coordsPanel.getComponent(AnimatedItem).deactivate()
+    // this.timePanel.getComponent(AnimatedItem).deactivate()
   }
   show() {}
   hide() {}
