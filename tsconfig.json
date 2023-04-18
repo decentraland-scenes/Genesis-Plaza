@@ -1,10 +1,16 @@
 {
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
-    "noLib": false,
     "lib": ["ES2015"],
     "outFile": "./bin/game.js",
     "allowJs": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "noLib": false,
     "paths": {
       "colyseus.js": [
         "node_modules/colyseus.js/dist/colyseus.d.ts",
