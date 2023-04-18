@@ -209,7 +209,8 @@ export function insideBar() {
     REGISTRY.lobbyScene = new LobbyScene()
 
     REGISTRY.lobbyScene.init()
-    REGISTRY.lobbyScene.initArena(true)
+    //lazy load this, dont call automatically???
+    //REGISTRY.lobbyScene.initArena(true)
   
   
     REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {

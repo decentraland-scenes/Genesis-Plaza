@@ -144,7 +144,7 @@ sendButton.isPointerBlocker = true
  
    
  
-function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
+export function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
   if(msg === undefined || msg.text.text.trim().length === 0){
     ui.displayAnnouncement("cannot send empty message")
     return
@@ -160,7 +160,7 @@ function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
 
 let lastCharacterId = undefined
 
-function createMessageObject(msgText:string,characterId:serverStateSpec.CharacterId,room: Room<clientState.NpcGameRoomState>){
+export function createMessageObject(msgText:string,characterId:serverStateSpec.CharacterId,room: Room<clientState.NpcGameRoomState>){
   const chatMessage:serverStateSpec.ChatMessage = new serverStateSpec.ChatMessage({
     date: new Date().toUTCString(),
     packetId:{interactionId:"",packetId:"",utteranceId:""},
@@ -177,33 +177,15 @@ function createMessageObject(msgText:string,characterId:serverStateSpec.Characte
   if(characterId) lastCharacterId = characterId
   return chatMessage
 }  
+
+
+
+  //start fresh
+
+
 function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   //initLevelData(room.state.levelData)
  
-  //start fresh
-
-  for(const p of REGISTRY.allNPCs){
-    p.npc.onActivate = ()=>{
-      log("NPC",p.name ,"activated") 
-      REGISTRY.activeNPC = p
-  
-      inputContainer.visible = false  
-      
-      closeAllInteractions(REGISTRY.activeNPC)
-      
-      p.thinking([REGISTRY.askWaitingForResponse]) 
-
-      streamedMsgs.reset()  
-      //if(GAME_STATE.gameRoom) GAME_STATE.gameRoom.send("changeCharacter", {resourceName:p.config.resourceName} )      
-
-      
-      const randomMsgs = ["Hello!","Greetings"]
-      const msgText = randomMsgs[Math.floor( Math.random() * randomMsgs.length )]
-      const chatMessage:serverStateSpec.ChatMessage = createMessageObject(msgText,{resourceName:p.config.resourceName},room)
-      sendMsgToAI( chatMessage )      
-    }
-  }
-
   //REGISTRY.npcScene.onConnect( room )
   REGISTRY.lobbyScene.onConnect( room )
 

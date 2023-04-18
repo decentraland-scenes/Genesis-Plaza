@@ -73,23 +73,23 @@ export class LobbyScene{
     connectOptions.playFabData = {
     }; 
 
-    const roomName = "custom_lobby"
+    const roomName = "genesis_plaza"
     joinOrCreateRoomAsync( roomName,connectOptions )
 
     //snow these now so have ability to quit
 
 
   }
+  
   onConnect(room: Room<clientState.NpcGameRoomState>) {
     GAME_STATE.gameRoom = room;
-    //Game_2DUI.showLeaderboard(true) 
-    //this.grid.room = room
-    //for(let x=0;x<this.grid.cells.length;x++){
-    //  for(let y=0;y<this.grid.cells[x].length;y++){
-    //    const cell = this.grid.cells[x][y]
-    //    cell.room = room
-    //  }
-    //}
+
+    if(this.pendingConvoWithNPC){
+      this.startConvoWith(this.pendingConvoWithNPC)
+      //do we want this side affect?
+      this.pendingConvoWithNPC = undefined
+    }
+
 
   }
   exitBattle(){

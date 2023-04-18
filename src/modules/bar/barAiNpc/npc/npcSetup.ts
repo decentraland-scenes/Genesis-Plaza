@@ -46,7 +46,6 @@ const TEST_BLUNT_BOBBY_ENABLED = false
 
 //let myNPC:RemoteNpc
 //let myNPCCheshireCat:RemoteNpc 
-let npcCart23:RemoteNpc
 let npcJarvis:RemoteNpc 
 let npcBluntBobby:RemoteNpc 
  
@@ -92,7 +91,7 @@ export function setupNPC(){
  
   
   npcJarvis = new RemoteNpc(
-    {resourceName:"workspaces/poc_testing_season_0/characters/jarvis"}
+    {resourceName:"workspaces/genesis_city/characters/dcl_guide"}
     ,new npc.NPC(
       { position: new Vector3(161, 1.2, 144.4) },
       'models/robots/marsha.glb',//'models/Placeholder_NPC_02.glb',
@@ -212,55 +211,6 @@ export function setupNPC(){
   //engine.addEntity(collider)
 
 
-
-  npcCart23 = new RemoteNpc(
-    {
-      
-      resourceName:"workspaces/poc_testing_season_0/characters/cart23"
-    }
-    ,new npc.NPC(
-      { position: new Vector3(14, 0.1, 14) },
-      'models/whiteRabbit_Anim.glb',//'models/Placeholder_NPC_02.glb',
-      () => { 
-        log('myNPCGameMaster.NPC activated!')
-        
-        REGISTRY.activeNPC = npcCart23
-
-        closeAllInteractions(REGISTRY.activeNPC)
-
-        npcCart23.thinking([REGISTRY.askWaitingForResponse]) 
-
-      }, 
-      { 
-        idleAnim: CART23_NPC_ANIMATIONS.IDLE.name,
-        walkingAnim: CART23_NPC_ANIMATIONS.WALK.name, 
-        walkingSpeed: 2 ,//11 on full scale seems tiny big faster. 15 is roughlly player run speed, 20 is roughly fast enough to keep out of player range
-        faceUser: true,
-        portrait: { path: 'images/whiteRabitPortrait.png', height: 250, width: 250,offsetX:0 /*75*/ },
-        darkUI: true,
-        coolDownDuration: 3,
-        hoverText: 'CHAT', 
-        onlyClickTrigger: false,
-        onlyExternalTrigger: false,
-        reactDistance: 5, //KEEP IT UNDER STOPPING DISTANCE
-        continueOnWalkAway: true,
-        dialogCustomTheme: RESOURCES.textures.dialogAtlas,
-        onWalkAway: () => {
-          log('walked away') 
-        }  
-      } 
-    ),  
-    {  
-      npcAnimations:CART23_NPC_ANIMATIONS,
-      waitingOffsetY: 2.3
-    })
-  npcCart23.setName( "npc.cart23")
-  
-
-  //REGISTRY.myNPC = myNPC
-  //REGISTRY.allNPCs.push(myNPC)
-  //REGISTRY.allNPCs.push(myNPCCheshireCat)
-  REGISTRY.allNPCs.push(npcCart23)
   REGISTRY.allNPCs.push(npcJarvis)
   if(npcBluntBobby) REGISTRY.allNPCs.push(npcBluntBobby)
    
