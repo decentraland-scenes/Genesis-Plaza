@@ -41,6 +41,13 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
+import { setupNPC } from './modules/bar/barAiNpc/npc/npcSetup'
+import { REGISTRY } from './registry'
+import { Room } from 'colyseus.js'
+import * as lobbyConn from 'src/modules/bar/barAiNpc/lobby-scene/connection/onConnect';
+import { LobbyScene } from './modules/bar/barAiNpc/lobby-scene/lobbyScene'
+import { NpcScene } from './modules/bar/barAiNpc/npc-scene/npcScene'
+
 
 //////// LOG PLAYER POSITION
 
@@ -70,6 +77,19 @@ utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()
     addBarNPCs()
+    setupNPC()
+
+    REGISTRY.npcScene = new NpcScene()
+    REGISTRY.lobbyScene = new LobbyScene()
+
+    REGISTRY.lobbyScene.init()
+    REGISTRY.lobbyScene.initArena(true)
+  
+  
+    REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {
+      //npcConn.onNpcRoomConnect(room)
+      lobbyConn.onNpcRoomConnect(room)
+    }
   }
 })
 
@@ -172,6 +192,19 @@ export function insideBar() {
   if (!areNPCsAdded) {
     handleQuests()
     addBarNPCs()
+    setupNPC()
+
+    REGISTRY.npcScene = new NpcScene()
+    REGISTRY.lobbyScene = new LobbyScene()
+
+    REGISTRY.lobbyScene.init()
+    REGISTRY.lobbyScene.initArena(true)
+  
+  
+    REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {
+      //npcConn.onNpcRoomConnect(room)
+      lobbyConn.onNpcRoomConnect(room)
+    }
   }
 
   placeJukeBox()
