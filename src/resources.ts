@@ -159,7 +159,7 @@ export const RESOURCES = {
         textures: {
           //sprite_sheet: spriteSheetTexture,
           transparent: INVISIBLE_MATERIAL_texture,
-          dialogAtlas: new Texture('images/DispenserAtlas.png')
+          dialogAtlas: new Texture('https://decentraland.org/images/ui/dark-atlas-v3.png')
         },
         materials: {
           //sprite_sheet: spriteSheetMaterial

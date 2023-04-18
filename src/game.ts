@@ -42,11 +42,13 @@ import {
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
 import { setupNPC } from './modules/bar/barAiNpc/npc/npcSetup'
-import { REGISTRY } from './registry'
+import { REGISTRY, initRegistry } from './registry'
 import { Room } from 'colyseus.js'
 import * as lobbyConn from 'src/modules/bar/barAiNpc/lobby-scene/connection/onConnect';
 import { LobbyScene } from './modules/bar/barAiNpc/lobby-scene/lobbyScene'
 import { NpcScene } from './modules/bar/barAiNpc/npc-scene/npcScene'
+import { CONFIG, initConfig } from './config'
+import { initDialogs } from './modules/bar/barAiNpc/npc/npcDialog'
 
 
 //////// LOG PLAYER POSITION
@@ -61,6 +63,13 @@ Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
   //   )
   // }
 })
+
+
+initRegistry()
+
+//// AI NPC initial init
+initConfig()
+initDialogs()
 
 //// ADD BUILDINGS
 
@@ -77,6 +86,8 @@ utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()
     addBarNPCs()
+
+    //// AI NPC initial init
     setupNPC()
 
     REGISTRY.npcScene = new NpcScene()
