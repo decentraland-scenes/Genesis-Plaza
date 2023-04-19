@@ -29,6 +29,7 @@ import { Dialog, DialogWindow,ButtonData } from "@dcl/npc-scene-utils";
 import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
 import { closeAllInteractions } from "src/modules/bar/barAiNpc/npc/npcSetup";
 import { ChatNext, ChatPart, streamedMsgs } from "src/modules/bar/barAiNpc/npc/streamedMsgs";
+import { showInputOverlay } from "../../npc/customNPCUI";
 
 const canvas = ui.canvas
 
@@ -100,48 +101,6 @@ let messageIdProcessed = 0
 
 
 
-
-const inputContainer = new UIContainerRect(canvas)
-inputContainer.width = "300"
-inputContainer.height = "50"
-inputContainer.hAlign = "center"
-inputContainer.vAlign = "bottom"
-inputContainer.positionY = -10 
-inputContainer.color = Color4.Blue()
-inputContainer.opacity = 1
-inputContainer.visible = false
-
-const inputBackground = new UIImage(inputContainer,new Texture("images/DispenserAtlas.png"))
-setSection(inputBackground,resources.backgrounds.promptBackground)
-inputBackground.width = "100%"
-inputBackground.height = "100%"
-inputBackground.vAlign = "center"
-inputBackground.hAlign = "center"
-
-
-const textInput = new UIInputText(inputContainer)
-textInput.width = "80%"
-textInput.height = "25px"
-textInput.vAlign = "center"
-textInput.hAlign = "center"
-textInput.fontSize = 10
-textInput.placeholder = "Ask question here"
-//textInput.placeholderColor = Color4.Gray()
-textInput.positionY = "0"
-textInput.isPointerBlocker = true
-
-const sendButton = new UIImage(inputContainer,new Texture("images/DispenserAtlas.png"))
-setSection(sendButton,resources.buttons.roundGold) 
-sendButton.width = "25"
-sendButton.height = "25px"
-sendButton.vAlign = "bottom"
-sendButton.hAlign = "right"
-//sendButton.fontSize = 10
-//sendButton.placeholder = "Write message here"
-//textInput.placeholderColor = Color4.Gray()
-sendButton.positionY = "10"
-sendButton.isPointerBlocker = true
- 
    
  
 export function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
@@ -151,7 +110,7 @@ export function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
   }
   log("sendMsgToAI",msg)  
   //hide input
-  inputContainer.visible = false  
+  showInputOverlay(false)
   //mark waiting for reply
   REGISTRY.activeNPC.thinking([REGISTRY.askWaitingForResponse])
   //wrap it in object
@@ -222,17 +181,6 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   //need a managing system
 
    
-  textInput.onTextSubmit = new OnTextSubmit((x) => {
-    log("sending ", x)
-    //REGISTRY.activeNPC.dialog.closeDialogWindow()
-    closeAllInteractions()
-    //utils.setTimeout(200,()=>{ 
-      const chatMessage:serverStateSpec.ChatMessage = createMessageObject(x.text,undefined,room)
-      sendMsgToAI(chatMessage) 
-    //} 
-    textInput.value =""  
-  }) 
-   
   const whatIsYourName:ButtonData={
     label:"What is your name",goToDialog:REGISTRY.askWaitingForResponse.name,
     triggeredActions:()=>{
@@ -252,7 +200,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
     label:"Goodbye",goToDialog:REGISTRY.askWaitingForResponse.name,
     triggeredActions:()=>{
       closeAllInteractions()  
-      inputContainer.visible = false
+      showInputOverlay(false)
     }
   }
   const doYouTakeCredit:ButtonData={
@@ -287,7 +235,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
     } 
     const dialog = chatPart.text.createNPCDialog() 
     
-    inputContainer.visible = false
+    showInputOverlay(false)
 
     dialog.triggeredByNext = () => {
       REGISTRY.activeNPC.npc.playAnimation(REGISTRY.activeNPC.npcAnimations.WAVE.name,true,REGISTRY.activeNPC.npcAnimations.WAVE.duration)
@@ -329,9 +277,9 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
 
             //GETTING TRIGGERED on race condition i think, audio came through but not text?
             //show input box
-            inputContainer.visible = true
+            showInputOverlay(true)
             //debugger
-            REGISTRY.activeNPC.talk([askWhatCanIHelpYouWithDialog,REGISTRY.askWaitingForResponse]);
+            //REGISTRY.activeNPC.talk([askWhatCanIHelpYouWithDialog,REGISTRY.askWaitingForResponse]);
           }else{
             streamedMsgs.waitingForMore = true 
             //still waiting for more from server
@@ -459,7 +407,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   });
 }
 
- 
+ /*
 let triggerCounter = 0
 for(const p of ["no_shards_given","player_gave_shards","containment_alarms_on","containment_alarms_stopped"]){
   const setTriggerShardsGiven = new Entity()
@@ -475,3 +423,4 @@ for(const p of ["no_shards_given","player_gave_shards","containment_alarms_on","
   triggerCounter+=2
   engine.addEntity(setTriggerShardsGiven)
 }
+*/
