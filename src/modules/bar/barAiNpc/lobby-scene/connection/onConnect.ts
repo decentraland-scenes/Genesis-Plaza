@@ -26,7 +26,7 @@ import { CONFIG } from "src/config";
 
 import { REGISTRY } from "src/registry";
 import { Dialog, DialogWindow,ButtonData } from "@dcl/npc-scene-utils";
-import resources, { setSection } from "src/modules/bar/barAiNpc/dcl-scene-ui-workaround/resources";
+import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
 import { closeAllInteractions } from "src/modules/bar/barAiNpc/npc/npcSetup";
 import { ChatNext, ChatPart, streamedMsgs } from "src/modules/bar/barAiNpc/npc/streamedMsgs";
 

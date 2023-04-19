@@ -5,7 +5,6 @@ import { Room } from "colyseus.js"
 import { RemoteNpc } from "./modules/bar/barAiNpc/npc/remoteNpc"
 import { NpcScene } from "./modules/bar/barAiNpc/npc-scene/npcScene"
 import { LobbyScene } from "./modules/bar/barAiNpc/lobby-scene/lobbyScene"
-import { CameraPanSystem } from "./modules/bar/barAiNpc/cameraSystem"
 
 
 export type NpcAnimationNameDef = {
@@ -33,7 +32,6 @@ export class Registry{
   askWaitingForResponse!:Dialog
   npcScene!:NpcScene
   lobbyScene!:LobbyScene
-  cameraPanSystem!:CameraPanSystem
   serverTime:number = -1//default to not set so clear
   //for computing time relative to remote server
   getServerTime(){
