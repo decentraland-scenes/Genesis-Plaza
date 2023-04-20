@@ -1,7 +1,7 @@
 import { Realm } from '@decentraland/EnvironmentAPI'
 import {  UserData } from '@decentraland/Identity'
 import { Room } from 'colyseus.js'
-import * as npcClientSpec from 'src/modules/bar/barAiNpc/npc-scene/connection/state/client-state-spec'
+import * as npcClientSpec from 'src/aiNpc/lobby-scene/connection/state/client-state-spec'
 
 //import { RaceData } from './race'
 //import { TrackData } from './trackPlacement'

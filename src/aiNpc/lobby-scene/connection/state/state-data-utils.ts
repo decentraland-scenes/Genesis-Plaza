@@ -1,9 +1,9 @@
 import { GAME_STATE } from 'src/state';
-import * as serverState from 'src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec'
-import * as clientState from 'src/modules/bar/barAiNpc/npc-scene/connection/state/client-state-spec'
+import * as serverState from 'src/aiNpc/lobby-scene/connection/state/server-state-spec'
+import * as clientState from 'src/aiNpc/lobby-scene/connection/state/client-state-spec'
 
 import { CONFIG } from 'src/config';
-import { isNull } from 'src/modules/bar/barAiNpc/utils/utilities';
+import { isNull } from 'src/utils/utilities';
 
 
 export type PlayerRankingsType={

@@ -1,7 +1,7 @@
 import * as utils from '@dcl/ecs-scene-utils'
 import { getUserData, UserData } from '@decentraland/Identity'
 import { CONFIG } from 'src/config'
-import { IntervalUtil } from 'src/modules/bar/barAiNpc/utils/interval-util'
+import { IntervalUtil } from 'src/utils/interval-util'
 import { getAndSetUserDataIfNullNoWait, getUserDataFromLocal } from 'userData'
 
 

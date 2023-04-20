@@ -41,14 +41,13 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
-import { setupNPC } from './modules/bar/barAiNpc/npc/npcSetup'
+import { setupNPC } from './aiNpc/npc/npcSetup'
 import { REGISTRY, initRegistry } from './registry'
 import { Room } from 'colyseus.js'
-import * as lobbyConn from 'src/modules/bar/barAiNpc/lobby-scene/connection/onConnect';
-import { LobbyScene } from './modules/bar/barAiNpc/lobby-scene/lobbyScene'
-import { NpcScene } from './modules/bar/barAiNpc/npc-scene/npcScene'
+import * as lobbyConn from 'src/aiNpc/lobby-scene/connection/onConnect';
+import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
 import { CONFIG, initConfig } from './config'
-import { initDialogs } from './modules/bar/barAiNpc/npc/npcDialog'
+import { initDialogs } from './aiNpc/npc/npcDialog'
 
 
 //////// LOG PLAYER POSITION
@@ -90,7 +89,6 @@ utils.setTimeout(20000, () => {
     //// AI NPC initial init
     setupNPC()
 
-    REGISTRY.npcScene = new NpcScene()
     REGISTRY.lobbyScene = new LobbyScene()
 
     REGISTRY.lobbyScene.init()
@@ -205,7 +203,6 @@ export function insideBar() {
     addBarNPCs()
     setupNPC()
 
-    REGISTRY.npcScene = new NpcScene()
     REGISTRY.lobbyScene = new LobbyScene()
 
     REGISTRY.lobbyScene.init()

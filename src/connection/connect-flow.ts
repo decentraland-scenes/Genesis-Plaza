@@ -1,11 +1,11 @@
 import { CONFIG } from 'src/config';
 import { GAME_STATE } from 'src/state';
 
-import * as battleConn from 'src/modules/bar/barAiNpc/npc-scene/connection/onConnect';
+
 import { connect, disconnect, reconnect } from './connection';
 import { Room } from 'colyseus.js';
 import { REGISTRY } from 'src/registry';
-import { preventConcurrentExecution } from 'src/modules/bar/barAiNpc/utils/utilities';
+import { preventConcurrentExecution } from 'src/utils/utilities';
 
 
 
@@ -35,12 +35,6 @@ export function joinNewRoom(){
     
 }
 
-function onConnectWork(room:Room<any>){
-    log("onConnectWork!!!")
-    
-    battleConn.onNpcRoomConnect(room)
-    
-}
 
 export async function joinOrCreateRoom(roomName:string,options: any = {}){
     log("connect-flow","joinOrCreateRoom",roomName,options)

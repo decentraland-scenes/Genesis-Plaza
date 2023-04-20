@@ -1,5 +1,5 @@
 import { message } from "node_modules/@dcl/ui-scene-utils/dist/utils/default-ui-components"
-import { ChatMessageProps, ChatPacket } from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec"
+import { ChatMessageProps, ChatPacket } from "src/aiNpc/lobby-scene/connection/state/server-state-spec"
 import { ChatNext, ChatPart, getControlTypeAsInt, getMessageTypeAsInt, StreamedMessages } from "./streamedMsgs"
 
 const thingCollector_hiThere:ChatMessageProps[] = new Array()

@@ -45,58 +45,18 @@ export function closeAllInteractions(ignore?:RemoteNpc){
 const TEST_BLUNT_BOBBY_ENABLED = false
 
 //let myNPC:RemoteNpc
-//let myNPCCheshireCat:RemoteNpc 
 let npcJarvis:RemoteNpc 
 let npcBluntBobby:RemoteNpc 
  
 
 export function setupNPC(){
-  /*
-  myNPCCheshireCat = new RemoteNpc(
-      {resourceName:"workspaces/default-ygg_eqgm5efk2wl3w9pdyw/characters/the_cheshire_cat"}
-      ,new npc.NPC(
-    { position: new Vector3(1, 0.1, 14) },
-    'models/whiteRabbit_Anim.glb',//'models/Placeholder_NPC_02.glb',
-    () => { 
-      log('myNPCCheshireCat.NPC activated!')
-      
-      REGISTRY.activeNPC = myNPCCheshireCat
-
-      closeAllInteractions(REGISTRY.activeNPC)
-
-      myNPCCheshireCat.waiting([REGISTRY.askWaitingForResponse])
-
-    },
-    { 
-      idleAnim: NPC_ANIMATIONS.IDLE.name,
-      walkingAnim: NPC_ANIMATIONS.RUN.name, 
-      walkingSpeed: 15 ,//11 on full scale seems tiny big faster. 15 is roughlly player run speed, 20 is roughly fast enough to keep out of player range
-      faceUser: true,
-      portrait: { path: 'images/cheshireCatPortrait.png', height: 250, width: 250,offsetX:0  },
-      darkUI: true,
-      coolDownDuration: 3,
-      hoverText: 'CHAT', 
-      onlyClickTrigger: false,
-      onlyExternalTrigger: false,
-      reactDistance: 5, //KEEP IT UNDER STOPPING DISTANCE
-      continueOnWalkAway: true,
-      dialogCustomTheme: RESOURCES.textures.dialogAtlas,
-      onWalkAway: () => {
-        log('walked away') 
-      }
-    }
-  ))
-  myNPC.setName( "npc.myNPCCheshireCat")*/
-
- 
-  
   npcJarvis = new RemoteNpc(
     {resourceName:"workspaces/genesis_city/characters/dcl_guide"}
     ,new npc.NPC(
       { position: new Vector3(161, 1.2, 144.4) },
       'models/robots/marsha.glb',//'models/Placeholder_NPC_02.glb',
       () => {
-        log('whiterabbit.NPC activated!')
+        log(npcJarvis.name,' activated!')
         REGISTRY.activeNPC = npcJarvis
         
         closeAllInteractions(REGISTRY.activeNPC)
@@ -125,50 +85,20 @@ export function setupNPC(){
     ),
     {
       npcAnimations:JARVIS_NPC_ANIMATIONS,
-      waitingOffsetY: 1
+      thinkingOffsetY: 1
     }
     )
   npcJarvis.setName( "npc.jarvis")
 
-  if(TEST_BLUNT_BOBBY_ENABLED){
-  npcBluntBobby = new RemoteNpc(
-    {resourceName:"workspaces/poc_testing_season_0/characters/blunt_bobby"}
-    ,new npc.NPC(
-      { position: new Vector3(1, 1.2, 14) },
-      'models/robots/marsha.glb',//'models/Placeholder_NPC_02.glb',
-      () => {
-        log('whiterabbit.NPC activated!')
-        REGISTRY.activeNPC = npcBluntBobby
-        
-        closeAllInteractions(REGISTRY.activeNPC)
-        
-
-        npcBluntBobby.thinking([REGISTRY.askWaitingForResponse] )
-      },
-      { 
-        idleAnim: JARVIS_NPC_ANIMATIONS.IDLE.name,
-        walkingAnim: JARVIS_NPC_ANIMATIONS.WALK.name, 
-        walkingSpeed: 15 ,//11 on full scale seems tiny big faster. 15 is roughlly player run speed, 20 is roughly fast enough to keep out of player range
-        faceUser: true,
-        portrait: { path: 'images/npcBluntBobby.png', height: 250, width: 250,offsetX:0 /*75*/ },
-        darkUI: true,
-        coolDownDuration: 3,
-        hoverText: 'CHAT', 
-        onlyClickTrigger: false,
-        onlyExternalTrigger: false,
-        reactDistance: 5, //KEEP IT UNDER STOPPING DISTANCE
-        continueOnWalkAway: true,
-        dialogCustomTheme: RESOURCES.textures.dialogAtlas,
-        onWalkAway: () => {
-          log('walked away')  
-        }
-      }
-    ),
-    {
-      npcAnimations:JARVIS_NPC_ANIMATIONS
-    }
-    )
-    npcBluntBobby.setName( "npc.npcBluntBobby")
+  let dogePath: npc.FollowPathData = {
+    path: [
+      new Vector3(3,.24,3),
+      new Vector3(3,.24,16-3),
+      new Vector3(16-3,.24,16-3),
+      new Vector3(16-3,.24,3)
+    ],
+    loop: true,
+    // curve: true,
   }
   
     /*

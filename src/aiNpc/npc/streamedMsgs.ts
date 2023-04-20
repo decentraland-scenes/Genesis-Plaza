@@ -1,5 +1,5 @@
-import * as serverStateSpec from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
-import * as serverState from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
+import * as serverStateSpec from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
+import * as serverState from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
 import * as npc from '@dcl/npc-scene-utils'
 
 const CLASSNAME = "streamedMsg.ts"

@@ -6,24 +6,72 @@ import { joinOrCreateRoom, joinOrCreateRoomAsync } from "src/connection/connect-
 import { disconnect } from "src/connection/connection";
 import { REGISTRY } from "src/registry";
 import * as ui from "@dcl/ui-scene-utils";
-import * as serverStateSpec from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
+import * as serverStateSpec from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
 import { Room } from "colyseus.js";
-import * as clientState from "src/modules/bar/barAiNpc/npc-scene/connection/state/client-state-spec";
+import * as clientState from "src/aiNpc/lobby-scene/connection/state/client-state-spec";
 
-import { notNull } from "src/modules/bar/barAiNpc/utils/utilities";
 import * as utils from '@dcl/ecs-scene-utils';
 import { GAME_STATE } from "src/state";
+import { closeAllInteractions } from "../npc/npcSetup";
+import { createMessageObject, sendMsgToAI } from "./connection/onConnect";
+import { streamedMsgs } from "../npc/streamedMsgs";
+import { RemoteNpc } from "../npc/remoteNpc";
+//import { GridMap } from "src/land-infection/modules/grid";
+//import { gridSize, mapCenter, mapSize } from "src/land-infection/globals";
 
-export class NpcScene{
+export class LobbyScene{
  
   //ballManager:BallManager, player has the ball manager
   private _isPlayerInArena : boolean = false;
   isArenaActive: boolean = false;
 
+  pendingConvoWithNPC:RemoteNpc
+  //grid:GridMap
+
   init(){
     //player has the ball manager
     //this.ballManager = new BallManager(100, undefined)
+    const host = this
+    for(const p of REGISTRY.allNPCs){
+      p.npc.onActivate = ()=>{
+        log("NPC",p.name ,"activated") 
+
+        this.pendingConvoWithNPC = undefined
+        REGISTRY.activeNPC = p
+    
+        //inputContainer.visible = false  
+        
+        closeAllInteractions(REGISTRY.activeNPC)
+        
+        p.thinking([REGISTRY.askWaitingForResponse]) 
+
+        streamedMsgs.reset()  
+        //if(GAME_STATE.gameRoom) GAME_STATE.gameRoom.send("changeCharacter", {resourceName:p.config.resourceName} )      
  
+        if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
+          host.startConvoWith(p)  
+        }else{
+          log("NPC",p.name ,"GAME_STATE.gameConnected",GAME_STATE.gameConnected,"connect first") 
+          //debugger
+          //TODO prompt connection system to reconnect, 
+          //then register to call me on connect
+          //need to connect first
+          this.pendingConvoWithNPC = p
+          host.initArena(false)
+        }
+      }
+    }
+  }
+  startConvoWith(npc:RemoteNpc){
+    log("NPC",npc.name ,"GAME_STATE.gameConnected",GAME_STATE.gameConnected,"sendMsgToAI") 
+    
+    //do we want this side affect?
+    this.pendingConvoWithNPC = undefined
+
+    const randomMsgs = ["Hello!","Greetings"]
+    const msgText = randomMsgs[Math.floor( Math.random() * randomMsgs.length )]
+    const chatMessage:serverStateSpec.ChatMessage = createMessageObject(msgText,{resourceName:npc.config.resourceName},GAME_STATE.gameRoom)
+    sendMsgToAI( chatMessage )    
   }
   resetBattleArenaEntities(){
     const METHOD_NAME = "resetBattleArenaEntities"
@@ -60,20 +108,32 @@ export class NpcScene{
       npcDataOptions: npcDataOptions,
       
     };
+    
+    //if(this.grid == undefined){
+    //  this.grid = new GridMap(mapCenter, mapSize, gridSize, undefined)
+    //  this.grid.initGrid()
+    //}
 
     connectOptions.playFabData = {
     }; 
 
-    const roomName = "chat_npc"
+    const roomName = "genesis_plaza"
     joinOrCreateRoomAsync( roomName,connectOptions )
 
     //snow these now so have ability to quit
 
 
   }
+  
   onConnect(room: Room<clientState.NpcGameRoomState>) {
     GAME_STATE.gameRoom = room;
-    //Game_2DUI.showLeaderboard(true) 
+
+    if(this.pendingConvoWithNPC){
+      this.startConvoWith(this.pendingConvoWithNPC)
+      //do we want this side affect?
+      this.pendingConvoWithNPC = undefined
+    }
+
 
   }
   exitBattle(){

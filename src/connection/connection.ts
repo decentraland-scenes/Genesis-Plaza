@@ -16,8 +16,9 @@ import { CUSTOM_CODE_MANUAL_ERROR_MSG, decodeConnectionCode, isErrorCode } from 
 
 import * as ui from '@dcl/ui-scene-utils'
 import { REGISTRY } from "src/registry";
-import { onDisconnect } from "src/modules/bar/barAiNpc/npc-scene/connection/onConnect";
-import { notNull } from "src/modules/bar/barAiNpc/utils/utilities";
+
+import { notNull } from "src/utils/utilities";
+import { onDisconnect } from "src/aiNpc/lobby-scene/connection/onConnect";
 
 export const canvas = ui.canvas
 

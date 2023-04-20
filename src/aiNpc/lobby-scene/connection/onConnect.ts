@@ -1,23 +1,22 @@
 import { DataChange, Room, RoomAvailable } from "colyseus.js";
 import { GAME_STATE, PlayerState } from "src/state";
-import * as clientState from "src/modules/bar/barAiNpc/npc-scene/connection/state/client-state-spec";
-import * as serverState from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
-import * as serverStateSpec from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
+import * as clientState from "src/aiNpc/lobby-scene/connection/state/client-state-spec";
+import * as serverState from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
+import * as serverStateSpec from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
 
 //import * as SceneData from "src/og-decentrally/modules/scene";
 //import * as gameUI from "../ui/index";
 import * as utils from "@dcl/ecs-scene-utils";
 //import { Enemy, ENEMY_MGR } from "src/og-decentrally/modules/playerManager";
-import { createEntityForSound, createEntitySound, isNull, notNull, realDistance } from "src/modules/bar/barAiNpc/utils/utilities";
+import { createEntityForSound, createEntitySound, isNull, notNull, realDistance } from "src/utils/utilities";
 import * as ui from "@dcl/ui-scene-utils";
 
-import { PlayerRankingsType, sortPlayersByPosition } from "./state-data-utils";
+
 //import { Projectile } from "src/og-decentrally/modules/projectiles";
 //import { LevelDataState, TrackFeaturePosition } from "src/og-decentrally/modules/connection/state/server-state-spec";
 //import { levelManager } from "src/og-decentrally/tracks/levelManager";
 //import { Constants } from "src/og-decentrally/modules/resources/globals";
 //import { ColyseusCallbacksCollection, ColyseusCollection } from './state/client-colyseus-ext'
-import { IntervalUtil } from "src/modules/bar/barAiNpc/utils/interval-util";
 import { CONFIG } from "src/config";
 //import { TrackFeature, TrackFeatureConstructorArgs } from "src/og-decentrally/modules/trackFeatures";
 //import { LeaderBoardManager } from "src/og-decentrally/modules/scene/menu";
@@ -28,8 +27,9 @@ import { CONFIG } from "src/config";
 import { REGISTRY } from "src/registry";
 import { Dialog, DialogWindow,ButtonData } from "@dcl/npc-scene-utils";
 import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
-import { closeAllInteractions } from "src/modules/bar/barAiNpc/npc/npcSetup";
-import { ChatNext, ChatPart, streamedMsgs } from "src/modules/bar/barAiNpc/npc/streamedMsgs";
+import { closeAllInteractions } from "src/aiNpc/npc/npcSetup";
+import { ChatNext, ChatPart, streamedMsgs } from "src/aiNpc/npc/streamedMsgs";
+import { showInputOverlay } from "src/aiNpc/npc/customNPCUI";
 
 const canvas = ui.canvas
 
@@ -101,58 +101,16 @@ let messageIdProcessed = 0
 
 
 
-
-const inputContainer = new UIContainerRect(canvas)
-inputContainer.width = "300"
-inputContainer.height = "50"
-inputContainer.hAlign = "center"
-inputContainer.vAlign = "bottom"
-inputContainer.positionY = -10 
-inputContainer.color = Color4.Blue()
-inputContainer.opacity = 1
-inputContainer.visible = false
-
-const inputBackground = new UIImage(inputContainer,new Texture("images/DispenserAtlas.png"))
-setSection(inputBackground,resources.backgrounds.promptBackground)
-inputBackground.width = "100%"
-inputBackground.height = "100%"
-inputBackground.vAlign = "center"
-inputBackground.hAlign = "center"
-
-
-const textInput = new UIInputText(inputContainer)
-textInput.width = "80%"
-textInput.height = "25px"
-textInput.vAlign = "center"
-textInput.hAlign = "center"
-textInput.fontSize = 10
-textInput.placeholder = "Ask question here"
-//textInput.placeholderColor = Color4.Gray()
-textInput.positionY = "0"
-textInput.isPointerBlocker = true
-
-const sendButton = new UIImage(inputContainer,new Texture("images/DispenserAtlas.png"))
-setSection(sendButton,resources.buttons.roundGold) 
-sendButton.width = "25"
-sendButton.height = "25px"
-sendButton.vAlign = "bottom"
-sendButton.hAlign = "right"
-//sendButton.fontSize = 10
-//sendButton.placeholder = "Write message here"
-//textInput.placeholderColor = Color4.Gray()
-sendButton.positionY = "10"
-sendButton.isPointerBlocker = true
- 
    
  
-function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
+export function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
   if(msg === undefined || msg.text.text.trim().length === 0){
     ui.displayAnnouncement("cannot send empty message")
     return
   }
   log("sendMsgToAI",msg)  
   //hide input
-  inputContainer.visible = false  
+  showInputOverlay(false)
   //mark waiting for reply
   REGISTRY.activeNPC.thinking([REGISTRY.askWaitingForResponse])
   //wrap it in object
@@ -161,7 +119,7 @@ function sendMsgToAI( msg:serverStateSpec.ChatMessage ){
 
 let lastCharacterId = undefined
 
-function createMessageObject(msgText:string,characterId:serverStateSpec.CharacterId,room: Room<clientState.NpcGameRoomState>){
+export function createMessageObject(msgText:string,characterId:serverStateSpec.CharacterId,room: Room<clientState.NpcGameRoomState>){
   const chatMessage:serverStateSpec.ChatMessage = new serverStateSpec.ChatMessage({
     date: new Date().toUTCString(),
     packetId:{interactionId:"",packetId:"",utteranceId:""},
@@ -178,34 +136,24 @@ function createMessageObject(msgText:string,characterId:serverStateSpec.Characte
   if(characterId) lastCharacterId = characterId
   return chatMessage
 }  
+
+
+
+  //start fresh
+
+
 function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   //initLevelData(room.state.levelData)
  
-  //start fresh
+  //REGISTRY.npcScene.onConnect( room )
+  REGISTRY.lobbyScene.onConnect( room )
 
-  for(const p of REGISTRY.allNPCs){
-    p.npc.onActivate = ()=>{
-      log("NPC",p.name ,"activated") 
-      REGISTRY.activeNPC = p
-  
-      inputContainer.visible = false  
-      
-      closeAllInteractions(REGISTRY.activeNPC)
-      
-      p.thinking([REGISTRY.askWaitingForResponse]) 
+  room.onMessage("grid", (data)=>{
+    //log("GRID DATA: " + JSON.parse(data.grid)[0][0].infectionLevel)
+   // log("GRID CELL: " + JSON.parse(data.grid)[0][0].infectionLevel)
+    //REGISTRY.lobbyScene.grid.updateColumns(JSON.parse(data.grid))
+  })
 
-      streamedMsgs.reset()  
-      //if(GAME_STATE.gameRoom) GAME_STATE.gameRoom.send("changeCharacter", {resourceName:p.config.resourceName} )      
-
-      
-      const randomMsgs = ["Hello!","Greetings"]
-      const msgText = randomMsgs[Math.floor( Math.random() * randomMsgs.length )]
-      const chatMessage:serverStateSpec.ChatMessage = createMessageObject(msgText,{resourceName:p.config.resourceName},room)
-      sendMsgToAI( chatMessage )      
-    }
-  }
-
-  REGISTRY.npcScene.onConnect( room )
 
   room.onMessage("inGameMsg", (data) => {
     log("room.msg.inGameMsg", data);
@@ -233,17 +181,6 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   //need a managing system
 
    
-  textInput.onTextSubmit = new OnTextSubmit((x) => {
-    log("sending ", x)
-    //REGISTRY.activeNPC.dialog.closeDialogWindow()
-    closeAllInteractions()
-    //utils.setTimeout(200,()=>{ 
-      const chatMessage:serverStateSpec.ChatMessage = createMessageObject(x.text,undefined,room)
-      sendMsgToAI(chatMessage) 
-    //} 
-    textInput.value =""  
-  }) 
-   
   const whatIsYourName:ButtonData={
     label:"What is your name",goToDialog:REGISTRY.askWaitingForResponse.name,
     triggeredActions:()=>{
@@ -263,7 +200,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
     label:"Goodbye",goToDialog:REGISTRY.askWaitingForResponse.name,
     triggeredActions:()=>{
       closeAllInteractions()  
-      inputContainer.visible = false
+      showInputOverlay(false)
     }
   }
   const doYouTakeCredit:ButtonData={
@@ -298,7 +235,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
     } 
     const dialog = chatPart.text.createNPCDialog() 
     
-    inputContainer.visible = false
+    showInputOverlay(false)
 
     dialog.triggeredByNext = () => {
       REGISTRY.activeNPC.npc.playAnimation(REGISTRY.activeNPC.npcAnimations.WAVE.name,true,REGISTRY.activeNPC.npcAnimations.WAVE.duration)
@@ -340,9 +277,9 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
 
             //GETTING TRIGGERED on race condition i think, audio came through but not text?
             //show input box
-            inputContainer.visible = true
+            showInputOverlay(true)
             //debugger
-            REGISTRY.activeNPC.talk([askWhatCanIHelpYouWithDialog,REGISTRY.askWaitingForResponse]);
+            //REGISTRY.activeNPC.talk([askWhatCanIHelpYouWithDialog,REGISTRY.askWaitingForResponse]);
           }else{
             streamedMsgs.waitingForMore = true 
             //still waiting for more from server
@@ -443,6 +380,22 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   });
   
 
+  room.onMessage("serverTime", (data)=>{
+    //log("onMessage.serverTime", data);
+    //log("SERVERTIME: " + data.time)
+    REGISTRY.serverTime = data.time
+  })
+
+  room.onMessage("grid", (data)=>{
+    //log("onMessage.grid", data);
+    //log("GRID DATA: " + JSON.parse(data.grid)[0][0].infectionLevel)
+   // log("GRID CELL: " + JSON.parse(data.grid)[0][0].infectionLevel)
+    //REGISTRY.lobbyScene.grid.updateColumns(JSON.parse(data.grid)) 
+  })
+
+  
+
+
   room.onLeave(() => {
     //allPlayers = [];
     //update_full_list();
@@ -454,7 +407,7 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
   });
 }
 
- 
+ /*
 let triggerCounter = 0
 for(const p of ["no_shards_given","player_gave_shards","containment_alarms_on","containment_alarms_stopped"]){
   const setTriggerShardsGiven = new Entity()
@@ -470,3 +423,4 @@ for(const p of ["no_shards_given","player_gave_shards","containment_alarms_on","
   triggerCounter+=2
   engine.addEntity(setTriggerShardsGiven)
 }
+*/

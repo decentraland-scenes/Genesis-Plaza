@@ -1,22 +1,22 @@
 import { DataChange, Room, RoomAvailable } from "colyseus.js";
 import { GAME_STATE, PlayerState } from "src/state";
-import * as clientState from "src/modules/bar/barAiNpc/npc-scene/connection/state/client-state-spec";
-import * as serverState from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
-import * as serverStateSpec from "src/modules/bar/barAiNpc/npc-scene/connection/state/server-state-spec";
+import * as clientState from "src/aiNpc/lobby-scene/connection/state/client-state-spec";
+import * as serverState from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
+import * as serverStateSpec from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
 
 //import * as SceneData from "src/og-decentrally/modules/scene";
 //import * as gameUI from "../ui/index";
 import * as utils from "@dcl/ecs-scene-utils";
 //import { Enemy, ENEMY_MGR } from "src/og-decentrally/modules/playerManager";
-import { createEntityForSound, createEntitySound, isNull, notNull, realDistance } from "src/modules/bar/barAiNpc/utils/utilities";
+import { createEntityForSound, createEntitySound, isNull, notNull, realDistance } from "src/utils/utilities";
 import * as ui from "@dcl/ui-scene-utils";
 
 
 import { REGISTRY } from "src/registry";
 import { Dialog, DialogWindow, ButtonData } from "@dcl/npc-scene-utils";
 import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
-import { closeAllInteractions } from "src/modules/bar/barAiNpc/npc/npcSetup";
-import { ChatNext, ChatPart, streamedMsgs } from "src/modules/bar/barAiNpc/npc/streamedMsgs";
+import { closeAllInteractions } from "src/aiNpc/npc/npcSetup";
+import { ChatNext, ChatPart, streamedMsgs } from "src/aiNpc/npc/streamedMsgs";
 import { createMessageObject, sendMsgToAI } from "../lobby-scene/connection/onConnect";
 
 const canvas = ui.canvas
@@ -37,7 +37,9 @@ askSomethingElse.addButton("What can I do here?", 100, 35, () => {
   sendMessageToAi("what can i do in decentraland?")
 }, buttonsSyle).label.fontSize = 17
 askSomethingElse.addButton("Good Bye", -0, -20, () => {
+  log("askSomethingElse.goodbye")
   showInputOverlay(false)
+  //REGISTRY.activeNPC.npc.followPath()
 }, buttonsSyle)
 
 export function showInputOverlay(val: boolean) {
