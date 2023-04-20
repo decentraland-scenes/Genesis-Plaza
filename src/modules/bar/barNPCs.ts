@@ -167,6 +167,12 @@ export async function addBarNPCs() {
       doge.talkBubble(DogeTalk, randomNum)
     },
     {
+      portrait: 
+          { 
+            path: 'images/portraits/doge.png', height: 300, width: 300
+            ,offsetX:-10,offsetY:0
+            , section:{sourceHeight:384,sourceWidth:384} 
+          },
       walkingAnim: 'Walk',
       faceUser: true,
       hoverText: 'WOW',
@@ -195,8 +201,8 @@ export async function addBarNPCs() {
   }
 
   const dogeAI = new RemoteNpc(
-    {resourceName:"workspaces/genesis_city/characters/dcl_guide"},
-    doge,
+    {resourceName:"workspaces/genesis_city/characters/doge"},
+    doge, 
     {
       npcAnimations:DOGE_NPC_ANIMATIONS,
       thinkingOffsetX: 0,
