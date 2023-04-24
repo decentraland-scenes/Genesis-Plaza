@@ -1,35 +1,28 @@
-import { DataChange, Room, RoomAvailable } from "colyseus.js";
-import { GAME_STATE, PlayerState } from "src/state";
-import * as clientState from "src/aiNpc/lobby-scene/connection/state/client-state-spec";
-import * as serverState from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
+import { GAME_STATE } from "src/state";
 import * as serverStateSpec from "src/aiNpc/lobby-scene/connection/state/server-state-spec";
 
-//import * as SceneData from "src/og-decentrally/modules/scene";
-//import * as gameUI from "../ui/index";
-import * as utils from "@dcl/ecs-scene-utils";
-//import { Enemy, ENEMY_MGR } from "src/og-decentrally/modules/playerManager";
-import { createEntityForSound, createEntitySound, isNull, notNull, realDistance } from "src/utils/utilities";
 import * as ui from "@dcl/ui-scene-utils";
 
 
 import { REGISTRY } from "src/registry";
-import { Dialog, DialogWindow, ButtonData } from "@dcl/npc-scene-utils";
 import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
-import { closeAllInteractions } from "src/aiNpc/npc/npcSetup";
-import { ChatNext, ChatPart, streamedMsgs } from "src/aiNpc/npc/streamedMsgs";
-import { createMessageObject, sendMsgToAI } from "../lobby-scene/connection/onConnect";
+
+import { closeAllInteractions, createMessageObject, sendMsgToAI } from "./connectedUtils";
 
 const canvas = ui.canvas
 
-
+const PROMPT_WIDTH = 550
 
 const buttonsSyle = ui.ButtonStyles.RED
-const askSomethingElse = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, 500, 200)
+const askSomethingElse = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, PROMPT_WIDTH, 200)
 askSomethingElse.hide()//immeidatly hide it
 askSomethingElse.background.vAlign = 'bottom'
 askSomethingElse.closeIcon.visible = false
 
-askSomethingElse.addText("Ask something else", 0, 100, Color4.White())
+   
+const portait = askSomethingElse.addIcon('images/portraits/doge.png',-PROMPT_WIDTH/2,0,200,200)
+ 
+askSomethingElse.addText("Ask something else?", 0, 100, Color4.White())
 askSomethingElse.addButton("Tell me about \n Decentraland", -100, 35, () => {
   sendMessageToAi("Tell me about Decentraland")
 }, buttonsSyle).label.fontSize = 17
@@ -39,12 +32,27 @@ askSomethingElse.addButton("What can I do here?", 100, 35, () => {
 askSomethingElse.addButton("Good Bye", -0, -20, () => {
   log("askSomethingElse.goodbye")
   showInputOverlay(false)
+  REGISTRY.activeNPC?.goodbye()
   //REGISTRY.activeNPC.npc.followPath()
 }, buttonsSyle)
 
+//askSomethingElse.show()
+
 export function showInputOverlay(val: boolean) {
   if (val) {
+    //copy the portrait being used
+    //wish had access to private data REGISTRY.activeNPC.npc.dialog.defaultPortrait to place more dynamically
+    portait.image.positionX = -PROMPT_WIDTH/2 + 10//(REGISTRY.activeNPC.npc.dialog.portrait.width/2)
+    portait.image.source = REGISTRY.activeNPC.npc.dialog.portrait.source
+    portait.image.width = REGISTRY.activeNPC.npc.dialog.portrait.width
+    portait.image.height = REGISTRY.activeNPC.npc.dialog.portrait.height
+    portait.image.sourceHeight = REGISTRY.activeNPC.npc.dialog.portrait.sourceHeight
+    portait.image.sourceWidth = REGISTRY.activeNPC.npc.dialog.portrait.sourceWidth
+    portait.image.sourceTop = REGISTRY.activeNPC.npc.dialog.portrait.sourceTop
+    portait.image.sourceLeft = REGISTRY.activeNPC.npc.dialog.portrait.sourceLeft
+
     askSomethingElse.show()
+    //ad
     askSomethingElse.closeIcon.visible = false
   } else {
     askSomethingElse.hide()
@@ -54,7 +62,8 @@ export function showInputOverlay(val: boolean) {
 function sendMessageToAi(message: string){
   log("sending ", message)
   //REGISTRY.activeNPC.dialog.closeDialogWindow()
-  closeAllInteractions()
+  //close all other interactions to start the new one
+  closeAllInteractions({exclude:REGISTRY.activeNPC})
   //utils.setTimeout(200,()=>{ 
   const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
   sendMsgToAI(chatMessage)
@@ -92,9 +101,20 @@ textInput.isPointerBlocker = true
 textInput.focusedBackground = Color4.FromHexString("#46404AFF")
 
 textInput.onTextSubmit = new OnTextSubmit((x) => {
-  log("sending ", x)
+  const METHOD_NAME = "textInput.onTextSubmit"
+  log(METHOD_NAME,"sending ", x)
+  if(textInput.value === textInput.placeholder){
+    log(METHOD_NAME,"value matches place holder skipping ", x)
+    return;
+  }
+  if(textInput.value.trim().length === 0){
+    log(METHOD_NAME,"value is empty skipping ", x)
+    return;
+  }
   //REGISTRY.activeNPC.dialog.closeDialogWindow()
-  closeAllInteractions()
+  //REGISTRY.activeNPC.endInteraction()
+  closeAllInteractions({exclude:REGISTRY.activeNPC})
+  //REGISTRY.activeNPC.endInteraction()
   //utils.setTimeout(200,()=>{ 
   const chatMessage: serverStateSpec.ChatMessage = createMessageObject(x.text, undefined, GAME_STATE.gameRoom)
   sendMsgToAI(chatMessage)

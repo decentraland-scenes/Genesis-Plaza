@@ -15,6 +15,7 @@ import { Calis1 } from '../interactiveItems/calis'
 import { setStreamVolume } from './jukebox'
 import { RemoteNpc } from 'src/aiNpc/npc/remoteNpc'
 import { NpcAnimationNameType, REGISTRY } from 'src/registry'
+import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
 
 export let octopus: NPC
 let doge: NPC
@@ -157,7 +158,7 @@ export async function addBarNPCs() {
 
   const doge = new NPC(
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
-    'models/core_building/dogeNPC.glb',
+    'models/core_building/dogeNPC_anim4.glb',
     () => {
       doge.stopWalking()
       artist1.endInteraction()
@@ -169,9 +170,9 @@ export async function addBarNPCs() {
     {
       portrait: 
           { 
-            path: 'images/portraits/doge.png', height: 300, width: 300
-            ,offsetX:-10,offsetY:0
-            , section:{sourceHeight:384,sourceWidth:384} 
+            path: 'images/portraits/doge.png', height: 250, width: 250
+            ,offsetX:-30,offsetY:20
+            , section:{sourceHeight:256,sourceWidth:256} 
           },
       walkingAnim: 'Walk',
       faceUser: true,
@@ -184,6 +185,7 @@ export async function addBarNPCs() {
       },
       textBubble: false,
       noUI: false,
+      darkUI: true,
       //bubbleHeight: 2.2,
     }
   )
@@ -191,23 +193,37 @@ export async function addBarNPCs() {
 
 
   const ANIM_TIME_PADD = .2
+    
   const DOGE_NPC_ANIMATIONS:NpcAnimationNameType = {
-    IDLE: {name:"Talk1",duration:-1},
+    IDLE: {name:"Idle",duration:-1},
     WALK: {name:"Walk",duration:-1},
-    TALK: {name:"Talk1",duration:-1},
-    THINKING: {name:"Talk1",duration:-1},
+    TALK: {name:"Talk1",duration:5},
+    THINKING: {name:"Thinking",duration:5},
     RUN: {name:"Run",duration:-1},
-    WAVE: {name:"Hello",duration:2.46 + ANIM_TIME_PADD},
+    WAVE: {name:"Wave",duration:4 + ANIM_TIME_PADD},
   }
-
+  
   const dogeAI = new RemoteNpc(
     {resourceName:"workspaces/genesis_city/characters/doge"},
     doge, 
     {
       npcAnimations:DOGE_NPC_ANIMATIONS,
-      thinkingOffsetX: 0,
-      thinkingOffsetY: 1.8,
-      thinkingOffsetZ: 0
+      thinking:{
+        enabled:true,
+        model: new GLTFShape('models/loading-icon.glb'),
+        offsetX: 0,
+        offsetY: 2 ,
+        offsetZ: 0
+      }
+      ,onEndOfRemoteInteractionStream: ()=>{
+        showInputOverlay(true)
+      }
+      ,onEndOfInteraction: ()=>{
+        //showInputOverlay(true)
+        const LOOP = false
+        if(dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP,dogeAI.npcAnimations.WALK.duration)
+        dogeAI.npc.followPath()
+      }
     }
     )
   REGISTRY.allNPCs.push(dogeAI)

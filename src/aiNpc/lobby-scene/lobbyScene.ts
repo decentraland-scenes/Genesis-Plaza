@@ -12,10 +12,10 @@ import * as clientState from "src/aiNpc/lobby-scene/connection/state/client-stat
 
 import * as utils from '@dcl/ecs-scene-utils';
 import { GAME_STATE } from "src/state";
-import { closeAllInteractions } from "../npc/npcSetup";
-import { createMessageObject, sendMsgToAI } from "./connection/onConnect";
+
 import { streamedMsgs } from "../npc/streamedMsgs";
 import { RemoteNpc } from "../npc/remoteNpc";
+import { closeAllInteractions, createMessageObject, sendMsgToAI } from "../npc/connectedUtils";
 //import { GridMap } from "src/land-infection/modules/grid";
 //import { gridSize, mapCenter, mapSize } from "src/land-infection/globals";
 
@@ -41,7 +41,7 @@ export class LobbyScene{
     
         //inputContainer.visible = false  
         
-        closeAllInteractions(REGISTRY.activeNPC)
+        closeAllInteractions({exclude:REGISTRY.activeNPC})
         
         p.thinking([REGISTRY.askWaitingForResponse]) 
 

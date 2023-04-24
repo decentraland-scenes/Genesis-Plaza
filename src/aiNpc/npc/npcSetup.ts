@@ -85,7 +85,13 @@ export function setupNPC(){
     ),
     {
       npcAnimations:JARVIS_NPC_ANIMATIONS,
-      thinkingOffsetY: 1
+      thinking:{
+        enabled:true,
+        model: new GLTFShape('models/loading-icon.glb'),
+        offsetY:1
+      },
+      onEndOfInteraction:()=>{}
+      ,onEndOfRemoteInteractionStream:()=>{}
     }
     )
   npcJarvis.setName( "npc.jarvis")
