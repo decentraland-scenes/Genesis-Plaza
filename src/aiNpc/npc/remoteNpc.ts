@@ -13,10 +13,21 @@ export class RemoteNpcConfig{
    */
   id?:string
 }
+
+export type QuestionData = {
+  displayQuestion:string
+  queryToAi:string
+}
+
+
 export type RemoteNpcThinkingOptions={
   enabled:boolean
   model?:GLTFShape
+  modelScale?:Vector3
+  modelOffset?:Vector3
   text?:string
+  textScale?:Vector3
+  textOffset?:Vector3
   offsetX?:number
   offsetY?:number
   offsetZ?:number
@@ -86,13 +97,13 @@ export class RemoteNpc{
 
     
     this.thinkingIcon.setParent(this.thinkingIconRoot)
-    this.thinkingIcon.addComponent(new Transform({
-      position:new Vector3(
-          0,0,0
-        ),
-      scale:new Vector3(1,1,1)
-    }))
+    
     if(this.thinkingIconEnabled){
+      this.thinkingIcon.addComponent(new Transform({
+        position: args.thinking.modelOffset ? args.thinking.modelOffset : new Vector3( 0,0,0 ),
+        scale: args.thinking.modelScale ? args.thinking.modelScale : new Vector3(1,1,1)
+      }))
+
       if(args.thinking.model){
         this.thinkingIcon.addComponent(args.thinking.model)
         //this.thinkingIcon.addComponent(new KeepRotatingComponent(Quaternion.Euler(0,25,0)))
@@ -110,11 +121,8 @@ export class RemoteNpc{
     this.thinkingIconText.setParent(this.thinkingIconRoot)
     
     this.thinkingIconText.addComponent(new Transform({
-      position:new Vector3(
-          0,//args.thinkingOffsetX ? args.thinkingOffsetX  : defaultWaitingOffsetX
-          TEXT_HEIGHT,//,args.thinkingOffsetY ? args.thinkingOffsetY - TEXT_HEIGHT : defaultWaitingOffsetY - TEXT_HEIGHT
-          0),//,args.thinkingOffsetZ ? args.thinkingOffsetZ : defaultWaitingOffsetZ ),
-      scale:new Vector3(1,1,1),
+      position:args.thinking.textOffset ? args.thinking.textOffset : new Vector3( 0,TEXT_HEIGHT,0 ),
+      scale: args.thinking.textScale ? args.thinking.textScale : new Vector3(1,1,1),
       rotation: Quaternion.Euler(0,180,0)
     }))
     //this.waitingIconText.addComponent(new KeepRotatingComponent(Quaternion.Euler(0,25,0)))
