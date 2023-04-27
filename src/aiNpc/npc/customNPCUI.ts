@@ -146,21 +146,21 @@ if(BUTTON_ROWS_AMOUNT > 1){
   askButtonsList.push(askButton4)
 }
 
-let counter = -1
+let currentQuestionIndex = -1
 function nextPageOfQuestions(dir:number){
   //debugger
   //counter+=dir
   let loopCnt = 0
   for(const b of askButtonsList){
-    counter+=dir
-    if(counter >= QUESTION_LIST.length){
-      counter = 0
+    currentQuestionIndex+=dir
+    if(currentQuestionIndex >= QUESTION_LIST.length){
+      currentQuestionIndex = 0
     }
-    if(counter < 0){
-      counter = QUESTION_LIST.length-1
+    if(currentQuestionIndex < 0){
+      currentQuestionIndex = QUESTION_LIST.length-1
     }
 
-    const q = QUESTION_LIST[counter] 
+    const q = QUESTION_LIST[currentQuestionIndex] 
     b.label.fontSize = ASK_BTN_FONT_SIZE 
     b.label.value = q.displayQuestion
     b.image.height = BUTTON_HEIGHT
@@ -221,13 +221,10 @@ export function showInputOverlay(val: boolean) {
     } 
 
     //random questions
-    const rndAmount = Math.random()*3
-    for(let x=0;x<rndAmount;x++){ 
-      log("nextPageOfQuestions",rndAmount,x)
-      nextPageOfQuestions(1)
-    }
-  
-
+    const rndAmount = Math.floor(Math.random()*QUESTION_LIST.length)
+    currentQuestionIndex = rndAmount
+    nextPageOfQuestions(1)
+    
     askSomethingElse.show()
     
     //ad
