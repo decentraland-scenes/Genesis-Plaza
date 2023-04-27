@@ -92,7 +92,7 @@ utils.setTimeout(20000, () => {
     REGISTRY.lobbyScene = new LobbyScene()
 
     REGISTRY.lobbyScene.init()
-    REGISTRY.lobbyScene.initArena(true)
+    //REGISTRY.lobbyScene.initArena(true) //lazy connect to avoid over connections
   
   
     REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {
