@@ -15,7 +15,27 @@ const canvas = ui.canvas
 const PROMPT_WIDTH = 600
 
 //make undefined for fall back default atlas
-const customAtlas = undefined //new Texture('images/custom-dark-atlas-v3.png')
+const ATLAS_STANDARD = false
+const customAtlas = undefined//new Texture('images/custom-ai-dark-atlas-v3.png') //new Texture('images/custom-dark-atlas-v3.png')
+const CUSTOM_BLACK_BUTTON_SECTION={
+  sourceWidth: 680,
+  sourceHeight: 62,
+  sourceLeft: 0,
+  sourceTop: 442
+}
+const CUSTOM_GOLD_BUTTON_SECTION={
+  sourceWidth: 232,
+  sourceHeight: 42,
+  sourceLeft: 0,
+  sourceTop: 555
+}
+const CUSTOM_GRAY_BUTTON_SECTION={
+  sourceWidth: 232,
+  sourceHeight: 42,
+  sourceLeft: 0,
+  sourceTop: 513
+}
+
 
 const buttonsSyle = ui.ButtonStyles.DARK
 const askSomethingElse = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, PROMPT_WIDTH, 180)
@@ -66,7 +86,11 @@ const NEXT_BACK_WIDTH = BUTTON_WIDTH//120//30
 
 //const commonQLbl = askSomethingElse.addText("Example Questions", 0, BUTTON_POS_Y + 2*BUTTON_HEIGHT, Color4.White(),10)
 
-askSomethingElse.addText("Powered by AI. Stay Safe. Do not share personally identifiable information.\nNPC may produce inaccurate information about people, places, or facts.", 0, -50, Color4.White(),8)
+askSomethingElse.addText(
+  //"Powered by AI. Stay Safe. Do not share personally identifiable information.\nNPC may produce inaccurate information about people, places, or facts."
+  "Disclaimer: Beta. Power by a 3rd party AI. You may receive inaccurate information which is not \nendorsed by the Foundation or the Decentraland community.  Do not share personal information."
+  , 0, -50, Color4.White(),8)
+
 
 //askSomethingElse.addText("Or ask your own question below", 0, -20, Color4.White(),14)
 
@@ -105,7 +129,11 @@ for(const b of [askButtonNext]){
 
   if(customAtlas){
     b.image.source = customAtlas
-    setSection(b.image,resources.buttons.squareGold)
+    if(ATLAS_STANDARD){
+      setSection(b.image,resources.buttons.squareGold)
+    }else{
+      setSection(b.image, CUSTOM_GRAY_BUTTON_SECTION)
+    }
   }
   
 }
@@ -139,14 +167,27 @@ function nextPageOfQuestions(dir:number){
     b.image.onClick = new OnPointerDown(()=>{
       sendMessageToAi(q.queryToAi) 
     })
-
+    
     if(customAtlas){
       b.image.source = customAtlas
       if(loopCnt === 0){
-        setSection(b.image,resources.buttons.roundGold)
+        if(ATLAS_STANDARD){
+          setSection(b.image,resources.buttons.roundGold)
+        }else{
+          setSection(b.image,{
+            sourceWidth: 232,
+            sourceHeight: 40,
+            sourceLeft: 0,
+            sourceTop: 558
+          })
+        }
       }
       if(loopCnt === 1){
-        setSection(b.image,resources.buttons.roundGold)
+        if(ATLAS_STANDARD){
+          setSection(b.image,resources.buttons.roundGold)
+        }else{
+          setSection(b.image,CUSTOM_GOLD_BUTTON_SECTION)
+        }
       }
     }
     loopCnt++
@@ -206,20 +247,17 @@ inputContainer.height = INPUT_BOX_HEIGHT + 6
 inputContainer.positionY = INPUT_POS_Y
 inputContainer.hAlign = "center"
 inputContainer.vAlign = "center"
-if(!customAtlas) inputContainer.color = Color4.White()
+if(!customAtlas || !CUSTOM_BLACK_BUTTON_SECTION) inputContainer.color = Color4.White()
 inputContainer.opacity = 1
 inputContainer.visible = true
 
-if(customAtlas){
+if(customAtlas && CUSTOM_BLACK_BUTTON_SECTION){
   const bginputContainer = new UIImage(inputContainer,customAtlas)
   bginputContainer.width = "100%"
   bginputContainer.height = "100%"
-  setSection(bginputContainer,{
-      sourceWidth: 440,
-      sourceHeight: 40,
-      sourceLeft: 12,
-      sourceTop: 750
-    })
+  setSection(bginputContainer,
+    CUSTOM_BLACK_BUTTON_SECTION
+  )
 }
 
 const placeHolder =   "Type your question HERE then hit enter..."
@@ -228,7 +266,7 @@ const textInput = custUiInputText.fillInBox
 textInput.width = INPUT_BOX_WIDTH 
 textInput.height = INPUT_BOX_HEIGHT
 textInput.fontSize = 14
-if(customAtlas) textInput.focusedBackground = Color4.FromHexString("#FFFFFF00")
+if(customAtlas && CUSTOM_BLACK_BUTTON_SECTION) textInput.focusedBackground = Color4.FromHexString("#FFFFFF00")
 //textInput.outlineColor = Color4.White()
 
 
