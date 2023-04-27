@@ -232,10 +232,26 @@ function sendMessageToAi(message: string){
   //REGISTRY.activeNPC.dialog.closeDialogWindow()
   //close all other interactions to start the new one
   closeAllInteractions({exclude:REGISTRY.activeNPC})
-  //utils.setTimeout(200,()=>{ 
-  const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
-  sendMsgToAI(chatMessage)
-  //} 
+
+  const doSend = ()=>{
+      const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
+      sendMsgToAI(chatMessage)
+  }
+  if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
+    doSend()
+  }else{
+    //TODO solve reconnecting then sending msg
+    //log("NPC",p.name ,"GAME_STATE.gameConnected",GAME_STATE.gameConnected,"connect first") 
+    //debugger
+    //TODO prompt connection system to reconnect, 
+    //then register to call me on connect
+    //need to connect first
+    //this.pendingConvoWithNPC = p
+    REGISTRY.lobbyScene.pendingConvoActionWithNPC = doSend
+    REGISTRY.lobbyScene.initArena(false)
+    return
+  }
+  
   textInput.value = ""
 }
 

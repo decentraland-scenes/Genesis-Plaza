@@ -26,6 +26,7 @@ export class LobbyScene{
   isArenaActive: boolean = false;
 
   pendingConvoWithNPC:RemoteNpc
+  pendingConvoActionWithNPC:()=>void
   //grid:GridMap
 
   init(){
@@ -37,6 +38,7 @@ export class LobbyScene{
         log("NPC",p.name ,"activated") 
 
         this.pendingConvoWithNPC = undefined
+        this.pendingConvoActionWithNPC = undefined
         REGISTRY.activeNPC = p
     
         //inputContainer.visible = false  
@@ -67,6 +69,7 @@ export class LobbyScene{
     
     //do we want this side affect?
     this.pendingConvoWithNPC = undefined
+    this.pendingConvoActionWithNPC = undefined
 
     const randomMsgs = ["Hello!","Greetings"]
     const msgText = randomMsgs[Math.floor( Math.random() * randomMsgs.length )]
@@ -132,6 +135,9 @@ export class LobbyScene{
       this.startConvoWith(this.pendingConvoWithNPC)
       //do we want this side affect?
       this.pendingConvoWithNPC = undefined
+    }
+    if(this.pendingConvoActionWithNPC){
+      this.pendingConvoActionWithNPC()
     }
 
 
