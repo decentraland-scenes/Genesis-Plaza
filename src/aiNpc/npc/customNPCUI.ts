@@ -43,6 +43,7 @@ askSomethingElse.hide()//immeidatly hide it
 askSomethingElse.background.vAlign = 'bottom'
 //askSomethingElse.closeIcon.visible = false
 askSomethingElse.closeIcon.onClick = new OnPointerDown(()=>{
+  log("askSomethingElse.closeIcon.onClick")
   showInputOverlay(false)
   REGISTRY.activeNPC?.goodbye()
 })
@@ -217,9 +218,18 @@ export function showInputOverlay(val: boolean) {
       portait.image.sourceWidth = REGISTRY.activeNPC.npc.dialog.portrait.sourceWidth
       portait.image.sourceTop = REGISTRY.activeNPC.npc.dialog.portrait.sourceTop
       portait.image.sourceLeft = REGISTRY.activeNPC.npc.dialog.portrait.sourceLeft
+    } 
+
+    //random questions
+    const rndAmount = Math.random()*3
+    for(let x=0;x<rndAmount;x++){ 
+      log("nextPageOfQuestions",rndAmount,x)
+      nextPageOfQuestions(1)
     }
+  
 
     askSomethingElse.show()
+    
     //ad
     //askSomethingElse.closeIcon.visible = false
   } else {
