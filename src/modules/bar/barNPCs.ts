@@ -13,9 +13,12 @@ import { query } from '@dcl/quests-query'
 import { ProgressStatus } from 'dcl-quests-client/quests-client-amd'
 import { Calis1 } from '../interactiveItems/calis'
 import { setStreamVolume } from './jukebox'
+import { RemoteNpc } from 'src/aiNpc/npc/remoteNpc'
+import { NpcAnimationNameType, REGISTRY } from 'src/registry'
+import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
 
 export let octopus: NPC
-export let doge: NPC
+let doge: NPC
 export let catGuy: NPC
 export let wearablesC: NPC
 export let artist1: NPC
@@ -153,9 +156,11 @@ export async function addBarNPCs() {
     // curve: true,
   }
 
-  doge = new NPC(
+  //set this to false to disable in world experiment
+  const dogeAINpcEnabled = true
+  const doge = new NPC(
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
-    'models/core_building/dogeNPC.glb',
+    'models/core_building/dogeNPC_anim4.glb',
     () => {
       doge.stopWalking()
       artist1.endInteraction()
@@ -165,6 +170,12 @@ export async function addBarNPCs() {
       doge.talkBubble(DogeTalk, randomNum)
     },
     {
+      portrait: 
+          { 
+            path: 'images/portraits/doge.png', height: 250, width: 250
+            ,offsetX:-30,offsetY:20
+            , section:{sourceHeight:256,sourceWidth:256} 
+          },
       walkingAnim: 'Walk',
       faceUser: true,
       hoverText: 'WOW',
@@ -174,12 +185,50 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         doge.followPath()
       },
-      textBubble: true,
-      noUI: true,
-      bubbleHeight: 2.2,
+      textBubble: !dogeAINpcEnabled,
+      noUI: !dogeAINpcEnabled,
+      darkUI: dogeAINpcEnabled,
+      bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
     }
   )
   doge.followPath(dogePath)
+
+
+  const ANIM_TIME_PADD = .2
+    
+  const DOGE_NPC_ANIMATIONS:NpcAnimationNameType = {
+    IDLE: {name:"Idle",duration:-1},
+    WALK: {name:"Walk",duration:-1},
+    TALK: {name:"Talk1",duration:5},
+    THINKING: {name:"Thinking",duration:5},
+    RUN: {name:"Run",duration:-1},
+    WAVE: {name:"Wave",duration:4 + ANIM_TIME_PADD},
+  }
+  
+  const dogeAI = new RemoteNpc(
+    {resourceName:"workspaces/genesis_city/characters/doge"},
+    doge, 
+    {
+      npcAnimations:DOGE_NPC_ANIMATIONS,
+      thinking:{
+        enabled:true,
+        model: new GLTFShape('models/loading-icon.glb'),
+        offsetX: 0,
+        offsetY: 2 ,
+        offsetZ: 0
+      }
+      ,onEndOfRemoteInteractionStream: ()=>{
+        showInputOverlay(true)
+      }
+      ,onEndOfInteraction: ()=>{
+        //showInputOverlay(true)
+        const LOOP = false
+        if(dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP,dogeAI.npcAnimations.WALK.duration)
+        dogeAI.npc.followPath()
+      }
+    }
+    )
+  REGISTRY.allNPCs.push(dogeAI)
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },

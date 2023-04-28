@@ -1,0 +1,1 @@
+Manually put class here as I needed the resource mappings to do a custom atlas

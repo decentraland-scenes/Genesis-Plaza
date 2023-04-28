@@ -41,6 +41,14 @@ import {
 } from './modules/bar/barNPCs'
 import { startArtichoke } from './modules/artichoke'
 import { handleQuests } from './quests'
+import { setupNPC } from './aiNpc/npc/npcSetup'
+import { REGISTRY, initRegistry } from './registry'
+import { Room } from 'colyseus.js'
+import * as lobbyConn from 'src/aiNpc/lobby-scene/connection/onConnect';
+import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
+import { CONFIG, initConfig } from './config'
+import { initDialogs } from './aiNpc/npc/npcDialog'
+
 
 //////// LOG PLAYER POSITION
 
@@ -54,6 +62,13 @@ Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
   //   )
   // }
 })
+
+
+initRegistry()
+
+//// AI NPC initial init
+initConfig()
+initDialogs()
 
 //// ADD BUILDINGS
 
@@ -70,6 +85,29 @@ utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()
     addBarNPCs()
+
+    //// AI NPC initial init
+    setupNPC()
+
+    REGISTRY.lobbyScene = new LobbyScene()
+
+    REGISTRY.lobbyScene.init()
+    //REGISTRY.lobbyScene.initArena(true) //lazy connect to avoid over connections
+  
+  
+    REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {
+      //npcConn.onNpcRoomConnect(room)
+      lobbyConn.onNpcRoomConnect(room)
+    }
+
+    //docs say will fire after 1 minute
+    onIdleStateChangedObservable.add(({ isIdle }) => {
+      log("Idle State change: ", isIdle)
+      if(isIdle){
+        //prevent too many connnections for AFKers, it will auto reconnect if u interact with something again
+        REGISTRY.lobbyScene.endBattle()
+      }
+    })
   }
 })
 
@@ -172,6 +210,19 @@ export function insideBar() {
   if (!areNPCsAdded) {
     handleQuests()
     addBarNPCs()
+    setupNPC()
+
+    REGISTRY.lobbyScene = new LobbyScene()
+
+    REGISTRY.lobbyScene.init()
+    //lazy load this, dont call automatically???
+    //REGISTRY.lobbyScene.initArena(true)
+  
+  
+    REGISTRY.onConnectActions = (room: Room<any>, eventName: string) => {
+      //npcConn.onNpcRoomConnect(room)
+      lobbyConn.onNpcRoomConnect(room)
+    }
   }
 
   placeJukeBox()

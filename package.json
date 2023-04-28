@@ -18,15 +18,18 @@
     "@dcl/ui-scene-utils": "latest",
     "@types/cannon": "^0.1.7",
     "cannon": "^0.6.2",
-    "decentraland-ecs": "^6.11.15"
+    "decentraland-ecs": "^6.11.15",
+    "colyseus.js": "^0.14.13"
   },
   "devDependencies": {
-    "@dcl/eslint-config": "^1.0.1"
+    "@dcl/eslint-config": "^1.0.1",
+    "decentraland-ecs": "^6.11.15"
   },
   "bundleDependencies": [
     "@dcl/ecs-quests",
     "@dcl/ecs-scene-utils",
     "@dcl/npc-scene-utils",
-    "@dcl/ui-scene-utils"
+    "@dcl/ui-scene-utils",
+    "colyseus.js"
   ]
 }
