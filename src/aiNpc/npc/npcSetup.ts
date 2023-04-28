@@ -50,7 +50,7 @@ let npcBluntBobby:RemoteNpc
  
 
 export function setupNPC(){
-  npcJarvis = new RemoteNpc(
+  /*npcJarvis = new RemoteNpc(
     {resourceName:"workspaces/genesis_city/characters/dcl_guide"}
     ,new npc.NPC(
       { position: new Vector3(161, 1.2, 144.4) },
@@ -69,7 +69,7 @@ export function setupNPC(){
         walkingAnim: JARVIS_NPC_ANIMATIONS.WALK.name, 
         walkingSpeed: 15 ,//11 on full scale seems tiny big faster. 15 is roughlly player run speed, 20 is roughly fast enough to keep out of player range
         faceUser: true,
-        portrait: { path: 'images/jarvisPortrait.png', height: 250, width: 250,offsetX:0 /*75*/ },
+        portrait: { path: 'images/jarvisPortrait.png', height: 250, width: 250,offsetX:0  },
         darkUI: true,
         coolDownDuration: 3,
         hoverText: 'CHAT', 
@@ -94,19 +94,8 @@ export function setupNPC(){
       ,onEndOfRemoteInteractionStream:()=>{}
     }
     )
-  npcJarvis.setName( "npc.jarvis")
+  npcJarvis.setName( "npc.jarvis")*/
 
-  let dogePath: npc.FollowPathData = {
-    path: [
-      new Vector3(3,.24,3),
-      new Vector3(3,.24,16-3),
-      new Vector3(16-3,.24,16-3),
-      new Vector3(16-3,.24,3)
-    ],
-    loop: true,
-    // curve: true,
-  }
-  
     /*
   const colliderBox = new BoxShape()
   colliderBox.isPointerBlocker = false; 
@@ -147,7 +136,7 @@ export function setupNPC(){
   //engine.addEntity(collider)
 
 
-  REGISTRY.allNPCs.push(npcJarvis)
+  if(npcJarvis) REGISTRY.allNPCs.push(npcJarvis)
   if(npcBluntBobby) REGISTRY.allNPCs.push(npcBluntBobby)
    
   

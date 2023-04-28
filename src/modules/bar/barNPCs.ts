@@ -156,6 +156,8 @@ export async function addBarNPCs() {
     // curve: true,
   }
 
+  //set this to false to disable in world experiment
+  const dogeAINpcEnabled = true
   const doge = new NPC(
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
     'models/core_building/dogeNPC_anim4.glb',
@@ -183,10 +185,10 @@ export async function addBarNPCs() {
       onWalkAway: () => {
         doge.followPath()
       },
-      textBubble: false,
-      noUI: false,
-      darkUI: true,
-      //bubbleHeight: 2.2,
+      textBubble: !dogeAINpcEnabled,
+      noUI: !dogeAINpcEnabled,
+      darkUI: dogeAINpcEnabled,
+      bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
     }
   )
   doge.followPath(dogePath)
