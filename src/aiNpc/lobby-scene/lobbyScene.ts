@@ -16,44 +16,49 @@ import { GAME_STATE } from "src/state";
 import { streamedMsgs } from "../npc/streamedMsgs";
 import { RemoteNpc } from "../npc/remoteNpc";
 import { closeAllInteractions, createMessageObject, sendMsgToAI } from "../npc/connectedUtils";
+import { sendTrack } from "../Stats/Segment";
+import { TrackableEntity } from "../npc/analyticRemoteNpc";
 //import { GridMap } from "src/land-infection/modules/grid";
 //import { gridSize, mapCenter, mapSize } from "src/land-infection/globals";
 
-export class LobbyScene{
- 
+export class LobbyScene {
+
   //ballManager:BallManager, player has the ball manager
-  private _isPlayerInArena : boolean = false;
+  private _isPlayerInArena: boolean = false;
   isArenaActive: boolean = false;
 
-  pendingConvoWithNPC:RemoteNpc
-  pendingConvoActionWithNPC:()=>void
+  pendingConvoWithNPC: RemoteNpc
+  pendingConvoActionWithNPC: () => void
   //grid:GridMap
 
-  init(){
+  init() {
     //player has the ball manager
     //this.ballManager = new BallManager(100, undefined)
     const host = this
-    for(const p of REGISTRY.allNPCs){
-      p.npc.onActivate = ()=>{
-        log("NPC",p.name ,"activated") 
+    for (const p of REGISTRY.allNPCs) {
+      p.npc.onActivate = () => {
+        log("TestBarNPC", "NPC", p.name, "activated")
+        if(p.npc.hasComponent(TrackableEntity)){
+          p.npc.getComponent(TrackableEntity).trackStart()
+        }
 
         this.pendingConvoWithNPC = undefined
         this.pendingConvoActionWithNPC = undefined
         REGISTRY.activeNPC = p
-    
-        //inputContainer.visible = false  
-        
-        closeAllInteractions({exclude:REGISTRY.activeNPC})
-        
-        p.thinking([REGISTRY.askWaitingForResponse]) 
 
-        streamedMsgs.reset()  
+        //inputContainer.visible = false  
+
+        closeAllInteractions({ exclude: REGISTRY.activeNPC })
+
+        p.thinking([REGISTRY.askWaitingForResponse])
+
+        streamedMsgs.reset()
         //if(GAME_STATE.gameRoom) GAME_STATE.gameRoom.send("changeCharacter", {resourceName:p.config.resourceName} )      
- 
-        if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
-          host.startConvoWith(p)  
-        }else{
-          log("NPC",p.name ,"GAME_STATE.gameConnected",GAME_STATE.gameConnected,"connect first") 
+
+        if (GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected') {
+          host.startConvoWith(p)
+        } else {
+          log("NPC", p.name, "GAME_STATE.gameConnected", GAME_STATE.gameConnected, "connect first")
           //debugger
           //TODO prompt connection system to reconnect, 
           //then register to call me on connect
@@ -64,30 +69,63 @@ export class LobbyScene{
       }
     }
   }
-  startConvoWith(npc:RemoteNpc){
-    log("NPC",npc.name ,"GAME_STATE.gameConnected",GAME_STATE.gameConnected,"sendMsgToAI") 
-    
+
+  activateNpc(targetNpc: RemoteNpc, analyticEventKey: string) {
+    const host = this
+    log("TestBarNPC", "NPC", targetNpc.name, "activated")
+    //analytic
+    sendTrack(analyticEventKey)
+
+    this.pendingConvoWithNPC = undefined
+    this.pendingConvoActionWithNPC = undefined
+    REGISTRY.activeNPC = targetNpc
+
+    //inputContainer.visible = false  
+
+    closeAllInteractions({ exclude: REGISTRY.activeNPC })
+
+    targetNpc.thinking([REGISTRY.askWaitingForResponse])
+
+    streamedMsgs.reset()
+    //if(GAME_STATE.gameRoom) GAME_STATE.gameRoom.send("changeCharacter", {resourceName:p.config.resourceName} )      
+
+    if (GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected') {
+      host.startConvoWith(targetNpc)
+    } else {
+      log("NPC", targetNpc.name, "GAME_STATE.gameConnected", GAME_STATE.gameConnected, "connect first")
+      //debugger
+      //TODO prompt connection system to reconnect, 
+      //then register to call me on connect
+      //need to connect first
+      this.pendingConvoWithNPC = targetNpc
+      host.initArena(false)
+    }
+  }
+
+  startConvoWith(npc: RemoteNpc) {
+    log("NPC", npc.name, "GAME_STATE.gameConnected", GAME_STATE.gameConnected, "sendMsgToAI")
+
     //do we want this side affect?
     this.pendingConvoWithNPC = undefined
     this.pendingConvoActionWithNPC = undefined
 
-    const randomMsgs = ["Hello!","Greetings"]
-    const msgText = randomMsgs[Math.floor( Math.random() * randomMsgs.length )]
-    const chatMessage:serverStateSpec.ChatMessage = createMessageObject(msgText,{resourceName:npc.config.resourceName},GAME_STATE.gameRoom)
-    sendMsgToAI( chatMessage )    
+    const randomMsgs = ["Hello!", "Greetings"]
+    const msgText = randomMsgs[Math.floor(Math.random() * randomMsgs.length)]
+    const chatMessage: serverStateSpec.ChatMessage = createMessageObject(msgText, { resourceName: npc.config.resourceName }, GAME_STATE.gameRoom)
+    sendMsgToAI(chatMessage)
   }
-  resetBattleArenaEntities(){
+  resetBattleArenaEntities() {
     const METHOD_NAME = "resetBattleArenaEntities"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
   }
-  removeEnemies(){
+  removeEnemies() {
     //clear out enemies
     //if(REGISTRY.player.enemyManager !== undefined) REGISTRY.player.enemyManager.removeAll()
   }
-  resetBattleArena(){
+  resetBattleArena() {
     const METHOD_NAME = "resetBattleArena"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
     this.isArenaActive = false
 
@@ -97,54 +135,54 @@ export class LobbyScene{
   }
   initArena(force: boolean) {
     const METHOD_NAME = "initArena"
-    log(METHOD_NAME,"ENTRY",force)
-    
-    this.resetBattleArena() 
+    log(METHOD_NAME, "ENTRY", force)
 
-    const npcDataOptions:serverStateSpec.NpcRoomDataOptions={
-      levelId:"",
+    this.resetBattleArena()
+
+    const npcDataOptions: serverStateSpec.NpcRoomDataOptions = {
+      levelId: "",
       //timeLimit: 10
       //customRoomId:undefined,
       //maxPlayers
     }
-    const connectOptions:any = {
+    const connectOptions: any = {
       npcDataOptions: npcDataOptions,
-      
+
     };
-    
+
     //if(this.grid == undefined){
     //  this.grid = new GridMap(mapCenter, mapSize, gridSize, undefined)
     //  this.grid.initGrid()
     //}
 
     connectOptions.playFabData = {
-    }; 
+    };
 
     const roomName = "genesis_plaza"
-    joinOrCreateRoomAsync( roomName,connectOptions )
+    joinOrCreateRoomAsync(roomName, connectOptions)
 
     //snow these now so have ability to quit
 
 
   }
-  
+
   onConnect(room: Room<clientState.NpcGameRoomState>) {
     GAME_STATE.gameRoom = room;
 
-    if(this.pendingConvoWithNPC){
+    if (this.pendingConvoWithNPC) {
       this.startConvoWith(this.pendingConvoWithNPC)
       //do we want this side affect?
       this.pendingConvoWithNPC = undefined
     }
-    if(this.pendingConvoActionWithNPC){
+    if (this.pendingConvoActionWithNPC) {
       this.pendingConvoActionWithNPC()
     }
 
 
   }
-  exitBattle(){
+  exitBattle() {
     const METHOD_NAME = "exitBattle"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
     this.resetBattleArena()
 
@@ -152,37 +190,37 @@ export class LobbyScene{
 
     this.isArenaActive = false
   }
-  exitArena(moveToLobby?:boolean){
+  exitArena(moveToLobby?: boolean) {
     const METHOD_NAME = "exitArena"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
     this.exitBattle()
 
-    
+
   }
-  isPlayerInArena():boolean {
+  isPlayerInArena(): boolean {
     //const playerPos = Camera.instance.feetPosition
-    
+
     //using arena active as decision for now
     //return this.isArenaActive; 
     //log("//. Is Player In Arena: ",this._isPlayerInArena)
     return this._isPlayerInArena;
   }
   movePlayerToRespawnPointInArena() {
-    
+
 
   }
   movePlayerToStartPointInArena() {
-    
+
   }
 
-  movePlayerHere(position:Vector3,cameraLook:Vector3){
-    
+  movePlayerHere(position: Vector3, cameraLook: Vector3) {
+
   }
 
-  battleAboutToStart(){
+  battleAboutToStart() {
     const METHOD_NAME = "battleAboutToStart"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
     this.resetBattleArenaEntities()
 
@@ -192,23 +230,23 @@ export class LobbyScene{
 
     //WHAT DOES THIS DO??, removed
     //sfx.SOUND_POOL_MGR.mainMusic.playOnce()
-    
+
   }
-  startBattle(){
+  startBattle() {
     const METHOD_NAME = "startBattle"
-    log(METHOD_NAME,"ENTRY")
-    
-    
+    log(METHOD_NAME, "ENTRY")
+
+
     this.isArenaActive = true
 
   }
 
-  endBattle(){
+  endBattle() {
     const METHOD_NAME = "endBattle"
-    log(METHOD_NAME,"ENTRY")
+    log(METHOD_NAME, "ENTRY")
 
-    
-    
+
+
     //this.resetBattleArena()
     this.isArenaActive = false
 
@@ -217,11 +255,11 @@ export class LobbyScene{
     //REGISTRY.SCENE_MGR.goLobby()
   }
 
-  private SetAvatarInArena(state : boolean){
-      
+  private SetAvatarInArena(state: boolean) {
+
   }
-  private UpdatePlayersColors(){
-    
+  private UpdatePlayersColors() {
+
   }
 }
 

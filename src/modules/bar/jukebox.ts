@@ -3,6 +3,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 import { invisibleMaterial } from '../museumItems'
 import { OctoComments, octopus } from './barNPCs'
 import { tutorialRunning } from 'src/lobby/portalBeam'
+import { sendTrack } from 'src/aiNpc/Stats/Segment'
+import { ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -218,8 +220,10 @@ export class JukeboxButton extends Entity {
     this.addComponent(
       new OnPointerDown(
         () => {
+          log("JukeBoxButton","Click")
           action()
           this.press()
+          sendTrack(ANALYTICS_EVENT_KEYS.JukeBoxInteract)
         },
         {
           button: ActionButton.POINTER,

@@ -13,6 +13,10 @@ import {
 import { lobbyCenter, lobbyHeight, lobbyRadius } from './resources/globals'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
+import * as utils from '@dcl/ecs-scene-utils'
+import { addRepeatTrigger } from 'src/modules/Utils'
+import { sendTrack } from 'src/aiNpc/Stats/Segment'
+import { ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 const portalControl = new TeleportController()
 
@@ -142,3 +146,28 @@ let classicsMenu = createClassicsVerticalMenu({
   scale: new Vector3(menuScale, menuScale, menuScale),
 })
 fillClassicsMenu(classicsMenu)
+
+// -- TriggerBox
+/*
+let sphereTrigger = new Entity()
+engine.addEntity(sphereTrigger)
+sphereTrigger.addComponent(new Transform({
+  position: center.clone(),
+  scale: new Vector3(22,22,22)
+}))
+sphereTrigger.addComponent(new SphereShape()).withCollisions = false
+*/
+addRepeatTrigger(
+  center.clone(),
+  new Vector3(30,15,30), 
+  ()=> {
+    log("TestBarNPC", "In the Clouds")
+    sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionEnter)
+  },
+  null,
+  true,
+  ()=> {
+    log("TestBarNPC", "Out of the Clouds")
+    sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionLeave)
+  }
+)

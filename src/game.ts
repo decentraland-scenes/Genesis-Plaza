@@ -48,6 +48,8 @@ import * as lobbyConn from 'src/aiNpc/lobby-scene/connection/onConnect';
 import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
 import { CONFIG, initConfig } from './config'
 import { initDialogs } from './aiNpc/npc/npcDialog'
+import { ANALYTICS_EVENT_KEYS } from './aiNpc/Stats/AnalyticsConfig'
+import { sendTrack } from './aiNpc/Stats/Segment'
 
 
 //////// LOG PLAYER POSITION
@@ -134,6 +136,7 @@ addRepeatTrigger(
   () => {
     setBarMusicOn()
     log('went in')
+    sendTrack(ANALYTICS_EVENT_KEYS.BarRegionEnter)
   },
   null,
   false,
@@ -142,6 +145,7 @@ addRepeatTrigger(
     endArtistTalk()
     lowerVolume()
     log('mid distance')
+    sendTrack(ANALYTICS_EVENT_KEYS.BarRegionLeave)
 
     //setBarMusicOff()
   }
