@@ -7,8 +7,6 @@ import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import { tutorialEnableObservable } from 'src/modules/tutorialHandler'
 import { isInBar, setBarMusicOn } from 'src/modules/bar/jukebox'
-import { sendTrack } from 'src/aiNpc/Stats/Segment'
-import { ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 @Component('DelayedTriggerBox')
 export class DelayedTriggerBox {
@@ -96,8 +94,6 @@ export class TeleportController {
       new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
       new Vector3(6, 4.5, 6),
       () => {
-        log("TrackPlayerMovement", "Beam Up")
-        sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionEnter)
         movePlayerTo(
           { x: lobbyCenter.x + 5, y: 140, z: lobbyCenter.z - 10 },
           { x: lobbyCenter.x, y: 80, z: lobbyCenter.z }
@@ -135,8 +131,6 @@ export class TeleportController {
       new Vector3(lobbyCenter.x, lobbyCenter.y + 90, lobbyCenter.z),
       new Vector3(6, 10, 6),
       () => {
-        log("TrackPlayerMovement", "Beam Down")
-        sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionLeave)
         sfx.lobbyMusicSource.playing = false
         sfx.lobbyAmbienceSource.playing = false
         this.beamFallSound.getComponent(AudioSource).playOnce()

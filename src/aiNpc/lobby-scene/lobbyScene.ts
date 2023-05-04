@@ -16,8 +16,7 @@ import { GAME_STATE } from "src/state";
 import { streamedMsgs } from "../npc/streamedMsgs";
 import { RemoteNpc } from "../npc/remoteNpc";
 import { closeAllInteractions, createMessageObject, sendMsgToAI } from "../npc/connectedUtils";
-import { sendTrack } from "../Stats/Segment";
-import { TrackableEntity } from "../npc/analyticRemoteNpc";
+import { TrackingElement } from "../Stats/analyticsCompnents";
 //import { GridMap } from "src/land-infection/modules/grid";
 //import { gridSize, mapCenter, mapSize } from "src/land-infection/globals";
 
@@ -38,8 +37,8 @@ export class LobbyScene {
     for (const p of REGISTRY.allNPCs) {
       p.npc.onActivate = () => {
         log("TestBarNPC", "NPC", p.name, "activated")
-        if(p.npc.hasComponent(TrackableEntity)){
-          p.npc.getComponent(TrackableEntity).trackStart()
+        if(p.npc.hasComponent(TrackingElement)){
+          p.npc.getComponent(TrackingElement).trackStart()
         }
 
         this.pendingConvoWithNPC = undefined
@@ -74,7 +73,9 @@ export class LobbyScene {
     const host = this
     log("TestBarNPC", "NPC", targetNpc.name, "activated")
     //analytic
-    sendTrack(analyticEventKey)
+    if(targetNpc.npc.hasComponent(TrackingElement)){
+      targetNpc.npc.getComponent(TrackingElement).trackStart(analyticEventKey)
+    } 
 
     this.pendingConvoWithNPC = undefined
     this.pendingConvoActionWithNPC = undefined

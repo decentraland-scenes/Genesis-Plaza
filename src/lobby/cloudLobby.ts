@@ -15,8 +15,8 @@ import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import * as utils from '@dcl/ecs-scene-utils'
 import { addRepeatTrigger } from 'src/modules/Utils'
-import { sendTrack } from 'src/aiNpc/Stats/Segment'
-import { ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement } from 'src/aiNpc/Stats/analyticsCompnents'
 
 const portalControl = new TeleportController()
 
@@ -148,26 +148,29 @@ let classicsMenu = createClassicsVerticalMenu({
 fillClassicsMenu(classicsMenu)
 
 // -- TriggerBox
-/*
 let sphereTrigger = new Entity()
-engine.addEntity(sphereTrigger)
+sphereTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.cloud))
+/*
 sphereTrigger.addComponent(new Transform({
   position: center.clone(),
   scale: new Vector3(22,22,22)
 }))
 sphereTrigger.addComponent(new SphereShape()).withCollisions = false
 */
+engine.addEntity(sphereTrigger)
 addRepeatTrigger(
   center.clone(),
   new Vector3(30,15,30), 
   ()=> {
-    log("TestBarNPC", "In the Clouds")
-    sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionEnter)
+    if(sphereTrigger.hasComponent(TrackingElement)){
+      sphereTrigger.getComponent(TrackingElement).trackStart()
+    }
   },
   null,
   true,
   ()=> {
-    log("TestBarNPC", "Out of the Clouds")
-    sendTrack(ANALYTICS_EVENT_KEYS.CloudRegionLeave)
+    if(sphereTrigger.hasComponent(TrackingElement)){
+      sphereTrigger.getComponent(TrackingElement).trackEnd()
+    }
   }
 )

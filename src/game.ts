@@ -48,8 +48,8 @@ import * as lobbyConn from 'src/aiNpc/lobby-scene/connection/onConnect';
 import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
 import { CONFIG, initConfig } from './config'
 import { initDialogs } from './aiNpc/npc/npcDialog'
-import { ANALYTICS_EVENT_KEYS } from './aiNpc/Stats/AnalyticsConfig'
-import { sendTrack } from './aiNpc/Stats/Segment'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS } from './aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement } from './aiNpc/Stats/analyticsCompnents'
 
 
 //////// LOG PLAYER POSITION
@@ -129,6 +129,9 @@ utils.addOneTimeTrigger(
   }
 )
 
+const barEntity = new Entity()
+barEntity.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.bar))
+engine.addEntity(barEntity)
 // proper bar interior
 addRepeatTrigger(
   new Vector3(160, 50, 155),
@@ -136,7 +139,10 @@ addRepeatTrigger(
   () => {
     setBarMusicOn()
     log('went in')
-    sendTrack(ANALYTICS_EVENT_KEYS.BarRegionEnter)
+    if(barEntity.hasComponent(TrackingElement)){
+      barEntity.getComponent(TrackingElement).
+        trackStart()
+    }
   },
   null,
   false,
@@ -145,7 +151,10 @@ addRepeatTrigger(
     endArtistTalk()
     lowerVolume()
     log('mid distance')
-    sendTrack(ANALYTICS_EVENT_KEYS.BarRegionLeave)
+    if(barEntity.hasComponent(TrackingElement)){
+      barEntity.getComponent(TrackingElement).
+        trackEnd()
+    }
 
     //setBarMusicOff()
   }

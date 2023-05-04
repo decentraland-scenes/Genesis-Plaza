@@ -1,6 +1,9 @@
 import { getUserData } from "@decentraland/Identity"
 import { SKIP_ANALYTICS } from "./AnalyticsConfig";
 
+const sceneId: string = "genesis_plaza"
+const inSeconds: boolean = false
+
 var segment: Segment = null
 
 export function getSegment() {
@@ -10,8 +13,9 @@ export function getSegment() {
   return segment
 }
 
-export async function sendTrack(eventName: string) {
+export async function sendTrackOld(eventName: string,) {
   const doc: any = {
+    sceneId: sceneId,
     playTime: Date.now(),
     exactPosition: Camera.instance.worldPosition,
     position: Math.floor(Camera.instance.worldPosition.x / 16) + "," + Math.floor(Camera.instance.worldPosition.z / 16)
@@ -19,12 +23,26 @@ export async function sendTrack(eventName: string) {
   await getSegment().track(eventName, doc)
 }
 
-export async function trackDogeQuestion(eventName: string, question: string) {
-  const doc: any = {
-    sentQuestion: question,
-    playTime: Date.now(),
-  }
-  await getSegment().track(eventName, doc)
+export async function sendTrack(trackEvent: string,
+  elementType: string,
+  elementId: string,
+  instance: string,
+  event: string,
+  selection: string,
+  durationTime: number) {
+    const doc: any = {
+      sceneId: sceneId,
+      elementType: elementType,
+      elementId: elementId,
+      event: event,
+      selection: selection,
+      durationTime: inSeconds ? durationTime * 0.001 : durationTime,
+
+      playTime: Date.now(),
+      exactPosition: Camera.instance.worldPosition,
+      position: Math.floor(Camera.instance.worldPosition.x / 16) + "," + Math.floor(Camera.instance.worldPosition.z / 16)
+    }
+  await getSegment().track(trackEvent, doc)
 }
 
 declare function btoa(soruce: string): string

@@ -9,6 +9,7 @@ import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
 
 import { closeAllInteractions, createMessageObject, sendMsgToAI } from "./connectedUtils";
 import { QuestionData } from "./remoteNpc";
+import { TrackingElement } from "../Stats/analyticsCompnents";
 
 const canvas = ui.canvas
 
@@ -242,6 +243,8 @@ function sendMessageToAi(message: string){
 
   const doSend = ()=>{
       const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
+      if(REGISTRY.activeNPC.npc.hasComponent(TrackingElement))
+        REGISTRY.activeNPC.npc.getComponent(TrackingElement).trackAction("preDefinedQuestion", message)
       sendMsgToAI(chatMessage)
   }
   if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
@@ -311,6 +314,9 @@ textInput.onTextSubmit = new OnTextSubmit((x) => {
   //utils.setTimeout(200,()=>{ 
   const chatMessage: serverStateSpec.ChatMessage = createMessageObject(x.text, undefined, GAME_STATE.gameRoom)
   sendMsgToAI(chatMessage)
+  log("TestBarNPC", "End Of Single Interaction")
+  if(REGISTRY.activeNPC.npc.hasComponent(TrackingElement))
+    REGISTRY.activeNPC.npc.getComponent(TrackingElement).trackAction("userDefinedQuestion", x.text)
   //} 
   textInput.value = ""
 })
