@@ -1,4 +1,5 @@
-export const SKIP_ANALYTICS: boolean = true
+export const SKIP_ANALYTICS: boolean = false
+export const AnalyticsLogLabel: string = "AnalyticLogs"
 
 export const ANALYTICS_EVENT_KEYS = {
   scene_element_visit: "scene_element_visit",
@@ -21,7 +22,6 @@ export const ANALYTICS_ELEMENTS_IDS = {
   beerMug: "beerMug",
   eventsSlider: "eventsSlider",
 }
-
 
 export const ANALYTICS_GENERIC_EVENTS = {
   start: "start",

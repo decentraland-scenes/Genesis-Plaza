@@ -16,8 +16,8 @@ import { setStreamVolume } from './jukebox'
 import { RemoteNpc } from 'src/aiNpc/npc/remoteNpc'
 import { NpcAnimationNameType, REGISTRY } from 'src/registry'
 import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
-import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackEnd } from 'src/aiNpc/Stats/analyticsCompnents'
 
 export let octopus: NPC
 let doge: NPC
@@ -186,9 +186,8 @@ export async function addBarNPCs() {
       walkingSpeed: 1.2,
       continueOnWalkAway: false,
       onWalkAway: () => {
-        log("TestBarNPC", "Walk Away")
-        if(REGISTRY.activeNPC.npc.hasComponent(TrackingElement))
-          REGISTRY.activeNPC.npc.getComponent(TrackingElement).trackEnd()
+        log(AnalyticsLogLabel, "TestBarNPC", "WalkAway")
+        trackEnd(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement))
         showInputOverlay(false)
         doge.followPath()
       },

@@ -9,7 +9,8 @@ import resources, { setSection } from "src/dcl-scene-ui-workaround/resources";
 
 import { closeAllInteractions, createMessageObject, sendMsgToAI } from "./connectedUtils";
 import { QuestionData } from "./remoteNpc";
-import { TrackingElement } from "../Stats/analyticsCompnents";
+import { TrackingElement, trackAction } from "../Stats/analyticsCompnents";
+import { AnalyticsLogLabel } from "../Stats/AnalyticsConfig";
 
 const canvas = ui.canvas
 
@@ -242,10 +243,10 @@ function sendMessageToAi(message: string){
   closeAllInteractions({exclude:REGISTRY.activeNPC})
 
   const doSend = ()=>{
-      const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
-      if(REGISTRY.activeNPC.npc.hasComponent(TrackingElement))
-        REGISTRY.activeNPC.npc.getComponent(TrackingElement).trackAction("preDefinedQuestion", message)
-      sendMsgToAI(chatMessage)
+    const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
+    log(AnalyticsLogLabel, "CustomNPCUI", "SendMessageToAI", "PreDefined Questions", message)
+    trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement),"preDefinedQuestion", message)
+    sendMsgToAI(chatMessage)
   }
   if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
     doSend()
@@ -313,10 +314,9 @@ textInput.onTextSubmit = new OnTextSubmit((x) => {
   //REGISTRY.activeNPC.endInteraction()
   //utils.setTimeout(200,()=>{ 
   const chatMessage: serverStateSpec.ChatMessage = createMessageObject(x.text, undefined, GAME_STATE.gameRoom)
+  log(AnalyticsLogLabel, "CustomNPCUI", "OnTextSubmit", "userDefined Questions", x.text)
+  trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement), "userDefinedQuestion", x.text)
   sendMsgToAI(chatMessage)
-  log("TestBarNPC", "End Of Single Interaction")
-  if(REGISTRY.activeNPC.npc.hasComponent(TrackingElement))
-    REGISTRY.activeNPC.npc.getComponent(TrackingElement).trackAction("userDefinedQuestion", x.text)
   //} 
   textInput.value = ""
 })

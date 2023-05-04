@@ -48,8 +48,8 @@ import * as lobbyConn from 'src/aiNpc/lobby-scene/connection/onConnect';
 import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
 import { CONFIG, initConfig } from './config'
 import { initDialogs } from './aiNpc/npc/npcDialog'
-import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS } from './aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement } from './aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from './aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackEnd, trackStart } from './aiNpc/Stats/analyticsCompnents'
 
 
 //////// LOG PLAYER POSITION
@@ -139,10 +139,8 @@ addRepeatTrigger(
   () => {
     setBarMusicOn()
     log('went in')
-    if(barEntity.hasComponent(TrackingElement)){
-      barEntity.getComponent(TrackingElement).
-        trackStart()
-    }
+    log(AnalyticsLogLabel, "Game.ts", "RepeatTrigger", "OnEnter")
+    trackStart(barEntity.getComponentOrNull(TrackingElement))
   },
   null,
   false,
@@ -151,10 +149,8 @@ addRepeatTrigger(
     endArtistTalk()
     lowerVolume()
     log('mid distance')
-    if(barEntity.hasComponent(TrackingElement)){
-      barEntity.getComponent(TrackingElement).
-        trackEnd()
-    }
+    log(AnalyticsLogLabel, "Game.ts", "RepeatTrigger", "OnExit")
+    trackEnd(barEntity.getComponentOrNull(TrackingElement))
 
     //setBarMusicOff()
   }

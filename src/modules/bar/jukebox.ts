@@ -3,8 +3,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 import { invisibleMaterial } from '../museumItems'
 import { OctoComments, octopus } from './barNPCs'
 import { tutorialRunning } from 'src/lobby/portalBeam'
-import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS } from 'src/aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackAction } from 'src/aiNpc/Stats/analyticsCompnents'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -97,10 +97,9 @@ export function placeJukeBox() {
       sceneMessageBus.emit('BarRadioToggle', {
         state: !musicState,
       })
-      log("JukeBoxButton","Button_On")
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_On")
       let boxState = !musicState ? "ON" : "OFF"
-      baseJukeBox.getComponent(TrackingElement).
-        trackAction("button_on_off", boxState)
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "button_on_off", boxState)
     },
     'On/Off'
   )
@@ -109,9 +108,8 @@ export function placeJukeBox() {
     new GLTFShape('models/core_building/jukebox/ButtonForward.glb'),
     'Button_Forward',
     () => {
-      log("JukeBoxButton","Button_Forward")
-      baseJukeBox.getComponent(TrackingElement).
-        trackAction("button_forward", null)
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_Forward")
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "button_forward", null)
       barCurrentRadioIndex += 1
       if (barCurrentRadioIndex > radioCount) barCurrentRadioIndex = 0
       JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
@@ -129,9 +127,8 @@ export function placeJukeBox() {
     new GLTFShape('models/core_building/jukebox/Button_Previous.glb'),
     'Button_Preview',
     () => {
-      log("JukeBoxButton","Button_Preview")
-      baseJukeBox.getComponent(TrackingElement).
-        trackAction("previous_button", null)
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_Preview")
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "previous_button", null)
       barCurrentRadioIndex -= 1
       if (barCurrentRadioIndex < 0) barCurrentRadioIndex = radioCount - 1
       JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)

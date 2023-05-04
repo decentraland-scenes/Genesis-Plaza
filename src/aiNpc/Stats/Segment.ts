@@ -32,6 +32,7 @@ export async function sendTrack(trackEvent: string,
   durationTime: number) {
     const doc: any = {
       sceneId: sceneId,
+      spanId: instance,
       elementType: elementType,
       elementId: elementId,
       event: event,

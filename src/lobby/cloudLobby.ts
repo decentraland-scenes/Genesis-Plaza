@@ -15,8 +15,8 @@ import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import * as utils from '@dcl/ecs-scene-utils'
 import { addRepeatTrigger } from 'src/modules/Utils'
-import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackEnd, trackStart } from 'src/aiNpc/Stats/analyticsCompnents'
 
 const portalControl = new TeleportController()
 
@@ -162,15 +162,13 @@ addRepeatTrigger(
   center.clone(),
   new Vector3(30,15,30), 
   ()=> {
-    if(sphereTrigger.hasComponent(TrackingElement)){
-      sphereTrigger.getComponent(TrackingElement).trackStart()
-    }
+    log(AnalyticsLogLabel, "CloudLobby.ts", "RepeatTrigger", "OnEnter")
+    trackStart(sphereTrigger.getComponentOrNull(TrackingElement))
   },
   null,
-  true,
+  false,
   ()=> {
-    if(sphereTrigger.hasComponent(TrackingElement)){
-      sphereTrigger.getComponent(TrackingElement).trackEnd()
-    }
+    log(AnalyticsLogLabel, "CloudLobby.ts", "RepeatTrigger", "OnExit")
+    trackEnd(sphereTrigger.getComponentOrNull(TrackingElement))
   }
 )
