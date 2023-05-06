@@ -18,7 +18,7 @@ export class TrackingElement {
   startTime: number = 0
   isStarted: boolean = false
 
-  constructor(inEelementType: string, inElementId) {
+  constructor(inEelementType: string, inElementId: string) {
     this.guid = generateGUID()
     this.elementType = inEelementType
     this.elementId = inElementId
@@ -59,7 +59,8 @@ export function trackAction(trackingElement: TrackingElement, eventKey: string, 
     ANALYTICS_EVENT_KEYS.scene_element_event,
     trackingElement.elementType,
     trackingElement.elementId,
-    trackingElement.guid, eventKey,
+    trackingElement.guid,
+    eventKey,
     selection,
     null
   )

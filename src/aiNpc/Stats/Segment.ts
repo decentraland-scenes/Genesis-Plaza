@@ -1,5 +1,6 @@
 import { getUserData } from "@decentraland/Identity"
-import { SKIP_ANALYTICS } from "./AnalyticsConfig";
+import { AnalyticsLogLabel, SKIP_ANALYTICS } from "./AnalyticsConfig";
+import { getRealm } from "src/modules/realmData";
 
 const sceneId: string = "genesis_plaza"
 const inSeconds: boolean = false
@@ -30,8 +31,12 @@ export async function sendTrack(trackEvent: string,
   event: string,
   selection: string,
   durationTime: number) {
+
+    const realm = await getRealm()
+
     const doc: any = {
       sceneId: sceneId,
+      realm: realm,
       spanId: instance,
       elementType: elementType,
       elementId: elementId,
