@@ -2,8 +2,8 @@ import { getUserData } from "@decentraland/Identity"
 import { AnalyticsLogLabel, SKIP_ANALYTICS } from "./AnalyticsConfig";
 import { getRealm } from "src/modules/realmData";
 
-const sceneId: string = "genesis_plaza"
-const inSeconds: boolean = false
+const SCENE_ID: string = "genesis_plaza"
+const IN_SECONDS: boolean = false
 
 var segment: Segment = null
 
@@ -16,8 +16,8 @@ export function getSegment() {
 
 export async function sendTrackOld(eventName: string,) {
   const doc: any = {
-    sceneId: sceneId,
-    playTime: Date.now(),
+    sceneId: SCENE_ID,
+    playTime: Date.now() - GenesisData.instance().startPlayTime,
     exactPosition: Camera.instance.worldPosition,
     position: Math.floor(Camera.instance.worldPosition.x / 16) + "," + Math.floor(Camera.instance.worldPosition.z / 16)
   }
@@ -32,22 +32,22 @@ export async function sendTrack(trackEvent: string,
   selection: string,
   durationTime: number) {
 
-    const realm = await getRealm()
+  const realm = await getRealm()
 
-    const doc: any = {
-      sceneId: sceneId,
-      realm: realm,
-      spanId: instance,
-      elementType: elementType,
-      elementId: elementId,
-      event: event,
-      selection: selection,
-      durationTime: inSeconds ? durationTime * 0.001 : durationTime,
+  const doc: any = {
+    sceneId: SCENE_ID,
+    realm: realm,
+    spanId: instance,
+    elementType: elementType,
+    elementId: elementId,
+    event: event,
+    selection: selection,
+    durationTime: IN_SECONDS ? durationTime * 0.001 : durationTime,
 
-      playTime: Date.now(),
-      exactPosition: Camera.instance.worldPosition,
-      position: Math.floor(Camera.instance.worldPosition.x / 16) + "," + Math.floor(Camera.instance.worldPosition.z / 16)
-    }
+    playTime: Date.now() - GenesisData.instance().startPlayTime,
+    exactPosition: Camera.instance.worldPosition,
+    position: Math.floor(Camera.instance.worldPosition.x / 16) + "," + Math.floor(Camera.instance.worldPosition.z / 16)
+  }
   await getSegment().track(trackEvent, doc)
 }
 
