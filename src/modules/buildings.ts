@@ -180,7 +180,8 @@ export function addBuildings() {
   )
   engine.addEntity(core_building)
   */
-  //add msg_welcome
+  //add msg_welcome^
+  /*
   let msg_welcome = new Entity()
   msg_welcome.addComponent(new GLTFShape('models/msg_welcome.glb'))
   msg_welcome.addComponent(
@@ -189,6 +190,7 @@ export function addBuildings() {
     })
   )
   engine.addEntity(msg_welcome)
+  */
 
   //add core_art
   let core_art = new Entity()
