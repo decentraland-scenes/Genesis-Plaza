@@ -14,7 +14,7 @@ import { lobbyCenter, lobbyHeight, lobbyRadius } from './resources/globals'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 
-const portalControl = new TeleportController()
+//const portalControl = new TeleportController()
 
 const menuScale = 1.2
 const center = new Vector3(lobbyCenter.x, lobbyHeight + 1.5, lobbyCenter.z)

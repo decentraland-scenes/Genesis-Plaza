@@ -17,6 +17,7 @@ export class DelayedTriggerBox {
     this.delay = _delay
   }
 }
+/*
 // AMBIENT SOUND, WATER + BIRDS
 let ambienceBox = new Entity()
 ambienceBox.addComponent(sfx.lobbyAmbienceSource)
@@ -59,11 +60,12 @@ tutorialEnableObservable.add((tutorialEnabled) => {
   }
 
   sfx.lobbyMusicSource.playing = tutorialEnabled ? false : true
-})
+})*/
 
 export let tutorialRunning: boolean = false
 
 // BEAM MESH
+/*
 let beam = new Entity()
 beam.addComponent(
   new Transform({
@@ -72,6 +74,7 @@ beam.addComponent(
 )
 beam.addComponent(resource.beamShape)
 engine.addEntity(beam)
+*/
 
 export class TeleportController {
   triggerBoxUp: TriggerBox
