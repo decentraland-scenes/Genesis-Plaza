@@ -78,8 +78,8 @@ addBuildings()
 
 // BAR DOORS
 
-placeDoors()
-barPlatforms()
+//placeDoors()
+//barPlatforms()
 
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
