@@ -318,7 +318,7 @@ export function addBuildings() {
 
   //add street
   let street = new Entity()
-  street.addComponent(new GLTFShape('models/street.glb'))
+  street.addComponent(new GLTFShape('models/street_cutoutVersion.glb'))
   street.addComponent(
     new Transform({
       rotation: Quaternion.Euler(0, 180, 0),
