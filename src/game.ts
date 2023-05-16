@@ -84,7 +84,7 @@ addBuildings()
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()
-    addBarNPCs()
+    //addBarNPCs()
 
     //// AI NPC initial init
     setupNPC()
@@ -209,7 +209,7 @@ utils.addOneTimeTrigger(
 export function insideBar() {
   if (!areNPCsAdded) {
     handleQuests()
-    addBarNPCs()
+    //addBarNPCs()
     setupNPC()
 
     REGISTRY.lobbyScene = new LobbyScene()
