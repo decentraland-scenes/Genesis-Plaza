@@ -230,7 +230,7 @@ export function insideBar() {
 
   //REMOVING PROCESS
   //placeJukeBox()
-  addMicFeedback()
+  //addMicFeedback()
 }
 
 export let isOutsideLoaded: boolean = false
