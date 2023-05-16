@@ -8,6 +8,7 @@ import { Sound } from './sound'
 import { sceneMessageBus } from '../interactiveItems'
 
 // Dispenser
+/*
 export const beerDispenser = new Entity()
 beerDispenser.addComponent(
   new GLTFShape('models/core_building/interactiveItems/beerDispenser.glb')
@@ -17,6 +18,7 @@ beerDispenser.addComponent(
 )
 beerDispenser.getComponent(Transform).rotate(Vector3.Up(), -90)
 engine.addEntity(beerDispenser)
+*/
 
 // Multiplayer
 type TapID = {
@@ -86,17 +88,18 @@ export class Tap extends Entity {
 }
 
 sceneMessageBus.on('TapPourAnim', (tapID: TapID) => {
-  taps[tapID.id].stopAnimations()
+  /*taps[tapID.id].stopAnimations()
   taps[tapID.id].getComponent(Animator).getClip('Pour').play()
   taps[tapID.id].removeComponent(OnPointerDown)
   taps[tapID.id].addComponent(
     new utils.Delay(2500, () => {
       taps[tapID.id].addPointerDown()
     })
-  )
+  )*/
 })
 
 // Taps
+/*
 const redTap = new Tap(
   0,
   new GLTFShape('models/core_building/interactiveItems/redTap.glb'),
@@ -122,3 +125,4 @@ const greenTap = new Tap(
 greenTap.setParent(beerDispenser)
 
 const taps: Tap[] = [redTap, yellowTap, greenTap]
+*/
