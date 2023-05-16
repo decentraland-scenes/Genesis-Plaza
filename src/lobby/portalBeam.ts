@@ -2,7 +2,7 @@ import { TriggerBox } from '../modules/triggerBox'
 import { player } from '../modules/player'
 import { movePlayerTo } from '@decentraland/RestrictedActions'
 import { lobbyCenter, lobbyHeight } from './resources/globals'
-import { showTeleportUI, setTeleportCountdown } from '../modules/ui'
+import {  setTeleportCountdown } from '../modules/ui'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import { tutorialEnableObservable } from 'src/modules/tutorialHandler'
@@ -222,7 +222,7 @@ export class TeleportController {
         const delayInfo =
           this.delayedTriggers[i].getComponent(DelayedTriggerBox)
         delayInfo.elapsed += dt
-        showTeleportUI(true)
+        //showTeleportUI(true)
         let countDownNum = delayInfo.delay - delayInfo.elapsed + 1
         if (countDownNum < 1) countDownNum = 1
         setTeleportCountdown(countDownNum.toFixed(0))
@@ -243,7 +243,7 @@ export class TeleportController {
         }
       } else {
         this.delayedTriggers[i].getComponent(DelayedTriggerBox).elapsed = 0
-        showTeleportUI(false)
+        //showTeleportUI(false)
         setTeleportCountdown('0')
         liftSpiralTransform.scale.y = 0
         liftSpiralTransform.position.y = lobbyCenter.y
