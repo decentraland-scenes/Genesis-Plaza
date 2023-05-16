@@ -42,7 +42,7 @@ export function addBuildings() {
 
   //add hallway
   let hallway = new Entity()
-  hallway.addComponent(new GLTFShape('models/hallway.glb'))
+  hallway.addComponent(new GLTFShape('models/hallway_cutoutVersion.glb'))
   hallway.addComponent(
     new Transform({
       rotation: Quaternion.Euler(0, 180, 0),
