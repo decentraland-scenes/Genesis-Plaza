@@ -170,17 +170,17 @@ export function addBuildings() {
   engine.addEntity(TheWhale_Action_Sculpture)
 
   //CORE BUILDING
-  /*
+  
   //add core_building
-  let core_building = new Entity()
-  core_building.addComponent(new GLTFShape('models/core_building.glb'))
-  core_building.addComponent(
+  let island = new Entity()
+  island.addComponent(new GLTFShape('models/island_cutoutVersion.glb'))
+  island.addComponent(
     new Transform({
       rotation: Quaternion.Euler(0, 180, 0),
     })
   )
-  engine.addEntity(core_building)
-  */
+  engine.addEntity(island)
+  
   //add msg_welcome^
   /*
   //REMOVING PROCESS
