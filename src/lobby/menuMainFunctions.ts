@@ -173,7 +173,7 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
   
 
   // ADD BAR PANELS
-
+  /*
   if(events.length >= 4){
     addPanels(
       new Texture( events[0].image ),
@@ -189,7 +189,7 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
       new Texture( events[0].image ),
       new Texture( events[0].image ),
     )
-  }
+  }*/
   
 
 
