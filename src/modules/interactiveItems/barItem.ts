@@ -66,6 +66,7 @@ sceneMessageBus.on("ItemPutDown", (itemPosition: ItemPosition) => {
 
 // Bar items
 /*
+//REMOVING PROCESS
 const bottle02 = new BarItem(0, new GLTFShape("models/core_building/interactiveItems/Bottle_02.glb"), new Vector3(144.30, 1.02, 163.20), new Vector3(0, -0.475, 0.5), 0)
 const bottle06 = new BarItem(1, new GLTFShape("models/core_building/interactiveItems/Bottle_06.glb"), new Vector3(176.25, 1.02, 163.73), new Vector3(0, -0.475, 0.5), 0)
 const bottle08 = new BarItem(2, new GLTFShape("models/core_building/interactiveItems/Bottle_08.glb"), new Vector3(173.80, 1.02, 137.71), new Vector3(0, -0.475, 0.5), 0)
@@ -81,6 +82,7 @@ const glass05A = new BarItem(10, new GLTFShape("models/core_building/interactive
 
 export const barItems: BarItem[] = [
   /*
+  //REMOVING PROCESS
   bottle02, 
   bottle06, 
   bottle08, 

@@ -173,6 +173,7 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
   
 
   // ADD BAR PANELS
+  //REMOVING PROCESS
   /*
   if(events.length >= 4){
     addPanels(

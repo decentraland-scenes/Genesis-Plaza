@@ -3,6 +3,7 @@ export function addBuildings() {
     // CLOUD LOBBY
   /*
   // add lobby platform + teleport beam
+  //REMOVING PROCESS
   let lobby = new Entity()
   lobby.addComponent(new GLTFShape('models/lobby/lobby_platform.glb'))
   lobby.addComponent(
@@ -182,6 +183,7 @@ export function addBuildings() {
   */
   //add msg_welcome^
   /*
+  //REMOVING PROCESS
   let msg_welcome = new Entity()
   msg_welcome.addComponent(new GLTFShape('models/msg_welcome.glb'))
   msg_welcome.addComponent(
@@ -359,6 +361,7 @@ engine.addEntity(zepellin)
 
 //add eth logos in bar
 /*
+//REMOVING PROCESS
 let ethLogos = new Entity()
 ethLogos.addComponent(new GLTFShape('models/core_building/Eth_Details.glb'))
 ethLogos.addComponent(

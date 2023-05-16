@@ -14,6 +14,7 @@ import { lobbyCenter, lobbyHeight, lobbyRadius } from './resources/globals'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 
+//REMOVING PROCESS
 //const portalControl = new TeleportController()
 
 const menuScale = 1.2

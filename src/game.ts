@@ -78,12 +78,14 @@ addBuildings()
 
 // BAR DOORS
 
+//REMOVING PROCESS
 //placeDoors()
 //barPlatforms()
 
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()
+    //REMOVING PROCESS
     //addBarNPCs()
 
     //// AI NPC initial init
@@ -209,6 +211,7 @@ utils.addOneTimeTrigger(
 export function insideBar() {
   if (!areNPCsAdded) {
     handleQuests()
+    //REMOVING PROCESS
     //addBarNPCs()
     setupNPC()
 
@@ -225,6 +228,7 @@ export function insideBar() {
     }
   }
 
+  //REMOVING PROCESS
   //placeJukeBox()
   addMicFeedback()
 }

@@ -18,6 +18,7 @@ export class DelayedTriggerBox {
   }
 }
 /*
+//REMOVING PROCESS
 // AMBIENT SOUND, WATER + BIRDS
 let ambienceBox = new Entity()
 ambienceBox.addComponent(sfx.lobbyAmbienceSource)
@@ -66,6 +67,7 @@ export let tutorialRunning: boolean = false
 
 // BEAM MESH
 /*
+//REMOVING PROCESS
 let beam = new Entity()
 beam.addComponent(
   new Transform({

@@ -9,6 +9,7 @@ import { sceneMessageBus } from '../interactiveItems'
 
 // Dispenser
 /*
+//REMOVING PROCESS
 export const beerDispenser = new Entity()
 beerDispenser.addComponent(
   new GLTFShape('models/core_building/interactiveItems/beerDispenser.glb')

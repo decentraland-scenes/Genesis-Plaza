@@ -210,6 +210,7 @@ sceneMessageBus.on('BeerGlassPourAnim', (beerGlassState: BeerGlassState) => {
 
 // Beer glasses
 /*
+//REMOVING PROCESS
 const beerGlassShape = new GLTFShape(
   'models/core_building/interactiveItems/beerGlass.glb'
 )
@@ -272,6 +273,7 @@ const beerGlass8 = new BeerGlass(
 )*/
 
 export const beerGlasses: BeerGlass[] = [
+  //REMOVING PROCESS
   /*beerGlass1,
   beerGlass2,
   beerGlass3,
