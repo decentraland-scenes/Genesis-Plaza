@@ -225,7 +225,7 @@ export function insideBar() {
     }
   }
 
-  placeJukeBox()
+  //placeJukeBox()
   addMicFeedback()
 }
 
