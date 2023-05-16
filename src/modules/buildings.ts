@@ -356,6 +356,7 @@ zepellin.addComponent(
 engine.addEntity(zepellin)
 
 //add eth logos in bar
+/*
 let ethLogos = new Entity()
 ethLogos.addComponent(new GLTFShape('models/core_building/Eth_Details.glb'))
 ethLogos.addComponent(
@@ -373,3 +374,4 @@ ethLogos_02.addComponent(
   })
 )
 engine.addEntity(ethLogos_02)
+*/
