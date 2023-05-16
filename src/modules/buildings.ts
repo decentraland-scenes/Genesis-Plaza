@@ -1,7 +1,7 @@
 export function addBuildings() {
 
     // CLOUD LOBBY
-
+  /*
   // add lobby platform + teleport beam
   let lobby = new Entity()
   lobby.addComponent(new GLTFShape('models/lobby/lobby_platform.glb'))
@@ -11,7 +11,8 @@ export function addBuildings() {
     })
   )
   engine.addEntity(lobby)
-  
+  */
+
   // AGORA BUILDING
 
   // add agora
@@ -168,7 +169,7 @@ export function addBuildings() {
   engine.addEntity(TheWhale_Action_Sculpture)
 
   //CORE BUILDING
-
+  /*
   //add core_building
   let core_building = new Entity()
   core_building.addComponent(new GLTFShape('models/core_building.glb'))
@@ -178,7 +179,7 @@ export function addBuildings() {
     })
   )
   engine.addEntity(core_building)
-
+  */
   //add msg_welcome
   let msg_welcome = new Entity()
   msg_welcome.addComponent(new GLTFShape('models/msg_welcome.glb'))
