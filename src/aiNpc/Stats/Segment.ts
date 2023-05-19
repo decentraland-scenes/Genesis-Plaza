@@ -5,7 +5,7 @@ import { getRealm } from "src/modules/realmData";
 const SCENE_ID: string = "genesis_plaza"
 const IN_SECONDS: boolean = false
 
-var segment: Segment = null
+let segment: Segment
 
 export function getSegment() {
   if (segment) return segment;
@@ -29,8 +29,9 @@ export async function sendTrack(trackEvent: string,
   elementId: string,
   instance: string,
   event: string,
-  selection: string,
-  durationTime: number) {
+  selection?: string,
+  durationTime?: number) {
+
 
   const realm = await getRealm()
 
@@ -42,7 +43,7 @@ export async function sendTrack(trackEvent: string,
     elementId: elementId,
     event: event,
     selection: selection,
-    durationTime: IN_SECONDS ? durationTime * 0.001 : durationTime,
+    durationTime: durationTime && IN_SECONDS ? durationTime * 0.001 : durationTime,
 
     playTime: Date.now() - GenesisData.instance().startPlayTime,
     exactPosition: Camera.instance.worldPosition,
@@ -61,9 +62,10 @@ class Segment {
     if (SKIP_ANALYTICS) return
     const userData = await getUserData()
     if (!userData) {
-      log(`[ignored] track("${event}"${properties ? ', {...}' : ''}): missing userData`)
+      log(`[ignored] Segment.track("${event}`,properties,`): missing userData`)
       return
     }
+    log(`Segment.track("${event}`,properties,`)`)
 
     const data: SegemntTrack = {
       messageId: messageId(),
@@ -92,7 +94,7 @@ class Segment {
         body: JSON.stringify(data)
       })
     } catch (err) {
-      log(`[error] track("${event}"${properties ? ', {...}' : ''}): ${(err as Error)?.message || err}`)
+      log(`[error] Segment.track("${event}"`,properties,`): ${(err as Error)?.message || err}`)
     }
   }
 }

@@ -73,7 +73,7 @@ export function trackEnd(trackingElement: TrackingElement, inTrackingKey?: strin
   }
   trackingElement.isStarted = false
   trackingElement.startTime = Date.now() - trackingElement.startTime
-  let eventKey: string = event ? ANALYTICS_GENERIC_EVENTS.end : event
+  let eventKey: string = event ? event : ANALYTICS_GENERIC_EVENTS.end
   let trackingKey: string = inTrackingKey ? inTrackingKey : ANALYTICS_EVENT_KEYS.scene_element_visit
   sendTrack(
     trackingKey,
