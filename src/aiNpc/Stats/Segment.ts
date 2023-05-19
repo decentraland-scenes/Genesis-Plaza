@@ -31,7 +31,7 @@ export async function sendTrack(trackEvent: string,
   event: string,
   durationTime?: number,
   selection?: string,
-  selectionDesc?: string) {
+  selectionDetails?: string) {
 
 
   const realm = await getRealm()
@@ -44,7 +44,7 @@ export async function sendTrack(trackEvent: string,
     elementId: elementId,
     event: event,
     selection: selection,
-    selectionDesc: selectionDesc,
+    selectionDetails: selectionDetails,
     durationTime: durationTime && IN_SECONDS ? durationTime * 0.001 : durationTime,
 
     playTime: Date.now() - GenesisData.instance().startPlayTime,
