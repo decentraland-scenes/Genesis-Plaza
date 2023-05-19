@@ -50,7 +50,7 @@ export function trackStart(trackingElement: TrackingElement, inTrackingKey?: str
   )
 }
 
-export function trackAction(trackingElement: TrackingElement, eventKey: string, selection: string) {
+export function trackAction(trackingElement: TrackingElement, eventKey: string, selection: string,selectionDesc?:string) {
   if (trackingElement === null || trackingElement === undefined) {
     log(AnalyticsLogLabel, "Tracking Element can't be Null Or Undefined")
     return
@@ -61,8 +61,8 @@ export function trackAction(trackingElement: TrackingElement, eventKey: string, 
     trackingElement.elementId,
     trackingElement.guid,
     eventKey,
-    selection,
-    null
+    undefined,
+    selection
   )
 }
 
@@ -81,7 +81,7 @@ export function trackEnd(trackingElement: TrackingElement, inTrackingKey?: strin
     trackingElement.elementId,
     trackingElement.guid,
     eventKey,
-    null,
-    trackingElement.startTime
+    trackingElement.startTime,
+    undefined
   )
 }
