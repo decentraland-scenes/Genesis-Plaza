@@ -3,10 +3,14 @@ import { monthToString, wordWrap } from './helperFunctions'
 import * as resource from './resources/resources'
 import { AnimatedItem } from './simpleAnimator'
 import { MenuItem } from './menuItem'
+import { TrackingElement, trackAction } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
 export class TrendingMenuItem extends MenuItem {
+  _scene: any//store data for analytics
+
   public thumbNail: ThumbnailPlane
   public scale: Vector3
   public scaleMultiplier: number
@@ -45,10 +49,12 @@ export class TrendingMenuItem extends MenuItem {
     _scene: any
   ) {
     super()
+    this._scene = _scene
     this.addComponent(new Transform(_transform))
 
     this.defaultItemScale = new Vector3(2, 2, 2)
     // event card root
+    const host = this
     this.itemBox = new Entity()
     this.itemBox.addComponent(
       new Transform({
@@ -58,6 +64,8 @@ export class TrendingMenuItem extends MenuItem {
     )
     this.itemBox.addComponent(resource.menuTitleBGShape)
     this.itemBox.setParent(this)
+
+    this.itemBox.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.interactable, ANALYTICS_ELEMENTS_IDS.menuTrendingScenesSlider))
 
     this.scale = new Vector3(1, 0.5, 1)
     this.scaleMultiplier = 1.2
@@ -300,6 +308,7 @@ export class TrendingMenuItem extends MenuItem {
       this.coordsPanel.addComponent(
         new OnPointerDown(
           async function () {
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
             teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
           },
           {
@@ -313,6 +322,7 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpInButton.addComponent(
         new OnPointerDown(
           async function () {
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
             teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
           },
           {
@@ -349,6 +359,7 @@ export class TrendingMenuItem extends MenuItem {
   }
 
   updateItemInfo(_scene: any) {
+    this._scene = _scene
     //image
     if (_scene.thumbnail) {
       this.thumbNail.updateImage(new Texture(_scene.thumbnail))
@@ -374,6 +385,8 @@ export class TrendingMenuItem extends MenuItem {
     //coords
     this.coordsText.value = _scene.baseCoords[0] + ',' + _scene.baseCoords[1]
 
+    const host = this
+    
     //exception for Genesis Plaza
     if (_scene.baseCoords[0] < 10 && _scene.baseCoords[0] > -10) {
       this.coordsText.value = '0,0'
@@ -390,6 +403,7 @@ export class TrendingMenuItem extends MenuItem {
     } else {
       ;(this.coordsPanel.getComponent(OnPointerDown).callback =
         async function () {
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
           teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
         }),
         {
@@ -401,6 +415,7 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpButtonTextShape.fontSize = 10
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
           teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText = 'JUMP IN'
@@ -414,6 +429,7 @@ export class TrendingMenuItem extends MenuItem {
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
       //this.timePanel.getComponent(AnimatedItem).activate()
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1],this._scene.name)
     }
   }
   deselect() {

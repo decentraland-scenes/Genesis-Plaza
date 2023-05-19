@@ -3,6 +3,8 @@ import * as utils from '@dcl/ecs-scene-utils'
 import { invisibleMaterial } from '../museumItems'
 import { OctoComments, octopus } from './barNPCs'
 import { tutorialRunning } from 'src/lobby/portalBeam'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackAction } from 'src/aiNpc/Stats/analyticsCompnents'
 
 export enum Radios {
   RAVE = 'https://icecast.ravepartyradio.org/ravepartyradio-192.mp3',
@@ -35,6 +37,7 @@ let baseJukeBoxLights2 = new Entity()
 //   looping: true,
 // })
 // jukeBoxLightsAnim2.stop()
+baseJukeBox.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.interactable, ANALYTICS_ELEMENTS_IDS.jukeBox))
 
 export function placeJukeBox() {
   barMusicStream = new AudioStream(barCurrentRadio)
@@ -94,6 +97,9 @@ export function placeJukeBox() {
       sceneMessageBus.emit('BarRadioToggle', {
         state: !musicState,
       })
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_On")
+      let boxState = !musicState ? "ON" : "OFF"
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "button_on_off", boxState)
     },
     'On/Off'
   )
@@ -102,6 +108,8 @@ export function placeJukeBox() {
     new GLTFShape('models/core_building/jukebox/ButtonForward.glb'),
     'Button_Forward',
     () => {
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_Forward")
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "button_forward", null)
       barCurrentRadioIndex += 1
       if (barCurrentRadioIndex > radioCount) barCurrentRadioIndex = 0
       JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)
@@ -119,6 +127,8 @@ export function placeJukeBox() {
     new GLTFShape('models/core_building/jukebox/Button_Previous.glb'),
     'Button_Preview',
     () => {
+      log(AnalyticsLogLabel, "JukeBoxButton","Button_Preview")
+      trackAction(baseJukeBox.getComponentOrNull(TrackingElement), "previous_button", null)
       barCurrentRadioIndex -= 1
       if (barCurrentRadioIndex < 0) barCurrentRadioIndex = radioCount - 1
       JukeBoxText.value = 'Radio:\n' + getRadioName(barCurrentRadioIndex)

@@ -6,6 +6,8 @@ import { MenuItem } from './menuItem'
 import * as sfx from './resources/sounds'
 import { lobbyCenter } from './resources/globals'
 import { getCurrentTime, getTimeStamp } from './checkApi'
+import { TrackingElement, trackAction, trackEnd, trackStart } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 let dummyLiveBadge = new Entity()
 dummyLiveBadge.addComponent(
@@ -19,6 +21,8 @@ engine.addEntity(dummyLiveBadge)
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
 export class EventMenuItem extends MenuItem {
+  _event: any//store data for analytics
+
   public thumbNail: ThumbnailPlane
   public scale: Vector3
   public scaleMultiplier: number
@@ -59,9 +63,11 @@ export class EventMenuItem extends MenuItem {
     _event: any
   ) {
     super()
+    this._event = _event
     this.addComponent(new Transform(_transform))
 
     // event card root
+    const host = this
     this.itemBox = new Entity()
     this.itemBox.addComponent(
       new Transform({
@@ -71,6 +77,8 @@ export class EventMenuItem extends MenuItem {
     )
     this.itemBox.addComponent(resource.menuTitleBGShape)
     this.itemBox.setParent(this)
+
+    this.itemBox.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.interactable, ANALYTICS_ELEMENTS_IDS.menuEventSlider))
 
     this.defaultItemScale = new Vector3(2, 2, 2)
 
@@ -279,6 +287,7 @@ export class EventMenuItem extends MenuItem {
     this.coordsPanel.addComponent(
       new OnPointerDown(
         async function () {
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _event.coordinates[0] + ',' + _event.coordinates[1],_event.name)
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         },
         {
@@ -351,6 +360,7 @@ export class EventMenuItem extends MenuItem {
       this.jumpInButton.addComponent(
         new OnPointerDown(
           async function () {
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.coordinates[0] + ',' + _event.coordinates[1],_event.name)
             teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
           },
           {
@@ -366,8 +376,10 @@ export class EventMenuItem extends MenuItem {
         new OnPointerDown(
           async function () {
             // rsvpToEvent(_event.id, getTimeStamp())
+            const url = 'https://events.decentraland.org/en/?event=' + _event.id
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", url,_event.name)
             openExternalURL(
-              'https://events.decentraland.org/en/?event=' + _event.id
+              url
             )
           },
           {
@@ -460,8 +472,10 @@ export class EventMenuItem extends MenuItem {
     this.readMoreButton.addComponent(
       new OnPointerDown(
         () => {
+          const url = 'https://events.decentraland.org/en/?event=' + _event.id
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_read_more", url)
           openExternalURL(
-            'https://events.decentraland.org/en/?event=' + _event.id
+            url
           )
         },
         { hoverText: 'READ MORE' }
@@ -494,8 +508,11 @@ export class EventMenuItem extends MenuItem {
     this.highlightFrame.setParent(this.highlightRays)
   }
   updateItemInfo(_event: any) {
+    this._event = _event
     //image
     this.thumbNail.updateImage(new Texture(_event.image))
+
+    const host = this
 
     //live or not
     this.live = _event.live
@@ -507,6 +524,7 @@ export class EventMenuItem extends MenuItem {
       this.jumpButtonTextShape.value = 'JUMP IN'
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText = 'JUMP IN'
@@ -523,8 +541,10 @@ export class EventMenuItem extends MenuItem {
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
           // rsvpToEvent(_event.id, getTimeStamp())
+          const url = 'https://events.decentraland.org/en/?event=' + _event.id
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           openExternalURL(
-            'https://events.decentraland.org/en/?event=' + _event.id
+            url
           )
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText =
@@ -558,6 +578,7 @@ export class EventMenuItem extends MenuItem {
       new OnPointerDown(
         async function () {
           // log("teleporting to:" +(_event.coordinates[0] + "," + _event.coordinates[1]) )
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         },
         {
@@ -577,12 +598,14 @@ export class EventMenuItem extends MenuItem {
 
     //details website button (read more)
     this.readMoreButton.getComponent(OnPointerDown).callback = () => {
+      trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_read_more", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
       openExternalURL('https://events.decentraland.org/en/?event=' + _event.id)
     }
     this.readMoreButton.getComponent(OnPointerDown).hoverText = 'READ MORE'
   }
   select() {
     if (!this.selected) {
+      const _event = this._event
       // engine.addEntity(this.detailsRoot)
       this.selected = true
       this.jumpInButton.getComponent(AnimatedItem).activate()
@@ -590,6 +613,8 @@ export class EventMenuItem extends MenuItem {
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
       this.timePanel.getComponent(AnimatedItem).activate()
+      //trackStart(this.itemBox.getComponentOrNull(TrackingElement),undefined,"select_card", this._event.coordinates[0] + ',' + this._event.coordinates[1])
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
     }
   }
   deselect(_silent?: boolean) {
@@ -602,7 +627,7 @@ export class EventMenuItem extends MenuItem {
     this.highlightRays.getComponent(AnimatedItem).deactivate()
     this.coordsPanel.getComponent(AnimatedItem).deactivate()
     this.timePanel.getComponent(AnimatedItem).deactivate()
-
+    //trackEnd(this.itemBox.getComponentOrNull(TrackingElement))
     // if(!_silent){
     //     sfx.menuDeselectSource.playOnce()
     // }
