@@ -12,6 +12,7 @@ import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stat
 
 export class ClassicMenuItem extends MenuItem {
   _location: string //track data for analytics
+  _name: string //track data for analytics
 
   public thumbNail: ThumbnailPlane
   public scale: Vector3
@@ -36,6 +37,7 @@ export class ClassicMenuItem extends MenuItem {
   ) {
     super()
     this._location = _location
+    this._name = this._name
     this.addComponent(new Transform(_transform))
 
     this.defaultItemScale = new Vector3(1, 1, 1)
@@ -278,7 +280,7 @@ export class ClassicMenuItem extends MenuItem {
       this.detailTextPanel.getComponent(AnimatedItem).activate()
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
-      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._location)
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._location,this._name)
     }
   }
   deselect() {

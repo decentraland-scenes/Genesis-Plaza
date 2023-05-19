@@ -308,7 +308,7 @@ export class TrendingMenuItem extends MenuItem {
       this.coordsPanel.addComponent(
         new OnPointerDown(
           async function () {
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
             teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
           },
           {
@@ -322,7 +322,7 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpInButton.addComponent(
         new OnPointerDown(
           async function () {
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
             teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
           },
           {
@@ -403,7 +403,7 @@ export class TrendingMenuItem extends MenuItem {
     } else {
       ;(this.coordsPanel.getComponent(OnPointerDown).callback =
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
           teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
         }),
         {
@@ -415,7 +415,7 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpButtonTextShape.fontSize = 10
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
           teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText = 'JUMP IN'
@@ -429,7 +429,7 @@ export class TrendingMenuItem extends MenuItem {
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
       //this.timePanel.getComponent(AnimatedItem).activate()
-      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1])
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1],_scene.name)
     }
   }
   deselect() {

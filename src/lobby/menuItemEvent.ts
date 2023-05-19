@@ -287,7 +287,7 @@ export class EventMenuItem extends MenuItem {
     this.coordsPanel.addComponent(
       new OnPointerDown(
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _event.coordinates[0] + ',' + _event.coordinates[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _event.coordinates[0] + ',' + _event.coordinates[1],_event.name)
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         },
         {
@@ -360,7 +360,7 @@ export class EventMenuItem extends MenuItem {
       this.jumpInButton.addComponent(
         new OnPointerDown(
           async function () {
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.coordinates[0] + ',' + _event.coordinates[1])
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.coordinates[0] + ',' + _event.coordinates[1],_event.name)
             teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
           },
           {
@@ -377,7 +377,7 @@ export class EventMenuItem extends MenuItem {
           async function () {
             // rsvpToEvent(_event.id, getTimeStamp())
             const url = 'https://events.decentraland.org/en/?event=' + _event.id
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", url)
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", url,_event.name)
             openExternalURL(
               url
             )
@@ -524,7 +524,7 @@ export class EventMenuItem extends MenuItem {
       this.jumpButtonTextShape.value = 'JUMP IN'
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.coordinates[0] + ',' + _event.coordinates[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText = 'JUMP IN'
@@ -542,7 +542,7 @@ export class EventMenuItem extends MenuItem {
         async function () {
           // rsvpToEvent(_event.id, getTimeStamp())
           const url = 'https://events.decentraland.org/en/?event=' + _event.id
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", url)
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_check_event_page", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           openExternalURL(
             url
           )
@@ -578,7 +578,7 @@ export class EventMenuItem extends MenuItem {
       new OnPointerDown(
         async function () {
           // log("teleporting to:" +(_event.coordinates[0] + "," + _event.coordinates[1]) )
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", (_event.coordinates[0] + ',' + _event.coordinates[1]))
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
           teleportTo(_event.coordinates[0] + ',' + _event.coordinates[1])
         },
         {
@@ -598,13 +598,14 @@ export class EventMenuItem extends MenuItem {
 
     //details website button (read more)
     this.readMoreButton.getComponent(OnPointerDown).callback = () => {
-      trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_read_more", ('https://events.decentraland.org/en/?event=' + _event.id))
+      trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_read_more", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
       openExternalURL('https://events.decentraland.org/en/?event=' + _event.id)
     }
     this.readMoreButton.getComponent(OnPointerDown).hoverText = 'READ MORE'
   }
   select() {
     if (!this.selected) {
+      const _event = this._event
       // engine.addEntity(this.detailsRoot)
       this.selected = true
       this.jumpInButton.getComponent(AnimatedItem).activate()
@@ -613,7 +614,7 @@ export class EventMenuItem extends MenuItem {
       this.coordsPanel.getComponent(AnimatedItem).activate()
       this.timePanel.getComponent(AnimatedItem).activate()
       //trackStart(this.itemBox.getComponentOrNull(TrackingElement),undefined,"select_card", this._event.coordinates[0] + ',' + this._event.coordinates[1])
-      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._event.coordinates[0] + ',' + this._event.coordinates[1])
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", _event.id, (_event.coordinates[0] + ',' + _event.coordinates[1]+":"+_event.name))
     }
   }
   deselect(_silent?: boolean) {
