@@ -21,8 +21,8 @@ export const ANALYTICS_ELEMENTS_IDS = {
   jukeBox: "jukeBox",
   beerMug: "beerMug",
   menuEventSlider: "menuEventSlider",
-  menuTrendingScenesSlider: "menuTrendingScenesSlider",
-  menuClassicGamesSlider: "menuclassicGameSlider"
+  menuTrendingScenesSlider: "menuTrendingSceneSlider",
+  menuClassicGamesSlider: "menuClassicGameSlider"
 }
 
 export const ANALYTICS_GENERIC_EVENTS = {
