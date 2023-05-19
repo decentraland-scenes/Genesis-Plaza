@@ -62,7 +62,8 @@ export function trackAction(trackingElement: TrackingElement, eventKey: string, 
     trackingElement.guid,
     eventKey,
     undefined,
-    selection
+    selection,
+    selectionDesc
   )
 }
 
