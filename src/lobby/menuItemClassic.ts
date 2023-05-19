@@ -37,7 +37,7 @@ export class ClassicMenuItem extends MenuItem {
   ) {
     super()
     this._location = _location
-    this._name = this._name
+    this._name = _name
     this.addComponent(new Transform(_transform))
 
     this.defaultItemScale = new Vector3(1, 1, 1)
@@ -224,7 +224,7 @@ export class ClassicMenuItem extends MenuItem {
     this.jumpInButton.addComponent(
       new OnPointerDown(
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _location)
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _location,_name)
           teleportTo(_location)
         },
         {

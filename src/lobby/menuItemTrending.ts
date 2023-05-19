@@ -429,7 +429,7 @@ export class TrendingMenuItem extends MenuItem {
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
       //this.timePanel.getComponent(AnimatedItem).activate()
-      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1],_scene.name)
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1],this._scene.name)
     }
   }
   deselect() {
