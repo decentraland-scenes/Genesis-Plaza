@@ -20,7 +20,9 @@ export const ANALYTICS_ELEMENTS_IDS = {
   atariMachine: "atariMachine",
   jukeBox: "jukeBox",
   beerMug: "beerMug",
-  eventsSlider: "eventsSlider",
+  menuEventSlider: "menuEventSlider",
+  menuTrendingScenesSlider: "menuTrendingScenesSlider",
+  menuClassicGamesSlider: "menuclassicGameSlider"
 }
 
 export const ANALYTICS_GENERIC_EVENTS = {

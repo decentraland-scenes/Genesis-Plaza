@@ -4,10 +4,15 @@ import * as resource from './resources/resources'
 import { AnimatedItem } from './simpleAnimator'
 import { Teleport } from './teleports'
 import { MenuItem } from './menuItem'
+import { sendTrack } from 'src/aiNpc/Stats/Segment'
+import { TrackingElement, trackAction } from 'src/aiNpc/Stats/analyticsCompnents'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stats/AnalyticsConfig'
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
 export class ClassicMenuItem extends MenuItem {
+  _location: string //track data for analytics
+
   public thumbNail: ThumbnailPlane
   public scale: Vector3
   public scaleMultiplier: number
@@ -30,10 +35,12 @@ export class ClassicMenuItem extends MenuItem {
     _mesh: GLTFShape
   ) {
     super()
+    this._location = _location
     this.addComponent(new Transform(_transform))
 
     this.defaultItemScale = new Vector3(1, 1, 1)
     // event card root
+    const host = this
     this.itemBox = new Entity()
     this.itemBox.addComponent(
       new Transform({
@@ -45,6 +52,8 @@ export class ClassicMenuItem extends MenuItem {
     this.itemBox.getComponent(GLTFShape).isPointerBlocker = false
     this.itemBox.addComponent(new Billboard(false, true, false))
     this.itemBox.setParent(this)
+
+    this.itemBox.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.interactable, ANALYTICS_ELEMENTS_IDS.menuClassicGamesSlider))
 
     this.scaleMultiplier = 1.2
 
@@ -213,6 +222,7 @@ export class ClassicMenuItem extends MenuItem {
     this.jumpInButton.addComponent(
       new OnPointerDown(
         async function () {
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _location)
           teleportTo(_location)
         },
         {
@@ -259,7 +269,7 @@ export class ClassicMenuItem extends MenuItem {
       )
     )
     this.highlightRays.addComponent(new Billboard(false, true, false))
-  }
+  } 
   select() {
     if (!this.selected) {
       this.selected = true
@@ -268,6 +278,7 @@ export class ClassicMenuItem extends MenuItem {
       this.detailTextPanel.getComponent(AnimatedItem).activate()
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._location)
     }
   }
   deselect() {
