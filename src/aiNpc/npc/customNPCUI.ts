@@ -98,21 +98,21 @@ askSomethingElse.addText(
 //askSomethingElse.addText("Or ask your own question below", 0, -20, Color4.White(),14)
 
 const askButton1 = askSomethingElse.addButton("Q1", BUTTON_COLUMN_SPACING*-1 - BUTTON_OFFSET_X, BUTTON_POS_Y, () => {
-  sendMessageToAi("Q1")
+  sendPredefinedMessageToAi("Q1")
 }, buttonsSyle)
 
 
 const askButton2 = askSomethingElse.addButton("Q2", 0, BUTTON_POS_Y, () => {
-  sendMessageToAi("Q2")
+  sendPredefinedMessageToAi("Q2")
 }, buttonsSyle)
 
 const askButton3 = BUTTON_ROWS_AMOUNT < 2 ? undefined : askSomethingElse.addButton("Q1", BUTTON_COLUMN_SPACING*-1 - BUTTON_OFFSET_X, BUTTON_POS_Y - BUTTON_HEIGHT- BUTTON_OFFSET_Y, () => {
-  sendMessageToAi("Q1")
+  sendPredefinedMessageToAi("Q1")
 }, buttonsSyle)
 
 
 const askButton4 = BUTTON_ROWS_AMOUNT < 2 ? undefined : askSomethingElse.addButton("Q2", BUTTON_COLUMN_SPACING + BUTTON_OFFSET_X, BUTTON_POS_Y- BUTTON_HEIGHT-BUTTON_OFFSET_Y, () => {
-  sendMessageToAi("Q2")
+  sendPredefinedMessageToAi("Q2")
 }, buttonsSyle)
 
 const askButtonNext = askSomethingElse.addButton("More Examples", BUTTON_COLUMN_SPACING + BUTTON_OFFSET_X , BUTTON_POS_Y, () => {
@@ -168,7 +168,7 @@ function nextPageOfQuestions(dir:number){
     b.image.height = BUTTON_HEIGHT
     b.image.width = BUTTON_WIDTH
     b.image.onClick = new OnPointerDown(()=>{
-      sendMessageToAi(q.queryToAi) 
+      sendPredefinedMessageToAi(q.queryToAi) 
     })
     
     if(customAtlas){
@@ -236,16 +236,22 @@ export function showInputOverlay(val: boolean) {
   }
 }
 
-function sendMessageToAi(message: string){
-  log("sending ", message)
+function sendPredefinedMessageToAi(message: string){
+  log("sendPredefinedMessageToAi","sending ", message)
+  sendMessageToAi(message,()=>{
+    log(AnalyticsLogLabel, "CustomNPCUI", "SendMessageToAI", "PreDefined Questions", message)
+    trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement),"preDefinedQuestion", message)
+  })
+}
+function sendMessageToAi(message: string,onSend?:()=>void){
+  log("sendMessageToAi","sending ", message)
   //REGISTRY.activeNPC.dialog.closeDialogWindow()
   //close all other interactions to start the new one
   closeAllInteractions({exclude:REGISTRY.activeNPC})
 
   const doSend = ()=>{
     const chatMessage: serverStateSpec.ChatMessage = createMessageObject(message, undefined, GAME_STATE.gameRoom)
-    log(AnalyticsLogLabel, "CustomNPCUI", "SendMessageToAI", "PreDefined Questions", message)
-    trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement),"preDefinedQuestion", message)
+    if(onSend) onSend()
     sendMsgToAI(chatMessage)
   }
   if(GAME_STATE.gameRoom && GAME_STATE.gameConnected === 'connected'){
@@ -313,10 +319,11 @@ textInput.onTextSubmit = new OnTextSubmit((x) => {
   closeAllInteractions({exclude:REGISTRY.activeNPC})
   //REGISTRY.activeNPC.endInteraction()
   //utils.setTimeout(200,()=>{ 
-  const chatMessage: serverStateSpec.ChatMessage = createMessageObject(x.text, undefined, GAME_STATE.gameRoom)
-  log(AnalyticsLogLabel, "CustomNPCUI", "OnTextSubmit", "userDefined Questions", x.text)
-  trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement), "userDefinedQuestion", x.text)
-  sendMsgToAI(chatMessage)
+  //const chatMessage: serverStateSpec.ChatMessage = createMessageObject(x.text, undefined, GAME_STATE.gameRoom)
+  sendMessageToAi(x.text,()=>{
+    log(AnalyticsLogLabel, "CustomNPCUI", "OnTextSubmit", "userDefined Questions", x.text)  
+    trackAction(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement), "userDefinedQuestion", x.text)
+  })
   //} 
   textInput.value = ""
 })
