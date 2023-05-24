@@ -3,7 +3,7 @@
 		"title": "Genesis Plaza",
 		"favicon": "favicon_asset",
 		"description": "Jump in to strike up a chat with other visitors, retake the commands tutorial with a cute floating robot, or dive into the swirling portal to get to Decentraland's visitor center.",
-		"navmapThumbnail": "https://decentraland.org/images/thumbnail/genesis-plaza.png"
+		"navmapThumbnail": "images/genesis-plaza.png"
 	},
 	"contact": {
 		"name": "Decentraland Foundation",
