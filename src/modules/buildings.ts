@@ -3,6 +3,7 @@ export function addBuildings() {
     // CLOUD LOBBY
   /*
   // add lobby platform + teleport beam
+  //TAG:removing-center-area
   //REMOVING PROCESS
   let lobby = new Entity()
   lobby.addComponent(new GLTFShape('models/lobby/lobby_platform.glb'))

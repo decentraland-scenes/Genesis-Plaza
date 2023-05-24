@@ -116,7 +116,9 @@ utils.setTimeout(20000, () => {
 })
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
-
+const ENABLE_DEBUG_TRIGGERS=true
+/*
+//TAG:removing-center-area
 utils.addOneTimeTrigger(
   new utils.TriggerBoxShape(new Vector3(50, 25, 50), new Vector3(160, 10, 155)),
   {
@@ -128,6 +130,7 @@ utils.addOneTimeTrigger(
       outsideBar()
       log('stepped out')
     },
+    enableDebug: ENABLE_DEBUG_TRIGGERS
   }
 )
 
@@ -145,7 +148,7 @@ addRepeatTrigger(
     trackStart(barEntity.getComponentOrNull(TrackingElement))
   },
   null,
-  false,
+  ENABLE_DEBUG_TRIGGERS,
   () => {
     outOfBar()
     endArtistTalk()
@@ -167,12 +170,12 @@ addRepeatTrigger(
     log('got closer')
   },
   null,
-  false,
+  ENABLE_DEBUG_TRIGGERS,
   () => {
     setBarMusicOff()
     log('got far')
   }
-)
+)*/
 
 /// TRIGGERS AROUND PLAZA
 

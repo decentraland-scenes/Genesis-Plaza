@@ -1,6 +1,8 @@
 import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 import * as resource from "./resources/resources"
 
+//TAG:removing-center-area
+/*
 @Component("CloudRotate")
 export class CloudRotate {  
     left:boolean = false
@@ -103,3 +105,4 @@ addClouds(
       }
     }
     engine.addSystem(new CloudSystem())
+*/

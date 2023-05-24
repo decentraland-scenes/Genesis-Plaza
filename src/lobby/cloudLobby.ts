@@ -24,6 +24,9 @@ import { TrackingElement, trackEnd, trackStart } from 'src/aiNpc/Stats/analytics
 const menuScale = 1.2
 const center = new Vector3(lobbyCenter.x, lobbyHeight + 1.5, lobbyCenter.z)
 
+/*
+//TAG:removing-center-area
+
 // SOCIAL LINKS
 let discordLink = new Entity()
 discordLink.addComponent(
@@ -108,6 +111,7 @@ let posVec = center.add(
     .multiplyByFloats(lobbyRadius, lobbyRadius, lobbyRadius)
 )
 
+
 // -- Events
 let eventsMenu = createEventsVerticalMenu({
   position: posVec,
@@ -151,6 +155,7 @@ fillClassicsMenu(classicsMenu)
 // -- TriggerBox
 let sphereTrigger = new Entity()
 sphereTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.cloud))
+*/
 /*
 sphereTrigger.addComponent(new Transform({
   position: center.clone(),
@@ -158,6 +163,7 @@ sphereTrigger.addComponent(new Transform({
 }))
 sphereTrigger.addComponent(new SphereShape()).withCollisions = false
 */
+/*
 engine.addEntity(sphereTrigger)
 addRepeatTrigger(
   center.clone(),
@@ -173,3 +179,4 @@ addRepeatTrigger(
     trackEnd(sphereTrigger.getComponentOrNull(TrackingElement))
   }
 )
+*/

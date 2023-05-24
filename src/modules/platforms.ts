@@ -248,6 +248,8 @@ export function upstairsBar() {
 
   upstairsLoaded = true
 
-  addArcades()
-  addPunchBag()
+  //TAG:removing-center-area
+
+  //addArcades()
+  //addPunchBag()
 }

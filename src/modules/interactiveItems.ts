@@ -1,7 +1,7 @@
 import { Sound } from './interactiveItems/sound'
 import { Player } from './interactiveItems/player'
 import * as ui from '@dcl/ui-scene-utils'
-import { beerDispenser } from './interactiveItems/tap'
+//import { beerDispenser } from './interactiveItems/tap'
 import { BeerBaseState, beerGlasses } from './interactiveItems/beerGlass'
 import { barItems } from './interactiveItems/barItem'
 
@@ -14,6 +14,8 @@ const errorSound = new Sound(new AudioClip('sounds/interactiveItems/error.mp3'))
 // Input
 // Instance the input object
 const input = Input.instance
+/*
+//TAG:removing-center-area
 
 input.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (event) => {
   log('Hit Point: ', event.hit.hitPoint)
@@ -103,7 +105,7 @@ let noSign = new ui.CenterImage(
     sourceTop: 0,
   }
 )
-
+*/
 // Punch bag
 export function addPunchBag(): void {
   const punchSound = new Sound(
