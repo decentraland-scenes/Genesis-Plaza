@@ -116,7 +116,7 @@ utils.setTimeout(20000, () => {
 })
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
-const ENABLE_DEBUG_TRIGGERS=true
+const ENABLE_DEBUG_TRIGGERS=false
 /*
 //TAG:removing-center-area
 utils.addOneTimeTrigger(
@@ -178,45 +178,59 @@ addRepeatTrigger(
 )*/
 
 /// TRIGGERS AROUND PLAZA
+const cutX = 4
+const cutZ = 5
+const parcelX = 19
+const parcelZ = 20
+const TRIGGER_HEIGHT = 2
 
+//must cover whole area now that its a cutout AND cuz now spawn points go to nearest url point
 utils.addOneTimeTrigger(
-  new utils.TriggerBoxShape(new Vector3(2, 5, 305), new Vector3(0, 2, 160)),
+  //  new utils.TriggerBoxShape(new Vector3(2, 5, 305), new Vector3(0, 2, 160)),
+  new utils.TriggerBoxShape(new Vector3(((parcelX-(cutX/2))*16)/2, 5, (parcelZ*16)/1), new Vector3(0+(parcelX*16)/8 + ((cutX-1)/2)*16, TRIGGER_HEIGHT, (parcelZ*16)/2)),
   {
     onCameraEnter: () => {
       log('WEST BORDER')
       outsideBar()
     },
+    enableDebug: ENABLE_DEBUG_TRIGGERS 
   }
 )
 
 utils.addOneTimeTrigger(
-  new utils.TriggerBoxShape(new Vector3(2, 5, 320), new Vector3(320, 2, 155)),
+  //new utils.TriggerBoxShape(new Vector3(2, 5, 320), new Vector3(320, 2, 155)),
+  new utils.TriggerBoxShape(new Vector3(((parcelX-(cutX/2))*16)/2, 5, (parcelZ*16)/1), new Vector3((parcelX*16)- ((cutX+1)/2)*16, TRIGGER_HEIGHT, (parcelZ*16)/2)),
   {
-    onCameraEnter: () => {
+    onCameraEnter: () => { 
       log('EAST BORDER')
       outsideBar()
     },
+    enableDebug: ENABLE_DEBUG_TRIGGERS
   }
 )
 
-utils.addOneTimeTrigger(
-  new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(165, 2, 0)),
+utils.addOneTimeTrigger(  
+  //new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(165, 2, 0)),
+  new utils.TriggerBoxShape(new Vector3(((parcelX)*16)/2, 5, ((parcelZ-cutZ/1)*16)/2), new Vector3((parcelX*16)/2, TRIGGER_HEIGHT, ((parcelZ)*16)/8)), 
   {
     onCameraEnter: () => {
       log('SOUTH BORDER')
       outsideBar()
     },
+    enableDebug: ENABLE_DEBUG_TRIGGERS
   }
 )
 
 utils.addOneTimeTrigger(
-  new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(155, 2, 300)),
+  //new utils.TriggerBoxShape(new Vector3(320, 5, 2), new Vector3(155, 2, 300)),
+  new utils.TriggerBoxShape(new Vector3(((parcelX)*16)/2, 5, ((parcelZ-cutZ/1)*16)/2), new Vector3((parcelX*16)/2, TRIGGER_HEIGHT, ((parcelZ-4)*16))),  
   {
     onCameraEnter: () => {
       log('NORTH BORDER')
 
       outsideBar()
     },
+    enableDebug: ENABLE_DEBUG_TRIGGERS
   }
 )
 
