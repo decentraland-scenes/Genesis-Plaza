@@ -13,6 +13,10 @@ import {
 import { lobbyCenter, lobbyHeight, lobbyRadius } from './resources/globals'
 import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
+import * as utils from '@dcl/ecs-scene-utils'
+import { addRepeatTrigger } from 'src/modules/Utils'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackEnd, trackStart } from 'src/aiNpc/Stats/analyticsCompnents'
 
 //REMOVING PROCESS
 //const portalControl = new TeleportController()
@@ -143,3 +147,29 @@ let classicsMenu = createClassicsVerticalMenu({
   scale: new Vector3(menuScale, menuScale, menuScale),
 })
 fillClassicsMenu(classicsMenu)
+
+// -- TriggerBox
+let sphereTrigger = new Entity()
+sphereTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.cloud))
+/*
+sphereTrigger.addComponent(new Transform({
+  position: center.clone(),
+  scale: new Vector3(22,22,22)
+}))
+sphereTrigger.addComponent(new SphereShape()).withCollisions = false
+*/
+engine.addEntity(sphereTrigger)
+addRepeatTrigger(
+  center.clone(),
+  new Vector3(30,15,30), 
+  ()=> {
+    log(AnalyticsLogLabel, "CloudLobby.ts", "RepeatTrigger", "OnEnter")
+    trackStart(sphereTrigger.getComponentOrNull(TrackingElement))
+  },
+  null,
+  false,
+  ()=> {
+    log(AnalyticsLogLabel, "CloudLobby.ts", "RepeatTrigger", "OnExit")
+    trackEnd(sphereTrigger.getComponentOrNull(TrackingElement))
+  }
+)

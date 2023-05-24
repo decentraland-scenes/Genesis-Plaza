@@ -16,6 +16,8 @@ import { setStreamVolume } from './jukebox'
 import { RemoteNpc } from 'src/aiNpc/npc/remoteNpc'
 import { NpcAnimationNameType, REGISTRY } from 'src/registry'
 import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
+import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
+import { TrackingElement, trackEnd } from 'src/aiNpc/Stats/analyticsCompnents'
 
 export let octopus: NPC
 let doge: NPC
@@ -162,6 +164,7 @@ export async function addBarNPCs() {
     { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
     'models/core_building/dogeNPC_anim4.glb',
     () => {
+      //redefined at lobbyScene.ts L36
       doge.stopWalking()
       artist1.endInteraction()
       artist2.endInteraction()
@@ -170,19 +173,22 @@ export async function addBarNPCs() {
       doge.talkBubble(DogeTalk, randomNum)
     },
     {
-      portrait: 
-          { 
-            path: 'images/portraits/doge.png', height: 250, width: 250
-            ,offsetX:-30,offsetY:20
-            , section:{sourceHeight:256,sourceWidth:256} 
-          },
+      portrait:
+      {
+        path: 'images/portraits/doge.png', height: 250, width: 250
+        , offsetX: -30, offsetY: 20
+        , section: { sourceHeight: 256, sourceWidth: 256 }
+      },
       walkingAnim: 'Walk',
       faceUser: true,
       hoverText: 'WOW',
       onlyETrigger: true,
       walkingSpeed: 1.2,
-      continueOnWalkAway: true,
+      continueOnWalkAway: false,
       onWalkAway: () => {
+        log(AnalyticsLogLabel, "TestBarNPC", "WalkAway")
+        trackEnd(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement))
+        showInputOverlay(false)
         doge.followPath()
       },
       textBubble: !dogeAINpcEnabled,
@@ -195,39 +201,47 @@ export async function addBarNPCs() {
 
 
   const ANIM_TIME_PADD = .2
-    
-  const DOGE_NPC_ANIMATIONS:NpcAnimationNameType = {
-    IDLE: {name:"Idle",duration:-1},
-    WALK: {name:"Walk",duration:-1},
-    TALK: {name:"Talk1",duration:5},
-    THINKING: {name:"Thinking",duration:5},
-    RUN: {name:"Run",duration:-1},
-    WAVE: {name:"Wave",duration:4 + ANIM_TIME_PADD},
+
+  const DOGE_NPC_ANIMATIONS: NpcAnimationNameType = {
+    IDLE: { name: "Idle", duration: -1 },
+    WALK: { name: "Walk", duration: -1 },
+    TALK: { name: "Talk1", duration: 5 },
+    THINKING: { name: "Thinking", duration: 5 },
+    RUN: { name: "Run", duration: -1 },
+    WAVE: { name: "Wave", duration: 4 + ANIM_TIME_PADD },
   }
-  
+
   const dogeAI = new RemoteNpc(
-    {resourceName:"workspaces/genesis_city/characters/doge"},
-    doge, 
+    { resourceName: "workspaces/genesis_city/characters/doge" },
+    doge,
     {
-      npcAnimations:DOGE_NPC_ANIMATIONS,
-      thinking:{
-        enabled:true,
+      npcAnimations: DOGE_NPC_ANIMATIONS,
+      thinking: {
+        enabled: true,
         model: new GLTFShape('models/loading-icon.glb'),
         offsetX: 0,
-        offsetY: 2 ,
+        offsetY: 2,
         offsetZ: 0
       }
-      ,onEndOfRemoteInteractionStream: ()=>{
+      , onEndOfRemoteInteractionStream: () => {
         showInputOverlay(true)
       }
-      ,onEndOfInteraction: ()=>{
-        //showInputOverlay(true)
+      , onEndOfInteraction: () => {
+        log("TestBarNPC", "End Of Interaction")
         const LOOP = false
-        if(dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP,dogeAI.npcAnimations.WALK.duration)
+        if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
         dogeAI.npc.followPath()
       }
-    }
+    },
+  )
+
+  // replace with add component
+  doge.addComponent(new TrackingElement(
+    ANALYTICS_ELEMENTS_TYPES.npc,
+    ANALYTICS_ELEMENTS_IDS.doge
     )
+  )
+
   REGISTRY.allNPCs.push(dogeAI)
 
   wearablesC = new NPC(
@@ -820,7 +834,7 @@ export let OctoQuest: Dialog[] = [
     triggeredByNext: () => {
       arrow.hide()
       octopus.playAnimation('CalisPrep', true, 7.17)
-      octopus.getComponent(NPCTriggerComponent).onCameraExit = () => {}
+      octopus.getComponent(NPCTriggerComponent).onCameraExit = () => { }
       prepareOctoTrip()
       utils.setTimeout(7250, () => {
         octopus.talk(OctoQuest, 'serveDrink')
