@@ -201,7 +201,8 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
 
     dialog.triggeredByNext = () => {
       const NO_LOOP = true
-      REGISTRY.activeNPC.npc.playAnimation(REGISTRY.activeNPC.npcAnimations.TALK.name,NO_LOOP,REGISTRY.activeNPC.npcAnimations.TALK.duration)
+      if (REGISTRY.activeNPC.npcAnimations.TALK) 
+        REGISTRY.activeNPC.npc.playAnimation(REGISTRY.activeNPC.npcAnimations.TALK.name,NO_LOOP,REGISTRY.activeNPC.npcAnimations.TALK.duration)
       
       //FIXME WORKAROUND, need to string dialogs together
       //or this workaround lets it end, then start a new one

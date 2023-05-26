@@ -11,6 +11,7 @@ export type NpcAnimationNameDef = {
   name:string
   duration:number
   autoStart?:boolean
+  portaitPath?:string
 }
 export type NpcAnimationNameType = {
   HI?: NpcAnimationNameDef
@@ -19,7 +20,6 @@ export type NpcAnimationNameType = {
   RUN?: NpcAnimationNameDef
   THINKING?: NpcAnimationNameDef
   TALK?: NpcAnimationNameDef
-  TALKING?: NpcAnimationNameDef
   LOADING?: NpcAnimationNameDef
   LAUGH?: NpcAnimationNameDef
   WAVE?: NpcAnimationNameDef

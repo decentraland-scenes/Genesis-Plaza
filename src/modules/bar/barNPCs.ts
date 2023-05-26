@@ -231,12 +231,14 @@ export async function addBarNPCs() {
   REGISTRY.allNPCs.push(dogeAI)
 
 
-
+  const simonasAINpcEnabled = true
   const simonas = new NPC(
-    { position: new Vector3(165, 0, 165) , scale: new Vector3(1, 1, 1) },
-    "models/Simon_Anim.glb",
+    { position: new Vector3(166, 1, 169) , scale: new Vector3(1, 1, 1), rotation: new Quaternion(0, 1, 0, 0) },
+    "models/Simone_Anim.glb",
     () => {
-      simonas.playAnimation('Talk1', true)
+      artist1.endInteraction()
+      artist2.endInteraction()
+      simonas.playAnimation('Talking', true)
       let randomNum = Math.floor(Math.random() * 10)
       simonas.talkBubble(DogeTalk, randomNum)
     },
@@ -254,17 +256,17 @@ export async function addBarNPCs() {
       onWalkAway: () => {
 
       },
-      textBubble: !dogeAINpcEnabled,
-      noUI: !dogeAINpcEnabled,
-      darkUI: dogeAINpcEnabled,
-      bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
+      textBubble: !simonasAINpcEnabled,
+      noUI: !simonasAINpcEnabled,
+      darkUI: simonasAINpcEnabled,
+      bubbleHeight: 2.2,
     }
   )
 
   const SIMONAS_NPC_ANIMATIONS: NpcAnimationNameType = {
     HI: { name: "Hi", duration: 2 },
     IDLE: { name: "Idle", duration: 4 },
-    TALKING: { name: "Talking", duration: 2 },
+    TALK: { name: "Talking", duration: 2 },
     THINKING: { name: "Thinking", duration: 2 },
     LOADING: { name: "Loading", duration: 2 },
     LAUGH: { name: "Laugh", duration: 2 },
@@ -272,9 +274,9 @@ export async function addBarNPCs() {
     SAD: { name: "Sad", duration: 2 },
     SURPRISE: { name: "Surprise", duration: 2 },
   }
-
+ 
   const simonasAI = new RemoteNpc(
-    {resourceName:"models/Simon_Anim.glb"},
+    {resourceName:'workspaces/genesis_city/characters/simone'},
     simonas, 
     {
       npcAnimations:SIMONAS_NPC_ANIMATIONS,
@@ -282,18 +284,19 @@ export async function addBarNPCs() {
         enabled:true,
         model: new GLTFShape('models/loading-icon.glb'),
         offsetX: 0,
-        offsetY: 2 ,
+        offsetY: 2.3,
         offsetZ: 0
       }
       ,onEndOfRemoteInteractionStream: ()=>{
         showInputOverlay(true)
       }
       ,onEndOfInteraction: ()=>{
-        if(simonasAI.npcAnimations.HI) simonasAI.npc.playAnimation(simonasAI.npcAnimations.WALK.name, false ,simonasAI.npcAnimations.WALK.duration)
+        if(simonasAI.npcAnimations.IDLE) simonasAI.npc.playAnimation(simonasAI.npcAnimations.IDLE.name, false ,simonasAI.npcAnimations.IDLE.duration)
       }
     }
-    )
+  )
   REGISTRY.allNPCs.push(simonasAI)
+
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },
