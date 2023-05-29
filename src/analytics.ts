@@ -41,18 +41,18 @@ artichokeAnalyticsTrigger.addComponent(new Transform({position: artichokeAnalyti
 const artichokeAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let artichokeTriggerBox = new utils.TriggerBoxShape(artichokeAnalyticsTriggerScale)
 
-artichokeAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+artichokeAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.artichoke))
 
 artichokeAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         artichokeTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "artichoke_Region", "onEnter")
             trackStart(artichokeAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "artichoke_Region", "onExit")
         	trackEnd(artichokeAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -70,18 +70,18 @@ hallwayAnalyticsTrigger.addComponent(new Transform({position: hallwayAnalyticsTr
 const hallwayAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let hallwayTriggerBox = new utils.TriggerBoxShape(hallwayAnalyticsTriggerScale)
 
-hallwayAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+hallwayAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.hallway))
 
 hallwayAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         hallwayTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "hallway_Region", "onEnter")
             trackStart(hallwayAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "hallway_Region", "onExit")
         	trackEnd(hallwayAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -99,18 +99,18 @@ mountainsAnalyticsTrigger.addComponent(new Transform({position: mountainsAnalyti
 const mountainsAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let mountainsTriggerBox = new utils.TriggerBoxShape(mountainsAnalyticsTriggerScale)
 
-mountainsAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+mountainsAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.mountains))
 
 mountainsAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         mountainsTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "mountains_Region", "onEnter")
             trackStart(mountainsAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "mountains_Region", "onExit")
         	trackEnd(mountainsAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -128,18 +128,18 @@ whaleBuildingAnalyticsTrigger.addComponent(new Transform({position: whaleBuildin
 const whaleBuildingAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let whaleBuildingTriggerBox = new utils.TriggerBoxShape(whaleBuildingAnalyticsTriggerScale)
 
-whaleBuildingAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+whaleBuildingAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.whaleBuilding))
 
 whaleBuildingAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         whaleBuildingTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "whale_Region", "onEnter")
             trackStart(whaleBuildingAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "whale_Region", "onExit")
         	trackEnd(whaleBuildingAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -157,18 +157,18 @@ moonTowerAnalyticsTrigger.addComponent(new Transform({position: moonTowerAnalyti
 const moonTowerAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let moonTowerTriggerBox = new utils.TriggerBoxShape(moonTowerAnalyticsTriggerScale)
 
-moonTowerAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+moonTowerAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.moonTower))
 
 moonTowerAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         moonTowerTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "moonTower_Region", "onEnter")
             trackStart(moonTowerAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "moonTower_Region", "onExit")
         	trackEnd(moonTowerAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -186,18 +186,18 @@ gardenAnalyticsTrigger.addComponent(new Transform({position: gardenAnalyticsTrig
 const gardenAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let gardenTriggerBox = new utils.TriggerBoxShape(gardenAnalyticsTriggerScale)
 
-gardenAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+gardenAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.garden))
 
 gardenAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         gardenTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "garden_Region", "onEnter")
             trackStart(gardenAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "garden_Region", "onExit")
         	trackEnd(gardenAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -215,18 +215,18 @@ auditoriumAnalyticsTrigger.addComponent(new Transform({position: auditoriumAnaly
 const auditoriumAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let auditoriumTriggerBox = new utils.TriggerBoxShape(auditoriumAnalyticsTriggerScale)
 
-auditoriumAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+auditoriumAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.auditorium))
 
 auditoriumAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         auditoriumTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "auditorium_Region", "onEnter")
             trackStart(auditoriumAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "auditorium_Region", "onExit")
         	trackEnd(auditoriumAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -244,18 +244,18 @@ shellAnalyticsTrigger.addComponent(new Transform({position: shellAnalyticsTrigge
 const shellAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let shellTriggerBox = new utils.TriggerBoxShape(shellAnalyticsTriggerScale)
 
-shellAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+shellAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.shell))
 
 shellAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         shellTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "shell_Region", "onEnter")
             trackStart(shellAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "shell_Region", "onExit")
         	trackEnd(shellAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
@@ -273,18 +273,18 @@ tradingCenterAnalyticsTrigger.addComponent(new Transform({position: tradingCente
 const tradingCenterAnalyticsTriggerScale = new Vector3(50, 30, 47)
 let tradingCenterTriggerBox = new utils.TriggerBoxShape(tradingCenterAnalyticsTriggerScale)
 
-tradingCenterAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
+tradingCenterAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.tradingCenter))
 
 tradingCenterAnalyticsTrigger.addComponent(
     new utils.TriggerComponent(
         tradingCenterTriggerBox, 
       {
         onCameraEnter : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onEnter")
+            log(AnalyticsLogLabel, "index.ts", "tradingCenter_Region", "onEnter")
             trackStart(tradingCenterAnalyticsTrigger.getComponentOrNull(TrackingElement))
         },
         onCameraExit : () => {
-            log(AnalyticsLogLabel, "index.ts", "agora_Region", "onExit")
+            log(AnalyticsLogLabel, "index.ts", "tradingCenter_Region", "onExit")
         	trackEnd(tradingCenterAnalyticsTrigger.getComponentOrNull(TrackingElement))
         }
       }
