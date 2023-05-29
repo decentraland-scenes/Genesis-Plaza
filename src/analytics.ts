@@ -6,10 +6,10 @@ import * as utils from '@dcl/ecs-scene-utils'
 
 const agoraAnalyticsTrigger = new Entity()
 
-const agoraAnalyticsTriggerPosition = new Vector3(50, 1, 250)
+const agoraAnalyticsTriggerPosition = new Vector3(40, 1, 260)
 agoraAnalyticsTrigger.addComponent(new Transform({position: agoraAnalyticsTriggerPosition}))
 
-const agoraAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const agoraAnalyticsTriggerScale = new Vector3(50, 30, 50)
 let agoraTriggerBox = new utils.TriggerBoxShape(agoraAnalyticsTriggerScale)
 
 agoraAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.agora))
@@ -96,7 +96,7 @@ const mountainsAnalyticsTrigger = new Entity()
 const mountainsAnalyticsTriggerPosition = new Vector3(78, 1, 184)
 mountainsAnalyticsTrigger.addComponent(new Transform({position: mountainsAnalyticsTriggerPosition}))
 
-const mountainsAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const mountainsAnalyticsTriggerScale = new Vector3(50, 30, 50)
 let mountainsTriggerBox = new utils.TriggerBoxShape(mountainsAnalyticsTriggerScale)
 
 mountainsAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.mountains))
@@ -122,10 +122,10 @@ engine.addEntity(mountainsAnalyticsTrigger)
 
 const whaleBuildingAnalyticsTrigger = new Entity()
 
-const whaleBuildingAnalyticsTriggerPosition = new Vector3(169, 1, 254)
+const whaleBuildingAnalyticsTriggerPosition = new Vector3(159, 1, 254)
 whaleBuildingAnalyticsTrigger.addComponent(new Transform({position: whaleBuildingAnalyticsTriggerPosition}))
 
-const whaleBuildingAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const whaleBuildingAnalyticsTriggerScale = new Vector3(100, 60, 60)
 let whaleBuildingTriggerBox = new utils.TriggerBoxShape(whaleBuildingAnalyticsTriggerScale)
 
 whaleBuildingAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.whaleBuilding))
@@ -180,7 +180,7 @@ engine.addEntity(moonTowerAnalyticsTrigger)
 
 const gardenAnalyticsTrigger = new Entity()
 
-const gardenAnalyticsTriggerPosition = new Vector3(48, 1, 116)
+const gardenAnalyticsTriggerPosition = new Vector3(112, 1, 34)
 gardenAnalyticsTrigger.addComponent(new Transform({position: gardenAnalyticsTriggerPosition}))
 
 const gardenAnalyticsTriggerScale = new Vector3(50, 30, 47)
@@ -241,7 +241,7 @@ const shellAnalyticsTrigger = new Entity()
 const shellAnalyticsTriggerPosition = new Vector3(275, 1, 128)
 shellAnalyticsTrigger.addComponent(new Transform({position: shellAnalyticsTriggerPosition}))
 
-const shellAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const shellAnalyticsTriggerScale = new Vector3(60, 50, 50)
 let shellTriggerBox = new utils.TriggerBoxShape(shellAnalyticsTriggerScale)
 
 shellAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.shell))
@@ -291,3 +291,19 @@ tradingCenterAnalyticsTrigger.addComponent(
     )
 )
 engine.addEntity(tradingCenterAnalyticsTrigger)
+
+
+/*
+//DEBUG
+const arr = new Array
+arr.push(shellAnalyticsTriggerPosition, agoraAnalyticsTriggerPosition, gardenAnalyticsTriggerPosition, hallwayAnalyticsTriggerPosition, moonTowerAnalyticsTriggerPosition, mountainsAnalyticsTriggerPosition, artichokeAnalyticsTriggerPosition, auditoriumAnalyticsTriggerPosition, tradingCenterAnalyticsTriggerPosition, whaleBuildingAnalyticsTriggerPosition)
+
+for (let i = 0; i < arr.length; i++) {
+    log("cane")
+    let cube = new Entity()
+    cube.addComponent(new BoxShape())
+    cube.getComponent(BoxShape).withCollisions = false
+    cube.addComponent(new Transform({position: arr[i], scale: new Vector3(50, 50, 50)}))
+    engine.addEntity(cube)
+}
+*/
