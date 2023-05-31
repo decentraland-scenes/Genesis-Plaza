@@ -12,7 +12,7 @@ export function addExteriorAnalytics(){
   }
   addExteriorAnalyticsAdded = true
 
-const debugTriggers = true 
+const debugTriggers = false 
 const agoraAnalyticsTrigger = new Entity()
 
 const agoraAnalyticsTriggerPosition = new Vector3(40, 1, 260)
