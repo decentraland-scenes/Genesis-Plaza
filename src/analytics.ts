@@ -1,9 +1,9 @@
-import { Utils } from "cannon"
+//import { Utils } from "cannon" //not used caused build issues
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, AnalyticsLogLabel } from "./aiNpc/Stats/AnalyticsConfig"
 import { TrackingElement, trackEnd, trackStart } from "./aiNpc/Stats/analyticsCompnents"
 import * as utils from '@dcl/ecs-scene-utils'
 
-
+const debugTriggers = true
 const agoraAnalyticsTrigger = new Entity()
 
 const agoraAnalyticsTriggerPosition = new Vector3(40, 1, 260)
@@ -25,7 +25,8 @@ agoraAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "agora_Region", "onExit")
         	trackEnd(agoraAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -35,7 +36,7 @@ engine.addEntity(agoraAnalyticsTrigger)
 
 const artichokeAnalyticsTrigger = new Entity()
 
-const artichokeAnalyticsTriggerPosition = new Vector3(51, 1, 40)
+const artichokeAnalyticsTriggerPosition = new Vector3(51, 15, 40)
 artichokeAnalyticsTrigger.addComponent(new Transform({position: artichokeAnalyticsTriggerPosition}))
 
 const artichokeAnalyticsTriggerScale = new Vector3(50, 30, 47)
@@ -54,7 +55,8 @@ artichokeAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "artichoke_Region", "onExit")
         	trackEnd(artichokeAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -67,7 +69,7 @@ const hallwayAnalyticsTrigger = new Entity()
 const hallwayAnalyticsTriggerPosition = new Vector3(108, 1, 118)
 hallwayAnalyticsTrigger.addComponent(new Transform({position: hallwayAnalyticsTriggerPosition}))
 
-const hallwayAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const hallwayAnalyticsTriggerScale = new Vector3(40, 30, 47)
 let hallwayTriggerBox = new utils.TriggerBoxShape(hallwayAnalyticsTriggerScale)
 
 hallwayAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.hallway))
@@ -83,7 +85,8 @@ hallwayAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "hallway_Region", "onExit")
         	trackEnd(hallwayAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -112,7 +115,8 @@ mountainsAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "mountains_Region", "onExit")
         	trackEnd(mountainsAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -122,10 +126,10 @@ engine.addEntity(mountainsAnalyticsTrigger)
 
 const whaleBuildingAnalyticsTrigger = new Entity()
 
-const whaleBuildingAnalyticsTriggerPosition = new Vector3(159, 1, 254)
+const whaleBuildingAnalyticsTriggerPosition = new Vector3(159, 10, 250)
 whaleBuildingAnalyticsTrigger.addComponent(new Transform({position: whaleBuildingAnalyticsTriggerPosition}))
 
-const whaleBuildingAnalyticsTriggerScale = new Vector3(100, 60, 60)
+const whaleBuildingAnalyticsTriggerScale = new Vector3(100, 60, 68)
 let whaleBuildingTriggerBox = new utils.TriggerBoxShape(whaleBuildingAnalyticsTriggerScale)
 
 whaleBuildingAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.whaleBuilding))
@@ -141,20 +145,21 @@ whaleBuildingAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "whale_Region", "onExit")
         	trackEnd(whaleBuildingAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
-engine.addEntity(whaleBuildingAnalyticsTrigger)
+engine.addEntity(whaleBuildingAnalyticsTrigger) 
 
 
 
 const moonTowerAnalyticsTrigger = new Entity()
 
-const moonTowerAnalyticsTriggerPosition = new Vector3(48, 1, 116)
+const moonTowerAnalyticsTriggerPosition = new Vector3(48, 25, 116)
 moonTowerAnalyticsTrigger.addComponent(new Transform({position: moonTowerAnalyticsTriggerPosition}))
 
-const moonTowerAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const moonTowerAnalyticsTriggerScale = new Vector3(50, 50, 47)
 let moonTowerTriggerBox = new utils.TriggerBoxShape(moonTowerAnalyticsTriggerScale)
 
 moonTowerAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.moonTower))
@@ -170,7 +175,8 @@ moonTowerAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "moonTower_Region", "onExit")
         	trackEnd(moonTowerAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -199,7 +205,8 @@ gardenAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "garden_Region", "onExit")
         	trackEnd(gardenAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -228,7 +235,8 @@ auditoriumAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "auditorium_Region", "onExit")
         	trackEnd(auditoriumAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -241,7 +249,7 @@ const shellAnalyticsTrigger = new Entity()
 const shellAnalyticsTriggerPosition = new Vector3(275, 1, 128)
 shellAnalyticsTrigger.addComponent(new Transform({position: shellAnalyticsTriggerPosition}))
 
-const shellAnalyticsTriggerScale = new Vector3(60, 50, 50)
+const shellAnalyticsTriggerScale = new Vector3(60, 50, 59)
 let shellTriggerBox = new utils.TriggerBoxShape(shellAnalyticsTriggerScale)
 
 shellAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.shell))
@@ -257,7 +265,8 @@ shellAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "shell_Region", "onExit")
         	trackEnd(shellAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
@@ -267,10 +276,10 @@ engine.addEntity(shellAnalyticsTrigger)
 
 const tradingCenterAnalyticsTrigger = new Entity()
 
-const tradingCenterAnalyticsTriggerPosition = new Vector3(274, 1, 37)
+const tradingCenterAnalyticsTriggerPosition = new Vector3(274, 18, 37)
 tradingCenterAnalyticsTrigger.addComponent(new Transform({position: tradingCenterAnalyticsTriggerPosition}))
 
-const tradingCenterAnalyticsTriggerScale = new Vector3(50, 30, 47)
+const tradingCenterAnalyticsTriggerScale = new Vector3(59, 35, 58)
 let tradingCenterTriggerBox = new utils.TriggerBoxShape(tradingCenterAnalyticsTriggerScale)
 
 tradingCenterAnalyticsTrigger.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.tradingCenter))
@@ -286,7 +295,8 @@ tradingCenterAnalyticsTrigger.addComponent(
         onCameraExit : () => {
             log(AnalyticsLogLabel, "analytics.ts", "tradingCenter_Region", "onExit")
         	trackEnd(tradingCenterAnalyticsTrigger.getComponentOrNull(TrackingElement))
-        }
+        },
+        enableDebug:debugTriggers
       }
     )
 )
