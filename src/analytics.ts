@@ -3,7 +3,16 @@ import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, AnalyticsLogLabel } f
 import { TrackingElement, trackEnd, trackStart } from "./aiNpc/Stats/analyticsCompnents"
 import * as utils from '@dcl/ecs-scene-utils'
 
-const debugTriggers = true
+let addExteriorAnalyticsAdded = false
+
+export function addExteriorAnalytics(){
+
+  if(addExteriorAnalyticsAdded){ 
+    return
+  }
+  addExteriorAnalyticsAdded = true
+
+const debugTriggers = true 
 const agoraAnalyticsTrigger = new Entity()
 
 const agoraAnalyticsTriggerPosition = new Vector3(40, 1, 260)
@@ -317,3 +326,4 @@ for (let i = 0; i < arr.length; i++) {
     engine.addEntity(cube)
 }
 */
+}
