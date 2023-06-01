@@ -50,6 +50,7 @@ import { CONFIG, initConfig } from './config'
 import { initDialogs } from './aiNpc/npc/npcDialog'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from './aiNpc/Stats/AnalyticsConfig'
 import { TrackingElement, trackEnd, trackStart } from './aiNpc/Stats/analyticsCompnents'
+import { addExteriorAnalytics } from './analytics'
 
 
 //////// LOG PLAYER POSITION
@@ -268,6 +269,8 @@ export function outsideBar() {
 
   isOutsideLoaded = true
 
+  addExteriorAnalytics()
+  
   sfx.lobbyMusicSource.playing = false
 
   addNPCsOutside()
