@@ -51,6 +51,7 @@ import { initDialogs } from './aiNpc/npc/npcDialog'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from './aiNpc/Stats/AnalyticsConfig'
 import { TrackingElement, trackEnd, trackStart } from './aiNpc/Stats/analyticsCompnents'
 import { addExteriorAnalytics } from './analytics'
+import { activateMirage, deActivateMirage } from './modules/mirage'
 
 
 //////// LOG PLAYER POSITION
@@ -118,8 +119,9 @@ utils.setTimeout(20000, () => {
 
 /// TRIGGER FOR STUFF OUTSIDE BAR
 const ENABLE_DEBUG_TRIGGERS=false
-/*
+
 //TAG:removing-center-area
+/*
 utils.addOneTimeTrigger(
   new utils.TriggerBoxShape(new Vector3(50, 25, 50), new Vector3(160, 10, 155)),
   {
@@ -134,7 +136,29 @@ utils.addOneTimeTrigger(
     enableDebug: ENABLE_DEBUG_TRIGGERS
   }
 )
-
+*/
+//TAG-mirage-workaround/bug that lets models still be rendered, the outer appearance of the bar-want still visible when player outside scene load radius
+//trigger just inside 1 parcel of the bar, we dont know the settings of their load radiu so assuming smallest
+//if player has a 1 scene load radius that center wont be visible till they get within 1 parcel of the bar
+const nearBarMirageTrigger = new Entity() 
+nearBarMirageTrigger.addComponent(
+  new utils.TriggerComponent(
+    new utils.TriggerBoxShape(new Vector3(50*1.89, 25, 50*2.33), new Vector3(160, 10, 155)),
+    {
+      onCameraEnter: () => {
+        log('game.ts','nearBarMirageTrigger','onCameraEnter')
+        deActivateMirage()
+      },
+      onCameraExit: async () => {
+        log('game.ts','nearBarMirageTrigger','onCameraExit')
+        activateMirage()
+      },
+      enableDebug: ENABLE_DEBUG_TRIGGERS
+    }
+  )
+)
+engine.addEntity(nearBarMirageTrigger)
+/*
 const barEntity = new Entity()
 barEntity.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.bar))
 engine.addEntity(barEntity)

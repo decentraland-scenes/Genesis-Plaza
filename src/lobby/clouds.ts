@@ -2,7 +2,7 @@ import {lobbyCenter, lobbyHeight, lobbyRadius} from './resources/globals'
 import * as resource from "./resources/resources"
 
 //TAG:removing-center-area
-/*
+
 @Component("CloudRotate")
 export class CloudRotate {  
     left:boolean = false
@@ -13,7 +13,7 @@ export class CloudRotate {
         this.speed = _speed              
     }    
 }
-
+/*
 function addClouds(_count:number, _radius:number, _center:Vector3){
 
     let angle = 0
@@ -70,7 +70,7 @@ addClouds(
     cloudsSmall2.addComponent(resource.cloudSmall2Shape)
     cloudsSmall2.addComponent(new CloudRotate(true,1.5))
     engine.addEntity(cloudsSmall2)
-
+      */
     let cloudsBig = new Entity()
     
     cloudsBig.addComponent(
@@ -105,4 +105,3 @@ addClouds(
       }
     }
     engine.addSystem(new CloudSystem())
-*/

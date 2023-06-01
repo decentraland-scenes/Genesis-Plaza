@@ -1,3 +1,5 @@
+import { addMirageEntity } from "./mirage"
+
 export function addBuildings() {
 
     // CLOUD LOBBY
@@ -181,6 +183,20 @@ export function addBuildings() {
     })
   )
   engine.addEntity(island)
+  
+   //add core_building
+   let coreBuilding = new Entity()
+   coreBuilding.addComponent(new GLTFShape('models/core_building_mirage.glb'))
+   //coreBuilding.addComponent(new BoxShape())
+   coreBuilding.addComponent(
+     new Transform({
+       position: new Vector3(32, 0, 140+12),
+       //scale: new Vector3(10, 99, 10),
+       rotation: Quaternion.Euler(0, 180, 0),
+     })
+   )
+   engine.addEntity(coreBuilding)
+  addMirageEntity(coreBuilding)
   
   //add msg_welcome^
   /*

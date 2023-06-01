@@ -7,6 +7,7 @@ import * as resource from './resources/resources'
 import * as sfx from './resources/sounds'
 import { tutorialEnableObservable } from 'src/modules/tutorialHandler'
 import { isInBar, setBarMusicOn } from 'src/modules/bar/jukebox'
+import { addMirageEntity } from 'src/modules/mirage'
 
 @Component('DelayedTriggerBox')
 export class DelayedTriggerBox {
@@ -66,8 +67,10 @@ tutorialEnableObservable.add((tutorialEnabled) => {
 export let tutorialRunning: boolean = false
 
 // BEAM MESH
-/*
+
 //REMOVING PROCESS
+//TAG:removing-center-area
+//TAG-mirage-workaround/bug that lets models still be rendered, the outer appearance of the bar-want still visible when player outside scene load radius
 let beam = new Entity()
 beam.addComponent(
   new Transform({
@@ -75,8 +78,9 @@ beam.addComponent(
   })
 )
 beam.addComponent(resource.beamShape)
-engine.addEntity(beam)
-*/
+//engine.addEntity(beam)
+
+addMirageEntity(beam)
 
 export class TeleportController {
   triggerBoxUp: TriggerBox
