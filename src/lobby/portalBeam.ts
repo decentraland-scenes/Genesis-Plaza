@@ -71,14 +71,32 @@ export let tutorialRunning: boolean = false
 //REMOVING PROCESS
 //TAG:removing-center-area
 //TAG-mirage-workaround/bug that lets models still be rendered, the outer appearance of the bar-want still visible when player outside scene load radius
+const beanOffsetZ = 1.8
 let beam = new Entity()
 beam.addComponent(
   new Transform({
-    position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
-  })
+    //position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
+    position: new Vector3(32, 0, 140+12-beanOffsetZ),
+    //scale: new Vector3(10, 99, 10),
+    rotation: Quaternion.Euler(0, 180, 0),
+  }) 
 )
 beam.addComponent(resource.beamShape)
-//engine.addEntity(beam)
+//beam.addComponent(new BoxShape()) 
+engine.addEntity(beam)
+/*
+let beamold = new Entity()
+beamold.addComponent(
+  new Transform({
+    position: new Vector3(lobbyCenter.x, lobbyCenter.y, lobbyCenter.z),
+    //position: new Vector3(32, 0, 140+12),
+    //scale: new Vector3(10, 99, 10),
+    //rotation: Quaternion.Euler(0, 180, 0),
+  })
+)
+beamold.addComponent(resource.beamShapeOLD)
+//beam.addComponent(new BoxShape())
+engine.addEntity(beamold)*/
 
 addMirageEntity(beam)
 

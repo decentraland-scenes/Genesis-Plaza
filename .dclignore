@@ -13,3 +13,4 @@ Dockerfile
 dist
 screenshots
 server
+models_unused

@@ -186,6 +186,7 @@ export function addBuildings() {
   
    //add core_building
    let coreBuilding = new Entity()
+   //core_building_mirage_low.glb - has no interior is this OK?
    coreBuilding.addComponent(new GLTFShape('models/core_building_mirage.glb'))
    //coreBuilding.addComponent(new BoxShape())
    coreBuilding.addComponent(

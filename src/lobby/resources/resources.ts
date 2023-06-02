@@ -12,7 +12,8 @@ export let twitterShape =           new GLTFShape(modelFolder + "icons/twitter.g
 
 //BEAM
 export let portalSpiralShape =      new GLTFShape(modelFolder + "portal_lift_spiral.glb")
-export let beamShape =              new GLTFShape(modelFolder + "beam.glb")
+export let beamShape =              new GLTFShape(modelFolder + "beam_mirage.glb")//"beam.glb")
+export let beamShapeOLD=              new GLTFShape(modelFolder + "beam.glb")//"beam.glb")
 
 //MENU
 export let menuPillarsShape =       new GLTFShape(modelFolder + "menu_pillars.glb")
