@@ -42,7 +42,7 @@ export async function sendTrack(trackEvent: string,
     spanId: instance,
     elementType: elementType,
     elementId: elementId,
-    event: event,
+    event_key: event,//'event' and properties.event conflict and properties.event is lost. renamed to event_key
     selection: selection,
     selectionDetails: selectionDetails,
     durationTime: durationTime && IN_SECONDS ? durationTime * 0.001 : durationTime,
