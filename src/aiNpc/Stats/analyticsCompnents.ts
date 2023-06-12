@@ -9,8 +9,12 @@ function generateGUID(): string{
   return ([...Array(36)].map(() => randomChar()).join(''))
 }
 
+const rootGuid = generateGUID()
+
 @Component("TrackingElement")
 export class TrackingElement {
+  parent: Entity
+  rootGuid: string
   guid: string
   elementType: string
   elementId: string
@@ -18,7 +22,9 @@ export class TrackingElement {
   startTime: number = 0
   isStarted: boolean = false
 
-  constructor(inEelementType: string, inElementId: string) {
+  constructor(inEelementType: string, inElementId: string, parent?:Entity) {
+    this.rootGuid = rootGuid
+    this.parent = parent
     this.guid = generateGUID()
     this.elementType = inEelementType
     this.elementId = inElementId
@@ -26,6 +32,28 @@ export class TrackingElement {
   }
 }
 
+
+
+export const ANALYTIC_ENTITY_REGISTRY = {
+
+}
+
+export function registerAnalyticsEntity(ent:Entity){
+  const key = ent.getComponent(TrackingElement).elementId
+  ANALYTIC_ENTITY_REGISTRY[ key ] = ent
+}
+export function getRegisteredAnalyticsEntity(key:string){
+  return ANALYTIC_ENTITY_REGISTRY[ key ]
+}
+
+export function getParentGuid(trackingElement: TrackingElement){
+  //TODO recursive look for tracking parent 
+  if(trackingElement.parent && trackingElement.parent.hasComponent(TrackingElement)){
+    return trackingElement.parent.getComponent(TrackingElement).guid
+  }
+  //default is root
+  return trackingElement.rootGuid
+}
 export function trackStart(trackingElement: TrackingElement, inTrackingKey?: string, event?: string) {
   if (trackingElement === null || trackingElement === undefined) {
     log(AnalyticsLogLabel, "Tracking Element can't be Null Or Undefined")
@@ -43,6 +71,8 @@ export function trackStart(trackingElement: TrackingElement, inTrackingKey?: str
     trackingKey,
     trackingElement.elementType,
     trackingElement.elementId,
+    trackingElement.rootGuid,
+    getParentGuid(trackingElement),
     trackingElement.guid,
     eventKey,
     null,
@@ -59,6 +89,8 @@ export function trackAction(trackingElement: TrackingElement, eventKey: string, 
     ANALYTICS_EVENT_KEYS.scene_element_event,
     trackingElement.elementType,
     trackingElement.elementId,
+    trackingElement.rootGuid,
+    getParentGuid(trackingElement),
     trackingElement.guid,
     eventKey,
     undefined,
@@ -80,6 +112,8 @@ export function trackEnd(trackingElement: TrackingElement, inTrackingKey?: strin
     trackingKey,
     trackingElement.elementType,
     trackingElement.elementId,
+    trackingElement.rootGuid,
+    getParentGuid(trackingElement),
     trackingElement.guid,
     eventKey,
     trackingElement.startTime,
