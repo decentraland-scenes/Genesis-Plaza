@@ -17,7 +17,7 @@ import { RemoteNpc } from 'src/aiNpc/npc/remoteNpc'
 import { NpcAnimationNameType, REGISTRY } from 'src/registry'
 import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement, trackEnd } from 'src/aiNpc/Stats/analyticsCompnents'
+import { TrackingElement, getRegisteredAnalyticsEntity, trackEnd } from 'src/aiNpc/Stats/analyticsCompnents'
 
 export let octopus: NPC
 let doge: NPC
@@ -238,7 +238,8 @@ export async function addBarNPCs() {
   // replace with add component
   doge.addComponent(new TrackingElement(
     ANALYTICS_ELEMENTS_TYPES.npc,
-    ANALYTICS_ELEMENTS_IDS.doge
+    ANALYTICS_ELEMENTS_IDS.doge,
+    getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
     )
   )
 

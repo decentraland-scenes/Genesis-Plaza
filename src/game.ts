@@ -49,7 +49,7 @@ import { LobbyScene } from './aiNpc/lobby-scene/lobbyScene'
 import { CONFIG, initConfig } from './config'
 import { initDialogs } from './aiNpc/npc/npcDialog'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from './aiNpc/Stats/AnalyticsConfig'
-import { TrackingElement, trackEnd, trackStart } from './aiNpc/Stats/analyticsCompnents'
+import { TrackingElement, trackEnd, trackStart,registerAnalyticsEntity } from './aiNpc/Stats/analyticsCompnents'
 import { addExteriorAnalytics } from './analytics'
 import { activateMirage, deActivateMirage } from './modules/mirage'
 
@@ -75,6 +75,14 @@ initConfig()
 initDialogs()
 
 //// ADD BUILDINGS
+
+
+const barEntity = new Entity()
+barEntity.addComponentOrReplace(new TrackingElement(ANALYTICS_ELEMENTS_TYPES.region, ANALYTICS_ELEMENTS_IDS.bar))
+engine.addEntity(barEntity)
+
+registerAnalyticsEntity(barEntity)
+
 
 addBuildings()
 
