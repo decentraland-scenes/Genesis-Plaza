@@ -99,7 +99,7 @@ export function addSimoneNPC() {
     // replace with add component
     simone.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,
-        ANALYTICS_ELEMENTS_IDS.aisha,
+        ANALYTICS_ELEMENTS_IDS.simone,
         getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
     )
     )

@@ -34,7 +34,8 @@ export const ANALYTICS_ELEMENTS_IDS = {
   menuTrendingScenesSlider: "menuTrendingSceneSlider",
   menuClassicGamesSlider: "menuClassicGameSlider",
 
-  aisha: "aisha"
+    aisha: "aisha",
+    simone: "simone"
 }
 
 export const ANALYTICS_GENERIC_EVENTS = {
