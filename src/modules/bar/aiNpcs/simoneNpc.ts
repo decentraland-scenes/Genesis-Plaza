@@ -174,9 +174,8 @@ export function addSimoneNPC() {
     simone.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,
         ANALYTICS_ELEMENTS_IDS.simone,
-        getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
-    )
-    )
+        getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.cloud)
+    ))
 
     REGISTRY.allNPCs.push(simoneAI)
 }

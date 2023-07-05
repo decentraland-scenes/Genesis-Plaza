@@ -194,7 +194,7 @@ export function addDogeNPC() {
                 showInputOverlay(true)
             }
             , onEndOfInteraction: () => {
-                log("TestBarNPC", "End Of Interaction")
+                log("DOGENPC", "End Of Interaction")
                 const LOOP = false
                 if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
                 dogeAI.npc.followPath()
@@ -207,8 +207,7 @@ export function addDogeNPC() {
         ANALYTICS_ELEMENTS_TYPES.npc,
         ANALYTICS_ELEMENTS_IDS.doge,
         getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
-    )
-    )
+    ))
 
     REGISTRY.allNPCs.push(dogeAI)
 }

@@ -186,7 +186,7 @@ export function addAishaNPC() {
                 showInputOverlay(true)
             }
             , onEndOfInteraction: () => {
-                //log("TestBarNPC", "End Of Interaction")
+                log("AISHANPC", "End Of Interaction")
                 //const LOOP = false
                 //if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
                 //dogeAI.npc.followPath()
@@ -194,13 +194,12 @@ export function addAishaNPC() {
         },
     )
 
-    // replace with add component
+    //replace with add component
     aisha.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,
         ANALYTICS_ELEMENTS_IDS.aisha,
         getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
-    )
-    )
+    ))
 
     REGISTRY.allNPCs.push(aishaAI)
 }
