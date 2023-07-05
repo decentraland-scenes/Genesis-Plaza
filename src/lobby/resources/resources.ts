@@ -62,3 +62,4 @@ dateUIBGMaterial.roughness = 1
 dateUIBGMaterial.specularIntensity = 0
 
 
+export let customOrangeAtlas = new Texture('images/OrangeAtlas1024.png')

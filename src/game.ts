@@ -92,6 +92,8 @@ addBuildings()
 placeDoors()
 barPlatforms()
 
+insideBar()
+
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {
     handleQuests()

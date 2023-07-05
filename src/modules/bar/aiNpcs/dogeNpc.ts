@@ -10,6 +10,8 @@ import { AnalyticsLogLabel, ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } f
 import { REGISTRY, NpcAnimationNameType } from '../../../registry'
 import { RemoteNpc } from '../../../aiNpc/npc/remoteNpc'
 import { artist1, artist2 } from '../barNPCs'
+import { setSection } from '../../../dcl-scene-ui-workaround/resources'
+import { customOrangeAtlas } from '../../../lobby/resources/resources'
 
 
 export let doge: NPC
@@ -59,7 +61,8 @@ export function addDogeNPC() {
     const dogeAINpcEnabled = true
     doge = new NPC(
         { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
-        'models/core_building/dogeNPC_anim4.glb',
+        //'models/core_building/dogeNPC_anim4.glb',
+        'models/core_building/dogeNPC_anim4_new.glb',
         () => {
             //redefined at lobbyScene.ts L36
             doge.stopWalking()
@@ -72,8 +75,8 @@ export function addDogeNPC() {
         {
             portrait:
             {
-                path: 'images/portraits/doge.png', height: 250, width: 250
-                , offsetX: -30, offsetY: 20
+                path: 'images/portraits/doge.png', height: 300, width: 300
+                , offsetX: -40, offsetY: 20
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             walkingAnim: 'Walk',
@@ -90,11 +93,79 @@ export function addDogeNPC() {
             },
             textBubble: !dogeAINpcEnabled,
             noUI: !dogeAINpcEnabled,
-            darkUI: dogeAINpcEnabled,
+            dialogCustomTheme: customOrangeAtlas,
+            //darkUI: dogeAINpcEnabled,
             bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
         }
     )
     doge.followPath(dogePath)
+
+    //DIALOG BACKGROUND
+    doge.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    doge.dialog.container.height = 256 - 80
+    doge.dialog.container.width = 656
+    doge.dialog.container.positionY = 10//(256 - 80) / 2 + 20
+    
+    setSection(doge.dialog.panel, {
+        sourceHeight: 256 - 80,
+        sourceWidth: 656,
+        sourceLeft: 0,
+        sourceTop: 80
+    })
+    doge.dialog.panel.height = 256 - 80
+    doge.dialog.panel.width = 656
+
+    //LEFT CLICK
+    doge.dialog.leftClickIcon.parent
+    setSection(doge.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    doge.dialog.leftClickIcon.height = 46
+    doge.dialog.leftClickIcon.width = 32
+    doge.dialog.leftClickIcon.hAlign = "right"
+    doge.dialog.leftClickIcon.vAlign = "bottom"
+    doge.dialog.leftClickIcon.positionX = -15
+    doge.dialog.leftClickIcon.positionY = 15
+    
+    //ARROW DOWN
+    let arrowDown = new UIImage(doge.dialog.container, customOrangeAtlas)
+    setSection(arrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    arrowDown.height = 46
+    arrowDown.width = 48
+    arrowDown.hAlign = "center"
+    arrowDown.vAlign = "bottom"
+    arrowDown.positionY = -5
+
+    //NAME BACKGROUND
+    let npcNameBg = new UIImage(doge.dialog.container, customOrangeAtlas)
+    setSection(npcNameBg, {
+        sourceHeight: 80 - 48,
+        sourceWidth: 832 - 576,
+        sourceLeft: 576,
+        sourceTop: 48
+    })
+    npcNameBg.height = 32
+    npcNameBg.width = 256
+    npcNameBg.hAlign = "center"
+    npcNameBg.vAlign = "top"
+    npcNameBg.positionY = 17
+
+    //NAME TEXT
+    let npcNameText = new UIText(doge.dialog.container)
+    npcNameText.value = "Doge"
+    npcNameText.fontSize = 20
+    npcNameText.hAlign = "center"
+    npcNameText.vAlign = "top"
+    npcNameText.positionX = 20
+    npcNameText.positionY = 17 + 20
 
     const ANIM_TIME_PADD = .2
 
