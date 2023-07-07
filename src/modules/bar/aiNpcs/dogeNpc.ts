@@ -76,7 +76,7 @@ export function addDogeNPC() {
             portrait:
             {
                 path: 'images/portraits/doge.png', height: 300, width: 300
-                , offsetX: -40, offsetY: 20
+                , offsetX: -40, offsetY: 53
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             walkingAnim: 'Walk',
