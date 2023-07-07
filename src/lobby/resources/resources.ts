@@ -46,7 +46,6 @@ export let cloudBigShape=           new GLTFShape(modelFolder + "clouds_big.glb"
 // PLATFORM
 export let vortex1Shape=            new GLTFShape(modelFolder + "vortex1.glb")
 export let vortex2Shape=            new GLTFShape(modelFolder + "vortex2.glb")
-export let divingSignShape=         new GLTFShape(modelFolder + "diving_sign.glb")
 
 
 export const dateBGColor:Color3 = Color3.FromHexString("#cdcdcd")
