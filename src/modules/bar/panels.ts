@@ -6,19 +6,31 @@ export function addPanels(
   _tex4:Texture) {
 
   let boardMaterial1 = new Material()
-  boardMaterial1.albedoTexture = _tex1
+    boardMaterial1.albedoTexture = _tex1
+    boardMaterial1.emissiveTexture = _tex1
+    boardMaterial1.emissiveColor = Color3.White()
+    boardMaterial1.emissiveIntensity = 0.8
   boardMaterial1.roughness = 1
   
   let boardMaterial2 = new Material()
-  boardMaterial2.albedoTexture = _tex2
+    boardMaterial2.albedoTexture = _tex2
+    boardMaterial2.emissiveTexture = _tex2
+    boardMaterial2.emissiveColor = Color3.White()
+    boardMaterial2.emissiveIntensity = 0.8
   boardMaterial2.roughness = 1
 
   let boardMaterial3 = new Material()
-  boardMaterial3.albedoTexture = _tex3
+    boardMaterial3.albedoTexture = _tex3
+    boardMaterial3.emissiveTexture = _tex3
+    boardMaterial3.emissiveColor = Color3.White()
+    boardMaterial3.emissiveIntensity = 0.8
   boardMaterial3.roughness = 1
 
   let boardMaterial4 = new Material()
-  boardMaterial4.albedoTexture = _tex4
+    boardMaterial4.albedoTexture = _tex4
+    boardMaterial4.emissiveTexture = _tex4
+    boardMaterial4.emissiveColor = Color3.White()
+    boardMaterial4.emissiveIntensity = 0.8
   boardMaterial4.roughness = 1
 
   //board 1
