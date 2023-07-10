@@ -42,8 +42,8 @@ export function addSimoneNPC() {
         {
             portrait:
             {
-                path: 'images/portraits/simone/Talking.png', height: 350, width: 350
-                , offsetX: -40, offsetY: 0
+                path: 'images/portraits/simone/Talking.png', height: 250, width: 250
+                , offsetX: 20, offsetY: 0
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             //walkingAnim: 'Walk',
@@ -65,9 +65,80 @@ export function addSimoneNPC() {
             bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
         }
     )
-    //doge.followPath(dogePath)
 
-    const ANIM_TIME_PADD = .2
+
+    let UIScale = 0.75
+
+    //DIALOG BACKGROUND
+    simone.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    simone.dialog.container.height = (256 - 80) * UIScale
+    simone.dialog.container.width = 656 * UIScale
+    simone.dialog.container.positionY = 10//(256 - 80) / 2 + 20
+    
+    setSection(simone.dialog.panel, {
+        sourceHeight: 256 - 80,
+        sourceWidth: 656,
+        sourceLeft: 0,
+        sourceTop: 80
+    })
+    simone.dialog.panel.height = (256 - 80) * UIScale
+    simone.dialog.panel.width = 656 * UIScale
+
+    //LEFT CLICK
+    simone.dialog.leftClickIcon.parent
+    setSection(simone.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    simone.dialog.leftClickIcon.height = 46 * UIScale
+    simone.dialog.leftClickIcon.width = 32 * UIScale
+    simone.dialog.leftClickIcon.hAlign = "right"
+    simone.dialog.leftClickIcon.vAlign = "bottom"
+    simone.dialog.leftClickIcon.positionX = -15
+    simone.dialog.leftClickIcon.positionY = 15
+    
+    //ARROW DOWN
+    let arrowDown = new UIImage(simone.dialog.container, customOrangeAtlas)
+    setSection(arrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    arrowDown.height = 46 * UIScale
+    arrowDown.width = 48 * UIScale
+    arrowDown.hAlign = "center"
+    arrowDown.vAlign = "bottom"
+    arrowDown.positionY = -5
+
+    //NAME BACKGROUND
+    let npcNameBg = new UIImage(simone.dialog.container, customOrangeAtlas)
+    setSection(npcNameBg, {
+        sourceHeight: 80 - 48,
+        sourceWidth: 832 - 576,
+        sourceLeft: 576,
+        sourceTop: 48
+    })
+    npcNameBg.height = 32 * UIScale
+    npcNameBg.width = 256 * UIScale
+    npcNameBg.hAlign = "center"
+    npcNameBg.vAlign = "top"
+    npcNameBg.positionY = 17
+
+    //NAME TEXT
+    let npcNameText = new UIText(simone.dialog.container)
+    npcNameText.height = 32 * UIScale
+    npcNameText.width = 256 * UIScale
+    npcNameText.value = "Simone"
+    npcNameText.fontSize = 20 * UIScale
+    npcNameText.hAlign = "center"
+    npcNameText.vAlign = "top"
+    npcNameText.vTextAlign = "center"
+    npcNameText.hTextAlign = "center"
+    npcNameText.positionY = 13
+
 
     const SIMONE_NPC_ANIMATIONS: NpcAnimationNameType = {
         IDLE: { name: "Idle", duration: 4, autoStart: undefined }, //, portraitPath: "images/portraits/aisha/Idle.png" },
@@ -100,76 +171,10 @@ export function addSimoneNPC() {
                 //const LOOP = false
                 //if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
                 //dogeAI.npc.followPath()
-            }
+            },
         },
     )
-
-    //DIALOG BACKGROUND
-    simone.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
-    simone.dialog.container.height = 256 - 80
-    simone.dialog.container.width = 656
-    simone.dialog.container.positionY = 10//(256 - 80) / 2 + 20
-    
-    setSection(simone.dialog.panel, {
-        sourceHeight: 256 - 80,
-        sourceWidth: 656,
-        sourceLeft: 0,
-        sourceTop: 80
-    })
-    simone.dialog.panel.height = 256 - 80
-    simone.dialog.panel.width = 656
-
-    //LEFT CLICK
-    simone.dialog.leftClickIcon.parent
-    setSection(simone.dialog.leftClickIcon, {
-        sourceHeight: 46 - 0,
-        sourceWidth: 944 - 912,
-        sourceLeft: 912,
-        sourceTop: 0
-    })
-    simone.dialog.leftClickIcon.height = 46
-    simone.dialog.leftClickIcon.width = 32
-    simone.dialog.leftClickIcon.hAlign = "right"
-    simone.dialog.leftClickIcon.vAlign = "bottom"
-    simone.dialog.leftClickIcon.positionX = -15
-    simone.dialog.leftClickIcon.positionY = 15
-    
-    //ARROW DOWN
-    let arrowDown = new UIImage(simone.dialog.container, customOrangeAtlas)
-    setSection(arrowDown, {
-        sourceHeight: 46 - 0,
-        sourceWidth: 864 - 816,
-        sourceLeft: 816,
-        sourceTop: 0
-    })
-    arrowDown.height = 46
-    arrowDown.width = 48
-    arrowDown.hAlign = "center"
-    arrowDown.vAlign = "bottom"
-    arrowDown.positionY = -5
-
-    //NAME BACKGROUND
-    let npcNameBg = new UIImage(simone.dialog.container, customOrangeAtlas)
-    setSection(npcNameBg, {
-        sourceHeight: 80 - 48,
-        sourceWidth: 832 - 576,
-        sourceLeft: 576,
-        sourceTop: 48
-    })
-    npcNameBg.height = 32
-    npcNameBg.width = 256
-    npcNameBg.hAlign = "center"
-    npcNameBg.vAlign = "top"
-    npcNameBg.positionY = 17
-
-    //NAME TEXT
-    let npcNameText = new UIText(simone.dialog.container)
-    npcNameText.value = "Simone"
-    npcNameText.fontSize = 20
-    npcNameText.hAlign = "center"
-    npcNameText.vAlign = "top"
-    npcNameText.positionX = 15
-    npcNameText.positionY = 17 + 20
+    simoneAI.setName("Aisha")
     // replace with add component
     simone.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,

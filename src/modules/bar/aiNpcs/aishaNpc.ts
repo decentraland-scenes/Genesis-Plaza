@@ -41,8 +41,8 @@ export function addAishaNPC() {
         {
             portrait:
             {
-                path: 'images/portraits/aisha/Aisha.png', height: 300, width: 300
-                , offsetX: -40, offsetY: 53
+                path: 'images/portraits/aisha/Aisha.png', height: 250, width: 250
+                , offsetX: 20, offsetY: 0
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             //walkingAnim: 'Walk',
@@ -64,12 +64,14 @@ export function addAishaNPC() {
             bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
         }
     )
-    //doge.followPath(dogePath)
+
+
+    let UIScale = 0.75
 
     //DIALOG BACKGROUND
     aisha.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
-    aisha.dialog.container.height = 256 - 80
-    aisha.dialog.container.width = 656
+    aisha.dialog.container.height = (256 - 80) * UIScale
+    aisha.dialog.container.width = 656 * UIScale
     aisha.dialog.container.positionY = 10//(256 - 80) / 2 + 20
 
     setSection(aisha.dialog.panel, {
@@ -78,8 +80,8 @@ export function addAishaNPC() {
         sourceLeft: 0,
         sourceTop: 80
     })
-    aisha.dialog.panel.height = 256 - 80
-    aisha.dialog.panel.width = 656
+    aisha.dialog.panel.height = (256 - 80) * UIScale
+    aisha.dialog.panel.width = 656 * UIScale
 
     //LEFT CLICK
     aisha.dialog.leftClickIcon.parent
@@ -89,8 +91,8 @@ export function addAishaNPC() {
         sourceLeft: 912,
         sourceTop: 0
     })
-    aisha.dialog.leftClickIcon.height = 46
-    aisha.dialog.leftClickIcon.width = 32
+    aisha.dialog.leftClickIcon.height = 46 * UIScale
+    aisha.dialog.leftClickIcon.width = 32 * UIScale
     aisha.dialog.leftClickIcon.hAlign = "right"
     aisha.dialog.leftClickIcon.vAlign = "bottom"
     aisha.dialog.leftClickIcon.positionX = -15
@@ -104,8 +106,8 @@ export function addAishaNPC() {
         sourceLeft: 816,
         sourceTop: 0
     })
-    arrowDown.height = 46
-    arrowDown.width = 48
+    arrowDown.height = 46 * UIScale
+    arrowDown.width = 48 * UIScale
     arrowDown.hAlign = "center"
     arrowDown.vAlign = "bottom"
     arrowDown.positionY = -5
@@ -118,46 +120,24 @@ export function addAishaNPC() {
         sourceLeft: 576,
         sourceTop: 48
     })
-    npcNameBg.height = 32
-    npcNameBg.width = 256
+    npcNameBg.height = 32 * UIScale
+    npcNameBg.width = 256 * UIScale
     npcNameBg.hAlign = "center"
     npcNameBg.vAlign = "top"
-    npcNameBg.positionY = 17
+    npcNameBg.positionY = 13
 
     //NAME TEXT
     let npcNameText = new UIText(aisha.dialog.container)
+    npcNameText.height = 32 * UIScale
+    npcNameText.width = 256 * UIScale
     npcNameText.value = "Aisha"
-    npcNameText.fontSize = 20
+    npcNameText.fontSize = 20 * UIScale
     npcNameText.hAlign = "center"
     npcNameText.vAlign = "top"
-    npcNameText.positionX = 20
-    npcNameText.positionY = 17 + 20
+    npcNameText.vTextAlign = "center"
+    npcNameText.hTextAlign = "center"
+    npcNameText.positionY = 13
 
-    //let dialogBg = new UIImage(aisha.dialog.panel, customOrangeAtlas)
-    //dialogBg.height = 256 - 80
-    //dialogBg.width = 656
-    //setSection(dialogBg, {
-    //    sourceHeight: 256 - 80,
-    //    sourceWidth: 656,
-    //    sourceLeft: 0,
-    //    sourceTop: 80
-    //})
-
-    //let npcName = new UIImage(aisha.dialog.panel, new Texture('images/test/CustomOrangeAtlas.png'))
-    //setSection(npcName, {
-    //    sourceHeight: 490 - 458,
-    //    sourceWidth: 640 - 512,
-    //    sourceLeft: 512,
-    //    sourceTop: 458
-    //})
-    //npcName.positionX = -20
-    //NPC NAME BACKGROUND
-
-    //NPC NAME TEXT
-
-    //aisha.dialog.panel.positionX = 100
-
-    const ANIM_TIME_PADD = .2
 
     const AISHA_NPC_ANIMATIONS: NpcAnimationNameType = {
         IDLE: { name: "Idle", duration: 4, autoStart: undefined}, //, portraitPath: "images/portraits/aisha/Idle.png" },
@@ -193,7 +173,7 @@ export function addAishaNPC() {
             }
         },
     )
-
+    aishaAI.setName("Aisha")
     //replace with add component
     aisha.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,

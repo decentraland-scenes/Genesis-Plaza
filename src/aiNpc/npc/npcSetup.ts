@@ -3,6 +3,7 @@ import { getUserData, UserData } from '@decentraland/Identity'
 import { NpcAnimationNameType, REGISTRY } from 'src/registry'
 import { RESOURCES } from 'src/resources'
 import { GAME_STATE } from 'src/state'
+import { ainpcTextColor } from '../../lobby/resources/resources'
 import { RemoteNpc } from './remoteNpc'
 import { streamedMsgs } from './streamedMsgs'
 
@@ -142,7 +143,8 @@ export function setupNPC(){
   
 
   for(const p of REGISTRY.allNPCs){
-    p.npc.dialog.text.hTextAlign = 'center'
+      p.npc.dialog.text.hTextAlign = 'center'
+      p.npc.dialog.text.color = ainpcTextColor
   }
 
    

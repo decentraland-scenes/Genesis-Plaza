@@ -75,8 +75,8 @@ export function addDogeNPC() {
         {
             portrait:
             {
-                path: 'images/portraits/doge.png', height: 300, width: 300
-                , offsetX: -40, offsetY: 53
+                path: 'images/portraits/doge.png', height: 250, width: 250
+                , offsetX: 20, offsetY: 0
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             walkingAnim: 'Walk',
@@ -100,10 +100,12 @@ export function addDogeNPC() {
     )
     doge.followPath(dogePath)
 
+    let UIScale = 0.75
+
     //DIALOG BACKGROUND
     doge.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
-    doge.dialog.container.height = 256 - 80
-    doge.dialog.container.width = 656
+    doge.dialog.container.height = (256 - 80) * UIScale
+    doge.dialog.container.width = 656 * UIScale
     doge.dialog.container.positionY = 10//(256 - 80) / 2 + 20
     
     setSection(doge.dialog.panel, {
@@ -112,8 +114,8 @@ export function addDogeNPC() {
         sourceLeft: 0,
         sourceTop: 80
     })
-    doge.dialog.panel.height = 256 - 80
-    doge.dialog.panel.width = 656
+    doge.dialog.panel.height = (256 - 80) * UIScale
+    doge.dialog.panel.width = 656 * UIScale
 
     //LEFT CLICK
     doge.dialog.leftClickIcon.parent
@@ -123,8 +125,8 @@ export function addDogeNPC() {
         sourceLeft: 912,
         sourceTop: 0
     })
-    doge.dialog.leftClickIcon.height = 46
-    doge.dialog.leftClickIcon.width = 32
+    doge.dialog.leftClickIcon.height = 46 * UIScale
+    doge.dialog.leftClickIcon.width = 32 * UIScale
     doge.dialog.leftClickIcon.hAlign = "right"
     doge.dialog.leftClickIcon.vAlign = "bottom"
     doge.dialog.leftClickIcon.positionX = -15
@@ -138,8 +140,8 @@ export function addDogeNPC() {
         sourceLeft: 816,
         sourceTop: 0
     })
-    arrowDown.height = 46
-    arrowDown.width = 48
+    arrowDown.height = 46 * UIScale
+    arrowDown.width = 48 * UIScale
     arrowDown.hAlign = "center"
     arrowDown.vAlign = "bottom"
     arrowDown.positionY = -5
@@ -152,20 +154,23 @@ export function addDogeNPC() {
         sourceLeft: 576,
         sourceTop: 48
     })
-    npcNameBg.height = 32
-    npcNameBg.width = 256
+    npcNameBg.height = 32 * UIScale
+    npcNameBg.width = 256 * UIScale
     npcNameBg.hAlign = "center"
     npcNameBg.vAlign = "top"
-    npcNameBg.positionY = 17
+    npcNameBg.positionY = 13
 
     //NAME TEXT
     let npcNameText = new UIText(doge.dialog.container)
+    npcNameText.height = 32 * UIScale
+    npcNameText.width = 256 * UIScale
     npcNameText.value = "Doge"
-    npcNameText.fontSize = 20
+    npcNameText.fontSize = 20 * UIScale
     npcNameText.hAlign = "center"
     npcNameText.vAlign = "top"
-    npcNameText.positionX = 20
-    npcNameText.positionY = 17 + 20
+    npcNameText.vTextAlign = "center"
+    npcNameText.hTextAlign = "center"
+    npcNameText.positionY = 13
 
     const ANIM_TIME_PADD = .2
 
@@ -201,6 +206,7 @@ export function addDogeNPC() {
             }
         },
     )
+    dogeAI.setName("Aisha")
 
     // replace with add component
     doge.addComponent(new TrackingElement(

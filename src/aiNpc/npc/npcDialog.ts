@@ -43,7 +43,9 @@ const askWaitingForResponse:Dialog = {
   //offsetX: 60,
   isQuestion: false,
   skipable: false,
-  isEndOfDialog:true
+  isEndOfDialog:true,
+
+    fontSize: 18
 }
 
 

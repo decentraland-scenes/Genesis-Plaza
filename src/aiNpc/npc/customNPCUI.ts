@@ -11,11 +11,13 @@ import { closeAllInteractions, createMessageObject, sendMsgToAI } from "./connec
 import { QuestionData } from "./remoteNpc";
 import { TrackingElement, trackAction } from "../Stats/analyticsCompnents";
 import { AnalyticsLogLabel } from "../Stats/AnalyticsConfig";
-import { customOrangeAtlas } from "../../lobby/resources/resources";
+import { ainpcTextColor, customOrangeAtlas } from "../../lobby/resources/resources";
 
 const canvas = ui.canvas
 
-const PROMPT_WIDTH = 600
+
+let UIScale = 0.75
+const PROMPT_WIDTH = 752 * 0.75//600
 
 //make undefined for fall back default atlas
 const ATLAS_STANDARD = false
@@ -42,7 +44,6 @@ const CUSTOM_GRAY_BUTTON_SECTION={
   sourceTop: 513
 }
 
-
 const buttonsSyle = ui.ButtonStyles.DARK
 //const askSomethingElse = new ui.CustomPrompt(ui.PromptStyles.DARKLARGE, PROMPT_WIDTH, 180)
 const askSomethingElse = new ui.CustomPrompt('images/OrangeAtlas1024.png', PROMPT_WIDTH, 180)
@@ -63,8 +64,8 @@ setSection(askSomethingElse.background, {
     sourceLeft: 0,
     sourceTop: 256
 })
-askSomethingElse.background.width = askSomethingElse.background.sourceWidth
-askSomethingElse.background.height = askSomethingElse.background.sourceHeight
+askSomethingElse.background.width = askSomethingElse.background.sourceWidth * UIScale
+askSomethingElse.background.height = askSomethingElse.background.sourceHeight * UIScale
 
 //CLOSE BUTTON
 const closeButton = new UIImage(askSomethingElse.background, customAtlas)
@@ -76,15 +77,15 @@ setSection(closeButton, {
 })
 closeButton.vAlign = "top"
 closeButton.hAlign = "right"
-closeButton.width = closeButton.sourceWidth
-closeButton.height = closeButton.sourceHeight
-closeButton.positionX = 18
-closeButton.positionY = 17
+closeButton.width = closeButton.sourceWidth * UIScale
+closeButton.height = closeButton.sourceHeight * UIScale
+closeButton.positionX = closeButton.sourceWidth * UIScale / 2 - 6
+closeButton.positionY = closeButton.sourceHeight * UIScale / 2 - 6
 closeButton.onClick = new OnPointerDown(() => {
     askSomethingElse.hide()
 })
  
-const ASK_BTN_FONT_SIZE = 12
+const ASK_BTN_FONT_SIZE = 10
 
 //const ASK_BTN_WIDTH = 16
 
@@ -100,21 +101,21 @@ const QUESTION_LIST:QuestionData[] = [
   {displayQuestion:"What is an emote!",queryToAi:"What is an emote!"}
 ]
 const askButtonsList:ui.CustomPromptButton[] = []
-let askText = askSomethingElse.addText("Ask Me Anything!", 0, 95, Color4.Black(), 18)
+let askText = askSomethingElse.addText("Ask Me Anything!", 0, 77, ainpcTextColor, 16)
 askText.text.font = ui.SFHeavyFont
 
 const INPUT_POS_Y = 27
-const BUTTON_POS_Y = -60 //-15
+const BUTTON_POS_Y = -45 //-15
 const BUTTON_HEIGHT = 48 //28
 const BUTTON_WIDTH = 176 //135
 const BUTTON_OFFSET_Y = 5
 
-const BUTTON_COLUMN_FULL_WIDTH = 280
+const BUTTON_COLUMN_FULL_WIDTH = 176 //280
 const BUTTON_COLUMN_SPACING = BUTTON_COLUMN_FULL_WIDTH/2
-const BUTTON_OFFSET_X = 50
+const BUTTON_OFFSET_X = 55
 const BUTTON_ROWS_AMOUNT = 1
-const INPUT_BOX_WIDTH = 576 - 2 * (40 + 5)
-const INPUT_BOX_HEIGHT = 80 - 2 * 10
+//const INPUT_BOX_WIDTH = 576 - 2 * (40 + 5)
+//const INPUT_BOX_HEIGHT = 80 - 2 * 10
 const NEXT_BUTTON_HEIGHT = BUTTON_HEIGHT
 const NEXT_BACK_WIDTH = BUTTON_WIDTH//120//30
 
@@ -155,10 +156,10 @@ const askButtonPrev = askSomethingElse.addButton("<<", -100, 0, () => {
 }, buttonsSyle)*/
 
 for(const b of [askButtonNext]){
-  b.label.width = NEXT_BACK_WIDTH
-  b.image.height = NEXT_BUTTON_HEIGHT
-  b.image.width = NEXT_BACK_WIDTH
-  b.label.fontSize = 14
+    //b.label.width = NEXT_BACK_WIDTH * UIScale
+    b.image.height = NEXT_BUTTON_HEIGHT * UIScale
+    b.image.width = NEXT_BACK_WIDTH * UIScale
+    b.label.fontSize = ASK_BTN_FONT_SIZE
 
   if(customAtlas){
     b.image.source = customAtlas
@@ -172,8 +173,8 @@ for(const b of [askButtonNext]){
             sourceLeft: 656,
             sourceTop: 128
         })
-        askButtonNext.image.width = askButtonNext.image.sourceWidth
-        askButtonNext.image.height = askButtonNext.image.sourceHeight
+        askButtonNext.image.width = askButtonNext.image.sourceWidth * UIScale
+        askButtonNext.image.height = askButtonNext.image.sourceHeight * UIScale
     }
   }
 }
@@ -203,9 +204,8 @@ function nextPageOfQuestions(dir:number){
     const q = QUESTION_LIST[currentQuestionIndex] 
     b.label.fontSize = ASK_BTN_FONT_SIZE 
     b.label.value = q.displayQuestion
-    b.image.height = BUTTON_HEIGHT
-      b.image.width = BUTTON_WIDTH
-      b.label.fontSize = 14
+      b.image.height = BUTTON_HEIGHT * UIScale
+      b.image.width = BUTTON_WIDTH * UIScale
     b.image.onClick = new OnPointerDown(()=>{
       sendPredefinedMessageToAi(q.queryToAi) 
     })
@@ -228,8 +228,8 @@ function nextPageOfQuestions(dir:number){
                 sourceLeft: 656,
                 sourceTop: 128
             })
-            b.image.width = b.image.sourceWidth
-            b.image.height = b.image.sourceHeight
+            b.image.width = b.image.sourceWidth * UIScale
+            b.image.height = b.image.sourceHeight * UIScale
         }
       }
       if(loopCnt === 1){
@@ -243,8 +243,8 @@ function nextPageOfQuestions(dir:number){
                 sourceLeft: 656,
                 sourceTop: 128
             })
-            b.image.width = b.image.sourceWidth
-            b.image.height = b.image.sourceHeight
+            b.image.width = b.image.sourceWidth * UIScale
+            b.image.height = b.image.sourceHeight * UIScale
         }
       }
     }
@@ -266,7 +266,7 @@ export function showInputOverlay(val: boolean) {
   if (val) {
     //copy the portrait being used
     //wish had access to private data REGISTRY.activeNPC.npc.dialog.defaultPortrait to place more dynamically
-      portait.image.positionX = -PROMPT_WIDTH / 2 + -40//(REGISTRY.activeNPC.npc.dialog.portrait.width/2)
+      portait.image.positionX = -PROMPT_WIDTH / 2//(REGISTRY.activeNPC.npc.dialog.portrait.width/2)
     if(REGISTRY.activeNPC){
       portait.image.source = REGISTRY.activeNPC.npc.dialog.portrait.source
       portait.image.width = REGISTRY.activeNPC.npc.dialog.portrait.width
@@ -275,7 +275,9 @@ export function showInputOverlay(val: boolean) {
       portait.image.sourceWidth = REGISTRY.activeNPC.npc.dialog.portrait.sourceWidth
       portait.image.sourceTop = REGISTRY.activeNPC.npc.dialog.portrait.sourceTop
       portait.image.sourceLeft = REGISTRY.activeNPC.npc.dialog.portrait.sourceLeft
-    } 
+
+        npcNameText.value = REGISTRY.activeNPC.npc.name
+      }
       disclaimerBg.visible = false
     //random questions
     const rndAmount = Math.floor(Math.random()*QUESTION_LIST.length)
@@ -372,20 +374,20 @@ setSection(textFieldBg, {
 })
 textFieldBg.vAlign = "center"
 textFieldBg.hAlign = "center"
-textFieldBg.width = textFieldBg.sourceWidth
-textFieldBg.height = textFieldBg.sourceHeight
+textFieldBg.width = textFieldBg.sourceWidth * UIScale
+textFieldBg.height = textFieldBg.sourceHeight * UIScale
 textFieldBg.positionX = 0
-textFieldBg.positionY = 16
+textFieldBg.positionY = 12
 
 const textInput = new UIInputText(textFieldBg)
-textInput.width = INPUT_BOX_WIDTH
-textInput.height = INPUT_BOX_HEIGHT
+textInput.width = textFieldBg.sourceWidth * UIScale - 10
+textInput.height = textFieldBg.sourceHeight * UIScale
 textInput.textWrapping = true
 textInput.hTextAlign = "center"
 textInput.vTextAlign = "center"
 textInput.vAlign = "center"
 textInput.hAlign = "center"
-textInput.fontSize = 16
+textInput.fontSize = 16 * UIScale
 textInput.placeholder = "Type your question HERE then hit enter..."
 //textInput.font = ui.SFHeavyFont
 //textInput.placeholderColor = Color4.Black()
@@ -450,14 +452,14 @@ setSection(infoButton, {
 })
 infoButton.vAlign = "bottom"
 infoButton.hAlign = "right"
-infoButton.width = infoButton.sourceWidth
-infoButton.height = infoButton.sourceHeight
-infoButton.positionX = -12
-infoButton.positionY = 20
+infoButton.width = infoButton.sourceWidth * UIScale
+infoButton.height = infoButton.sourceHeight * UIScale
+infoButton.positionX = -10
+infoButton.positionY = 16
 
 //DISCLAIMER BACKGROUND
 const disclaimerBg = new UIImage(infoButton, customAtlas)
-disclaimerBg.visible = false
+disclaimerBg.visible = true
 setSection(disclaimerBg, {
     sourceHeight: 464 - 320,
     sourceWidth: 912 - 753,
@@ -466,31 +468,56 @@ setSection(disclaimerBg, {
 })
 disclaimerBg.vAlign = "center"
 disclaimerBg.hAlign = "center"
-disclaimerBg.width = disclaimerBg.sourceWidth
-disclaimerBg.height = disclaimerBg.sourceHeight
-disclaimerBg.positionX = -64
-disclaimerBg.positionY =  94
+disclaimerBg.width = disclaimerBg.sourceWidth * UIScale
+disclaimerBg.height = disclaimerBg.sourceHeight * UIScale
+disclaimerBg.positionX = -1 * disclaimerBg.sourceWidth * UIScale / 2 + 9
+disclaimerBg.positionY = disclaimerBg.sourceHeight * UIScale / 2 + 14
 
 //DISCLAIMER TEXT
 const disclaimerText = new UIText(disclaimerBg)
 disclaimerText.value = "Disclaimer: Beta. Power by a 3rd party AI. \nYou may receive inaccurate information which is not endorsed by the Foundation or the Decentraland community. \nDo not share personal information."
 disclaimerText.textWrapping = true
 disclaimerText.color = Color4.White()
-disclaimerText.width = disclaimerBg.sourceWidth - 12
-disclaimerText.height = disclaimerBg.sourceHeight - 10
-disclaimerText.fontSize = 10
+disclaimerText.width = disclaimerBg.sourceWidth * UIScale - 12
+disclaimerText.height = disclaimerBg.sourceHeight * UIScale - 10
+disclaimerText.fontSize = 7
 disclaimerText.hAlign = "center"
 disclaimerText.vAlign = "center"
 disclaimerText.hTextAlign = "center"
 disclaimerText.vTextAlign = "center"
-disclaimerText.positionY = 8
+disclaimerText.positionY = 6
 
 infoButton.onClick = new OnPointerDown(() => {
     if (disclaimerBg.visible) disclaimerBg.visible = false
     else disclaimerBg.visible = true
 })
 
+//NAME BACKGROUND
+let npcNameBg = new UIImage(askSomethingElse.background, customOrangeAtlas)
+setSection(npcNameBg, {
+    sourceHeight: 80 - 48,
+    sourceWidth: 832 - 576,
+    sourceLeft: 576,
+    sourceTop: 48
+})
+npcNameBg.height = 32 * UIScale
+npcNameBg.width = 256 * UIScale
+npcNameBg.hAlign = "center"
+npcNameBg.vAlign = "top"
+npcNameBg.positionY = 16
+
+//NAME TEXT
+let npcNameText = new UIText(askSomethingElse.background)
+npcNameText.height = 32 * UIScale
+npcNameText.width = 256 * UIScale
+npcNameText.fontSize = 20 * UIScale
+npcNameText.fontSize = 20 * UIScale
+npcNameText.hAlign = "center"
+npcNameText.vAlign = "top"
+npcNameText.vTextAlign = "center"
+npcNameText.hTextAlign = "center"
+npcNameText.positionY = 16
 
 
 const portait = askSomethingElse.addIcon('images/portraits/catguy.png', -PROMPT_WIDTH / 2, 0, 200, 200)
-//showInputOverlay(true)
+showInputOverlay(true)

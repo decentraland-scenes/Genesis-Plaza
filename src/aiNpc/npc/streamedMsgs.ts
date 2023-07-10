@@ -82,8 +82,7 @@ export class ChatPart{
        isQuestion: false,
        skipable: false, 
        //audio: '',
-       
-        
+       fontSize: 20
      } 
      return dialog
    }

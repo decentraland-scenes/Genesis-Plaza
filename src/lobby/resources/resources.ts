@@ -62,3 +62,4 @@ dateUIBGMaterial.specularIntensity = 0
 
 
 export let customOrangeAtlas = new Texture('images/OrangeAtlas1024.png')
+export let ainpcTextColor = new Color4(0.35, 0.35, 0.35, 1)
