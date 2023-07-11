@@ -123,7 +123,13 @@ export async function addBarNPCs() {
     }
   )
 
-    //DIALOG BACKGROUND
+    
+  //Thumbnail position adjust 
+  
+    octopus.dialog.portrait.paddingTop = -30
+  
+  
+  //DIALOG BACKGROUND
     octopus.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
     octopus.dialog.container.height = (496 - 256) //* UIScale
     octopus.dialog.container.width = 752 //* UIScale
@@ -181,6 +187,7 @@ export async function addBarNPCs() {
         sourceTop: 128
     })
     octopus.dialog.skipButton.image.opacity = 0.9
+    octopus.dialog.skipButton.image.paddingTop = -30
 
     //ARROW DOWN
     let octoArrowDown = new UIImage(octopus.dialog.container, customOrangeAtlas)
@@ -401,6 +408,9 @@ export async function addBarNPCs() {
     }
   )
 
+  wearablesC.dialog.portrait.paddingTop = -30
+
+
     //DIALOG BACKGROUND
     wearablesC.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
     wearablesC.dialog.container.height = (496 - 256) //* UIScale
@@ -436,6 +446,9 @@ export async function addBarNPCs() {
         sourceTop: 128
     })
     wearablesC.dialog.skipButton.image.opacity = 0.9
+    wearablesC.dialog.skipButton.image.paddingTop = -30
+
+    
 
     //ARROW DOWN
     let wearableCArrowDown = new UIImage(wearablesC.dialog.container, customOrangeAtlas)
@@ -501,6 +514,9 @@ export async function addBarNPCs() {
       },
     }
   )
+
+    artist1.dialog.portrait.paddingTop = -30
+
     //DIALOG BACKGROUND
     artist1.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
     artist1.dialog.container.height = (496 - 256) //* UIScale
@@ -677,6 +693,9 @@ export function addNPCsOutside() {
   )
     wenMoon.followPath(wenPath)
 
+
+    wenMoon.dialog.portrait.paddingTop = -30
+
     //DIALOG BACKGROUND
     wenMoon.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
     wenMoon.dialog.container.height = (496 - 256) //* UIScale
@@ -712,6 +731,8 @@ export function addNPCsOutside() {
         sourceTop: 128
     })
     wenMoon.dialog.skipButton.image.opacity = 0.9
+    wenMoon.dialog.skipButton.image.paddingTop = -30
+
 
     //ARROW DOWN
     let wenMunArrowDown = new UIImage(wenMoon.dialog.container, customOrangeAtlas)
@@ -767,6 +788,9 @@ export function addNPCsOutside() {
       },
     }
   )
+
+    catGuy.dialog.portrait.paddingTop = -30
+
     //DIALOG BACKGROUND
     catGuy.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
     catGuy.dialog.container.height = (496 - 256) //* UIScale
@@ -802,6 +826,8 @@ export function addNPCsOutside() {
         sourceTop: 128
     })
     catGuy.dialog.skipButton.image.opacity = 0.9
+    catGuy.dialog.skipButton.image.paddingTop = -30
+
 
     //ARROW DOWN
     let catGuyArrowDown = new UIImage(catGuy.dialog.container, customOrangeAtlas)

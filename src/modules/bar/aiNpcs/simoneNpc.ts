@@ -43,7 +43,7 @@ export function addSimoneNPC() {
             portrait:
             {
                 path: 'images/portraits/simone/Talking.png', height: 300, width: 300
-                , offsetX: 20, offsetY: 0
+                , offsetX: 40, offsetY: 0
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
             //walkingAnim: 'Walk',
