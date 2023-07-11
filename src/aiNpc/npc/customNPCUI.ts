@@ -520,4 +520,4 @@ npcNameText.positionY = 16
 
 
 const portait = askSomethingElse.addIcon('images/portraits/catguy.png', -PROMPT_WIDTH / 2, 0, 200, 200)
-showInputOverlay(true)
+showInputOverlay(false)

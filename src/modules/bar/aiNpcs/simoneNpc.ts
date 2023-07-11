@@ -42,7 +42,7 @@ export function addSimoneNPC() {
         {
             portrait:
             {
-                path: 'images/portraits/simone/Talking.png', height: 250, width: 250
+                path: 'images/portraits/simone/Talking.png', height: 300, width: 300
                 , offsetX: 20, offsetY: 0
                 , section: { sourceHeight: 256, sourceWidth: 256 }
             },
@@ -125,7 +125,7 @@ export function addSimoneNPC() {
     npcNameBg.width = 256 * UIScale
     npcNameBg.hAlign = "center"
     npcNameBg.vAlign = "top"
-    npcNameBg.positionY = 17
+    npcNameBg.positionY = 13
 
     //NAME TEXT
     let npcNameText = new UIText(simone.dialog.container)
@@ -174,7 +174,7 @@ export function addSimoneNPC() {
             },
         },
     )
-    simoneAI.setName("Aisha")
+    simoneAI.setName("Simone")
     // replace with add component
     simone.addComponent(new TrackingElement(
         ANALYTICS_ELEMENTS_TYPES.npc,

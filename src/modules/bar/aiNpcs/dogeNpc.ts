@@ -206,7 +206,7 @@ export function addDogeNPC() {
             }
         },
     )
-    dogeAI.setName("Aisha")
+    dogeAI.setName("Doge")
 
     // replace with add component
     doge.addComponent(new TrackingElement(
