@@ -115,7 +115,7 @@ export async function addBarNPCs() {
       dialogSound: `sounds/navigationForward.mp3`,
       idleAnim: 'Idle',
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
             dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         backToIdle()
@@ -386,7 +386,7 @@ export async function addBarNPCs() {
     {
       portrait: `images/portraits/WearableConnoisseur.png`,
       faceUser: true,
-      darkUI: true,
+      //darkUI: true,
       dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Talk',
       turningSpeed: 0.35,
@@ -492,7 +492,7 @@ export async function addBarNPCs() {
     {
       portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
-      darkUI: true,
+      //darkUI: true,
       faceUser: false,
       dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Art Recommendations',
@@ -597,7 +597,7 @@ export async function addBarNPCs() {
       portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
       hoverText: 'Talk',
       reactDistance: 16,
       textBubble: true,
@@ -678,7 +678,7 @@ export function addNPCsOutside() {
       onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: true,
-      darkUI: true,
+      //darkUI: true,
       walkingSpeed: 1,
             dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
@@ -781,7 +781,7 @@ export function addNPCsOutside() {
       onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
             dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         catGuy.playAnimation(`idle`)
