@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
-    "lib": [ "ES2015" ],
     "outFile": "./bin/game.js",
     "allowJs": true,
     "strict": true,
