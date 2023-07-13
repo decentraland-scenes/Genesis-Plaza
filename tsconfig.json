@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
-    "lib": ["ES2015"],
     "outFile": "./bin/game.js",
     "allowJs": true,
     "strict": true,
@@ -45,7 +43,7 @@
         "node_modules\\@dcl\\ecs-quests\\dist\\@dcl\\dcl-ecs-quests.d.ts"
       ]
     },
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "include": [
     "src/**/*.ts"
