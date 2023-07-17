@@ -1,7 +1,9 @@
 
 import * as utils from '@dcl/ecs-scene-utils'
 
-const videoClip = new VideoClip("https://player.vimeo.com/external/843206751.m3u8?s=ad9e81b120faa9fa68506ed337e6095ac1de3f78")
+//const videoClip = new VideoClip("https://player.vimeo.com/external/843206751.m3u8?s=ad9e81b120faa9fa68506ed337e6095ac1de3f78")
+const videoClip = new VideoClip("https://video.dcl.guru/live/djtrax/index.m3u8")
+
 const videoTexture = new VideoTexture(videoClip)
 videoTexture.loop = true
 videoTexture.playing = false
@@ -20,20 +22,16 @@ screen1.addComponent(new PlaneShape())
 screen1.addComponent(
     new Transform({
         position: new Vector3(160.007, 3.88876, 173.449),
-        rotation: Quaternion.Euler(0, 0, 0),
+        rotation: Quaternion.Euler(0, 180, 0),
         scale: new Vector3(11.0332, 5.53546, 1)
     })
 )
 screen1.addComponent(screenMaterial)
 engine.addEntity(screen1)
 
-screen1.addComponent(new OnPointerDown(() => {
-    videoTexture.playing = !videoTexture.playing
-
-    if (videoTexture.playing) screen1.getComponent(OnPointerDown).hoverText = "PAUSE"
-    if (videoTexture.playing) screen1.getComponent(OnPointerDown).hoverText = "PLAY"
-}, {
-}))
+//screen1.addComponent(new OnPointerDown(() => {
+//}, {
+//}))
 
 
 const triggerEntity = new Entity()

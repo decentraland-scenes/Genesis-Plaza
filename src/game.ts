@@ -361,3 +361,16 @@ export function outsideBar() {
     0.6
   )
 }
+
+import { bootStrapClaimingDropins } from "./claiming-dropin/bootstrapClaiming"
+import { initClaimConfig } from "./claiming-dropin/claiming/loot-config"
+//import { initConfig } from "./config"
+import { initDispenserPositions, initSceneClaiming } from "./modules/claiming/claimSetup"
+
+
+//INITIALIZING claiming
+//initConfig()
+bootStrapClaimingDropins()
+initClaimConfig()
+initDispenserPositions()
+initSceneClaiming()

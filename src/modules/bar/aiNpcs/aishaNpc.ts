@@ -9,7 +9,6 @@ import { getRegisteredAnalyticsEntity, trackEnd, TrackingElement } from '../../.
 import { AnalyticsLogLabel, ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from '../../../aiNpc/Stats/AnalyticsConfig'
 import { REGISTRY, NpcAnimationNameType } from '../../../registry'
 import { RemoteNpc } from '../../../aiNpc/npc/remoteNpc'
-import { artist1, artist2 } from '../barNPCs'
 import { setSection } from '../../../dcl-scene-ui-workaround/resources'
 import { customOrangeAtlas } from '../../../lobby/resources/resources'
 
@@ -32,8 +31,6 @@ export function addAishaNPC() {
         () => {
             //redefined at lobbyScene.ts L36
             aisha.stopWalking()
-            artist1.endInteraction()
-            artist2.endInteraction()
             aisha.playAnimation('Talk1', true)
             let randomNum = Math.floor(Math.random() * 10)
             //doge.talkBubble(DogeTalk, randomNum)
@@ -64,7 +61,6 @@ export function addAishaNPC() {
             bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
         }
     )
-
 
     let UIScale = 0.75
 

@@ -1,7 +1,8 @@
 import { isPreviewMode } from '@decentraland/EnvironmentAPI'
+import { DispenserPos } from "./claiming-dropin/claiming/claimTypes"
 
 
-const ENV = "prd";
+const ENV = "local"; //set to local to use local values
 
 const DEBUG_FLAGS:Record<string,boolean>={
   "local":true,
@@ -17,7 +18,17 @@ const DEBUG_SHOW_ASTAR_OBSTICLES_FLAG:Record<string,boolean>={
   "local":true,
   "prd-demo":false,
   "prd":true
-} 
+}
+const FORCE_PREVIEW_VAL: Record<string, boolean> = {
+    local: true,//for local testing if u need different value
+    stg: true,//DEV/preview
+    prd: false,//PROD/live use this for launch
+};
+const DEBUG_CLAIMING_FLAGS_VAL: Record<string, boolean> = {
+    local: true,//for local testing if u need different value
+    stg: false,//DEV/preview
+    prd: false,//PROD/live use this for launch
+};
 
 
 //rx0ym1.colyseus.dev is hosed, made a new non prod - laashk.colyseus.dev
@@ -99,9 +110,9 @@ export class Config{
   IN_PREVIEW = false
   FORCE_PREVIEW_ENABLED = true
   
-  //do has check, maybe dont do it so always feel like won
-  //reward server will enforce if u got it
-  CLAIM_DO_HAS_WEARABLE_CHECK = false
+  ////do has check, maybe dont do it so always feel like won
+  ////reward server will enforce if u got it
+  //CLAIM_DO_HAS_WEARABLE_CHECK = false
    
   PLAYER_DATA_ENDPOINT = PLAYER_DATA_ENDPOINT_VALS[ENV]
   PLAYER_DATA_ENDPOINT_STATIC_PARAMS = PLAYER_DATA_ENDPOINT_STATIC_PARAMS_VALS[ENV]
@@ -116,12 +127,14 @@ export class Config{
   DEBUG_SHOW_ASTAR_OBSTICLES = DEBUG_SHOW_ASTAR_OBSTICLES_FLAG[ENV]
 
   //START claiming/dispensers
-  CLAIM_TESTING_ENABLED = CLAIM_TESTING_ENABLED[ENV]
-  CLAIM_DATE_TESTING_ENABLED = false
-  //DISPENSER_POSITIONS:DispenserPos[] = [] 
+  CLAIM_TESTING_ENABLED = DEBUG_CLAIMING_FLAGS_VAL[ENV]
+  CLAIM_TESTING_CAPTCHA_ENABLED = false//DEBUG_CLAIMING_FLAGS_VAL[DEFAULT_ENV]
+  CLAIM_DO_HAS_WEARABLE_CHECK = false
+  CLAIM_DATE_TESTING_ENABLED = DEBUG_CLAIMING_FLAGS_VAL[ENV]
+  DISPENSER_POSITIONS:DispenserPos[] = [] 
+  CLAIM_CAPTCHA_ENABLED = false  //worlds needs recaptcha since world catalyst not trusted by reward server
   //END claiming/dispensers
   
-
   center!:Vector3
   centerGround!:Vector3
   init(){
