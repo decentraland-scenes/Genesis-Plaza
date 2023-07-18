@@ -4,6 +4,7 @@ let lootBox = new Entity()
 
 lootBox.addComponent(new GLTFShape("models/clapmeter/loot.glb"))
     .visible = false
+engine.addEntity(lootBox)
 
 lootBox.addComponent(new Transform({
     position: new Vector3(154.5, 0.75, 168),

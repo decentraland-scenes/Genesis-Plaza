@@ -8,7 +8,7 @@ import { customResolveSourceImageSize } from "src/claiming-dropin/claiming/utils
 import { ClaimTokenResult, ClaimUI, HandleClaimTokenCallbacks } from "src/claiming-dropin/claiming/loot"
 import { ClaimUiType, ItemData } from "src/claiming-dropin/claiming/claimTypes"
 import { doClaim, IClaimProvider } from "src/claiming-dropin/claiming/defaultClaimProvider"
-import { loot } from '../../clap-meter/loot'
+import { loot } from '../../hand-party/loot'
 
  
 initConfig()

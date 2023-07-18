@@ -1,9 +1,19 @@
+import * as utils from "@dcl/ecs-scene-utils"
 
 let handEntity = new Entity()
 
+export enum HandState {
+    INTRO,
+    CLAP,
+    GIVE
+}
+
 // Add a 3D model to it
 handEntity.addComponent(new GLTFShape("models/clapmeter/Hand5.glb"))
-    .visible = true
+    .visible = false
+
+engine.addEntity(handEntity)
+
 handEntity.addComponent(new Transform({
     position: new Vector3(154.5, 0.75, 168),
     rotation: Quaternion.Euler(0, 180 - 37.5, 0),
@@ -49,6 +59,7 @@ LeftHandGive.playing = false
 RightHandGive.playing = false
 
 function playHandClap() {
+    hand.state = HandState.CLAP
     RightHandIntro.stop()
     LeftHandIntro.stop()
     RightHandGive.stop()
@@ -58,6 +69,7 @@ function playHandClap() {
 }
 
 function playHandIntro() {
+    hand.state = HandState.INTRO
     RightHandIntro.play(true)
     LeftHandIntro.play(true)
     RightHandGive.stop()
@@ -67,6 +79,8 @@ function playHandIntro() {
 }
 
 function playHandGive() {
+    hand.state = HandState.GIVE
+    log("PLAY HAND GIVE")
     RightHandIntro.stop()
     LeftHandIntro.stop()
     RightHandGive.play(true)
@@ -75,9 +89,21 @@ function playHandGive() {
     LeftHandClap.stop()
 }
 
+function handAppear() {
+    handEntity.getComponent(GLTFShape).visible = true
+    //play intro
+    playHandIntro()
+
+    handEntity.addComponentOrReplace(new utils.Delay(5000, () => {
+        playHandClap()
+    }))
+}
+
 export const hand = {
     entity: handEntity,
+    state: undefined,
+    handAppear: handAppear,
     playHandClap: playHandClap,
     playHandIntro: playHandIntro,
-    playhandgive: playHandGive
+    playhandGive: playHandGive
 }

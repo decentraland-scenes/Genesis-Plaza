@@ -9,6 +9,7 @@ import { ChainId, ChallengeDataStatus, ClaimCodes, ClaimDataInst, ClaimState, Cl
 import { CampaignSchedule } from "./schedule/claimSchedule"
 import { CONFIG } from "src/config"
 import { testForPortableXP, testForWearable } from "./utils"
+import { hand } from "../../hand-party/hand"
 
 
 
@@ -336,7 +337,12 @@ export function createDispeners(dispenserPositions:DispenserPos[],dispenserSched
 
                     claimUI.setClaimUIConfig( h.claimUIConfig )
 
-                    claimUI.handleClaimJson( claimResult, claimCallbacks )
+                    claimUI.handleClaimJson(claimResult, claimCallbacks)
+
+                    if (claimResult.success) {
+                        objectDispenser.getComponent(GLTFShape).visible = false
+                        hand.handAppear()
+                    }
                 }
             }
 
@@ -347,8 +353,11 @@ export function createDispeners(dispenserPositions:DispenserPos[],dispenserSched
                 claimFlow()
             }
 
-            objectDispenser.addComponent(new OnPointerDown( claimFlow,{hoverText: h.dispenserUI.hoverText})  
-                )
+            objectDispenser.addComponent(
+                new OnPointerDown(claimFlow, {
+                    hoverText: h.dispenserUI.hoverText
+                }
+            ))
 
         }
 
