@@ -2,7 +2,7 @@ import * as utils from "@dcl/ecs-scene-utils"
 
 let lootBox = new Entity()
 
-lootBox.addComponent(new GLTFShape("models/clapmeter/loot.glb"))
+lootBox.addComponent(new GLTFShape("models/clapmeter/loot2.glb"))
     .visible = false
 engine.addEntity(lootBox)
 
