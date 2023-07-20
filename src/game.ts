@@ -52,8 +52,6 @@ import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS,
 import { TrackingElement, trackEnd, trackStart,registerAnalyticsEntity } from './aiNpc/Stats/analyticsCompnents'
 import { addExteriorAnalytics } from './analytics'
 
-import { handParty } from './hand-party/handPartyEvent'
-
 //////// LOG PLAYER POSITION
 
 Input.instance.subscribe('BUTTON_DOWN', ActionButton.PRIMARY, true, (e) => {
@@ -242,7 +240,6 @@ export function insideBar() {
       lobbyConn.onNpcRoomConnect(room)
       }
 
-      handParty.init()
   }
 
   placeJukeBox()

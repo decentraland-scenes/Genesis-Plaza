@@ -18,17 +18,32 @@ let animator = new Animator()
 lootBox.addComponent(animator)
 
 const LootAppear = new AnimationState("LootAppear", { layer: 2 })
+const LootIdle = new AnimationState("LootIdle", { layer: 3 })
 
 animator.addClip(LootAppear)
+animator.addClip(LootIdle)
 
 LootAppear.looping = false
+LootIdle.looping = true
 
 function lootAppear() {
     lootBox.getComponent(GLTFShape).visible = true
+
+    LootIdle.playing = false
     LootAppear.play(true)
+
+    lootBox.addComponentOrReplace(new utils.Delay(2000, () => {
+        LootAppear.playing = false
+        LootIdle.play(true)
+    }))
+}
+
+function lootDissapear() {
+    lootBox.getComponent(GLTFShape).visible = false
 }
 
 export const loot = {
     entity: lootBox,
-    lootAppear: lootAppear
+    lootAppear: lootAppear,
+    lootDissapear: lootDissapear
 }

@@ -1,10 +1,11 @@
 import * as utils from "@dcl/ecs-scene-utils"
 import { hand, HandState } from "./hand"
+import { handPartyData } from "./handPartyData"
 import { loot } from "./loot"
 
 // Config
 const START_ANGLE = 350
-const END_ANGLE = 310//190
+const END_ANGLE = 340//190
 
 const sceneMessageBus = new MessageBus()
 
@@ -19,8 +20,6 @@ const COOLDOWN_SPEED = 10
 const ANGLE_INCREMENT = 1 // How many degrees does the needle move
 
 class ClapMeter extends Entity {
-    isRewardGranted: boolean = false
-    isPartyStarted: boolean = false
 
     constructor(transform: Transform) {
         super()
@@ -34,8 +33,10 @@ class ClapMeter extends Entity {
         clapMeterNeedle.addComponent(new GLTFShape("models/clapmeter/clapMeterNeedle.glb"))
         clapMeterNeedle.addComponent(new Transform({ position: new Vector3(0, 0.05, 0) }))
         clapMeterNeedle.getComponent(Transform).rotation.setEuler(0, 0, 350)
+
+        this.listenAndBroadcastClap()
     }
-    activate() {
+    private listenAndBroadcastClap() {
         engine.addSystem(new CooldownSystem())
 
         // Listen for claps
@@ -70,18 +71,32 @@ class ClapMeter extends Entity {
             hand.entity.getComponent(Animator).getClip("RightHandClap").speed = handClapAnimationSpeed
             hand.entity.getComponent(Animator).getClip("LeftHandClap").speed = handClapAnimationSpeed
         }
-        if (currentNeedleAngle >= END_ANGLE) {
+        if (currentNeedleAngle > END_ANGLE) {
             currentNeedleRotation.setEuler(0, 0, currentNeedleAngle - ANGLE_INCREMENT)
         }
         else {
-            if (!this.isRewardGranted && this.isPartyStarted) {
-                this.isRewardGranted = true
-                log("REWARD GRANTED, SHOW LOOT BOX!")
-                hand.playhandGive()
-                loot.lootAppear()
+            currentNeedleAngle = END_ANGLE
+
+            log("REACH TARGET")
+            //TRIGGER REWARD ANIMATION
+
+            if (handPartyData.isVideoStarted && handPartyData.insidePartyArea) {
+                log("video party play, user inside party area")
+                if (!handPartyData.isRewardClaimed) {
+
+                    if (!handPartyData.isWaitingToClaim) {
+                        handPartyData.isWaitingToClaim = true
+                        log("REWARD NOT YET CLAIMED, SHOW LOOT BOX!")
+                        hand.playhandGive()
+                        loot.lootAppear()
+                    }
+                }
+                else {
+                    log("REWARD ALREADY CLAIMED!")
+                }
             }
         }
-        log(hand.state)
+        log(handPartyData.isVideoStarted, HandState[hand.state], currentNeedleAngle)
     }
 }
 

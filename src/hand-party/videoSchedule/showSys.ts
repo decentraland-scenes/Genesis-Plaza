@@ -1,6 +1,6 @@
 
 import * as utils from '@dcl/ecs-scene-utils'
-import { handParty } from '../handPartyEvent'
+import { handPartyData } from '../handPartyData'
 import { showData } from './scheduleSetup'
 
 export class ShowSystem {
@@ -100,7 +100,7 @@ export class ShowSystem {
                                     this.playVideo(this.day.shows[0], 0)
                                 }
 
-                                handParty.start()
+                                handPartyData.isVideoStarted = true
                             }
                         }
                         else {

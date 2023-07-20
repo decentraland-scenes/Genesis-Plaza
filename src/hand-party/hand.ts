@@ -59,6 +59,8 @@ LeftHandGive.playing = false
 RightHandGive.playing = false
 
 function playHandClap() {
+    handEntity.removeComponent(utils.Delay)
+
     hand.state = HandState.CLAP
     RightHandIntro.stop()
     LeftHandIntro.stop()
@@ -69,24 +71,28 @@ function playHandClap() {
 }
 
 function playHandIntro() {
+    handEntity.removeComponent(utils.Delay)
+
     hand.state = HandState.INTRO
-    RightHandIntro.play(true)
-    LeftHandIntro.play(true)
     RightHandGive.stop()
     LeftHandGive.stop()
     RightHandClap.stop()
     LeftHandClap.stop()
+    RightHandIntro.play(true)
+    LeftHandIntro.play(true)
 }
 
 function playHandGive() {
+    handEntity.removeComponent(utils.Delay)
+
     hand.state = HandState.GIVE
     log("PLAY HAND GIVE")
     RightHandIntro.stop()
     LeftHandIntro.stop()
-    RightHandGive.play(true)
-    LeftHandGive.play(true)
     RightHandClap.stop()
     LeftHandClap.stop()
+    RightHandGive.play(true)
+    LeftHandGive.play(true)
 }
 
 function handAppear() {
@@ -98,11 +104,15 @@ function handAppear() {
         playHandClap()
     }))
 }
+function handDissapear() {
+    handEntity.getComponent(GLTFShape).visible = false
+}
 
 export const hand = {
     entity: handEntity,
     state: undefined,
     handAppear: handAppear,
+    handDissapear: handDissapear,
     playHandClap: playHandClap,
     playHandIntro: playHandIntro,
     playhandGive: playHandGive

@@ -13,6 +13,7 @@ import { closeDialogSound, openDialogSound } from '../booth/sounds'
 import { CONFIG } from 'src/config'
 import { testForExpression, testForWearable } from './utils'
 import { IClaimProvider, doClaim } from './defaultClaimProvider'
+import { ainpcTextColor } from '../../lobby/resources/resources'
      
 //let bgTexture = new Texture('images/claim/WearablePopUp.png')
 
@@ -883,17 +884,23 @@ export class ClaimUI {
     return p
   }
   openRequiresWeb3(claimResult:ClaimTokenResult, callbacks?:HandleClaimTokenCallbacks){
-    const mmPrompt = new ui.CustomPrompt( this.getCustomPromptStyle() )
-    this.applyCustomAtlas(mmPrompt)
+    const UI_SCALE_MULT = this.UI_SCALE_MULT
+      const mmPrompt = new ui.CustomPrompt( //this.getCustomPromptStyle() )
+          ui.PromptStyles.LIGHTLARGE,
+          640 * UI_SCALE_MULT,
+          512 * UI_SCALE_MULT
+      )
+    //this.applyCustomAtlas(mmPrompt)
 
-      mmPrompt.addText(
+      let mmPromptText = mmPrompt.addText(
         'A MetaMask Digital wallet\nis required to claim this token.',
         0,
         45,
         this.getCustomPromptFontColor(),
         20
       )
-      mmPrompt.addButton(
+
+      let mmPromptButton1 = mmPrompt.addButton(
         'GET MetaMask',
         -100,
         -100,
@@ -903,7 +910,7 @@ export class ClaimUI {
         ui.ButtonStyles.RED
       )
     
-      mmPrompt.addButton(
+      let mmPromptButton2 = mmPrompt.addButton(
         'Cancel'.toUpperCase(),
         100,
         -100,
@@ -914,6 +921,16 @@ export class ClaimUI {
         },
         ui.ButtonStyles.F
       )
+
+      mmPrompt.background.source = custUiAtlas
+      mmPromptButton1.image.source = custUiAtlas
+      mmPromptButton2.image.source = custUiAtlas
+
+      //modify close icon position
+      mmPrompt.closeIcon.hAlign = "right"
+      mmPrompt.closeIcon.vAlign = "top"
+      mmPrompt.closeIcon.positionX = -20
+      mmPrompt.closeIcon.positionY = -20
 
       if(callbacks && callbacks.onOpenUI) callbacks.onOpenUI(ClaimUiType.REQUIRES_WEB3,claimResult)
       this.lastUI = mmPrompt
@@ -944,7 +961,7 @@ export class ClaimUI {
       case ui.PromptStyles.DARK: 
       case ui.PromptStyles.DARKLARGE: 
         //log("getCustomPromptFontColor",style,"WHITE")
-        return Color4.White()  
+        return ainpcTextColor//Color4.White()  
       default:
         //log("getCustomPromptFontColor",style,"BLACK")
         return Color4.Black()
@@ -1277,6 +1294,11 @@ export class ClaimUI {
     txButton.image.source = custUiAtlas
     if(txButton.icon) txButton.icon.source = custUiAtlas
 
+      //modify close icon position
+      claimUI.closeIcon.hAlign = "right"
+      claimUI.closeIcon.vAlign = "top"
+      claimUI.closeIcon.positionX = -20
+      claimUI.closeIcon.positionY = -20
 
     return claimUI
   }

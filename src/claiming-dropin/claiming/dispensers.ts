@@ -10,6 +10,8 @@ import { CampaignSchedule } from "./schedule/claimSchedule"
 import { CONFIG } from "src/config"
 import { testForPortableXP, testForWearable } from "./utils"
 import { hand } from "../../hand-party/hand"
+import { handPartyData } from "../../hand-party/handPartyData"
+import { loot } from "../../hand-party/loot"
 
 
 
@@ -340,8 +342,9 @@ export function createDispeners(dispenserPositions:DispenserPos[],dispenserSched
                     claimUI.handleClaimJson(claimResult, claimCallbacks)
 
                     if (claimResult.success) {
-                        objectDispenser.getComponent(GLTFShape).visible = false
-                        hand.handAppear()
+                        loot.lootDissapear()
+                        handPartyData.isRewardClaimed = true
+                        hand.handDissapear()
                     }
                 }
             }
