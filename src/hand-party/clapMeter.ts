@@ -1,11 +1,12 @@
 import * as utils from "@dcl/ecs-scene-utils"
+import { CONFIG } from "../config"
 import { hand, HandState } from "./hand"
 import { handPartyData } from "./handPartyData"
 import { loot } from "./loot"
 
 // Config
 const START_ANGLE = 350
-const END_ANGLE = 340//190
+const END_ANGLE = CONFIG.DEBUG_ACTIVE_SCENE_TRIGGER_ENABLED ? 340 : 190
 
 const sceneMessageBus = new MessageBus()
 

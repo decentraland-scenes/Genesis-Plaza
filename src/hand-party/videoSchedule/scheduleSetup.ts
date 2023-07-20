@@ -2,8 +2,9 @@ import { CONFIG } from "../../config"
 
 let dayStart = Math.floor(Date.now() / 1000) - 5
 
-let startTime = CONFIG.DEBUG_ACTIVE_SCENE_TRIGGER_ENABLED ? dayStart + 20 : 1680120000 //Wednesday, March 29, 2023 20: 00: 00
-let duration = CONFIG.DEBUG_ACTIVE_SCENE_TRIGGER_ENABLED ? 600 : 1 * 60 * 60 + 3 * 60
+let startTime = CONFIG.DEBUG_ACTIVE_SCENE_TRIGGER_ENABLED ? dayStart + 20 : 1689879600 //(GMT): Thursday, July 20, 2023 19:00:00
+let duration = CONFIG.DEBUG_ACTIVE_SCENE_TRIGGER_ENABLED ? 600 : 2 * 60 * 60 // 2 hour
+let streamingLink = "https://video.dcl.guru/live/djtrax/index.m3u8"
 
 export const showData =[
     {
@@ -16,7 +17,7 @@ export const showData =[
                 //length: 20,
                 startTime: startTime, //1680120000, Wednesday, March 29, 2023 20:00:00
                 length: duration,
-                link: "https://player.vimeo.com/external/552481870.m3u8?s=c312c8533f97e808fccc92b0510b085c8122a875"
+                link: streamingLink //"https://player.vimeo.com/external/552481870.m3u8?s=c312c8533f97e808fccc92b0510b085c8122a875"
             },
         ],
         //VIDEO LOOP

@@ -2,7 +2,7 @@ import { isPreviewMode } from '@decentraland/EnvironmentAPI'
 import { DispenserPos } from "./claiming-dropin/claiming/claimTypes"
 
 
-const ENV = "local"; //set to local to use local values
+const ENV = "prd"; //set to local to use local values
 
 const DEBUG_FLAGS:Record<string,boolean>={
   "local":true,
