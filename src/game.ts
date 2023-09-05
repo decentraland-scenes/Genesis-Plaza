@@ -51,6 +51,7 @@ import { initDialogs } from './aiNpc/npc/npcDialog'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from './aiNpc/Stats/AnalyticsConfig'
 import { TrackingElement, trackEnd, trackStart,registerAnalyticsEntity } from './aiNpc/Stats/analyticsCompnents'
 import { addExteriorAnalytics } from './analytics'
+import { addSimoneNPC } from './modules/bar/aiNpcs/simoneNpc'
 
 
 //////// LOG PLAYER POSITION
@@ -92,7 +93,8 @@ addBuildings()
 placeDoors()
 barPlatforms()
 
-insideBar()
+addSimoneNPC()
+//insideBar()
 
 utils.setTimeout(20000, () => {
   if (!areNPCsAdded) {

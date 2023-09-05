@@ -214,7 +214,7 @@ export async function addBarNPCs() {
 
     addDogeNPC()
     addAishaNPC()
-    addSimoneNPC()
+    //addSimoneNPC()
 
     //move to /modules/bar/aiNpcs/dogeNpc.ts
   //let dogePath: FollowPathData = {
