@@ -66,20 +66,6 @@ twitterLink.addComponent(
 )
 engine.addEntity(twitterLink)
 
-//DIVING SIGN
-let divingSign = new Entity()
-divingSign.addComponent(
-  new Transform({
-    position: new Vector3(
-      lobbyCenter.x - 1.2,
-      lobbyHeight - 0.5,
-      lobbyCenter.z - 6.4
-    ),
-  })
-)
-divingSign.addComponent(resource.divingSignShape)
-engine.addEntity(divingSign)
-
 // WATER VORTEXES
 let vortex1 = new Entity()
 vortex1.addComponent(

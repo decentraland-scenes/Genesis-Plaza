@@ -18,9 +18,17 @@ import { NpcAnimationNameType, REGISTRY } from 'src/registry'
 import { showInputOverlay } from 'src/aiNpc/npc/customNPCUI'
 import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES, ANALYTICS_EVENT_KEYS, AnalyticsLogLabel } from 'src/aiNpc/Stats/AnalyticsConfig'
 import { TrackingElement, getRegisteredAnalyticsEntity, trackEnd } from 'src/aiNpc/Stats/analyticsCompnents'
+import { addDogeNPC } from './aiNpcs/dogeNpc'
+import { addAishaNPC } from './aiNpcs/aishaNpc'
+import { addSimoneNPC } from './aiNpcs/simoneNpc'
+import { ainpcTextColor, customOrangeAtlas } from '../../lobby/resources/resources'
+import { setSection } from '../../dcl-scene-ui-workaround/resources'
 
 export let octopus: NPC
-let doge: NPC
+
+//move to /modules/bar/aiNpcs/dogeNpc.ts
+//let doge: NPC
+
 export let catGuy: NPC
 export let wearablesC: NPC
 export let artist1: NPC
@@ -28,6 +36,8 @@ export let artist2: NPC
 export let wenMoon: NPC
 
 export let areNPCsAdded: boolean = false
+
+let UIScale = 0.75
 
 export let userData: UserData = {
   displayName: '',
@@ -105,12 +115,94 @@ export async function addBarNPCs() {
       dialogSound: `sounds/navigationForward.mp3`,
       idleAnim: 'Idle',
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
+            dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         backToIdle()
       },
     }
   )
+
+    
+  //Thumbnail position adjust 
+  
+    octopus.dialog.portrait.paddingTop = -30
+  
+  
+  //DIALOG BACKGROUND
+    octopus.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    octopus.dialog.container.height = (496 - 256) //* UIScale
+    octopus.dialog.container.width = 752 //* UIScale
+    octopus.dialog.container.positionY = -10//(256 - 80) / 2 + 20
+
+    octopus.dialog.text.color = ainpcTextColor
+
+    setSection(octopus.dialog.panel, {
+        sourceHeight: 496 - 256,
+        sourceWidth: 752,
+        sourceLeft: 0,
+        sourceTop: 256
+    })
+    octopus.dialog.panel.height = (496 - 256) * UIScale
+    octopus.dialog.panel.width = 752 * UIScale
+
+    //BUTTON1
+    setSection(octopus.dialog.button1.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    octopus.dialog.button1.image.width = octopus.dialog.button1.image.sourceWidth * UIScale
+    octopus.dialog.button1.image.height = octopus.dialog.button1.image.sourceHeight * UIScale
+    //button position property doesn't work
+    //octopus.dialog.button1.image.positionY = 100
+    //octopus.dialog.button1.image.positionX = 100
+
+    //BUTTON2
+    setSection(octopus.dialog.button2.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    octopus.dialog.button2.image.width = octopus.dialog.button2.image.sourceWidth * UIScale
+    octopus.dialog.button2.image.height = octopus.dialog.button2.image.sourceHeight * UIScale
+
+    //LEFT CLICK
+    setSection(octopus.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    octopus.dialog.leftClickIcon.height = 46 * UIScale
+    octopus.dialog.leftClickIcon.width = 32 * UIScale
+
+    //skip button
+    setSection(octopus.dialog.skipButton.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    octopus.dialog.skipButton.image.opacity = 0.9
+    octopus.dialog.skipButton.image.paddingTop = -30
+
+    //ARROW DOWN
+    let octoArrowDown = new UIImage(octopus.dialog.container, customOrangeAtlas)
+    setSection(octoArrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    octoArrowDown.height = 46 * UIScale
+    octoArrowDown.width = 48 * UIScale
+    octoArrowDown.hAlign = "center"
+    octoArrowDown.vAlign = "bottom"
+    octoArrowDown.positionY = 23
+    octoArrowDown.positionX = 30
 
   let octopusObjects = new Entity()
   octopusObjects.addComponent(new Transform())
@@ -120,130 +212,135 @@ export async function addBarNPCs() {
   engine.addEntity(octopusObjects)
   octopusObjects.setParent(octopus)
 
-  let dogePath: FollowPathData = {
-    path: [
-      new Vector3(166.7, 0.24, 163.9),
-      new Vector3(161, 0.24, 160),
-      new Vector3(157.5, 0.24, 157.4),
-      new Vector3(153.7, 0.24, 156.2),
-      new Vector3(148.1, 0.24, 156.8),
+    addDogeNPC()
+    addAishaNPC()
+    addSimoneNPC()
 
-      new Vector3(146.4, 0.24, 156),
+    //move to /modules/bar/aiNpcs/dogeNpc.ts
+  //let dogePath: FollowPathData = {
+  //  path: [
+  //    new Vector3(166.7, 0.24, 163.9),
+  //    new Vector3(161, 0.24, 160),
+  //    new Vector3(157.5, 0.24, 157.4),
+  //    new Vector3(153.7, 0.24, 156.2),
+  //    new Vector3(148.1, 0.24, 156.8),
 
-      new Vector3(143.1, 0.24, 153.1),
-      new Vector3(143, 0.24, 152.8),
+  //    new Vector3(146.4, 0.24, 156),
 
-      new Vector3(143.2, 0.24, 150.7),
+  //    new Vector3(143.1, 0.24, 153.1),
+  //    new Vector3(143, 0.24, 152.8),
 
-      new Vector3(143.26, 0.24, 147.5),
-      new Vector3(148.1, 0.24, 142.3),
+  //    new Vector3(143.2, 0.24, 150.7),
 
-      new Vector3(151.9, 0.24, 142.3),
-      new Vector3(153.8, 0.24, 144.9),
-      new Vector3(154, 0.24, 146.9),
+  //    new Vector3(143.26, 0.24, 147.5),
+  //    new Vector3(148.1, 0.24, 142.3),
 
-      new Vector3(154.6, 0.24, 149.57),
-      new Vector3(156.65, 0.24, 154.7),
-      new Vector3(162.3, 0.24, 156.2),
+  //    new Vector3(151.9, 0.24, 142.3),
+  //    new Vector3(153.8, 0.24, 144.9),
+  //    new Vector3(154, 0.24, 146.9),
 
-      new Vector3(166.4, 0.24, 156.1),
-      new Vector3(169.7, 0.24, 156.2),
-      new Vector3(171.9, 0.24, 157.8),
-      new Vector3(173.8, 0.24, 158.7),
-      new Vector3(173.8, 0.24, 160.1),
-      new Vector3(173.15, 0.24, 161.59),
-      new Vector3(171.3, 0.24, 163.22),
-    ],
-    loop: true,
-    // curve: true,
-  }
+  //    new Vector3(154.6, 0.24, 149.57),
+  //    new Vector3(156.65, 0.24, 154.7),
+  //    new Vector3(162.3, 0.24, 156.2),
 
-  //set this to false to disable in world experiment
-  const dogeAINpcEnabled = true
-  const doge = new NPC(
-    { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
-    'models/core_building/dogeNPC_anim4.glb',
-    () => {
-      //redefined at lobbyScene.ts L36
-      doge.stopWalking()
-      artist1.endInteraction()
-      artist2.endInteraction()
-      doge.playAnimation('Talk1', true)
-      let randomNum = Math.floor(Math.random() * 10)
-      doge.talkBubble(DogeTalk, randomNum)
-    },
-    {
-      portrait:
-      {
-        path: 'images/portraits/doge.png', height: 250, width: 250
-        , offsetX: -30, offsetY: 20
-        , section: { sourceHeight: 256, sourceWidth: 256 }
-      },
-      walkingAnim: 'Walk',
-      faceUser: true,
-      hoverText: 'WOW',
-      onlyETrigger: true,
-      walkingSpeed: 1.2,
-      continueOnWalkAway: false,
-      onWalkAway: () => {
-        log(AnalyticsLogLabel, "TestBarNPC", "WalkAway")
-        trackEnd(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement))
-        showInputOverlay(false)
-        doge.followPath()
-      },
-      textBubble: !dogeAINpcEnabled,
-      noUI: !dogeAINpcEnabled,
-      darkUI: dogeAINpcEnabled,
-      bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
-    }
-  )
-  doge.followPath(dogePath)
+  //    new Vector3(166.4, 0.24, 156.1),
+  //    new Vector3(169.7, 0.24, 156.2),
+  //    new Vector3(171.9, 0.24, 157.8),
+  //    new Vector3(173.8, 0.24, 158.7),
+  //    new Vector3(173.8, 0.24, 160.1),
+  //    new Vector3(173.15, 0.24, 161.59),
+  //    new Vector3(171.3, 0.24, 163.22),
+  //  ],
+  //  loop: true,
+  //  // curve: true,
+  //}
+
+  ////set this to false to disable in world experiment
+  //const dogeAINpcEnabled = true
+  //const doge = new NPC(
+  //  { position: dogePath.path[0], scale: new Vector3(2, 2, 2) },
+  //  'models/core_building/dogeNPC_anim4.glb',
+  //  () => {
+  //    //redefined at lobbyScene.ts L36
+  //    doge.stopWalking()
+  //    artist1.endInteraction()
+  //    artist2.endInteraction()
+  //    doge.playAnimation('Talk1', true)
+  //    let randomNum = Math.floor(Math.random() * 10)
+  //    doge.talkBubble(DogeTalk, randomNum)
+  //  },
+  //  {
+  //    portrait:
+  //    {
+  //      path: 'images/portraits/doge.png', height: 250, width: 250
+  //      , offsetX: -30, offsetY: 20
+  //      , section: { sourceHeight: 256, sourceWidth: 256 }
+  //    },
+  //    walkingAnim: 'Walk',
+  //    faceUser: true,
+  //    hoverText: 'WOW',
+  //    onlyETrigger: true,
+  //    walkingSpeed: 1.2,
+  //    continueOnWalkAway: false,
+  //    onWalkAway: () => {
+  //      log(AnalyticsLogLabel, "TestBarNPC", "WalkAway")
+  //      trackEnd(REGISTRY.activeNPC.npc.getComponentOrNull(TrackingElement))
+  //      showInputOverlay(false)
+  //      doge.followPath()
+  //    },
+  //    textBubble: !dogeAINpcEnabled,
+  //    noUI: !dogeAINpcEnabled,
+  //    darkUI: dogeAINpcEnabled,
+  //    bubbleHeight: 2.2,//dogeAINpcEnabled == true only matters
+  //  }
+  //)
+  //doge.followPath(dogePath)
 
 
-  const ANIM_TIME_PADD = .2
+  //const ANIM_TIME_PADD = .2
 
-  const DOGE_NPC_ANIMATIONS: NpcAnimationNameType = {
-    IDLE: { name: "Idle", duration: -1 },
-    WALK: { name: "Walk", duration: -1 },
-    TALK: { name: "Talk1", duration: 5 },
-    THINKING: { name: "Thinking", duration: 5 },
-    RUN: { name: "Run", duration: -1 },
-    WAVE: { name: "Wave", duration: 4 + ANIM_TIME_PADD },
-  }
+  //const DOGE_NPC_ANIMATIONS: NpcAnimationNameType = {
+  //  IDLE: { name: "Idle", duration: -1 },
+  //  WALK: { name: "Walk", duration: -1 },
+  //  TALK: { name: "Talk1", duration: 5 },
+  //  THINKING: { name: "Thinking", duration: 5 },
+  //  RUN: { name: "Run", duration: -1 },
+  //  WAVE: { name: "Wave", duration: 4 + ANIM_TIME_PADD },
+  //}
 
-  const dogeAI = new RemoteNpc(
-    { resourceName: "workspaces/genesis_city/characters/doge" },
-    doge,
-    {
-      npcAnimations: DOGE_NPC_ANIMATIONS,
-      thinking: {
-        enabled: true,
-        model: new GLTFShape('models/loading-icon.glb'),
-        offsetX: 0,
-        offsetY: 2,
-        offsetZ: 0
-      }
-      , onEndOfRemoteInteractionStream: () => {
-        showInputOverlay(true)
-      }
-      , onEndOfInteraction: () => {
-        log("TestBarNPC", "End Of Interaction")
-        const LOOP = false
-        if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
-        dogeAI.npc.followPath()
-      }
-    },
-  )
+  //const dogeAI = new RemoteNpc(
+  //  { resourceName: "workspaces/genesis_city/characters/doge" },
+  //  doge,
+  //  {
+  //    npcAnimations: DOGE_NPC_ANIMATIONS,
+  //    thinking: {
+  //      enabled: true,
+  //      model: new GLTFShape('models/loading-icon.glb'),
+  //      offsetX: 0,
+  //      offsetY: 2,
+  //      offsetZ: 0
+  //    }
+  //    , onEndOfRemoteInteractionStream: () => {
+  //      showInputOverlay(true)
+  //    }
+  //    , onEndOfInteraction: () => {
+  //      log("TestBarNPC", "End Of Interaction")
+  //      const LOOP = false
+  //      if (dogeAI.npcAnimations.WALK) dogeAI.npc.playAnimation(dogeAI.npcAnimations.WALK.name, LOOP, dogeAI.npcAnimations.WALK.duration)
+  //      dogeAI.npc.followPath()
+  //    }
+  //  },
+  //)
 
-  // replace with add component
-  doge.addComponent(new TrackingElement(
-    ANALYTICS_ELEMENTS_TYPES.npc,
-    ANALYTICS_ELEMENTS_IDS.doge,
-    getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
-    )
-  )
+  //// replace with add component
+  //doge.addComponent(new TrackingElement(
+  //  ANALYTICS_ELEMENTS_TYPES.npc,
+  //  ANALYTICS_ELEMENTS_IDS.doge,
+  //  getRegisteredAnalyticsEntity(ANALYTICS_ELEMENTS_IDS.bar)
+  //  )
+  //)
 
-  REGISTRY.allNPCs.push(dogeAI)
+  //REGISTRY.allNPCs.push(dogeAI)
 
   wearablesC = new NPC(
     { position: new Vector3(162.65, 0.23, 133.15) },
@@ -289,11 +386,14 @@ export async function addBarNPCs() {
     {
       portrait: `images/portraits/WearableConnoisseur.png`,
       faceUser: true,
-      darkUI: true,
+      //darkUI: true,
       dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Talk',
       turningSpeed: 0.35,
       onlyETrigger: true,
+
+        dialogCustomTheme: customOrangeAtlas,
+
       onWalkAway: () => {
         wearablesC.endInteraction()
         wearablesC.playAnimation('TurnOut', true, 1.47)
@@ -307,6 +407,65 @@ export async function addBarNPCs() {
       },
     }
   )
+
+  wearablesC.dialog.portrait.paddingTop = -30
+
+
+    //DIALOG BACKGROUND
+    wearablesC.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    wearablesC.dialog.container.height = (496 - 256) //* UIScale
+    wearablesC.dialog.container.width = 752 //* UIScale
+    wearablesC.dialog.container.positionY = -10//(256 - 80) / 2 + 20
+
+    wearablesC.dialog.text.color = ainpcTextColor
+
+    setSection(wearablesC.dialog.panel, {
+        sourceHeight: 496 - 256,
+        sourceWidth: 752,
+        sourceLeft: 0,
+        sourceTop: 256
+    })
+    wearablesC.dialog.panel.height = (496 - 256) * UIScale
+    wearablesC.dialog.panel.width = 752 * UIScale
+
+    //LEFT CLICK
+    setSection(wearablesC.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    wearablesC.dialog.leftClickIcon.height = 46 * UIScale
+    wearablesC.dialog.leftClickIcon.width = 32 * UIScale
+
+    //SKIP BUTTON
+    setSection(wearablesC.dialog.skipButton.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    wearablesC.dialog.skipButton.image.opacity = 0.9
+    wearablesC.dialog.skipButton.image.paddingTop = -30
+
+    
+
+    //ARROW DOWN
+    let wearableCArrowDown = new UIImage(wearablesC.dialog.container, customOrangeAtlas)
+    setSection(wearableCArrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    wearableCArrowDown.height = 46 * UIScale
+    wearableCArrowDown.width = 48 * UIScale
+    wearableCArrowDown.hAlign = "center"
+    wearableCArrowDown.vAlign = "bottom"
+    wearableCArrowDown.positionY = 23
+    wearableCArrowDown.positionX = 30
+    //wearablesC.dialog.skipButton.image.height = wearablesC.dialog.skipButton.image.sourceHeight * UIScale
+    //wearablesC.dialog.skipButton.image.width = wearablesC.dialog.skipButton.image.sourceWidth * UIScale
 
   artist1 = new NPC(
     {
@@ -333,12 +492,13 @@ export async function addBarNPCs() {
     {
       portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
-      darkUI: true,
+      //darkUI: true,
       faceUser: false,
       dialogSound: `sounds/navigationForward.mp3`,
       hoverText: 'Art Recommendations',
       onlyETrigger: true,
       textBubble: true,
+            dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         if (artist1.dialog.container.visible) {
           artist1.bubble.closeDialogEndAll()
@@ -354,6 +514,70 @@ export async function addBarNPCs() {
       },
     }
   )
+
+    artist1.dialog.portrait.paddingTop = -30
+
+    //DIALOG BACKGROUND
+    artist1.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    artist1.dialog.container.height = (496 - 256) //* UIScale
+    artist1.dialog.container.width = 752 //* UIScale
+    artist1.dialog.container.positionY = -10//(256 - 80) / 2 + 20
+
+    artist1.dialog.text.color = ainpcTextColor
+    
+    setSection(artist1.dialog.panel, {
+        sourceHeight: 496 - 256,
+        sourceWidth: 752,
+        sourceLeft: 0,
+        sourceTop: 256
+    })
+    artist1.dialog.panel.height = (496 - 256) * UIScale
+    artist1.dialog.panel.width = 752 * UIScale
+
+    //BUTTON1
+    setSection(artist1.dialog.button1.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    artist1.dialog.button1.image.width = artist1.dialog.button1.image.sourceWidth * UIScale
+    artist1.dialog.button1.image.height = artist1.dialog.button1.image.sourceHeight * UIScale
+
+    //BUTTON2
+    setSection(artist1.dialog.button2.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    artist1.dialog.button2.image.width = artist1.dialog.button2.image.sourceWidth * UIScale
+    artist1.dialog.button2.image.height = artist1.dialog.button2.image.sourceHeight * UIScale
+
+    //LEFT CLICK
+    setSection(artist1.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    artist1.dialog.leftClickIcon.height = 46 * UIScale
+    artist1.dialog.leftClickIcon.width = 32 * UIScale
+
+    //ARROW DOWN
+    let artistArrowDown = new UIImage(artist1.dialog.container, customOrangeAtlas)
+    setSection(artistArrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    artistArrowDown.height = 46 * UIScale
+    artistArrowDown.width = 48 * UIScale
+    artistArrowDown.hAlign = "center"
+    artistArrowDown.vAlign = "bottom"
+    artistArrowDown.positionY = 23
+    artistArrowDown.positionX = 30
 
   artist2 = new NPC(
     {
@@ -373,7 +597,7 @@ export async function addBarNPCs() {
       portrait: `images/portraits/ACch2.png`,
       idleAnim: 'Talk',
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
       hoverText: 'Talk',
       reactDistance: 16,
       textBubble: true,
@@ -454,8 +678,9 @@ export function addNPCsOutside() {
       onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: true,
-      darkUI: true,
+      //darkUI: true,
       walkingSpeed: 1,
+            dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         // turnOut
         wenMoon.playAnimation(`TurnOut`, true, 0.53)
@@ -466,7 +691,63 @@ export function addNPCsOutside() {
       },
     }
   )
-  wenMoon.followPath(wenPath)
+    wenMoon.followPath(wenPath)
+
+
+    wenMoon.dialog.portrait.paddingTop = -30
+
+    //DIALOG BACKGROUND
+    wenMoon.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    wenMoon.dialog.container.height = (496 - 256) //* UIScale
+    wenMoon.dialog.container.width = 752 //* UIScale
+    wenMoon.dialog.container.positionY = -10//(256 - 80) / 2 + 20
+
+    wenMoon.dialog.text.color = ainpcTextColor
+
+    setSection(wenMoon.dialog.panel, {
+        sourceHeight: 496 - 256,
+        sourceWidth: 752,
+        sourceLeft: 0,
+        sourceTop: 256
+    })
+    wenMoon.dialog.panel.height = (496 - 256) * UIScale
+    wenMoon.dialog.panel.width = 752 * UIScale
+
+    //LEFT CLICK
+    setSection(wenMoon.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    wenMoon.dialog.leftClickIcon.height = 46 * UIScale
+    wenMoon.dialog.leftClickIcon.width = 32 * UIScale
+
+    //SKIP BUTTON
+    setSection(wenMoon.dialog.skipButton.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    wenMoon.dialog.skipButton.image.opacity = 0.9
+    wenMoon.dialog.skipButton.image.paddingTop = -30
+
+
+    //ARROW DOWN
+    let wenMunArrowDown = new UIImage(wenMoon.dialog.container, customOrangeAtlas)
+    setSection(wenMunArrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    wenMunArrowDown.height = 46 * UIScale
+    wenMunArrowDown.width = 48 * UIScale
+    wenMunArrowDown.hAlign = "center"
+    wenMunArrowDown.vAlign = "bottom"
+    wenMunArrowDown.positionY = 23
+    wenMunArrowDown.positionX = 30
 
   // Cat guy
   catGuy = new NPC(
@@ -500,12 +781,68 @@ export function addNPCsOutside() {
       onlyETrigger: true,
       dialogSound: `sounds/navigationForward.mp3`,
       faceUser: false,
-      darkUI: true,
+      //darkUI: true,
+            dialogCustomTheme: customOrangeAtlas,
       onWalkAway: () => {
         catGuy.playAnimation(`idle`)
       },
     }
   )
+
+    catGuy.dialog.portrait.paddingTop = -30
+
+    //DIALOG BACKGROUND
+    catGuy.dialog.container.color = new Color4(0.5, 0.5, 1, 0)
+    catGuy.dialog.container.height = (496 - 256) //* UIScale
+    catGuy.dialog.container.width = 752 //* UIScale
+    catGuy.dialog.container.positionY = -10//(256 - 80) / 2 + 20
+
+    catGuy.dialog.text.color = ainpcTextColor
+
+    setSection(catGuy.dialog.panel, {
+        sourceHeight: 496 - 256,
+        sourceWidth: 752,
+        sourceLeft: 0,
+        sourceTop: 256
+    })
+    catGuy.dialog.panel.height = (496 - 256) * UIScale
+    catGuy.dialog.panel.width = 752 * UIScale
+
+    //LEFT CLICK
+    setSection(catGuy.dialog.leftClickIcon, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 944 - 912,
+        sourceLeft: 912,
+        sourceTop: 0
+    })
+    catGuy.dialog.leftClickIcon.height = 46 * UIScale
+    catGuy.dialog.leftClickIcon.width = 32 * UIScale
+
+    //SKIP BUTTON
+    setSection(catGuy.dialog.skipButton.image, {
+        sourceHeight: 176 - 128,
+        sourceWidth: 832 - 656,
+        sourceLeft: 656,
+        sourceTop: 128
+    })
+    catGuy.dialog.skipButton.image.opacity = 0.9
+    catGuy.dialog.skipButton.image.paddingTop = -30
+
+
+    //ARROW DOWN
+    let catGuyArrowDown = new UIImage(catGuy.dialog.container, customOrangeAtlas)
+    setSection(catGuyArrowDown, {
+        sourceHeight: 46 - 0,
+        sourceWidth: 864 - 816,
+        sourceLeft: 816,
+        sourceTop: 0
+    })
+    catGuyArrowDown.height = 46 * UIScale
+    catGuyArrowDown.width = 48 * UIScale
+    catGuyArrowDown.hAlign = "center"
+    catGuyArrowDown.vAlign = "bottom"
+    catGuyArrowDown.positionY = 23
+    catGuyArrowDown.positionX = 30
 }
 
 onIdleStateChangedObservable.add(({ isIdle }) => {
@@ -605,6 +942,8 @@ export let OctoHi: Dialog[] = [
 
     skipable: true,
     triggeredByNext: () => {
+      octopus.endInteraction()
+      log('ended conversation')
       backToIdle()
     },
     isEndOfDialog: true,
@@ -892,88 +1231,89 @@ export let OctoComments: Dialog[] = [
   },
 ]
 
-export let DogeTalk: Dialog[] = [
-  {
-    text: 'Wow, so very game changing revolutionary use case of blockchain technology',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'Such community generated content.',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'How true asset ownership!',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'Very potential to become the so awaited true incarnation of the metaverse',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'So decentralized governance by community voting',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'Much open source',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'So 3d social platform',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'How social experiment in self-governance',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'Very redefining how we interchange value with each other',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-  {
-    text: 'Much persistent virtual world',
-    triggeredByNext: () => {
-      doge.followPath()
-    },
-    timeOn: 4.1,
-    isEndOfDialog: true,
-  },
-]
+//move to /modules/bar/aiNpcs/dogeNpc.ts
+//export let DogeTalk: Dialog[] = [
+//  {
+//    text: 'Wow, so very game changing revolutionary use case of blockchain technology',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'Such community generated content.',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'How true asset ownership!',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'Very potential to become the so awaited true incarnation of the metaverse',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'So decentralized governance by community voting',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'Much open source',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'So 3d social platform',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'How social experiment in self-governance',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'Very redefining how we interchange value with each other',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//  {
+//    text: 'Much persistent virtual world',
+//    triggeredByNext: () => {
+//      doge.followPath()
+//    },
+//    timeOn: 4.1,
+//    isEndOfDialog: true,
+//  },
+//]
 
 export let ILoveCats: Dialog[] = [
   {

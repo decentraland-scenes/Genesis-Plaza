@@ -213,9 +213,26 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
           streamedMsgs.waitingForMore = true 
           return;
         } 
-        const nextPart = streamedMsgs.next()
+
+          //work around, there're empty space character being send from server
+          //if empty space detected, look for next
+          //if next is endofinteraction, stop NPC interaction
+          let nextPart: ChatNext = streamedMsgs.next()
+          while (nextPart.text && !nextPart.text.packet.text.text.trim() && !chatPart.endOfInteraction) {
+              log("TEXT NOT VALID: createDialog", "nextPart", "TEXT FOUND BUT CONTAINS ONLY SPACE, look for next")
+
+              if (nextPart.endOfInteraction) {
+                  streamedMsgs.started = false
+                  streamedMsgs.waitingForMore = false
+                  REGISTRY.activeNPC.endOfRemoteInteractionStream()
+              }
+              nextPart = streamedMsgs.next()
+          }
+
+        //const nextPart = streamedMsgs.next()
         //debugger 
         if(nextPart.text){
+            log("createDialog", "FOUND TEXT IN nextPart", nextPart);
           const nextDialog = createDialog( nextPart )
           REGISTRY.activeNPC.talk([nextDialog]);
           if(true){//audio optional
@@ -225,7 +242,8 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
               //npcDialogAudioPacket.push( msg )
             }
           } 
-        }else{
+        }//else{
+        if(!nextPart.text) {
           //check to see if this interaction id has an ending we didn't find before
           //if its part of same interactionId but not the utterace
           const checkRes = streamedMsgs._next(false,chatPart.indexStart)
@@ -289,23 +307,29 @@ function onLevelConnect(room: Room<clientState.NpcGameRoomState>) {
     if(REGISTRY.activeNPC && (streamedMsgs.started == false || streamedMsgs.waitingForMore) && streamedMsgs.hasNextAudioNText()){ 
       log("structuredMsg","createDialog","chatPart.start",chatPart)
       const nextPart = streamedMsgs.next() 
-      
-      streamedMsgs.started = true
-      streamedMsgs.waitingForMore = false
-      const dialog = createDialog(nextPart)
-      if(dialog){
-        REGISTRY.activeNPC.talk([dialog]);
-      }else{   
-        log("structuredMsg","createDialog","no dialog to show,probably just a control msg",dialog,"chatPart",chatPart,"nextPart",nextPart)
-      }
- 
-      if(true){//if(npcDialog.length ==1){
-        if(nextPart.audio && nextPart.audio.packet.audio.chunk){
-          log("onMessage.structuredMsg.audio", msg); 
-          convertAndPlayAudio( nextPart.audio.packet )    
-          //npcDialogAudioPacket.push( msg ) 
-        } 
-      } 
+
+        //if (nextPart.text.packet.text.text == " ") {
+        if (!nextPart.text.packet.text.text.trim()) {
+            log("TEXT SPACE ONLY, DO NOTHING: structuredMsg", "createDialog", "chatPart.start", chatPart)
+        }
+        else {
+            streamedMsgs.started = true
+            streamedMsgs.waitingForMore = false
+            const dialog = createDialog(nextPart)
+            if (dialog) {
+                REGISTRY.activeNPC.talk([dialog]);
+            } else {
+                log("DO NOTHING: structuredMsg", "createDialog", "no dialog to show,probably just a control msg", dialog, "chatPart", chatPart, "nextPart", nextPart)
+            }
+
+            if (true) {//if(npcDialog.length ==1){
+                if (nextPart.audio && nextPart.audio.packet.audio.chunk) {
+                    log("onMessage.structuredMsg.audio", msg);
+                    convertAndPlayAudio(nextPart.audio.packet)
+                    //npcDialogAudioPacket.push( msg ) 
+                }
+            }
+        }
     }else{
       log("structuredMsg","createDialog","chatPart.onmsg","started:",streamedMsgs.started,"waitingForMore:",streamedMsgs.waitingForMore,"hasNextAudioNText",streamedMsgs.hasNextAudioNText())
     }  

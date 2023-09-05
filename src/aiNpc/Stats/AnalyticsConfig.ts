@@ -32,7 +32,10 @@ export const ANALYTICS_ELEMENTS_IDS = {
   beerMug: "beerMug",
   menuEventSlider: "menuEventSlider",
   menuTrendingScenesSlider: "menuTrendingSceneSlider",
-  menuClassicGamesSlider: "menuClassicGameSlider"
+  menuClassicGamesSlider: "menuClassicGameSlider",
+
+    aisha: "aisha",
+    simone: "simone"
 }
 
 export const ANALYTICS_GENERIC_EVENTS = {
