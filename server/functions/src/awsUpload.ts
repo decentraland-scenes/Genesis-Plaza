@@ -24,7 +24,7 @@ export type MessageData = {
 
 export async function getMessageJSON(url: string): Promise<string[]> {
   try {
-    let response = await fetch(url).then()
+    let response = await fetch(url)
     let json = await response.json()
     return json.messages
   } catch {
@@ -108,7 +108,7 @@ export async function uploadMessageBoardJSON(
 
 export async function getSeqJSON(url: string): Promise<any> {
   try {
-    let response = await fetch(url).then()
+    let response = await fetch(url)
     let json = await response.json()
     return json.stones
   } catch {

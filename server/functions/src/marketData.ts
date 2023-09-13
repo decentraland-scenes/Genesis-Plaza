@@ -547,7 +547,7 @@ export async function getOpenSeaEventsJSON(
     }
     const opts = { headers: { 'X-API-KEY': OpenSea.OpenSeaKey } }
 
-    let response = await fetch(finalURL, opts).then()
+    let response = await fetch(finalURL, opts)
     let json = await response.json()
     let fullList = json.asset_events
     if (alreadyCollected) {

@@ -19,7 +19,7 @@
 
 //signMessage(messageToSign)
 
-export async function getEvents(_count:number) {
+export async function getEvents(_count:number): Promise<any[]> {
   let events: any[] = []
   let url = 'https://events.decentraland.org/api/events/?limit=' + _count.toString() 
 
@@ -39,10 +39,11 @@ export async function getEvents(_count:number) {
     }
 
    // log(events)
-    return events
   } catch (e) {
     log('error getting event data ', e)
   }
+
+  return events
 }
 
 // export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
@@ -95,7 +96,7 @@ export async function getEvents(_count:number) {
   
 // }
 
-export async function getTrendingScenes(_limit:number) {
+export async function getTrendingScenes(_limit:number): Promise<any[]> {
   let trendingScenes: any[] = []
   let url = 'https://peer.decentraland.org/lambdas/explore/hot-scenes/'
 
@@ -119,15 +120,15 @@ export async function getTrendingScenes(_limit:number) {
     
 
     log(json)   
-    return trendingScenes
   } catch (e) {
     log('error getting trending scene data ', e)
   }
+  return trendingScenes
 }
 
 
 
-export async function getCurrentTime() {  
+export async function getCurrentTime(): Promise<any> {  
   let url = 'https://worldtimeapi.org/api'
 
   try {
@@ -139,6 +140,7 @@ export async function getCurrentTime() {
     return json
   } catch (e) {
     log('error getting event data ', e)
+    return {}
   }
 }
 

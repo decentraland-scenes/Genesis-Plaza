@@ -232,6 +232,8 @@ let marketData: MarketData | null = null
 
 export async function updateMarketData() {
   let newMarketData = await getMarketData()
+  if (!newMarketData) return
+
   if (newMarketData === marketData) {
     return
   } else {
@@ -241,13 +243,14 @@ export async function updateMarketData() {
   updateTradeCentrer(marketData)
 }
 
-export async function getMarketData(): Promise<MarketData> {
+export async function getMarketData(): Promise<MarketData | undefined> {
   try {
     let url = awsServer + 'market/marketData.json'
-    let response = await fetch(url).then()
+    let response = await fetch(url)
     let json = await response.json()
     return json
   } catch {
     log('error fetching from AWS server')
+    return undefined
   }
 }

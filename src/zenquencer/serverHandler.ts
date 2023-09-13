@@ -20,6 +20,7 @@ export async function getStones(): Promise<number[][]> {
     return json.stones
   } catch {
     log('error fetching from AWS server')
+    return [[]]
   }
 }
 
@@ -42,6 +43,7 @@ export async function changeSequencer() {
         return response.json()
       } catch {
         log('error fetching from AWS server')
+        return {}
       }
     })
   )
