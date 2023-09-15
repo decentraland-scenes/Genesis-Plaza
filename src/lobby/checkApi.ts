@@ -45,6 +45,30 @@ export async function getEvents(_count:number) {
   }
 }
 
+export async function getBestPlaces(_count:number) {
+  let places: any[] = []
+  let url = 'https://places.decentraland.org/api/places?only_featured=false&only_highlighted=false&only_favorites=false&order_by=like_score&order=desc&offset=0&limit=' + _count.toString() 
+
+  try {
+    let response = await fetch(url)
+    let json = await response.json()
+    log("BEST PLACES FETCH:")
+   log(json)
+
+    for (let place of json.data) {
+     
+        places.push(place)   
+        log("title: " + place.title)   
+      
+    }
+
+    log(places)
+    return places
+  } catch (e) {
+    log('error getting best places data ', e)
+  }
+}
+
 // export async function rsvpToEvent(_eventID:string, _timeStamp:string) {
 //   let url = 'https://events.decentraland.org/api/message'
 

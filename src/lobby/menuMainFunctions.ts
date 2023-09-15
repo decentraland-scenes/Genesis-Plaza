@@ -1,4 +1,4 @@
-import { getEvents, getTrendingScenes } from './checkApi'
+import { getEvents, getTrendingScenes , getBestPlaces} from './checkApi'
 import { EventMenuItem } from "./menuItemEvent"
 import { TrendingMenuItem } from "./menuItemTrending"
 import { ClassicMenuItem } from './menuItemClassic'
@@ -12,6 +12,7 @@ import { AnimatedItem } from './simpleAnimator'
 import { addPanels } from 'src/modules/bar/panels'
 import { loadMoreMenuItem } from './menuItemLoad'
 import { CooldownActivated } from './cooldown'
+import { BestMenuItem } from './menuItemBest'
 
 
 
@@ -376,7 +377,153 @@ export async function fillCrowdsMenu(_menu:VerticalScrollMenu) {
 
 
 
-}// CLASSICS COLLECTION MENU
+}
+
+// BEST RATED PLACES MENU 
+export function createBestVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
+  let menuRoot = new Entity()
+  let vertBestMenu = new VerticalScrollMenu({
+    position: new Vector3(0, 0, 0 ),
+    scale: new Vector3(1,1,1)
+  },
+  2,
+  4,
+  resource.menuTopBestShape,
+  resource.menuBaseShape,
+  "Best Rated"
+  )  
+  menuRoot.addComponent(new Transform({
+    position: _transform.position,
+    rotation: _transform.rotation,
+    scale: _transform.scale
+  }))    
+  vertBestMenu.setParent(menuRoot)
+  engine.addEntity(menuRoot)
+
+  //placeholder menuItems
+  for (let i = 0; i < 10; i++){
+    vertBestMenu.addMenuItem(new BestMenuItem({    
+      scale: new Vector3(2,2,2)
+    },        
+    new Texture("images/rounded_alpha.png"),
+    crowdMenuPlaceholder
+  ))
+  }
+
+  let refreshRoot = new Entity()
+  refreshRoot.addComponent(new Transform({
+    position: new Vector3(2.35,-1.15,-0.65),
+    rotation: Quaternion.Euler(27,0,0),
+    scale: new Vector3(0.35, 0.35, 0.35)
+  }))
+  refreshRoot.addComponent(sfx.menuErrorSource)
+  refreshRoot.setParent(vertBestMenu)
+
+  let refreshButton = new Entity()
+  refreshButton.addComponent(new Transform({
+    position: new Vector3(0,0,-0.1),
+    
+  }))
+
+  refreshButton.addComponent(new AnimatedItem(
+    {
+      position: new Vector3(0,0,-0.1),
+      scale: new Vector3(1,1,1)
+    },
+    {
+      position: new Vector3(0,0,0.0),
+      scale: new Vector3(1,1,1)
+    },
+    2
+  ))
+
+  refreshButton.addComponent(new CooldownActivated(
+    20,
+    "REFRESH",
+    "WAIT FOR COOLDOWN"
+    ))
+  refreshButton.addComponent(sfx.refreshSource)
+
+  let cooldownText = new TextShape()
+  cooldownText.value = "20"
+  cooldownText.fontSize = 4
+
+  refreshButton.addComponent(cooldownText)
+
+  refreshButton.addComponent(resource.refreshShape)
+  refreshButton.addComponent(
+    new OnPointerDown(
+      async function () {
+        if(refreshButton.getComponent(CooldownActivated).active){
+          refreshButton.getComponent(Transform).position.z = 0
+          updateBestMenu(vertBestMenu)
+          refreshButton.getComponent(CooldownActivated).startCooldown()
+          sfx.refreshSource.playOnce()
+        } 
+        else{
+          sfx.menuErrorSource.playOnce()
+        }
+        
+      },
+      {
+        button: ActionButton.POINTER,
+        hoverText: "Refresh"
+      }
+    )
+  )
+ 
+  refreshButton.setParent(refreshRoot) 
+
+  return vertBestMenu
+}
+
+export async function updateBestMenu(_menu:VerticalScrollMenu){
+
+  let scenes = await getBestPlaces(10)
+
+  if (scenes.length <= 0) {
+    return
+  } 
+
+  for(let i=0; i < scenes.length; i++){
+
+    if (i < _menu.items.length){
+      _menu.items[i].updateItemInfo(scenes[i])
+    }
+    else{
+      _menu.addMenuItem(new BestMenuItem({    
+        scale: new Vector3(2,2,2)
+      },        
+      new Texture("images/rounded_alpha.png"),
+      scenes[i]
+    ))
+    }
+    
+}
+}
+
+export async function fillBestMenu(_menu:VerticalScrollMenu) {
+
+  let scenes = await getBestPlaces(10)
+
+  if (scenes.length <= 0) {
+    return
+  } 
+
+  for(let i=0; i < scenes.length; i++){ 
+    _menu.addMenuItem(new BestMenuItem({    
+      scale: new Vector3(2,2,2)
+    },        
+    new Texture("images/rounded_alpha.png"),
+    scenes[i]
+  ))
+  } 
+  //_menu.showFirstXItems(_menu.visibleItemCount)
+
+
+
+}
+// CLASSICS COLLECTION MENU
 export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
   let menuRoot = new Entity()
   let vertMenu = new VerticalScrollMenu({
