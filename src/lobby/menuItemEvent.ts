@@ -152,8 +152,8 @@ export class EventMenuItem extends MenuItem {
     dateText.value = this.date.getDate().toString()
     dateText.fontSize = 5
     dateText.color = resource.dateDayColor
-    dateText.outlineColor = resource.dateDayColor
-    dateText.outlineWidth = 0.2
+    // dateText.outlineColor = resource.dateDayColor
+    // dateText.outlineWidth = 0.2
 
     dateMonthText.value = monthToString(this.date.getMonth()).toUpperCase()
     dateMonthText.fontSize = 3
@@ -221,7 +221,7 @@ export class EventMenuItem extends MenuItem {
     this.startTime = new Entity()
 
     this.startTimeText = new TextShape()
-    this.startTimeText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.startTimeText.font = new Font(Fonts.SansSerif_Heavy)
     this.startTimeText.value = _event.next_start_at.substring(11, 16) + '\nUTC'
 
     this.startTime.addComponent(
@@ -242,7 +242,7 @@ export class EventMenuItem extends MenuItem {
 
     rawText = wordWrap(rawText, 36, 3)
     this.titleText.value = rawText
-    this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.titleText.font = new Font(Fonts.SansSerif_Heavy)
     this.titleText.height = 20
     this.titleText.width = 2
 
@@ -302,7 +302,7 @@ export class EventMenuItem extends MenuItem {
     this.coordsText = new TextShape()
     this.coordsText.value = _event.coordinates[0] + ',' + _event.coordinates[1]
     this.coordsText.color = Color3.FromHexString('#111111')
-    this.coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.coordsText.font = new Font(Fonts.SansSerif_Heavy)
 
     this.coords.addComponent(this.coordsText)
     this.coords.addComponent(
@@ -342,7 +342,7 @@ export class EventMenuItem extends MenuItem {
     this.jumpButtonTextShape = new TextShape()
 
     this.jumpButtonTextShape.color = Color3.FromHexString('#FFFFFF')
-    this.jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.jumpButtonTextShape.font = new Font(Fonts.SansSerif_Heavy)
     this.jumpButtonTextShape.hTextAlign = 'center'
 
     this.jumpButtonText.addComponent(this.jumpButtonTextShape)
@@ -420,7 +420,7 @@ export class EventMenuItem extends MenuItem {
     //  remove non-UTF-8 characters and wrap
     this.detailTitle.value = wordWrap(cleanString(_event.name), 45, 3)
 
-    this.detailTitle.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.detailTitle.font = new Font(Fonts.SansSerif_Heavy)
     this.detailTitle.height = 20
     this.detailTitle.width = 2
 
@@ -442,7 +442,7 @@ export class EventMenuItem extends MenuItem {
     this.detailTextContent = new TextShape()
     this.detailTextContent.value =
       '\n\n' + wordWrap(cleanString(_event.description), 75, 11) + '</cspace>'
-    this.detailTextContent.font = new Font(Fonts.SanFrancisco_Semibold)
+    this.detailTextContent.font = new Font(Fonts.SansSerif_SemiBold)
     this.detailTextContent.height = 20
     this.detailTextContent.width = 2
     this.detailTextContent.fontSize = 1

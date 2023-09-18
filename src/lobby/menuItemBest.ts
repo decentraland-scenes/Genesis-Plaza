@@ -140,12 +140,12 @@ export class BestMenuItem extends MenuItem {
     this.likeScoreText.fontSize = 4
     this.likeScoreText.hTextAlign = 'right'
     this.likeScoreText.color = resource.dateDayColor
-    this.likeScoreText.outlineColor = resource.dateDayColor
-    this.likeScoreText.outlineWidth = 0.2
+    // this.likeScoreText.outlineColor = resource.dateDayColor
+    // this.likeScoreText.outlineWidth = 0.2
 
     usersTitleText.value = 'RATING:'
     usersTitleText.fontSize = 2
-    usersTitleText.font = new Font(Fonts.SanFrancisco_Semibold)
+    usersTitleText.font = new Font(Fonts.SansSerif_Heavy)
     usersTitleText.color = Color3.White()
 
     this.userCountRoot.addComponent(this.likeScoreText)
@@ -193,7 +193,7 @@ export class BestMenuItem extends MenuItem {
     }
    
 
-    this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.titleText.font = new Font(Fonts.SansSerif_Bold)
     this.titleText.height = 20
     this.titleText.width = 2
     this.titleText.fontSize = 2
@@ -238,7 +238,7 @@ export class BestMenuItem extends MenuItem {
     this.coordsText = new TextShape()
     this.coordsText.value = _scene.base_position
     this.coordsText.color = Color3.FromHexString('#111111')
-    this.coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.coordsText.font = new Font(Fonts.SansSerif_Bold)
 
     this.coords.addComponent(this.coordsText)
     this.coords.addComponent(
@@ -278,7 +278,7 @@ export class BestMenuItem extends MenuItem {
     this.jumpButtonTextShape = new TextShape()
 
     this.jumpButtonTextShape.color = Color3.FromHexString('#FFFFFF')
-    this.jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.jumpButtonTextShape.font = new Font(Fonts.SansSerif_Bold)
     this.jumpButtonTextShape.fontSize = 10
     this.jumpButtonTextShape.hTextAlign = 'center'
 

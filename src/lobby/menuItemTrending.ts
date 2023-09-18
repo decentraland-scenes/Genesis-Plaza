@@ -140,12 +140,12 @@ export class TrendingMenuItem extends MenuItem {
     this.userCountText.fontSize = 4
     this.userCountText.hTextAlign = 'right'
     this.userCountText.color = resource.dateDayColor
-    this.userCountText.outlineColor = resource.dateDayColor
-    this.userCountText.outlineWidth = 0.2
+    // this.userCountText.outlineColor = resource.dateDayColor
+    // this.userCountText.outlineWidth = 0.2
 
     usersTitleText.value = 'PLAYERS:'
     usersTitleText.fontSize = 2
-    usersTitleText.font = new Font(Fonts.SanFrancisco_Semibold)
+    usersTitleText.font = new Font(Fonts.SansSerif_Heavy)
     usersTitleText.color = Color3.Black()
 
     this.userCountRoot.addComponent(this.userCountText)
@@ -188,7 +188,7 @@ export class TrendingMenuItem extends MenuItem {
       this.titleText.value = rawText
     }
 
-    this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.titleText.font = new Font(Fonts.SansSerif_Heavy)
     this.titleText.height = 20
     this.titleText.width = 2
     this.titleText.fontSize = 2
@@ -233,7 +233,7 @@ export class TrendingMenuItem extends MenuItem {
     this.coordsText = new TextShape()
     this.coordsText.value = _scene.baseCoords[0] + ',' + _scene.baseCoords[1]
     this.coordsText.color = Color3.FromHexString('#111111')
-    this.coordsText.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.coordsText.font = new Font(Fonts.SansSerif_Heavy)
 
     this.coords.addComponent(this.coordsText)
     this.coords.addComponent(
@@ -273,7 +273,7 @@ export class TrendingMenuItem extends MenuItem {
     this.jumpButtonTextShape = new TextShape()
 
     this.jumpButtonTextShape.color = Color3.FromHexString('#FFFFFF')
-    this.jumpButtonTextShape.font = new Font(Fonts.SanFrancisco_Heavy)
+    this.jumpButtonTextShape.font = new Font(Fonts.SansSerif_Heavy)
     this.jumpButtonTextShape.fontSize = 10
     this.jumpButtonTextShape.hTextAlign = 'center'
 
