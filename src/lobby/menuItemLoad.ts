@@ -59,10 +59,10 @@ export class loadMoreMenuItem extends MenuItem {
 
     }
     select(){   
-        if(!this.selected){
-            this.selected = true      
-            updateEventsMenu(this.menuRef, 30, false)    
-        }
+        // if(!this.selected){
+        //     this.selected = true      
+        //     //updateEventsMenu(this.menuRef, 30, false)    
+        // }
 
         
     }

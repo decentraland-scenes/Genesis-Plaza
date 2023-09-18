@@ -8,8 +8,7 @@ import {
   createClassicsVerticalMenu,
   fillClassicsMenu,
   updateCrowdsMenu,
-  createBestVerticalMenu,
-  fillBestMenu,
+  createBestVerticalMenu,  
   updateBestMenu
 } from './menuMainFunctions'
 
@@ -134,7 +133,7 @@ let bestMenu = createBestVerticalMenu({
   rotation: rotation,
   scale: new Vector3(menuScale, menuScale, menuScale),
 })
-updateBestMenu(bestMenu)
+updateBestMenu(bestMenu,15, true)
 
 // -- Classics
 // let classicsMenu = createClassicsVerticalMenu({

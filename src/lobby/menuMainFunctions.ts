@@ -7,7 +7,7 @@ import { Teleport, teleports } from "./teleports"
 
 import * as resource from "./resources/resources"
 import * as sfx from "./resources/sounds"
-import { eventItemPlaceholder, crowdMenuPlaceholder } from "./menuPlaceholders"
+import { eventItemPlaceholder, crowdMenuPlaceholder, bestMenuPlaceholder } from "./menuPlaceholders"
 import { AnimatedItem } from './simpleAnimator'
 import { addPanels } from 'src/modules/bar/panels'
 import { loadMoreMenuItem } from './menuItemLoad'
@@ -155,12 +155,17 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
       },
       _menu
       )
-    
+    loadButton.select = ()=>{ 
+      if(!loadButton.selected){
+        loadButton.selected = true      
+        updateEventsMenu(_menu, 30, false)    
+      }
+    }
     loadButton.addComponent(
       new OnPointerDown(
         async function () { 
-          loadButton.getComponent(Transform).position.z = 0
-          updateEventsMenu(_menu, 30, false)
+          //loadButton.getComponent(Transform).position.z = 0
+          //updateEventsMenu(_menu, 30, false)
         },
         {
           button: ActionButton.POINTER,
@@ -406,7 +411,7 @@ export function createBestVerticalMenu(_transform: TranformConstructorArgs):Vert
       scale: new Vector3(2,2,2)
     },        
     new Texture("images/rounded_alpha.png"),
-    crowdMenuPlaceholder
+    bestMenuPlaceholder
   ))
   }
 
@@ -456,7 +461,7 @@ export function createBestVerticalMenu(_transform: TranformConstructorArgs):Vert
       async function () {
         if(refreshButton.getComponent(CooldownActivated).active){
           refreshButton.getComponent(Transform).position.z = 0
-          updateBestMenu(vertBestMenu)
+          updateBestMenu(vertBestMenu, 25 ,false)
           refreshButton.getComponent(CooldownActivated).startCooldown()
           sfx.refreshSource.playOnce()
         } 
@@ -477,20 +482,29 @@ export function createBestVerticalMenu(_transform: TranformConstructorArgs):Vert
   return vertBestMenu
 }
 
-export async function updateBestMenu(_menu:VerticalScrollMenu){
+export async function updateBestMenu(_menu:VerticalScrollMenu, _count:number, _addLoadMoreButton:boolean){
 
-  let scenes = await getBestPlaces(10)
+  let scenes = await getBestPlaces(_count)
 
   if (scenes.length <= 0) {
+    log("NO BEST SCENES RETRIEVED")
     return
   } 
 
+   // remove loadmore item
+   if(!_addLoadMoreButton){
+    removeLastXItems(_menu, 1)
+  }
+
   for(let i=0; i < scenes.length; i++){
 
+    
     if (i < _menu.items.length){
+      log("UPDATING MENU ITEM : " + i)
       _menu.items[i].updateItemInfo(scenes[i])
     }
     else{
+      log("ADDING MENU ITEM : " + i)
       _menu.addMenuItem(new BestMenuItem({    
         scale: new Vector3(2,2,2)
       },        
@@ -499,30 +513,47 @@ export async function updateBestMenu(_menu:VerticalScrollMenu){
     ))
     }
     
-}
-}
+  }
 
-export async function fillBestMenu(_menu:VerticalScrollMenu) {
-
-  let scenes = await getBestPlaces(10)
-
-  if (scenes.length <= 0) {
-    return
+  if(scenes.length <= _menu.items.length){
+    removeLastXItems(_menu, _menu.items.length - scenes.length)
   } 
 
-  for(let i=0; i < scenes.length; i++){ 
-    _menu.addMenuItem(new BestMenuItem({    
-      scale: new Vector3(2,2,2)
-    },        
-    new Texture("images/rounded_alpha.png"),
-    scenes[i]
-  ))
-  } 
-  //_menu.showFirstXItems(_menu.visibleItemCount)
+  if(_addLoadMoreButton){
+    let loadButton = new loadMoreMenuItem({    
+      scale: new Vector3(1,1,1)
+      },
+      _menu
+      )
+      loadButton.select = ()=>{ 
+        if(!loadButton.selected){
+          loadButton.selected = true      
+          updateBestMenu(_menu, 25, false)   
+      }
+    }
+    loadButton.addComponent(
+      new OnPointerDown(
+        async function () { 
+         // log("PRESSED LOAD BUTTON")
+         // loadButton.getComponent(Transform).position.z = 0
+         // updateBestMenu(_menu, 25, false)
+        },
+        {
+          button: ActionButton.POINTER,
+          hoverText: "LOAD MORE"
+        }
+      )
+    )
 
+    _menu.addMenuItem(loadButton)
+  }
 
-
+  _menu.resetScroll()
 }
+
+
+
+
 // CLASSICS COLLECTION MENU
 export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
   let menuRoot = new Entity()

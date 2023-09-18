@@ -109,7 +109,7 @@ export class BestMenuItem extends MenuItem {
     this.userCountRoot = new Entity()
     this.userCountRoot.addComponent(
       new Transform({
-        position: new Vector3(0.52, -0.4, -0.025),
+        position: new Vector3(0.45, -0.4, -0.025),
         scale: new Vector3(0.93, 0.93, 0.93),
       })
     )
@@ -129,8 +129,13 @@ export class BestMenuItem extends MenuItem {
 
    // this.likeScore = _scene.like_score
     this.likeScore = 100
+    if (_scene.like_score) {
+      this.likeScore = _scene.like_score
+      this.likeScore = this.likeScore *100
+      this.likeScoreText.value = this.likeScore.toPrecision(3)
+    }
 
-    this.likeScoreText.value = this.likeScore.toString()
+    this.likeScoreText.value = this.likeScore.toPrecision(3)
     //userCountText.value = "12345"
     this.likeScoreText.fontSize = 4
     this.likeScoreText.hTextAlign = 'right'
@@ -176,13 +181,17 @@ export class BestMenuItem extends MenuItem {
     //let rawText: string = _scene.title
     let rawText: string = "TITLE"
 
-    //exception for unnamed scenes
-    if (rawText === 'interactive-text') {
-      this.titleText.value = 'Unnamed Scene'
-    } else {
-      rawText = wordWrap(rawText, 36, 3)
-      this.titleText.value = rawText
+    if(_scene.title){
+      rawText = _scene.title
+      //exception for unnamed scenes
+      if (rawText === 'interactive-text') {
+        this.titleText.value = 'Unnamed Scene'
+      } else {
+        rawText = wordWrap(rawText, 36, 3)
+        this.titleText.value = rawText
+      }
     }
+   
 
     this.titleText.font = new Font(Fonts.SanFrancisco_Heavy)
     this.titleText.height = 20
@@ -369,15 +378,18 @@ export class BestMenuItem extends MenuItem {
     this.likeScoreText.value = this.likeScore.toPrecision(3)
 
     //scene title
-    let rawText: string = _scene.title
+    if(_scene.title){
+      let rawText: string = _scene.title
 
-    //exception for unnamed scenes
-    if (rawText === 'interactive-text') {
-      this.titleText.value = 'Unnamed Scene'
-    } else {
-      rawText = wordWrap(rawText, 36, 3)
-      this.titleText.value = rawText
+      //exception for unnamed scenes
+      if (rawText === 'interactive-text') {
+        this.titleText.value = 'Unnamed Scene'
+      } else {
+        rawText = wordWrap(rawText, 36, 3)
+        this.titleText.value = rawText
+      }
     }
+   
 
     //coords
     this.coordsText.value = _scene.base_position

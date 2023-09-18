@@ -73,3 +73,13 @@ export let crowdMenuPlaceholder =
         }
 ]
 }
+export let bestMenuPlaceholder = 
+{
+    
+    title:"Loading Scene",
+    base_position:"0,0",
+    like_score:100,
+    parcels:[[0,0]],
+    
+
+}
