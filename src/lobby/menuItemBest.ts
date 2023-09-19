@@ -140,6 +140,7 @@ export class BestMenuItem extends MenuItem {
     this.likeScoreText.fontSize = 4
     this.likeScoreText.hTextAlign = 'right'
     this.likeScoreText.color = resource.dateDayColor
+    this.likeScoreText.font = new Font(Fonts.SansSerif_Bold)
     // this.likeScoreText.outlineColor = resource.dateDayColor
     // this.likeScoreText.outlineWidth = 0.2
 
@@ -376,6 +377,8 @@ export class BestMenuItem extends MenuItem {
     this.likeScore = _scene.like_score
     this.likeScore = this.likeScore *100
     this.likeScoreText.value = this.likeScore.toPrecision(3)
+    this.likeScoreText.fontSize = 4
+    this.likeScoreText.font = new Font(Fonts.SansSerif_Bold)
 
     //scene title
     if(_scene.title){

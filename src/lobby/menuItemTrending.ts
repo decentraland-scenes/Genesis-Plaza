@@ -140,13 +140,14 @@ export class TrendingMenuItem extends MenuItem {
     this.userCountText.fontSize = 4
     this.userCountText.hTextAlign = 'right'
     this.userCountText.color = resource.dateDayColor
+    this.userCountText.font = new Font(Fonts.SansSerif_Heavy)
     // this.userCountText.outlineColor = resource.dateDayColor
     // this.userCountText.outlineWidth = 0.2
 
     usersTitleText.value = 'PLAYERS:'
     usersTitleText.fontSize = 2
     usersTitleText.font = new Font(Fonts.SansSerif_Heavy)
-    usersTitleText.color = Color3.Black()
+    usersTitleText.color = Color3.White()
 
     this.userCountRoot.addComponent(this.userCountText)
     this.usersTitleRoot.addComponent(usersTitleText)
@@ -370,6 +371,7 @@ export class TrendingMenuItem extends MenuItem {
     //counter
     this.userCount = _scene.usersTotalCount
     this.userCountText.value = this.userCount.toString()
+    this.userCountText.font = new Font(Fonts.SansSerif_Heavy)
 
     //scene title
     let rawText: string = _scene.name
