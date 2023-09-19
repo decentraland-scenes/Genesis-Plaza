@@ -487,7 +487,7 @@ export async function updateBestMenu(_menu:VerticalScrollMenu, _count:number, _a
   let scenes = await getBestPlaces(_count)
 
   if (scenes.length <= 0) {
-    log("NO BEST SCENES RETRIEVED")
+   // log("NO BEST SCENES RETRIEVED")
     return
   } 
 
@@ -500,11 +500,11 @@ export async function updateBestMenu(_menu:VerticalScrollMenu, _count:number, _a
 
     
     if (i < _menu.items.length){
-      log("UPDATING MENU ITEM : " + i)
+     // log("UPDATING MENU ITEM : " + i)
       _menu.items[i].updateItemInfo(scenes[i])
     }
     else{
-      log("ADDING MENU ITEM : " + i)
+     // log("ADDING MENU ITEM : " + i)
       _menu.addMenuItem(new BestMenuItem({    
         scale: new Vector3(2,2,2)
       },        
