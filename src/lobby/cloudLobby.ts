@@ -1,13 +1,11 @@
 import { TeleportController } from './portalBeam'
 import {
-  createEventsVerticalMenu,
-  fillEventsMenu,
+  createEventsVerticalMenu,  
   updateEventsMenu,
-  createCrowdVerticalMenu,
-  fillCrowdsMenu,
-  createClassicsVerticalMenu,
-  fillClassicsMenu,
+  createCrowdVerticalMenu,    
   updateCrowdsMenu,
+  createBestVerticalMenu,  
+  updateBestMenu
 } from './menuMainFunctions'
 
 import { lobbyCenter, lobbyHeight, lobbyRadius } from './resources/globals'
@@ -125,13 +123,21 @@ posVec = center.add(
     .multiplyByFloats(lobbyRadius, lobbyRadius, lobbyRadius)
 )
 
-// -- Classics
-let classicsMenu = createClassicsVerticalMenu({
+// -- Best Places
+let bestMenu = createBestVerticalMenu({
   position: posVec,
   rotation: rotation,
   scale: new Vector3(menuScale, menuScale, menuScale),
 })
-fillClassicsMenu(classicsMenu)
+updateBestMenu(bestMenu,15, true)
+
+// -- Classics
+// let classicsMenu = createClassicsVerticalMenu({
+//   position: posVec,
+//   rotation: rotation,
+//   scale: new Vector3(menuScale, menuScale, menuScale),
+// })
+// fillClassicsMenu(classicsMenu)
 
 // -- TriggerBox
 let sphereTrigger = new Entity()

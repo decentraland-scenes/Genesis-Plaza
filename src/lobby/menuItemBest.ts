@@ -8,7 +8,7 @@ import { ANALYTICS_ELEMENTS_IDS, ANALYTICS_ELEMENTS_TYPES } from 'src/aiNpc/Stat
 
 //const clickableGroup = engine.getComponentGroup(ClickableItem, Transform)
 
-export class TrendingMenuItem extends MenuItem {
+export class BestMenuItem extends MenuItem {
   _scene: any//store data for analytics
 
   public thumbNail: ThumbnailPlane
@@ -18,12 +18,9 @@ export class TrendingMenuItem extends MenuItem {
   leftDetailsRoot: Entity
   userCountRoot: Entity
   usersTitleRoot: Entity
-  playerCounterBG: Entity
-  userCount: number
-  userCountText: TextShape
-  live: boolean
-  liveSign: Entity
-  liveText: TextShape
+  likeCounterBG: Entity
+  likeScore: number
+  likeScoreText: TextShape
   titleText: TextShape
   title: Entity
   detailsRoot: Entity
@@ -36,10 +33,7 @@ export class TrendingMenuItem extends MenuItem {
   readMoreButton: Entity
   coordsPanel: Entity
   coords: Entity
-  coordsText: TextShape
-  timePanel: Entity
-  startTime: Entity
-  startTimeText: TextShape
+  coordsText: TextShape  
   jumpButtonText: Entity
   jumpButtonTextShape: TextShape
 
@@ -70,9 +64,9 @@ export class TrendingMenuItem extends MenuItem {
     this.scale = new Vector3(1, 0.5, 1)
     this.scaleMultiplier = 1.2
 
-    if (_scene.thumbnail) {
+    if (_scene.image) {
       this.thumbNail = new ThumbnailPlane(
-        new Texture(_scene.thumbnail),
+        new Texture(_scene.image),
         {
           position: new Vector3(0.25, 0.275, 0),
           scale: new Vector3(1.1, 0.55, 1),
@@ -102,54 +96,60 @@ export class TrendingMenuItem extends MenuItem {
     this.leftDetailsRoot.setParent(this.itemBox)
 
     // -- USER COUNTER PANEL
-    this.playerCounterBG = new Entity()
-    this.playerCounterBG.addComponent(
+    this.likeCounterBG = new Entity()
+    this.likeCounterBG.addComponent(
       new Transform({
         position: new Vector3(-0.25, 0, 0),
         scale: new Vector3(0.45, 0.45, 0.45),
       })
     )
-    this.playerCounterBG.addComponent(resource.playerCounterBGShape)
-    this.playerCounterBG.setParent(this.leftDetailsRoot)
+    this.likeCounterBG.addComponent(resource.likeCounterBGShape)
+    this.likeCounterBG.setParent(this.leftDetailsRoot)
 
     this.userCountRoot = new Entity()
     this.userCountRoot.addComponent(
       new Transform({
-        position: new Vector3(0.52, -0.4, -0.025),
+        position: new Vector3(0.45, -0.4, -0.025),
         scale: new Vector3(0.93, 0.93, 0.93),
       })
     )
-    this.userCountRoot.setParent(this.playerCounterBG)
+    this.userCountRoot.setParent(this.likeCounterBG)
 
     this.usersTitleRoot = new Entity()
     this.usersTitleRoot.addComponent(
       new Transform({
-        position: new Vector3(0, -0.12, 0.05),
+        position: new Vector3(0, -0.05, 0.05),
         scale: new Vector3(0.8, 0.8, 0.8),
       })
     )
-    this.usersTitleRoot.setParent(this.playerCounterBG)
+    this.usersTitleRoot.setParent(this.likeCounterBG)
 
-    this.userCountText = new TextShape()
+    this.likeScoreText = new TextShape()
     let usersTitleText = new TextShape()
 
-    this.userCount = _scene.usersTotalCount
+   // this.likeScore = _scene.like_score
+    this.likeScore = 100
+    if (_scene.like_score) {
+      this.likeScore = _scene.like_score
+      this.likeScore = this.likeScore *100
+      this.likeScoreText.value = this.likeScore.toPrecision(3)
+    }
 
-    this.userCountText.value = this.userCount.toString()
+    this.likeScoreText.value = this.likeScore.toPrecision(3)
     //userCountText.value = "12345"
-    this.userCountText.fontSize = 4
-    this.userCountText.hTextAlign = 'right'
-    this.userCountText.color = resource.dateDayColor
-    this.userCountText.font = new Font(Fonts.SansSerif_Heavy)
-    // this.userCountText.outlineColor = resource.dateDayColor
-    // this.userCountText.outlineWidth = 0.2
+    this.likeScoreText.fontSize = 4
+    this.likeScoreText.hTextAlign = 'right'
+    this.likeScoreText.color = resource.dateDayColor
+    this.likeScoreText.font = new Font(Fonts.SansSerif_Bold)
+    // this.likeScoreText.outlineColor = resource.dateDayColor
+    // this.likeScoreText.outlineWidth = 0.2
 
-    usersTitleText.value = 'PLAYERS:'
+    usersTitleText.value = 'RATING:'
     usersTitleText.fontSize = 2
     usersTitleText.font = new Font(Fonts.SansSerif_Heavy)
     usersTitleText.color = Color3.White()
 
-    this.userCountRoot.addComponent(this.userCountText)
+    this.userCountRoot.addComponent(this.likeScoreText)
     this.usersTitleRoot.addComponent(usersTitleText)
 
     //selection event animation
@@ -179,17 +179,22 @@ export class TrendingMenuItem extends MenuItem {
     // TITLE
     this.titleText = new TextShape()
     this.title = new Entity()
-    let rawText: string = _scene.name
+    //let rawText: string = _scene.title
+    let rawText: string = "TITLE"
 
-    //exception for unnamed scenes
-    if (rawText === 'interactive-text') {
-      this.titleText.value = 'Unnamed Scene'
-    } else {
-      rawText = wordWrap(rawText, 36, 3)
-      this.titleText.value = rawText
+    if(_scene.title){
+      rawText = _scene.title
+      //exception for unnamed scenes
+      if (rawText === 'interactive-text') {
+        this.titleText.value = 'Unnamed Scene'
+      } else {
+        rawText = wordWrap(rawText, 36, 3)
+        this.titleText.value = rawText
+      }
     }
+   
 
-    this.titleText.font = new Font(Fonts.SansSerif_Heavy)
+    this.titleText.font = new Font(Fonts.SansSerif_Bold)
     this.titleText.height = 20
     this.titleText.width = 2
     this.titleText.fontSize = 2
@@ -232,9 +237,9 @@ export class TrendingMenuItem extends MenuItem {
 
     this.coords = new Entity()
     this.coordsText = new TextShape()
-    this.coordsText.value = _scene.baseCoords[0] + ',' + _scene.baseCoords[1]
+    this.coordsText.value = _scene.base_position
     this.coordsText.color = Color3.FromHexString('#111111')
-    this.coordsText.font = new Font(Fonts.SansSerif_Heavy)
+    this.coordsText.font = new Font(Fonts.SansSerif_Bold)
 
     this.coords.addComponent(this.coordsText)
     this.coords.addComponent(
@@ -274,7 +279,7 @@ export class TrendingMenuItem extends MenuItem {
     this.jumpButtonTextShape = new TextShape()
 
     this.jumpButtonTextShape.color = Color3.FromHexString('#FFFFFF')
-    this.jumpButtonTextShape.font = new Font(Fonts.SansSerif_Heavy)
+    this.jumpButtonTextShape.font = new Font(Fonts.SansSerif_Bold)
     this.jumpButtonTextShape.fontSize = 10
     this.jumpButtonTextShape.hTextAlign = 'center'
 
@@ -289,7 +294,7 @@ export class TrendingMenuItem extends MenuItem {
     this.jumpButtonText.setParent(this.jumpInButton)
 
     //exception for Genesis Plaza
-    if (_scene.baseCoords[0] < 10 && _scene.baseCoords[0] > -10) {
+    if (false) {
       this.coordsText.value = '0,0'
       this.coordsPanel.addComponent(
         new OnPointerDown(async function () {}, {
@@ -309,8 +314,8 @@ export class TrendingMenuItem extends MenuItem {
       this.coordsPanel.addComponent(
         new OnPointerDown(
           async function () {
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
-            teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.base_position ,_scene.title)
+            teleportTo(_scene.base_position)
           },
           {
             button: ActionButton.POINTER,
@@ -323,8 +328,8 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpInButton.addComponent(
         new OnPointerDown(
           async function () {
-            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
-            teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+            trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in",_scene.base_position,_scene.title)
+            teleportTo(_scene.base_position)
           },
           {
             button: ActionButton.POINTER,
@@ -362,35 +367,40 @@ export class TrendingMenuItem extends MenuItem {
   updateItemInfo(_scene: any) {
     this._scene = _scene
     //image
-    if (_scene.thumbnail) {
-      this.thumbNail.updateImage(new Texture(_scene.thumbnail))
+    if (_scene.image) {
+      this.thumbNail.updateImage(new Texture(_scene.image))
     } else {
       this.thumbNail.updateImage(resource.dummySceneBG)
     }
 
     //counter
-    this.userCount = _scene.usersTotalCount
-    this.userCountText.value = this.userCount.toString()
-    this.userCountText.font = new Font(Fonts.SansSerif_Heavy)
+    this.likeScore = _scene.like_score
+    this.likeScore = this.likeScore *100
+    this.likeScoreText.value = this.likeScore.toPrecision(3)
+    this.likeScoreText.fontSize = 4
+    this.likeScoreText.font = new Font(Fonts.SansSerif_Bold)
 
     //scene title
-    let rawText: string = _scene.name
+    if(_scene.title){
+      let rawText: string = _scene.title
 
-    //exception for unnamed scenes
-    if (rawText === 'interactive-text') {
-      this.titleText.value = 'Unnamed Scene'
-    } else {
-      rawText = wordWrap(rawText, 36, 3)
-      this.titleText.value = rawText
+      //exception for unnamed scenes
+      if (rawText === 'interactive-text') {
+        this.titleText.value = 'Unnamed Scene'
+      } else {
+        rawText = wordWrap(rawText, 36, 3)
+        this.titleText.value = rawText
+      }
     }
+   
 
     //coords
-    this.coordsText.value = _scene.baseCoords[0] + ',' + _scene.baseCoords[1]
+    this.coordsText.value = _scene.base_position
 
     const host = this
     
     //exception for Genesis Plaza
-    if (_scene.baseCoords[0] < 10 && _scene.baseCoords[0] > -10) {
+    if (false) {
       this.coordsText.value = '0,0'
       ;(this.coordsPanel.getComponent(OnPointerDown).callback =
         async function () {}),
@@ -405,8 +415,8 @@ export class TrendingMenuItem extends MenuItem {
     } else {
       ;(this.coordsPanel.getComponent(OnPointerDown).callback =
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
-          teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_go_there", _scene.base_position,_scene.title)
+          teleportTo(_scene.base_position)
         }),
         {
           button: ActionButton.POINTER,
@@ -417,8 +427,8 @@ export class TrendingMenuItem extends MenuItem {
       this.jumpButtonTextShape.fontSize = 10
       this.jumpInButton.getComponent(OnPointerDown).callback =
         async function () {
-          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.baseCoords[0] + ',' + _scene.baseCoords[1],_scene.name)
-          teleportTo(_scene.baseCoords[0] + ',' + _scene.baseCoords[1])
+          trackAction(host.itemBox.getComponentOrNull(TrackingElement), "button_jump_in", _scene.base_position,_scene.title)
+          teleportTo(_scene.base_position)
         }
       this.jumpInButton.getComponent(OnPointerDown).hoverText = 'JUMP IN'
     }
@@ -431,7 +441,7 @@ export class TrendingMenuItem extends MenuItem {
       this.highlightRays.getComponent(AnimatedItem).activate()
       this.coordsPanel.getComponent(AnimatedItem).activate()
       //this.timePanel.getComponent(AnimatedItem).activate()
-      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.baseCoords[0] + ',' + this._scene.baseCoords[1],this._scene.name)
+      trackAction(this.itemBox.getComponentOrNull(TrackingElement), "select_card", this._scene.base_position,this._scene.title)
     }
   }
   deselect() {

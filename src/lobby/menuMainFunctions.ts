@@ -1,4 +1,4 @@
-import { getEvents, getTrendingScenes } from './checkApi'
+import { getEvents, getTrendingScenes , getBestPlaces} from './checkApi'
 import { EventMenuItem } from "./menuItemEvent"
 import { TrendingMenuItem } from "./menuItemTrending"
 import { ClassicMenuItem } from './menuItemClassic'
@@ -7,11 +7,12 @@ import { Teleport, teleports } from "./teleports"
 
 import * as resource from "./resources/resources"
 import * as sfx from "./resources/sounds"
-import { eventItemPlaceholder, crowdMenuPlaceholder } from "./menuPlaceholders"
+import { eventItemPlaceholder, crowdMenuPlaceholder, bestMenuPlaceholder } from "./menuPlaceholders"
 import { AnimatedItem } from './simpleAnimator'
 import { addPanels } from 'src/modules/bar/panels'
 import { loadMoreMenuItem } from './menuItemLoad'
 import { CooldownActivated } from './cooldown'
+import { BestMenuItem } from './menuItemBest'
 
 
 
@@ -154,12 +155,17 @@ export async function updateEventsMenu(_menu:VerticalScrollMenu, _count:number, 
       },
       _menu
       )
-    
+    loadButton.select = ()=>{ 
+      if(!loadButton.selected){
+        loadButton.selected = true      
+        updateEventsMenu(_menu, 30, false)    
+      }
+    }
     loadButton.addComponent(
       new OnPointerDown(
         async function () { 
-          loadButton.getComponent(Transform).position.z = 0
-          updateEventsMenu(_menu, 30, false)
+          //loadButton.getComponent(Transform).position.z = 0
+          //updateEventsMenu(_menu, 30, false)
         },
         {
           button: ActionButton.POINTER,
@@ -376,52 +382,224 @@ export async function fillCrowdsMenu(_menu:VerticalScrollMenu) {
 
 
 
-}// CLASSICS COLLECTION MENU
-export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
+}
+
+// BEST RATED PLACES MENU 
+export function createBestVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
   let menuRoot = new Entity()
-  let vertMenu = new VerticalScrollMenu({
+  let vertBestMenu = new VerticalScrollMenu({
     position: new Vector3(0, 0, 0 ),
     scale: new Vector3(1,1,1)
   },
   2,
   4,
-  resource.menuTopClassicsShape,
+  resource.menuTopBestShape,
   resource.menuBaseShape,
-  "Old Classics"
+  "Best Rated"
   )  
   menuRoot.addComponent(new Transform({
     position: _transform.position,
     rotation: _transform.rotation,
     scale: _transform.scale
   }))    
-  vertMenu.setParent(menuRoot)
+  vertBestMenu.setParent(menuRoot)
   engine.addEntity(menuRoot)
 
-  return vertMenu
+  //placeholder menuItems
+  for (let i = 0; i < 10; i++){
+    vertBestMenu.addMenuItem(new BestMenuItem({    
+      scale: new Vector3(2,2,2)
+    },        
+    new Texture("images/rounded_alpha.png"),
+    bestMenuPlaceholder
+  ))
+  }
+
+  let refreshRoot = new Entity()
+  refreshRoot.addComponent(new Transform({
+    position: new Vector3(2.35,-1.15,-0.65),
+    rotation: Quaternion.Euler(27,0,0),
+    scale: new Vector3(0.35, 0.35, 0.35)
+  }))
+  refreshRoot.addComponent(sfx.menuErrorSource)
+  refreshRoot.setParent(vertBestMenu)
+
+  let refreshButton = new Entity()
+  refreshButton.addComponent(new Transform({
+    position: new Vector3(0,0,-0.1),
+    
+  }))
+
+  refreshButton.addComponent(new AnimatedItem(
+    {
+      position: new Vector3(0,0,-0.1),
+      scale: new Vector3(1,1,1)
+    },
+    {
+      position: new Vector3(0,0,0.0),
+      scale: new Vector3(1,1,1)
+    },
+    2
+  ))
+
+  refreshButton.addComponent(new CooldownActivated(
+    20,
+    "REFRESH",
+    "WAIT FOR COOLDOWN"
+    ))
+  refreshButton.addComponent(sfx.refreshSource)
+
+  let cooldownText = new TextShape()
+  cooldownText.value = "20"
+  cooldownText.fontSize = 4
+
+  refreshButton.addComponent(cooldownText)
+
+  refreshButton.addComponent(resource.refreshShape)
+  refreshButton.addComponent(
+    new OnPointerDown(
+      async function () {
+        if(refreshButton.getComponent(CooldownActivated).active){
+          refreshButton.getComponent(Transform).position.z = 0
+          updateBestMenu(vertBestMenu, 25 ,false)
+          refreshButton.getComponent(CooldownActivated).startCooldown()
+          sfx.refreshSource.playOnce()
+        } 
+        else{
+          sfx.menuErrorSource.playOnce()
+        }
+        
+      },
+      {
+        button: ActionButton.POINTER,
+        hoverText: "Refresh"
+      }
+    )
+  )
+ 
+  refreshButton.setParent(refreshRoot) 
+
+  return vertBestMenu
 }
 
-export async function fillClassicsMenu(_menu:VerticalScrollMenu) {
+export async function updateBestMenu(_menu:VerticalScrollMenu, _count:number, _addLoadMoreButton:boolean){
 
- // let scenes = await getTrendingScenes(10)
-  
-  for (let i of teleports) {
-    _menu.addMenuItem(new ClassicMenuItem(      
-      new Transform({
-        position: new Vector3(0, -1, 0),
-        scale: new Vector3(0.1, 0.1, 0.1),
-        rotation: Quaternion.Euler(0, 180,0)
-      }),
-      i.name,
-      i.description,
-      i.location,
-      i.model
-      
-    ))
+  let scenes = await getBestPlaces(_count)
+
+  if (scenes.length <= 0) {
+   // log("NO BEST SCENES RETRIEVED")
+    return
   } 
 
-  //_menu.showFirstXItems(_menu.visibleItemCount)
+   // remove loadmore item
+   if(!_addLoadMoreButton){
+    removeLastXItems(_menu, 1)
+  }
 
+  for(let i=0; i < scenes.length; i++){
 
+    
+    if (i < _menu.items.length){
+     // log("UPDATING MENU ITEM : " + i)
+      _menu.items[i].updateItemInfo(scenes[i])
+    }
+    else{
+     // log("ADDING MENU ITEM : " + i)
+      _menu.addMenuItem(new BestMenuItem({    
+        scale: new Vector3(2,2,2)
+      },        
+      new Texture("images/rounded_alpha.png"),
+      scenes[i]
+    ))
+    }
+    
+  }
 
+  if(scenes.length <= _menu.items.length){
+    removeLastXItems(_menu, _menu.items.length - scenes.length)
+  } 
+
+  if(_addLoadMoreButton){
+    let loadButton = new loadMoreMenuItem({    
+      scale: new Vector3(1,1,1)
+      },
+      _menu
+      )
+      loadButton.select = ()=>{ 
+        if(!loadButton.selected){
+          loadButton.selected = true      
+          updateBestMenu(_menu, 25, false)   
+      }
+    }
+    loadButton.addComponent(
+      new OnPointerDown(
+        async function () { 
+         // log("PRESSED LOAD BUTTON")
+         // loadButton.getComponent(Transform).position.z = 0
+         // updateBestMenu(_menu, 25, false)
+        },
+        {
+          button: ActionButton.POINTER,
+          hoverText: "LOAD MORE"
+        }
+      )
+    )
+
+    _menu.addMenuItem(loadButton)
+  }
+
+  _menu.resetScroll()
 }
+
+
+
+
+// CLASSICS COLLECTION MENU
+// export function createClassicsVerticalMenu(_transform: TranformConstructorArgs):VerticalScrollMenu {
+//   let menuRoot = new Entity()
+//   let vertMenu = new VerticalScrollMenu({
+//     position: new Vector3(0, 0, 0 ),
+//     scale: new Vector3(1,1,1)
+//   },
+//   2,
+//   4,
+//   resource.menuTopClassicsShape,
+//   resource.menuBaseShape,
+//   "Old Classics"
+//   )  
+//   menuRoot.addComponent(new Transform({
+//     position: _transform.position,
+//     rotation: _transform.rotation,
+//     scale: _transform.scale
+//   }))    
+//   vertMenu.setParent(menuRoot)
+//   engine.addEntity(menuRoot)
+
+//   return vertMenu
+// }
+
+// export async function fillClassicsMenu(_menu:VerticalScrollMenu) {
+
+//  // let scenes = await getTrendingScenes(10)
+  
+//   for (let i of teleports) {
+//     _menu.addMenuItem(new ClassicMenuItem(      
+//       new Transform({
+//         position: new Vector3(0, -1, 0),
+//         scale: new Vector3(0.1, 0.1, 0.1),
+//         rotation: Quaternion.Euler(0, 180,0)
+//       }),
+//       i.name,
+//       i.description,
+//       i.location,
+//       i.model
+      
+//     ))
+//   } 
+
+//   //_menu.showFirstXItems(_menu.visibleItemCount)
+
+
+
+// }
 
