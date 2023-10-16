@@ -1,6 +1,3 @@
-
-
-
 // function signMessage(msg: string) {
 
 //   executeTask(async () => {
@@ -12,60 +9,60 @@
 //     const sentMessageHex = await toHex(message)
 //     const isEqual = sentMessageHex === originalMessageHex
 //     log("Is the message correct?", isEqual)
-    
+
 //   })
 
 // }
 
 //signMessage(messageToSign)
 
-export async function getEvents(_count:number) {
-  let events: any[] = []
-  let url = 'https://events.decentraland.org/api/events/?limit=' + _count.toString() 
+export async function getEvents(_count: number) {
+  let events: any[] = [];
+  let url =
+    "https://events.decentraland.org/api/events/?limit=" + _count.toString();
 
   try {
-    let response = await fetch(url)
-    let json = await response.json()
+    let response = await fetch(url);
+    let json = await response.json();
 
-   // log(json)
+    // log(json)
 
     for (let event of json.data) {
-     
-        events.push(event)
-      
+      events.push(event);
+
       // if (event.live) {
       //   events.push(event)
       // }
     }
 
-   // log(events)
-    return events
+    // log(events)
+    return events;
   } catch (e) {
-    log('error getting event data ', e)
+    log("error getting event data ", e);
   }
 }
 
-export async function getBestPlaces(_count:number) {
-  let places: any[] = []
-  let url = 'https://places.decentraland.org/api/places?only_featured=false&only_highlighted=false&only_favorites=false&order_by=like_score&order=desc&offset=0&limit=' + _count.toString() 
+export async function getBestPlaces(_count: number) {
+  let places: any[] = [];
+  let url =
+    "https://places.decentraland.org/api/places?only_featured=false&only_highlighted=false&only_favorites=false&order_by=like_score&order=desc&offset=0&limit=" +
+    _count.toString();
 
   try {
-    let response = await fetch(url)
-    let json = await response.json()
-    log("BEST PLACES FETCH:")
-   log(json)
+    let response = await fetch(url);
+    let json = await response.json();
+    log("BEST PLACES FETCH:");
+    log(json);
 
     for (let place of json.data) {
-     
-        places.push(place)   
-        log("title: " + place.title)   
-      
+      places.push(place);
+      log("title: " + place.title);
     }
 
-    log(places)
-    return places
+    log(places);
+    return places;
   } catch (e) {
-    log('error getting best places data ', e)
+    log("error getting best places data ", e);
   }
 }
 
@@ -78,8 +75,7 @@ export async function getBestPlaces(_count:number) {
 //     "event":  "\"" + _eventID + "\"" ,
 //     "attend": "true"
 //   }
- 
-  
+
 //   log("string message to sign : " + messageToSign)
 
 //   //signMessage(messageToSign)
@@ -96,10 +92,10 @@ export async function getBestPlaces(_count:number) {
 //   //log("Is the message correct?", isEqual)
 
 //   let body = JSON.stringify({
-//     address: "0x0000000000000000000000000000000000000000",    
+//     address: "0x0000000000000000000000000000000000000000",
 //     message: message,
 //     signature: signature
-   
+
 //   })
 
 //   log('sending req to: ', url)
@@ -112,112 +108,116 @@ export async function getBestPlaces(_count:number) {
 //     })
 //     let data = await response.json()
 //    // log(data)
-   
+
 //   }  catch (e) {
 //     log('error signing up to event ', e)
 //   }
-  
+
 // }
 
-export async function getTrendingScenes(_limit:number) {
-  let trendingScenes: any[] = []
-  let url = 'https://peer.decentraland.org/lambdas/explore/hot-scenes/'
+export async function getTrendingScenes(_limit: number) {
+  let trendingScenes: any[] = [];
+  let url = "https://realm-provider.decentraland.org/hot-scenes";
 
   try {
-    let response = await fetch(url)
-    let json = await response.json()
+    let response = await fetch(url);
+    let json = await response.json();
 
     for (let scene of json) {
       //only save scenes with 2+ users
-      if(scene.usersTotalCount.toFixed() > 1){
+      if (scene.usersTotalCount.toFixed() > 1) {
         //log(scene.name + " : " + scene.usersTotalCount)
-        if(trendingScenes.length < _limit ){
-          trendingScenes.push(scene)
+        if (trendingScenes.length < _limit) {
+          trendingScenes.push(scene);
+        } else {
+          break;
         }
-        else{
-          break
-        }
-        
       }
     }
-    
 
-    log(json)   
-    return trendingScenes
+    log(json);
+    return trendingScenes;
   } catch (e) {
-    log('error getting trending scene data ', e)
+    log("error getting trending scene data ", e);
   }
 }
 
-
-
-export async function getCurrentTime() {  
-  let url = 'https://worldtimeapi.org/api'
+export async function getCurrentTime() {
+  let url = "https://worldtimeapi.org/api";
 
   try {
-    let response = await fetch(url)
-    let json = await response.json()
+    let response = await fetch(url);
+    let json = await response.json();
 
-    log(json) 
+    log(json);
 
-    return json
+    return json;
   } catch (e) {
-    log('error getting event data ', e)
+    log("error getting event data ", e);
   }
 }
 
-export function getTimeStamp():string{
-  var now = new Date()
+export function getTimeStamp(): string {
+  var now = new Date();
   //"2021-04-20T12:07:17.471Z"
-  let year = now.getUTCFullYear()
-  
-  let monthNum = now.getUTCMonth() + 1
-  let month:string = monthNum.toString()
-  if (monthNum < 10){
-    month = ("0" + monthNum) 
+  let year = now.getUTCFullYear();
+
+  let monthNum = now.getUTCMonth() + 1;
+  let month: string = monthNum.toString();
+  if (monthNum < 10) {
+    month = "0" + monthNum;
   }
 
-  let dayNum = now.getUTCDate()  
-  let day = dayNum.toString()
-  if (dayNum < 10){
-    day = "0" + dayNum
+  let dayNum = now.getUTCDate();
+  let day = dayNum.toString();
+  if (dayNum < 10) {
+    day = "0" + dayNum;
   }
 
-  let hourNum = now.getUTCHours()
-  let hour = hourNum.toString()
-  if(hourNum < 10){
-    hour = "0" + hourNum
+  let hourNum = now.getUTCHours();
+  let hour = hourNum.toString();
+  if (hourNum < 10) {
+    hour = "0" + hourNum;
   }
 
-  let minuteNum = now.getUTCMinutes()
-  let minute = minuteNum.toString()
-  if(minuteNum < 10){
-    minute = "0" + minuteNum
+  let minuteNum = now.getUTCMinutes();
+  let minute = minuteNum.toString();
+  if (minuteNum < 10) {
+    minute = "0" + minuteNum;
   }
 
-  let secondNum = now.getUTCSeconds()
-  let second = secondNum.toString()
-  if(secondNum < 10){
-    second = "0" + secondNum
+  let secondNum = now.getUTCSeconds();
+  let second = secondNum.toString();
+  if (secondNum < 10) {
+    second = "0" + secondNum;
   }
 
-  let msNum = now.getUTCSeconds()
-  let milliseconds = secondNum.toString()
-  if(msNum < 100){
-    milliseconds = "0" + msNum
+  let msNum = now.getUTCSeconds();
+  let milliseconds = secondNum.toString();
+  if (msNum < 100) {
+    milliseconds = "0" + msNum;
   }
-  if(msNum < 10){
-    milliseconds = "0" + milliseconds
+  if (msNum < 10) {
+    milliseconds = "0" + milliseconds;
   }
-  
 
+  var utc_timestamp =
+    year +
+    "-" +
+    month +
+    "-" +
+    day +
+    "T" +
+    hour +
+    ":" +
+    minute +
+    ":" +
+    second +
+    "." +
+    milliseconds +
+    "Z";
 
+  log("DATE:NOW: " + utc_timestamp);
 
-  var utc_timestamp =  year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second + "." + milliseconds + "Z"
-      
-
-  log("DATE:NOW: " + utc_timestamp)
-
-  return utc_timestamp
+  return utc_timestamp;
 }
-
